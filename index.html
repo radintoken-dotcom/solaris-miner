@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solaris Miner</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --accent-color: #f3ba2f;
+            --text-color: #ffffff;
+            --text-secondary: #8a99ad;
+        }
+        body {
+            margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+        }
+        .header { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; background: #0f172a; }
+        .user-info { font-size: 0.9rem; color: var(--accent-color); font-weight: bold; }
+        .main-content { flex: 1; padding: 16px; overflow-y: auto; padding-bottom: 80px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .balance-card { background: linear-gradient(135deg, #131b2e, #1a2642); padding: 16px; border-radius: 16px; text-align: center; border: 1px solid #243452; margin-bottom: 16px; }
+        .balance-amount { font-size: 1.8rem; font-weight: bold; color: var(--accent-color); margin: 8px 0; }
+        .coin-circle { width: 140px; height: 140px; margin: 0 auto; background: radial-gradient(circle, #f3ba2f 0%, #b78103 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 0 30px rgba(243, 186, 47, 0.3); border: 3px solid #ffe58f; }
+        .mining-btn { background: linear-gradient(135deg, #f3ba2f, #d49e1a); color: #000; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 15px; }
+        .card-item { background-color: var(--card-bg); border: 1px solid #1e2d4a; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background-color: #0f172a; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #1e293b; }
+        .nav-item { color: var(--text-secondary); font-size: 0.75rem; text-decoration: none; text-align: center; background: none; border: none; cursor: pointer; }
+        .nav-item.active { color: var(--accent-color); }
+        .nav-icon { font-size: 1.2rem; display: block; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="user-info">⚡ Solaris Miner</div>
+        <div style="font-size: 0.85rem; color: #4ade80;">● آنلاین</div>
+    </div>
+    <div class="main-content">
+        <div id="tab-mining" class="tab-content active">
+            <div class="balance-card">
+                <div style="color: var(--text-secondary); font-size: 0.85rem;">موجودی کل (SOLARIS)</div>
+                <div class="balance-amount" id="balance">0.000000</div>
+                <div style="font-size: 0.8rem; color: #4ade80;">سرعت: 1.2 SOLARIS / ساعت</div>
+            </div>
+            <div class="coin-circle">🪙</div>
+            <button class="mining-btn" onclick="alert('پاداش جمع‌آوری شد!')">جمع‌آوری پاداش ماینینگ</button>
+        </div>
+        <div id="tab-tasks" class="tab-content">
+            <h3 style="margin-top: 0;">ماموریت‌های روزانه</h3>
+            <div class="card-item">
+                <div><div style="font-weight: bold;">چک‌این روزانه</div><div style="font-size: 0.8rem; color: var(--text-secondary);">+5.0 SOLARIS</div></div>
+                <button style="background: #1e293b; color: #fff; border: 1px solid #f3ba2f; padding: 8px 12px; border-radius: 8px;">انجام شد</button>
+            </div>
+        </div>
+        <div id="tab-friends" class="tab-content">
+            <h3 style="margin-top: 0;">دعوت از دوستان</h3>
+            <div class="balance-card" style="text-align: right;">
+                <div style="font-size: 0.85rem; color: var(--text-secondary);">لینک دعوت اختصاصی شما:</div>
+                <div style="font-size: 0.8rem; color: #f3ba2f; word-break: break-all; margin: 8px 0;">t.me/SolarisMiner_bot</div>
+            </div>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <button class="nav-item active" onclick="switchTab('mining', this)"><span class="nav-icon">⛏️</span>ماینینگ</button>
+        <button class="nav-item" onclick="switchTab('tasks', this)"><span class="nav-icon">📋</span>تسک‌ها</button>
+        <button class="nav-item" onclick="switchTab('friends', this)"><span class="nav-icon">👥</span>دوستان</button>
+    </div>
+    <script>
+        let balance = 12.500000;
+        setInterval(() => { balance += 0.000333; document.getElementById('balance').innerText = balance.toFixed(6); }, 1000);
+        function switchTab(tabName, element) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            element.classList.add('active');
+        }
+    </script>
+</body>
+</html>
