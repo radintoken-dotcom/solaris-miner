@@ -1,83 +1,541 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Solaris Miner</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131b2e;
-            --accent-color: #f3ba2f;
+            --bg-color: #0f1115;
+            --card-bg: #1a1d24;
+            --accent-color: #0088cc;
             --text-color: #ffffff;
-            --text-secondary: #8a99ad;
+            --sub-text: #9a9ea7;
+            --btn-bg: #222630;
+            --success: #2ecc71;
+            --warning: #f1c40f;
         }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
+        }
+
         body {
-            margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
         }
-        .header { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; background: #0f172a; }
-        .user-info { font-size: 0.9rem; color: var(--accent-color); font-weight: bold; }
-        .main-content { flex: 1; padding: 16px; overflow-y: auto; padding-bottom: 80px; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .balance-card { background: linear-gradient(135deg, #131b2e, #1a2642); padding: 16px; border-radius: 16px; text-align: center; border: 1px solid #243452; margin-bottom: 16px; }
-        .balance-amount { font-size: 1.8rem; font-weight: bold; color: var(--accent-color); margin: 8px 0; }
-        .coin-circle { width: 140px; height: 140px; margin: 0 auto; background: radial-gradient(circle, #f3ba2f 0%, #b78103 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 0 30px rgba(243, 186, 47, 0.3); border: 3px solid #ffe58f; }
-        .mining-btn { background: linear-gradient(135deg, #f3ba2f, #d49e1a); color: #000; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 15px; }
-        .card-item { background-color: var(--card-bg); border: 1px solid #1e2d4a; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background-color: #0f172a; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #1e293b; }
-        .nav-item { color: var(--text-secondary); font-size: 0.75rem; text-decoration: none; text-align: center; background: none; border: none; cursor: pointer; }
-        .nav-item.active { color: var(--accent-color); }
-        .nav-icon { font-size: 1.2rem; display: block; margin-bottom: 2px; }
+
+        .header {
+            text-align: center;
+            padding: 15px 0;
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #222;
+            background: #14171d;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            padding-bottom: 80px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            border: 1px solid #282c37;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .card-title {
+            font-size: 12px;
+            color: var(--sub-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .big-number {
+            font-size: 26px;
+            font-weight: bold;
+            color: #fff;
+            margin: 8px 0;
+        }
+
+        .sub-rate {
+            font-size: 12px;
+            color: var(--success);
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+        .btn:active {
+            opacity: 0.8;
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: var(--btn-bg);
+            color: #fff;
+            border: 1px solid #333;
+        }
+
+        .task-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #282c37;
+        }
+
+        .task-info {
+            text-align: left;
+            max-width: 60%;
+        }
+
+        .task-title {
+            font-size: 13px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .task-reward {
+            font-size: 12px;
+            color: var(--success);
+            margin-top: 3px;
+        }
+
+        .task-btn {
+            width: auto;
+            padding: 8px 14px;
+            font-size: 12px;
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .task-btn.done {
+            background: #333;
+            color: var(--sub-text);
+            cursor: not-allowed;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--sub-text);
+            margin-bottom: 5px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            background: #111318;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .social-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .social-btn {
+            flex: 1;
+            background: #229ed9;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background: #14171d;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #222;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--sub-text);
+            font-size: 10px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: #fff;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="user-info">⚡ Solaris Miner</div>
-        <div style="font-size: 0.85rem; color: #4ade80;">● آنلاین</div>
-    </div>
-    <div class="main-content">
-        <div id="tab-mining" class="tab-content active">
-            <div class="balance-card">
-                <div style="color: var(--text-secondary); font-size: 0.85rem;">موجودی کل (SOLARIS)</div>
-                <div class="balance-amount" id="balance">0.000000</div>
-                <div style="font-size: 0.8rem; color: #4ade80;">سرعت: 1.2 SOLARIS / ساعت</div>
+
+    <div class="header">SOLARIS MINER</div>
+
+    <div class="content">
+        <!-- 1. MINER TAB -->
+        <div id="tab-miner" class="tab-content active">
+            <div class="social-box">
+                <a href="https://t.me/Crypto_Hunters_ir" target="_blank" class="social-btn">📢 کانال تلگرام ما</a>
+                <a href="https://t.me/Crypto_Hunters_ltf" target="_blank" class="social-btn" style="background: #2b547e;">💬 گروه گفتگو</a>
             </div>
-            <div class="coin-circle">🪙</div>
-            <button class="mining-btn" onclick="alert('پاداش جمع‌آوری شد!')">جمع‌آوری پاداش ماینینگ</button>
+
+            <div class="card">
+                <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                    <button class="btn" onclick="openDepositModal()" style="background:#2ecc71; color:#fff; font-size:13px; padding:10px;">ADD GHS</button>
+                    <button class="btn btn-secondary" style="font-size:13px; padding:10px; cursor:default;">FREE GHS</button>
+                </div>
+                <div class="card-title">TOTAL GHS POWER</div>
+                <div class="big-number" id="ghs-power">160.00 GHS</div>
+                <div class="sub-rate" id="rate-display">+0.00001157 TON/s (0.1 TON/day)</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">YOUR BALANCE</div>
+                <div class="big-number"><span id="main-balance">0.000000</span> TON</div>
+                
+                <div style="margin-top: 15px;">
+                    <div class="card-title">PENDING BALANCE</div>
+                    <div style="font-size: 18px; font-weight: bold; margin: 5px 0; color: var(--warning);" id="pending-balance">0.00000000 TON</div>
+                </div>
+
+                <button class="btn" style="margin-top: 15px;" onclick="claimBalance()">CLAIM BALANCE</button>
+            </div>
         </div>
+
+        <!-- 2. TASKS TAB -->
         <div id="tab-tasks" class="tab-content">
-            <h3 style="margin-top: 0;">ماموریت‌های روزانه</h3>
-            <div class="card-item">
-                <div><div style="font-weight: bold;">چک‌این روزانه</div><div style="font-size: 0.8rem; color: var(--text-secondary);">+5.0 SOLARIS</div></div>
-                <button style="background: #1e293b; color: #fff; border: 1px solid #f3ba2f; padding: 8px 12px; border-radius: 8px;">انجام شد</button>
+            <div style="text-align: center; margin-bottom: 15px; font-weight: bold; color: var(--sub-text);">DAILY TASKS (24H)</div>
+            <div id="tasks-container"></div>
+        </div>
+
+        <!-- 3. EARN TAB -->
+        <div id="tab-earn" class="tab-content">
+            <div class="card">
+                <div class="card-title">YOUR EXCLUSIVE REFERRAL LINK</div>
+                <input type="text" class="input-field" id="ref-link" readonly style="text-align: center; margin: 10px 0;">
+                <button class="btn" onclick="copyRefLink()">SHARE LINK</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">MY REFERRALS</div>
+                <div class="big-number" id="ref-count">0</div>
+                <div class="sub-rate">+10 GHS per referral</div>
+            </div>
+
+            <div class="card" style="text-align: left;">
+                <div class="card-title" style="margin-bottom: 10px;">PROMOTED GAMES</div>
+                <div style="font-size: 12px; line-height: 1.8; color: #ccc;">
+                    🔹 <a href="https://atok.ai/referral/OeqE" target="_blank" style="color: #0088cc;">ATOK Game</a><br>
+                    🔹 <a href="https://t.me/OilVoyageBot?startapp=t7kdz7a5" target="_blank" style="color: #0088cc;">Oil Voyage</a><br>
+                    🔹 <a href="https://t.me/MIMA_COIN_bot?start=ref_334f1c96314eb54c" target="_blank" style="color: #0088cc;">Mima Coin</a><br>
+                    🔹 <a href="https://t.me/AFL_Miningbot?start=1007321991" target="_blank" style="color: #0088cc;">AFL Mining</a><br>
+                    🔹 <a href="https://zmine.si/register?ref=WRFTHZXH" target="_blank" style="color: #0088cc;">Z-Mine</a>
+                </div>
             </div>
         </div>
-        <div id="tab-friends" class="tab-content">
-            <h3 style="margin-top: 0;">دعوت از دوستان</h3>
-            <div class="balance-card" style="text-align: right;">
-                <div style="font-size: 0.85rem; color: var(--text-secondary);">لینک دعوت اختصاصی شما:</div>
-                <div style="font-size: 0.8rem; color: #f3ba2f; word-break: break-all; margin: 8px 0;">t.me/SolarisMiner_bot</div>
+
+        <!-- 4. WITHDRAW TAB -->
+        <div id="tab-withdraw" class="tab-content">
+            <div class="card">
+                <div class="card-title">YOUR BALANCE</div>
+                <div class="big-number"><span id="withdraw-balance">0.000000</span> TON</div>
+            </div>
+
+            <div class="card" style="text-align: left;">
+                <div class="input-group">
+                    <label>Wallet Address (Tonkeeper TON)</label>
+                    <input type="text" id="wallet-addr" class="input-field" placeholder="UQ... or EQ...">
+                </div>
+
+                <div class="input-group">
+                    <label>Amount to withdraw</label>
+                    <input type="number" id="withdraw-amount" class="input-field" placeholder="0.00">
+                    <div style="font-size: 11px; color: var(--sub-text); margin-top: 4px;">Minimum is 0.2500 TON</div>
+                </div>
+
+                <button class="btn" onclick="requestWithdraw()">WITHDRAW</button>
             </div>
         </div>
     </div>
+
+    <!-- DEPOSIT MODAL (ADD GHS) -->
+    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); z-index:1000; padding:20px; align-items:center; justify-content:center;">
+        <div class="card" style="width:100%; max-width:350px; text-align:left; margin:0;">
+            <div class="card-title" style="text-align:center; font-size:16px; color:#fff; margin-bottom:15px;">ADD 200 GHS POWER</div>
+            
+            <p style="font-size:12px; color:#aaa; margin-bottom:10px;">
+                برای افزایش <b>200 GHS</b> به سرعت استخراج، مبلغ <b>0.2 TON</b> را به آدرس زیر واریز کنید:
+            </p>
+
+            <div class="input-group">
+                <label>آدرس کیف پول شما (Admin Wallet):</label>
+                <input type="text" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; color:#2ecc71;">
+            </div>
+
+            <div class="input-group">
+                <label>شناسه واریز اختصاصی (MEMO / Comment):</label>
+                <input type="text" id="user-memo" class="input-field" value="" readonly style="color:#f1c40f; font-weight:bold; text-align:center;">
+            </div>
+
+            <p style="font-size:10px; color:#e74c3c; margin-bottom:15px;">
+                ⚠️ حتماً ممو بالا را موقع انتقال در بخش Comment کیف پول خود وارد کنید.
+            </p>
+
+            <button class="btn" onclick="submitDeposit()" style="background:#2ecc71; color:#fff; margin-bottom:10px;">I HAVE PAID (تایید واریز)</button>
+            <button class="btn btn-secondary" onclick="closeDepositModal()">انصراف</button>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAV BAR -->
     <div class="nav-bar">
-        <button class="nav-item active" onclick="switchTab('mining', this)"><span class="nav-icon">⛏️</span>ماینینگ</button>
-        <button class="nav-item" onclick="switchTab('tasks', this)"><span class="nav-icon">📋</span>تسک‌ها</button>
-        <button class="nav-item" onclick="switchTab('friends', this)"><span class="nav-icon">👥</span>دوستان</button>
+        <div class="nav-item active" onclick="switchTab('miner', this)">
+            <div class="nav-icon">⛏️</div>
+            <div>MINER</div>
+        </div>
+        <div class="nav-item" onclick="switchTab('tasks', this)">
+            <div class="nav-icon">📋</div>
+            <div>TASKS</div>
+        </div>
+        <div class="nav-item" onclick="switchTab('earn', this)">
+            <div class="nav-icon">🔗</div>
+            <div>EARN</div>
+        </div>
+        <div class="nav-item" onclick="switchTab('withdraw', this)">
+            <div class="nav-icon">💳</div>
+            <div>WITHDRAW</div>
+        </div>
     </div>
+
     <script>
-        let balance = 12.500000;
-        setInterval(() => { balance += 0.000333; document.getElementById('balance').innerText = balance.toFixed(6); }, 1000);
-        function switchTab(tabName, element) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.getElementById('tab-' + tabName).classList.add('active');
-            element.classList.add('active');
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        let userId = localStorage.getItem('solaris_user_id');
+        if (!userId) {
+            const tgUser = tg.initDataUnsafe?.user;
+            userId = tgUser ? tgUser.id : 'user_' + Math.floor(100000 + Math.random() * 900000);
+            localStorage.setItem('solaris_user_id', userId);
         }
+
+        let ghs = parseFloat(localStorage.getItem('ghs_' + userId) || '160.0');
+        let balance = parseFloat(localStorage.getItem('balance_' + userId) || '0.0');
+        let pending = parseFloat(localStorage.getItem('pending_' + userId) || '0.0');
+        let referrals = parseInt(localStorage.getItem('referrals_' + userId) || '0');
+
+        const tasks = [
+            { id: 1, title: "Join Crypto Hunters Channel", reward: 20, link: "https://t.me/Crypto_Hunters_ir" },
+            { id: 2, title: "Join Crypto Hunters Group", reward: 20, link: "https://t.me/Crypto_Hunters_ltf" },
+            { id: 3, title: "Play Oil Voyage", reward: 15, link: "https://t.me/OilVoyageBot?startapp=t7kdz7a5" },
+            { id: 4, title: "Play Mima Coin", reward: 15, link: "https://t.me/MIMA_COIN_bot?start=ref_334f1c96314eb54c" },
+            { id: 5, title: "Play AFL Mining", reward: 15, link: "https://t.me/AFL_Miningbot?start=1007321991" }
+        ];
+
+        function updateUI() {
+            document.getElementById('ghs-power').innerText = ghs.toFixed(2) + ' GHS';
+            document.getElementById('main-balance').innerText = balance.toFixed(6);
+            document.getElementById('withdraw-balance').innerText = balance.toFixed(6);
+            document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' TON';
+            document.getElementById('ref-count').innerText = referrals;
+
+            const dailyTon = (ghs / 160) * 0.1;
+            const ratePerSec = dailyTon / 86400;
+            document.getElementById('rate-display').innerText = `+${ratePerSec.toFixed(8)} TON/s (${dailyTon.toFixed(2)} TON/day)`;
+            
+            const botUsername = "SolarisMiner_bot";
+            document.getElementById('ref-link').value = `https://t.me/${botUsername}?start=${userId}`;
+        }
+
+        setInterval(() => {
+            const dailyTon = (ghs / 160) * 0.1;
+            const ratePerSec = dailyTon / 86400;
+            pending += ratePerSec;
+            localStorage.setItem('pending_' + userId, pending);
+            document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' TON';
+        }, 1000);
+
+        function claimBalance() {
+            if (pending <= 0) return;
+            balance += pending;
+            pending = 0;
+            localStorage.setItem('balance_' + userId, balance);
+            localStorage.setItem('pending_' + userId, pending);
+            updateUI();
+            tg.showAlert("✅ Claimed successfully!");
+        }
+
+        function switchTab(tabName, el) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabName).classList.add('active');
+            el.classList.add('active');
+        }
+
+        function renderTasks() {
+            const container = document.getElementById('tasks-container');
+            container.innerHTML = '';
+            
+            const now = new Date().getTime();
+
+            tasks.forEach(task => {
+                const expireTime = localStorage.getItem('task_expire_' + userId + '_' + task.id);
+                const isExpired = !expireTime || now > parseInt(expireTime);
+                
+                const div = document.createElement('div');
+                div.className = 'task-item';
+                div.innerHTML = `
+                    <div class="task-info">
+                        <div class="task-title">${task.title}</div>
+                        <div class="task-reward">+${task.reward} GHS</div>
+                    </div>
+                    <button class="btn task-btn ${!isExpired ? 'done' : ''}" onclick="doTask(${task.id}, '${task.link}', ${task.reward}, this)">
+                        ${isExpired ? 'Start' : 'Done (24h)'}
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function doTask(id, link, reward, btn) {
+            const expireTime = localStorage.getItem('task_expire_' + userId + '_' + id);
+            const now = new Date().getTime();
+
+            if (expireTime && now < parseInt(expireTime)) {
+                tg.showAlert("⏳ This task is already completed. Available again after 24 hours.");
+                return;
+            }
+
+            tg.openTelegramLink(link);
+            btn.innerText = "Checking...";
+            
+            setTimeout(() => {
+                ghs += reward;
+                localStorage.setItem('ghs_' + userId, ghs);
+                
+                const nextAvailable = new Date().getTime() + (24 * 60 * 60 * 1000);
+                localStorage.setItem('task_expire_' + userId + '_' + id, nextAvailable);
+
+                renderTasks();
+                updateUI();
+                tg.showAlert(`🎉 Task Completed! +${reward} GHS added to your power.`);
+            }, 6000);
+        }
+
+        function copyRefLink() {
+            const copyText = document.getElementById("ref-link");
+            copyText.select();
+            document.execCommand("copy");
+            tg.showAlert("📋 Your exclusive referral link copied!");
+        }
+
+        function requestWithdraw() {
+            const addr = document.getElementById('wallet-addr').value;
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+
+            if (!addr || addr.length < 10) {
+                tg.showAlert("❌ Please enter a valid Tonkeeper wallet address.");
+                return;
+            }
+
+            if (isNaN(amount) || amount < 0.25) {
+                tg.showAlert("❌ Minimum withdrawal amount is 0.25 TON.");
+                return;
+            }
+
+            if (amount > balance) {
+                tg.showAlert("❌ Insufficient balance.");
+                return;
+            }
+
+            balance -= amount;
+            localStorage.setItem('balance_' + userId, balance);
+            updateUI();
+
+            tg.showAlert(`✅ Withdrawal Request Submitted!\n\nWallet: ${addr}\nAmount: ${amount} TON\n\nStatus: Pending Admin Approval`);
+            document.getElementById('wallet-addr').value = '';
+            document.getElementById('withdraw-amount').value = '';
+        }
+
+        // توابع پنجره خرید (ADD GHS)
+        function openDepositModal() {
+            document.getElementById('deposit-modal').style.display = 'flex';
+            document.getElementById('user-memo').value = userId; // ممو برابر با آیدی اختصاصی کاربر
+        }
+
+        function closeDepositModal() {
+            document.getElementById('deposit-modal').style.display = 'none';
+        }
+
+        function submitDeposit() {
+            closeDepositModal();
+            tg.showAlert("✅ Deposit request registered!\nAdmin will check your transaction with memo: " + userId + " and add 200 GHS.");
+        }
+
+        updateUI();
+        renderTasks();
     </script>
 </body>
 </html>
