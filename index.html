@@ -558,7 +558,8 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             
             document.getElementById('tab-' + tabName).classList.add('active');
-            el.classList.add('active');
+            if (el) el.classList.add('active');
+            
             if(tabName === 'tasks') {
                 renderTasks();
             }
@@ -670,4 +671,40 @@
         function selectPackage(amount, ghsPower, el) {
             selectedAmount = amount;
             selectedGhs = ghsPower;
-            document.querySelectorAll
+            document.querySelectorAll('.package-card').forEach(card => card.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function openDepositModal() {
+            document.getElementById('deposit-modal').style.display = 'flex';
+            document.getElementById('user-memo').value = userId;
+        }
+
+        function closeDepositModal() {
+            document.getElementById('deposit-modal').style.display = 'none';
+        }
+
+        function copyAdminWallet() {
+            const walletInput = document.getElementById('admin-wallet-input');
+            walletInput.select();
+            document.execCommand("copy");
+            tg.showAlert("📋 Address copied to clipboard!");
+        }
+
+        function copyUserMemo() {
+            const memoInput = document.getElementById('user-memo');
+            memoInput.select();
+            document.execCommand("copy");
+            tg.showAlert("📋 MEMO copied to clipboard!");
+        }
+
+        function submitDeposit() {
+            closeDepositModal();
+            tg.showAlert(`✅ Deposit Request Submitted!\n\nPlease ensure you sent ${selectedAmount} Gram/TON with MEMO: ${userId}\nYour power will be updated soon (+${selectedGhs} GHS).`);
+        }
+
+        updateUI();
+        renderTasks();
+    </script>
+</body>
+</html>
