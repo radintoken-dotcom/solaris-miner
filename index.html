@@ -95,7 +95,6 @@
             margin-bottom: 15px;
         }
 
-        /* GOLDEN COIN ANIMATION */
         .coin-container {
             margin: 15px 0;
             display: flex;
@@ -191,6 +190,7 @@
             background: #333;
             color: var(--sub-text);
             cursor: not-allowed;
+            font-size: 11px;
         }
 
         .input-group {
@@ -262,11 +262,10 @@
                     <button class="btn btn-secondary" style="font-size:13px; padding:10px; cursor:default;">FREE GHS</button>
                 </div>
                 <div class="card-title">TOTAL GHS POWER</div>
-                <div class="big-number" id="ghs-power">160.00 GHS</div>
-                <div class="sub-rate" id="rate-display">+0.00001157 TON/s (0.1 TON/day)</div>
+                <div class="big-number" id="ghs-power">0.00 GHS</div>
+                <div class="sub-rate" id="rate-display">+0.00000000 TON/s (0.00 TON/day)</div>
             </div>
 
-            <!-- سکه طلایی زیبا در مرکز -->
             <div class="coin-container">
                 <div class="gold-coin">🪙</div>
             </div>
@@ -301,17 +300,22 @@
             <div class="card">
                 <div class="card-title">MY REFERRALS</div>
                 <div class="big-number" id="ref-count">0</div>
-                <div class="sub-rate">+10 GHS per referral</div>
+                <div class="sub-rate">+2 GHS per referral</div>
             </div>
 
             <div class="card" style="text-align: left;">
                 <div class="card-title" style="margin-bottom: 10px;">PROMOTED GAMES</div>
-                <div style="font-size: 13px; line-height: 2; color: #ccc;">
-                    🔹 <a href="https://t.me/lifetime_energy_bot?start=1007321991" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Lifetime Energy Bot</a><br>
+                <div style="font-size: 12px; line-height: 2; color: #ccc;">
+                    🔹 <a href="https://t.me/lifetime_energy_bot?start=1007321991" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Lifetime Energy</a><br>
                     🔹 <a href="https://g.cb.click/aVYJfp" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">CB Click Game</a><br>
                     🔹 <a href="https://telegram.me/asanstars_bot?start=ref_636BD072" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Asan Stars Bot</a><br>
-                    🔹 <a href="https://t.me/ThunderWavesBot/App?startapp=ref_OU6LZU77" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Thunder Waves App</a><br>
-                    🔹 <a href="https://t.me/ASTRA_AIRDROP_BOT/app?startapp=ref_1007321991" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Astra Airdrop Bot</a>
+                    🔹 <a href="https://t.me/ThunderWavesBot/App?startapp=ref_OU6LZU77" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Thunder Waves</a><br>
+                    🔹 <a href="https://t.me/ASTRA_AIRDROP_BOT/app?startapp=ref_1007321991" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Astra Airdrop</a><br>
+                    🔹 <a href="https://t.me/mrgminerbot/app?startapp=ref_X21JV7Y" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Mrg Miner Bot</a><br>
+                    🔹 <a href="https://t.me/MIMA_COIN_bot?start=ref_334f1c96314eb54c" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Mima Coin Bot</a><br>
+                    🔹 <a href="https://zmine.si/register?ref=WRFTHZXH" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Z-Mine Platform</a><br>
+                    🔹 <a href="https://atok.ai/referral/OeqE" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">ATOK Game</a><br>
+                    🔹 <a href="https://t.me/trancemusicpsy" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Trance Music Channel</a>
                 </div>
             </div>
         </div>
@@ -392,25 +396,34 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        let userId = localStorage.getItem('solaris_user_id');
+        // دریافت آیدی واقعی و منحصربه‌فرد اکانت تلگرام
+        let userId = tg.initDataUnsafe?.user?.id ? String(tg.initDataUnsafe.user.id) : null;
         if (!userId) {
-            const tgUser = tg.initDataUnsafe?.user;
-            userId = tgUser ? tgUser.id : 'user_' + Math.floor(100000 + Math.random() * 900000);
-            localStorage.setItem('solaris_user_id', userId);
+            userId = localStorage.getItem('solaris_user_id');
+            if (!userId) {
+                userId = 'user_' + Math.floor(100000 + Math.random() * 900000);
+                localStorage.setItem('solaris_user_id', userId);
+            }
         }
 
-        let ghs = parseFloat(localStorage.getItem('ghs_' + userId) || '160.0');
+        // شروع از ۰.۰ GHS (بدون امتیاز اولیه رایگان)
+        let ghs = parseFloat(localStorage.getItem('ghs_' + userId) || '0.0');
         let balance = parseFloat(localStorage.getItem('balance_' + userId) || '0.0');
         let pending = parseFloat(localStorage.getItem('pending_' + userId) || '0.0');
         let referrals = parseInt(localStorage.getItem('referrals_' + userId) || '0');
 
-        // بازی‌های جدید شما در بخش تسک‌ها
+        // تنظیم پاداش تسک‌ها فقط روی ۱ و ۲ GHS
         const tasks = [
-            { id: 1, title: "Play Lifetime Energy", reward: 20, link: "https://t.me/lifetime_energy_bot?start=1007321991" },
-            { id: 2, title: "Play CB Click Game", reward: 20, link: "https://g.cb.click/aVYJfp" },
-            { id: 3, title: "Play Asan Stars Bot", reward: 15, link: "https://telegram.me/asanstars_bot?start=ref_636BD072" },
-            { id: 4, title: "Play Thunder Waves", reward: 15, link: "https://t.me/ThunderWavesBot/App?startapp=ref_OU6LZU77" },
-            { id: 5, title: "Play Astra Airdrop", reward: 15, link: "https://t.me/ASTRA_AIRDROP_BOT/app?startapp=ref_1007321991" }
+            { id: 1, title: "Lifetime Energy", reward: 2, link: "https://t.me/lifetime_energy_bot?start=1007321991" },
+            { id: 2, title: "CB Click Game", reward: 2, link: "https://g.cb.click/aVYJfp" },
+            { id: 3, title: "Asan Stars Bot", reward: 1, link: "https://telegram.me/asanstars_bot?start=ref_636BD072" },
+            { id: 4, title: "Thunder Waves", reward: 2, link: "https://t.me/ThunderWavesBot/App?startapp=ref_OU6LZU77" },
+            { id: 5, title: "Astra Airdrop", reward: 1, link: "https://t.me/ASTRA_AIRDROP_BOT/app?startapp=ref_1007321991" },
+            { id: 6, title: "Mrg Miner Bot", reward: 2, link: "https://t.me/mrgminerbot/app?startapp=ref_X21JV7Y" },
+            { id: 7, title: "Mima Coin Bot", reward: 1, link: "https://t.me/MIMA_COIN_bot?start=ref_334f1c96314eb54c" },
+            { id: 8, title: "Z-Mine Platform", reward: 2, link: "https://zmine.si/register?ref=WRFTHZXH" },
+            { id: 9, title: "ATOK Game", reward: 1, link: "https://atok.ai/referral/OeqE" },
+            { id: 10, title: "Trance Music Channel", reward: 1, link: "https://t.me/trancemusicpsy" }
         ];
 
         function updateUI() {
@@ -420,7 +433,7 @@
             document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' TON';
             document.getElementById('ref-count').innerText = referrals;
 
-            const dailyTon = (ghs / 160) * 0.1;
+            const dailyTon = (ghs / 200) * 0.13;
             const ratePerSec = dailyTon / 86400;
             document.getElementById('rate-display').innerText = `+${ratePerSec.toFixed(8)} TON/s (${dailyTon.toFixed(2)} TON/day)`;
             
@@ -429,11 +442,13 @@
         }
 
         setInterval(() => {
-            const dailyTon = (ghs / 160) * 0.1;
-            const ratePerSec = dailyTon / 86400;
-            pending += ratePerSec;
-            localStorage.setItem('pending_' + userId, pending);
-            document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' TON';
+            if (ghs > 0) {
+                const dailyTon = (ghs / 200) * 0.13;
+                const ratePerSec = dailyTon / 86400;
+                pending += ratePerSec;
+                localStorage.setItem('pending_' + userId, pending);
+                document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' TON';
+            }
         }, 1000);
 
         function claimBalance() {
@@ -452,6 +467,9 @@
             
             document.getElementById('tab-' + tabName).classList.add('active');
             el.classList.add('active');
+            if(tabName === 'tasks') {
+                renderTasks();
+            }
         }
 
         function renderTasks() {
@@ -461,47 +479,65 @@
             const now = new Date().getTime();
 
             tasks.forEach(task => {
-                const expireTime = localStorage.getItem('task_expire_' + userId + '_' + task.id);
-                const isExpired = !expireTime || now > parseInt(expireTime);
+                const expireKey = 'task_expire_' + userId + '_' + task.id;
+                const expireTime = localStorage.getItem(expireKey);
+                const timeLeft = expireTime ? parseInt(expireTime) - now : 0;
+                const isExpired = !expireTime || timeLeft <= 0;
                 
                 const div = document.createElement('div');
                 div.className = 'task-item';
+                
+                let btnHtml = '';
+                if (isExpired) {
+                    btnHtml = `<button class="btn task-btn" onclick="doTask(${task.id}, '${task.link}', ${task.reward})">Start (+${task.reward} GHS)</button>`;
+                } else {
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    const timeStr = `${hours}h ${minutes}m ${seconds}s`;
+                    btnHtml = `<button class="btn task-btn done" disabled>${timeStr}</button>`;
+                }
+
                 div.innerHTML = `
                     <div class="task-info">
                         <div class="task-title">${task.title}</div>
                         <div class="task-reward">+${task.reward} GHS</div>
                     </div>
-                    <button class="btn task-btn ${!isExpired ? 'done' : ''}" onclick="doTask(${task.id}, '${task.link}', ${task.reward}, this)">
-                        ${isExpired ? 'Start' : 'Done (24h)'}
-                    </button>
+                    ${btnHtml}
                 `;
                 container.appendChild(div);
             });
         }
 
-        function doTask(id, link, reward, btn) {
-            const expireTime = localStorage.getItem('task_expire_' + userId + '_' + id);
+        setInterval(() => {
+            const activeTab = document.querySelector('.tab-content.active');
+            if (activeTab && activeTab.id === 'tab-tasks') {
+                renderTasks();
+            }
+        }, 1000);
+
+        function doTask(id, link, reward) {
+            const expireKey = 'task_expire_' + userId + '_' + id;
+            const expireTime = localStorage.getItem(expireKey);
             const now = new Date().getTime();
 
             if (expireTime && now < parseInt(expireTime)) {
-                tg.showAlert("⏳ This task is already completed. Available again after 24 hours.");
                 return;
             }
 
             tg.openTelegramLink(link);
-            btn.innerText = "Checking...";
             
             setTimeout(() => {
                 ghs += reward;
                 localStorage.setItem('ghs_' + userId, ghs);
                 
                 const nextAvailable = new Date().getTime() + (24 * 60 * 60 * 1000);
-                localStorage.setItem('task_expire_' + userId + '_' + id, nextAvailable);
+                localStorage.setItem(expireKey, nextAvailable);
 
                 renderTasks();
                 updateUI();
                 tg.showAlert(`🎉 Task Completed! +${reward} GHS added to your power.`);
-            }, 6000);
+            }, 5000);
         }
 
         function copyRefLink() {
@@ -550,7 +586,7 @@
 
         function submitDeposit() {
             closeDepositModal();
-            tg.showAlert("✅ Deposit request registered!\nAdmin will check your transaction with memo: " + userId + " and add 200 GHS.");
+            tg.showAlert(`✅ Request registered!\nPlease make sure you sent 0.2 TON with Memo: ${userId}\n\nAdmin will check your transaction in Tonkeeper and update your power.`);
         }
 
         updateUI();
