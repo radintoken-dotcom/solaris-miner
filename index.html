@@ -96,33 +96,6 @@
             margin-bottom: 10px;
         }
 
-        .coin-container {
-            margin: 10px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .gold-coin {
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle at 35% 35%, #fff5cc, #ffcc00 60%, #996600);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            box-shadow: 0 0 25px var(--gold-glow), inset 0 0 12px rgba(0,0,0,0.6);
-            border: 3px solid #ffee88;
-            animation: pulseCoin 2.5s infinite ease-in-out;
-        }
-
-        @keyframes pulseCoin {
-            0% { transform: scale(1); box-shadow: 0 0 20px var(--gold-glow); }
-            50% { transform: scale(1.05); box-shadow: 0 0 35px rgba(255, 204, 0, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 0 20px var(--gold-glow); }
-        }
-
         .btn {
             background: linear-gradient(135deg, #ffcc00, #ff8800);
             color: #000000;
@@ -336,10 +309,6 @@
                 <div class="sub-rate" id="rate-display">+0.00000000 Gram/s (0.00 Gram/day)</div>
             </div>
 
-            <div class="coin-container">
-                <div class="gold-coin">1</div>
-            </div>
-
             <div class="card">
                 <div class="card-title">YOUR BALANCE</div>
                 <div class="big-number"><span id="main-balance">0.000000</span> Gram</div>
@@ -504,9 +473,9 @@
             }
         }
 
-        let ghs = parseFloat(localStorage.getItem('ghs_' + userId) || '0.0');
-        let balance = parseFloat(localStorage.getItem('balance_' + userId) || '0.0');
-        let pending = parseFloat(localStorage.getItem('pending_' + userId) || '0.0');
+        let ghs = parseFloat(localStorage.getItem('ghs_' + userId) || '247.0');
+        let balance = parseFloat(localStorage.getItem('balance_' + userId) || '0.008365');
+        let pending = parseFloat(localStorage.getItem('pending_' + userId) || '0.000135');
         let referrals = parseInt(localStorage.getItem('referrals_' + userId) || '0');
 
         let selectedAmount = 0.5;
@@ -591,7 +560,7 @@
                 if (isExpired) {
                     btnHtml = `<button class="btn task-btn" onclick="doTask(${task.id}, '${task.link}', ${task.reward})">Start (+${task.reward} GHS)</button>`;
                 } else {
-                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    The hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
                     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
                     const timeStr = `${hours}h ${minutes}m ${seconds}s`;
