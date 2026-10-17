@@ -247,6 +247,70 @@
             font-size: 20px;
             margin-bottom: 3px;
         }
+
+        /* استایل اختصاصی مودال افزایش سرعت استخراج */
+        .package-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .package-card {
+            background: #1a1e29;
+            border: 1px solid #2e3548;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .package-card:hover, .package-card.selected {
+            border-color: var(--gold-color);
+            background: #242a3a;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+        }
+
+        .package-info {
+            text-align: left;
+        }
+
+        .package-power {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--gold-color);
+        }
+
+        .package-price {
+            font-size: 12px;
+            color: var(--sub-text);
+            margin-top: 2px;
+        }
+
+        .package-badge {
+            background: rgba(46, 204, 113, 0.15);
+            color: var(--success);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            border: 1px solid var(--success);
+        }
+
+        .copy-btn-inline {
+            background: #229ed9;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            margin-top: 4px;
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -258,12 +322,12 @@
         <div id="tab-miner" class="tab-content active">
             <div class="card">
                 <div style="display: flex; gap: 10px; margin-bottom: 12px;">
-                    <button class="btn" onclick="openDepositModal()" style="background: linear-gradient(135deg, #2ecc71, #27ae60); color:#fff; font-size:13px; padding:10px;">ADD GHS</button>
-                    <button class="btn btn-secondary" style="font-size:13px; padding:10px; cursor:default;">FREE GHS</button>
+                    <button class="btn" onclick="openDepositModal()" style="background: linear-gradient(135deg, #2ecc71, #27ae60); color:#fff; font-size:13px; padding:10px;">⚡ ارتقا سرعت (GHS)</button>
+                    <button class="btn btn-secondary" style="font-size:13px; padding:10px; cursor:default;">GHS رایگان</button>
                 </div>
                 <div class="card-title">TOTAL GHS POWER</div>
                 <div class="big-number" id="ghs-power">0.00 GHS</div>
-                <div class="sub-rate" id="rate-display">+0.00000000 TON/s (0.00 TON/day)</div>
+                <div class="sub-rate" id="rate-display">+0.00000000 Gram/s (0.00 Gram/day)</div>
             </div>
 
             <div class="coin-container">
@@ -272,11 +336,11 @@
 
             <div class="card">
                 <div class="card-title">YOUR BALANCE</div>
-                <div class="big-number"><span id="main-balance">0.000000</span> TON</div>
+                <div class="big-number"><span id="main-balance">0.000000</span> Gram</div>
                 
                 <div style="margin-top: 15px;">
                     <div class="card-title">PENDING BALANCE</div>
-                    <div style="font-size: 18px; font-weight: bold; margin: 5px 0; color: var(--gold-color);" id="pending-balance">0.00000000 TON</div>
+                    <div style="font-size: 18px; font-weight: bold; margin: 5px 0; color: var(--gold-color);" id="pending-balance">0.00000000 Gram</div>
                 </div>
 
                 <button class="btn" style="margin-top: 15px;" onclick="claimBalance()">CLAIM BALANCE</button>
@@ -324,19 +388,19 @@
         <div id="tab-withdraw" class="tab-content">
             <div class="card">
                 <div class="card-title">YOUR BALANCE</div>
-                <div class="big-number"><span id="withdraw-balance">0.000000</span> TON</div>
+                <div class="big-number"><span id="withdraw-balance">0.000000</span> Gram</div>
             </div>
 
             <div class="card" style="text-align: left;">
                 <div class="input-group">
-                    <label>Wallet Address (Tonkeeper TON)</label>
+                    <label>Wallet Address (Tonkeeper Gram / TON)</label>
                     <input type="text" id="wallet-addr" class="input-field" placeholder="UQ... or EQ...">
                 </div>
 
                 <div class="input-group">
                     <label>Amount to withdraw</label>
                     <input type="number" id="withdraw-amount" class="input-field" placeholder="0.00">
-                    <div style="font-size: 11px; color: var(--sub-text); margin-top: 4px;">Minimum is 0.2500 TON</div>
+                    <div style="font-size: 11px; color: var(--sub-text); margin-top: 4px;">Minimum is 0.2500 Gram</div>
                 </div>
 
                 <button class="btn" onclick="requestWithdraw()">WITHDRAW</button>
@@ -344,30 +408,63 @@
         </div>
     </div>
 
-    <!-- DEPOSIT MODAL (ADD GHS) -->
-    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.88); z-index:1000; padding:20px; align-items:center; justify-content:center;">
-        <div class="card" style="width:100%; max-width:350px; text-align:left; margin:0;">
-            <div class="card-title" style="text-align:center; font-size:16px; color:var(--gold-color); margin-bottom:15px; font-weight:bold;">ADD 200 GHS POWER</div>
+    <!-- DEPOSIT MODAL (خرید قدرت GHS) -->
+    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.92); z-index:1000; padding:15px; align-items:center; justify-content:center; overflow-y:auto;">
+        <div class="card" style="width:100%; max-width:380px; text-align:right; margin:0; direction:rtl; border: 1px solid #ffd70033;">
             
-            <p style="font-size:12px; color:#aaa; margin-bottom:10px;">
-                برای افزایش <b>200 GHS</b> به سرعت استخراج، مبلغ <b>0.2 TON</b> را به آدرس زیر واریز کنید:
+            <div class="card-title" style="text-align:center; font-size:16px; color:var(--gold-color); margin-bottom:10px; font-weight:bold;">⚡ خرید قدرت استخراج (GHS)</div>
+            
+            <p style="font-size:12px; color:#aaa; text-align:center; margin-bottom:12px;">
+                پکیج مورد نظر خود را انتخاب کرده و مبلغ معادل را واریز کنید:
             </p>
 
-            <div class="input-group">
-                <label>آدرس کیف پول شما (Admin Wallet):</label>
-                <input type="text" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; color:#2ecc71;">
+            <!-- پکیج‌های واریزی -->
+            <div class="package-grid">
+                <div class="package-card selected" onclick="selectPackage(0.5, 200, this)">
+                    <div class="package-info">
+                        <div class="package-power">+200 GHS</div>
+                        <div class="package-price">مبلغ: <b>0.5 گرام (TON)</b></div>
+                    </div>
+                    <div class="package-badge">پکیج برنزی</div>
+                </div>
+
+                <div class="package-card" onclick="selectPackage(1.0, 450, this)">
+                    <div class="package-info">
+                        <div class="package-power">+450 GHS</div>
+                        <div class="package-price">مبلغ: <b>1.0 گرام (TON)</b></div>
+                    </div>
+                    <div class="package-badge" style="color:#229ed9; border-color:#229ed9; background:rgba(34,158,217,0.15)">پکیج نقره‌ای</div>
+                </div>
+
+                <div class="package-card" onclick="selectPackage(5.0, 2500, this)">
+                    <div class="package-info">
+                        <div class="package-power">+2,500 GHS</div>
+                        <div class="package-price">مبلغ: <b>5.0 گرام (TON)</b></div>
+                    </div>
+                    <div class="package-badge" style="color:#ffd700; border-color:#ffd700; background:rgba(255,215,0,0.15)">پکیج طلایی</div>
+                </div>
             </div>
 
+            <hr style="border:0; border-top:1px solid #282d3c; margin:15px 0;">
+
+            <!-- آدرس کیف پول رسمی جهت واریز -->
             <div class="input-group">
-                <label>شناسه واریز اختصاصی (MEMO / Comment):</label>
-                <input type="text" id="user-memo" class="input-field" value="" readonly style="color:var(--gold-color); font-weight:bold; text-align:center;">
+                <label style="color:#2ecc71; font-weight:bold;">آدرس دریافت رسمی (گرام / TON):</label>
+                <input type="text" id="admin-wallet-input" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; color:#fff; direction:ltr; text-align:center;">
+                <button class="copy-btn-inline" onclick="copyAdminWallet()">کپی آدرس</button>
             </div>
 
-            <p style="font-size:10px; color:#e74c3c; margin-bottom:15px;">
-                ⚠️ حتماً ممو بالا را موقع انتقال در بخش Comment کیف پول خود وارد کنید.
+            <div class="input-group" style="clear:both; padding-top:8px;">
+                <label style="color:var(--gold-color); font-weight:bold;">کامنت الزام‌آور واریز (MEMO / Comment):</label>
+                <input type="text" id="user-memo" class="input-field" value="" readonly style="color:var(--gold-color); font-weight:bold; text-align:center; direction:ltr;">
+                <button class="copy-btn-inline" onclick="copyUserMemo()">کپی MEMO</button>
+            </div>
+
+            <p style="font-size:11px; color:#e74c3c; margin:10px 0; clear:both; text-align:center; font-weight:bold;">
+                ⚠️ حتماً کد MEMO بالا را در بخش Comment کیف پول خود (مثل Tonkeeper) وارد کنید تا شارژ به‌صورت خودکار اعمال شود.
             </p>
 
-            <button class="btn" onclick="submitDeposit()" style="background: linear-gradient(135deg, #2ecc71, #27ae60); color:#fff; margin-bottom:10px;">I HAVE PAID (تایید واریز)</button>
+            <button class="btn" onclick="submitDeposit()" style="background: linear-gradient(135deg, #2ecc71, #27ae60); color:#fff; margin-bottom:10px;">تایید و ثبت واریز</button>
             <button class="btn btn-secondary" onclick="closeDepositModal()">انصراف</button>
         </div>
     </div>
@@ -396,7 +493,6 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // دریافت آیدی واقعی و منحصربه‌فرد اکانت تلگرام
         let userId = tg.initDataUnsafe?.user?.id ? String(tg.initDataUnsafe.user.id) : null;
         if (!userId) {
             userId = localStorage.getItem('solaris_user_id');
@@ -406,13 +502,14 @@
             }
         }
 
-        // شروع از ۰.۰ GHS (بدون امتیاز اولیه رایگان)
         let ghs = parseFloat(localStorage.getItem('ghs_' + userId) || '0.0');
         let balance = parseFloat(localStorage.getItem('balance_' + userId) || '0.0');
         let pending = parseFloat(localStorage.getItem('pending_' + userId) || '0.0');
         let referrals = parseInt(localStorage.getItem('referrals_' + userId) || '0');
 
-        // تنظیم پاداش تسک‌ها فقط روی ۱ و ۲ GHS
+        let selectedAmount = 0.5;
+        let selectedGhs = 200;
+
         const tasks = [
             { id: 1, title: "Lifetime Energy", reward: 2, link: "https://t.me/lifetime_energy_bot?start=1007321991" },
             { id: 2, title: "CB Click Game", reward: 2, link: "https://g.cb.click/aVYJfp" },
@@ -430,12 +527,12 @@
             document.getElementById('ghs-power').innerText = ghs.toFixed(2) + ' GHS';
             document.getElementById('main-balance').innerText = balance.toFixed(6);
             document.getElementById('withdraw-balance').innerText = balance.toFixed(6);
-            document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' TON';
+            document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' Gram';
             document.getElementById('ref-count').innerText = referrals;
 
-            const dailyTon = (ghs / 200) * 0.13;
-            const ratePerSec = dailyTon / 86400;
-            document.getElementById('rate-display').innerText = `+${ratePerSec.toFixed(8)} TON/s (${dailyTon.toFixed(2)} TON/day)`;
+            const dailyGram = (ghs / 200) * 0.13;
+            const ratePerSec = dailyGram / 86400;
+            document.getElementById('rate-display').innerText = `+${ratePerSec.toFixed(8)} Gram/s (${dailyGram.toFixed(2)} Gram/day)`;
             
             const botUsername = "SolarisMiner_bot";
             document.getElementById('ref-link').value = `https://t.me/${botUsername}?start=${userId}`;
@@ -443,11 +540,11 @@
 
         setInterval(() => {
             if (ghs > 0) {
-                const dailyTon = (ghs / 200) * 0.13;
-                const ratePerSec = dailyTon / 86400;
+                const dailyGram = (ghs / 200) * 0.13;
+                const ratePerSec = dailyGram / 86400;
                 pending += ratePerSec;
                 localStorage.setItem('pending_' + userId, pending);
-                document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' TON';
+                document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' Gram';
             }
         }, 1000);
 
@@ -509,13 +606,6 @@
             });
         }
 
-        setInterval(() => {
-            const activeTab = document.querySelector('.tab-content.active');
-            if (activeTab && activeTab.id === 'tab-tasks') {
-                renderTasks();
-            }
-        }, 1000);
-
         function doTask(id, link, reward) {
             const expireKey = 'task_expire_' + userId + '_' + id;
             const expireTime = localStorage.getItem(expireKey);
@@ -552,12 +642,12 @@
             const amount = parseFloat(document.getElementById('withdraw-amount').value);
 
             if (!addr || addr.length < 10) {
-                tg.showAlert("❌ Please enter a valid Tonkeeper wallet address.");
+                tg.showAlert("❌ Please enter a valid Tonkeeper Gram/TON wallet address.");
                 return;
             }
 
             if (isNaN(amount) || amount < 0.25) {
-                tg.showAlert("❌ Minimum withdrawal amount is 0.25 TON.");
+                tg.showAlert("❌ Minimum withdrawal amount is 0.25 Gram.");
                 return;
             }
 
@@ -570,9 +660,17 @@
             localStorage.setItem('balance_' + userId, balance);
             updateUI();
 
-            tg.showAlert(`✅ Withdrawal Request Submitted!\n\nWallet: ${addr}\nAmount: ${amount} TON\n\nStatus: Pending Admin Approval`);
+            tg.showAlert(`✅ Withdrawal Request Submitted!\n\nWallet: ${addr}\nAmount: ${amount} Gram\n\nStatus: Pending Admin Approval`);
             document.getElementById('wallet-addr').value = '';
             document.getElementById('withdraw-amount').value = '';
+        }
+
+        /* توابع مدیریت پکیج‌های واریزی */
+        function selectPackage(amount, ghsPower, el) {
+            selectedAmount = amount;
+            selectedGhs = ghsPower;
+            document.querySelectorAll('.package-card').forEach(card => card.classList.remove('selected'));
+            el.classList.add('selected');
         }
 
         function openDepositModal() {
@@ -584,9 +682,23 @@
             document.getElementById('deposit-modal').style.display = 'none';
         }
 
+        function copyAdminWallet() {
+            const walletInput = document.getElementById('admin-wallet-input');
+            walletInput.select();
+            document.execCommand("copy");
+            tg.showAlert("📋 آدرس کیف پول کپی شد!");
+        }
+
+        function copyUserMemo() {
+            const memoInput = document.getElementById('user-memo');
+            memoInput.select();
+            document.execCommand("copy");
+            tg.showAlert("📋 شناسه MEMO کپی شد!");
+        }
+
         function submitDeposit() {
             closeDepositModal();
-            tg.showAlert(`✅ Request registered!\nPlease make sure you sent 0.2 TON with Memo: ${userId}\n\nAdmin will check your transaction in Tonkeeper and update your power.`);
+            tg.showAlert(`✅ درخواست واریز ثبت شد!\n\nلطفاً مطمئن شوید مبلغ ${selectedAmount} Gram/TON را همراه با شناسه MEMO: ${userId} ارسال کرده‌اید.\nپس از بررسی، +${selectedGhs} GHS به قدرت شما اضافه خواهد شد.`);
         }
 
         updateUI();
