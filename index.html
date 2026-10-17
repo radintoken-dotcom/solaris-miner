@@ -7,8 +7,8 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #04080e;
-            --card-bg: rgba(14, 19, 31, 0.9);
+            --bg-color: #07090e;
+            --card-bg: #0e131f;
             --gold-color: #ffcc00;
             --gold-glow: rgba(255, 204, 0, 0.4);
             --neon-green: #00ffcc;
@@ -33,10 +33,19 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
-            background-image: url('https://raw.githubusercontent.com/radintoken-dotcom/solaris-miner/main/1000004990.jpg');
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            background-position: center top;
+            background-image: radial-gradient(circle at 50% 20%, #0c1829 0%, #07090e 80%);
+        }
+
+        .header {
+            text-align: center;
+            padding: 15px 0;
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: 3px;
+            color: var(--gold-color);
+            text-shadow: 0 0 12px var(--gold-glow);
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(10, 14, 22, 0.9);
         }
 
         .content {
@@ -44,7 +53,6 @@
             overflow-y: auto;
             padding: 15px;
             padding-bottom: 90px;
-            margin-top: 230px;
         }
 
         .tab-content {
@@ -88,6 +96,33 @@
             margin-bottom: 10px;
         }
 
+        .coin-container {
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gold-coin {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 35% 35%, #fff5cc, #ffcc00 60%, #996600);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            box-shadow: 0 0 25px var(--gold-glow), inset 0 0 12px rgba(0,0,0,0.6);
+            border: 3px solid #ffee88;
+            animation: pulseCoin 2.5s infinite ease-in-out;
+        }
+
+        @keyframes pulseCoin {
+            0% { transform: scale(1); box-shadow: 0 0 20px var(--gold-glow); }
+            50% { transform: scale(1.05); box-shadow: 0 0 35px rgba(255, 204, 0, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 0 20px var(--gold-glow); }
+        }
+
         .btn {
             background: linear-gradient(135deg, #ffcc00, #ff8800);
             color: #000000;
@@ -116,7 +151,7 @@
         }
 
         .task-item {
-            background: rgba(14, 19, 31, 0.95);
+            background: var(--card-bg);
             border-radius: 14px;
             padding: 15px;
             margin-bottom: 10px;
@@ -196,7 +231,6 @@
             align-items: center;
             border-top: 1px solid var(--border-color);
             box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
-            z-index: 1000;
         }
 
         .nav-item {
@@ -287,6 +321,8 @@
 </head>
 <body>
 
+    <div class="header">SOLARIS MINER</div>
+
     <div class="content">
         <!-- 1. MINER TAB -->
         <div id="tab-miner" class="tab-content active">
@@ -298,6 +334,10 @@
                 <div class="card-title">TOTAL GHS POWER</div>
                 <div class="big-number" id="ghs-power">0.00 GHS</div>
                 <div class="sub-rate" id="rate-display">+0.00000000 Gram/s (0.00 Gram/day)</div>
+            </div>
+
+            <div class="coin-container">
+                <div class="gold-coin">1</div>
             </div>
 
             <div class="card">
@@ -375,7 +415,7 @@
     </div>
 
     <!-- DEPOSIT MODAL -->
-    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(5,7,12,0.94); z-index:2000; padding:15px; align-items:center; justify-content:center; overflow-y:auto;">
+    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(5,7,12,0.94); z-index:1000; padding:15px; align-items:center; justify-content:center; overflow-y:auto;">
         <div class="card" style="width:100%; max-width:380px; text-align:left; margin:0; border-color:var(--gold-color); box-shadow: 0 0 20px var(--gold-glow);">
             <div class="card-title" style="text-align:center; font-size:15px; color:var(--gold-color); margin-bottom:12px; font-weight:bold;">⚡ BUY GHS POWER</div>
             <p style="font-size:11px; color:var(--sub-text); text-align:center; margin-bottom:12px;">
@@ -464,9 +504,9 @@
             }
         }
 
-        let ghs = parseFloat(localStorage.getItem('ghs_' + userId) || '247.0');
-        let balance = parseFloat(localStorage.getItem('balance_' + userId) || '0.008365');
-        let pending = parseFloat(localStorage.getItem('pending_' + userId) || '0.000135');
+        let ghs = parseFloat(localStorage.getItem('ghs_' + userId) || '0.0');
+        let balance = parseFloat(localStorage.getItem('balance_' + userId) || '0.0');
+        let pending = parseFloat(localStorage.getItem('pending_' + userId) || '0.0');
         let referrals = parseInt(localStorage.getItem('referrals_' + userId) || '0');
 
         let selectedAmount = 0.5;
