@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Solaris Miner</title>
+    <title>Solaris Miner 3000</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #0d0f12;
-            --card-bg: #161920;
-            --accent-color: #f39c12;
-            --gold-color: #ffd700;
-            --gold-glow: rgba(255, 215, 0, 0.3);
+            --bg-color: #07090e;
+            --card-bg: #0e131f;
+            --gold-color: #ffcc00;
+            --gold-glow: rgba(255, 204, 0, 0.4);
+            --neon-green: #00ffcc;
+            --neon-glow: rgba(0, 255, 204, 0.3);
             --text-color: #ffffff;
-            --sub-text: #a0a5b1;
-            --btn-bg: #222630;
-            --success: #2ecc71;
-            --warning: #f1c40f;
+            --sub-text: #8b9bb4;
+            --border-color: #1a293b;
         }
 
         * {
@@ -34,25 +33,26 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
+            background-image: radial-gradient(circle at 50% 20%, #0c1829 0%, #07090e 80%);
         }
 
         .header {
             text-align: center;
             padding: 15px 0;
-            font-weight: 800;
+            font-weight: 900;
             font-size: 20px;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: var(--gold-color);
-            text-shadow: 0 0 10px var(--gold-glow);
-            border-bottom: 1px solid #222;
-            background: #12141a;
+            text-shadow: 0 0 12px var(--gold-glow);
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(10, 14, 22, 0.9);
         }
 
         .content {
             flex: 1;
             overflow-y: auto;
             padding: 15px;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
         }
 
         .tab-content {
@@ -65,75 +65,77 @@
 
         .card {
             background-color: var(--card-bg);
-            border-radius: 18px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 18px;
             margin-bottom: 15px;
             text-align: center;
-            border: 1px solid #282d3c;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 15px var(--neon-glow), inset 0 0 10px rgba(0, 255, 204, 0.05);
         }
 
         .card-title {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--sub-text);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             margin-bottom: 5px;
         }
 
         .big-number {
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 26px;
+            font-weight: 900;
             color: var(--gold-color);
-            text-shadow: 0 0 8px var(--gold-glow);
-            margin: 8px 0;
+            text-shadow: 0 0 10px var(--gold-glow);
+            margin: 6px 0;
         }
 
         .sub-rate {
-            font-size: 12px;
-            color: var(--success);
-            margin-bottom: 15px;
+            font-size: 11px;
+            color: var(--neon-green);
+            text-shadow: 0 0 6px var(--neon-glow);
+            margin-bottom: 10px;
         }
 
         .coin-container {
-            margin: 15px 0;
+            margin: 10px 0;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .gold-coin {
-            width: 85px;
-            height: 85px;
-            background: radial-gradient(circle at 35% 35%, #fff7a1, #ffd700 60%, #b8860b);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 35% 35%, #fff5cc, #ffcc00 60%, #996600);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 42px;
-            box-shadow: 0 0 25px var(--gold-glow), inset 0 0 10px rgba(0,0,0,0.5);
-            border: 3px solid #ffe866;
+            font-size: 40px;
+            box-shadow: 0 0 25px var(--gold-glow), inset 0 0 12px rgba(0,0,0,0.6);
+            border: 3px solid #ffee88;
             animation: pulseCoin 2.5s infinite ease-in-out;
         }
 
         @keyframes pulseCoin {
             0% { transform: scale(1); box-shadow: 0 0 20px var(--gold-glow); }
-            50% { transform: scale(1.06); box-shadow: 0 0 35px rgba(255, 215, 0, 0.6); }
+            50% { transform: scale(1.05); box-shadow: 0 0 35px rgba(255, 204, 0, 0.6); }
             100% { transform: scale(1); box-shadow: 0 0 20px var(--gold-glow); }
         }
 
         .btn {
-            background: linear-gradient(135deg, #ffd700, #ffa500);
+            background: linear-gradient(135deg, #ffcc00, #ff8800);
             color: #000000;
             border: none;
-            padding: 12px 20px;
+            padding: 12px 18px;
             border-radius: 12px;
-            font-weight: bold;
-            font-size: 14px;
+            font-weight: 900;
+            font-size: 13px;
             cursor: pointer;
             width: 100%;
             transition: 0.2s;
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 12px rgba(255, 204, 0, 0.3);
+            letter-spacing: 1px;
         }
 
         .btn:active {
@@ -142,10 +144,10 @@
         }
 
         .btn-secondary {
-            background: var(--btn-bg);
-            color: #fff;
-            border: 1px solid #333;
-            box-shadow: none;
+            background: #111827;
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 8px var(--neon-glow);
         }
 
         .task-item {
@@ -156,7 +158,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid #282d3c;
+            border: 1px solid var(--border-color);
         }
 
         .task-info {
@@ -181,13 +183,13 @@
             width: auto;
             padding: 8px 14px;
             font-size: 12px;
-            background: #229ed9;
+            background: #0088cc;
             color: #fff;
             box-shadow: none;
         }
 
         .task-btn.done {
-            background: #333;
+            background: #1f293d;
             color: var(--sub-text);
             cursor: not-allowed;
             font-size: 11px;
@@ -200,16 +202,17 @@
 
         .input-group label {
             display: block;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--sub-text);
             margin-bottom: 5px;
+            text-transform: uppercase;
         }
 
         .input-field {
             width: 100%;
             padding: 12px;
-            background: #111318;
-            border: 1px solid #333;
+            background: #07090e;
+            border: 1px solid var(--border-color);
             border-radius: 10px;
             color: #fff;
             font-size: 13px;
@@ -222,11 +225,12 @@
             left: 0;
             right: 0;
             height: 65px;
-            background: #12141a;
+            background: rgba(10, 14, 22, 0.95);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            border-top: 1px solid #222;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
         }
 
         .nav-item {
@@ -237,10 +241,13 @@
             font-size: 10px;
             cursor: pointer;
             flex: 1;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
         .nav-item.active {
             color: var(--gold-color);
+            text-shadow: 0 0 8px var(--gold-glow);
         }
 
         .nav-icon {
@@ -256,8 +263,8 @@
         }
 
         .package-card {
-            background: #1a1e29;
-            border: 1px solid #2e3548;
+            background: #0e131f;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 12px;
             display: flex;
@@ -269,8 +276,8 @@
 
         .package-card:hover, .package-card.selected {
             border-color: var(--gold-color);
-            background: #242a3a;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+            background: #151d30;
+            box-shadow: 0 0 12px var(--gold-glow);
         }
 
         .package-info {
@@ -290,17 +297,17 @@
         }
 
         .package-badge {
-            background: rgba(46, 204, 113, 0.15);
-            color: var(--success);
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--neon-green);
             padding: 4px 10px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: bold;
-            border: 1px solid var(--success);
+            border: 1px solid var(--neon-green);
         }
 
         .copy-btn-inline {
-            background: #229ed9;
+            background: #0088cc;
             color: white;
             border: none;
             padding: 6px 10px;
@@ -314,15 +321,15 @@
 </head>
 <body>
 
-    <div class="header">SOLARIS MINER</div>
+    <div class="header">SOLARIS MINER 3000</div>
 
     <div class="content">
         <!-- 1. MINER TAB -->
         <div id="tab-miner" class="tab-content active">
             <div class="card">
                 <div style="display: flex; gap: 10px; margin-bottom: 12px;">
-                    <button class="btn" onclick="openDepositModal()" style="background: linear-gradient(135deg, #2ecc71, #27ae60); color:#fff; font-size:13px; padding:10px;">⚡ ADD GHS POWER</button>
-                    <button class="btn btn-secondary" style="font-size:13px; padding:10px; cursor:default;">FREE GHS</button>
+                    <button class="btn" onclick="openDepositModal()" style="font-size:12px; padding:10px;">⚡ BOOST GHS</button>
+                    <button class="btn btn-secondary" style="font-size:12px; padding:10px; cursor:default;">FREE GHS</button>
                 </div>
                 <div class="card-title">TOTAL GHS POWER</div>
                 <div class="big-number" id="ghs-power">0.00 GHS</div>
@@ -330,7 +337,7 @@
             </div>
 
             <div class="coin-container">
-                <div class="gold-coin">🪙</div>
+                <div class="gold-coin">1</div>
             </div>
 
             <div class="card">
@@ -339,7 +346,7 @@
                 
                 <div style="margin-top: 15px;">
                     <div class="card-title">PENDING BALANCE</div>
-                    <div style="font-size: 18px; font-weight: bold; margin: 5px 0; color: var(--gold-color);" id="pending-balance">0.00000000 Gram</div>
+                    <div style="font-size: 18px; font-weight: 900; margin: 5px 0; color: var(--neon-green); text-shadow: 0 0 8px var(--neon-glow);" id="pending-balance">0.00000000 Gram</div>
                 </div>
 
                 <button class="btn" style="margin-top: 15px;" onclick="claimBalance()">CLAIM BALANCE</button>
@@ -369,16 +376,16 @@
             <div class="card" style="text-align: left;">
                 <div class="card-title" style="margin-bottom: 10px;">PROMOTED GAMES</div>
                 <div style="font-size: 12px; line-height: 2; color: #ccc;">
-                    🔹 <a href="https://t.me/lifetime_energy_bot?start=1007321991" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Lifetime Energy</a><br>
-                    🔹 <a href="https://g.cb.click/aVYJfp" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">CB Click Game</a><br>
-                    🔹 <a href="https://telegram.me/asanstars_bot?start=ref_636BD072" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Asan Stars Bot</a><br>
-                    🔹 <a href="https://t.me/ThunderWavesBot/App?startapp=ref_OU6LZU77" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Thunder Waves</a><br>
-                    🔹 <a href="https://t.me/ASTRA_AIRDROP_BOT/app?startapp=ref_1007321991" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Astra Airdrop</a><br>
-                    🔹 <a href="https://t.me/mrgminerbot/app?startapp=ref_X21JV7Y" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Mrg Miner Bot</a><br>
-                    🔹 <a href="https://t.me/MIMA_COIN_bot?start=ref_334f1c96314eb54c" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Mima Coin Bot</a><br>
-                    🔹 <a href="https://zmine.si/register?ref=WRFTHZXH" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Z-Mine Platform</a><br>
-                    🔹 <a href="https://atok.ai/referral/OeqE" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">ATOK Game</a><br>
-                    🔹 <a href="https://t.me/trancemusicpsy" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Trance Music Channel</a>
+                    🔹 <a href="https://t.me/lifetime_energy_bot?start=1007321991" target="_blank" style="color: var(--neon-green); text-decoration: none;">Lifetime Energy</a><br>
+                    🔹 <a href="https://g.cb.click/aVYJfp" target="_blank" style="color: var(--neon-green); text-decoration: none;">CB Click Game</a><br>
+                    🔹 <a href="https://telegram.me/asanstars_bot?start=ref_636BD072" target="_blank" style="color: var(--neon-green); text-decoration: none;">Asan Stars Bot</a><br>
+                    🔹 <a href="https://t.me/ThunderWavesBot/App?startapp=ref_OU6LZU77" target="_blank" style="color: var(--neon-green); text-decoration: none;">Thunder Waves</a><br>
+                    🔹 <a href="https://t.me/ASTRA_AIRDROP_BOT/app?startapp=ref_1007321991" target="_blank" style="color: var(--neon-green); text-decoration: none;">Astra Airdrop</a><br>
+                    🔹 <a href="https://t.me/mrgminerbot/app?startapp=ref_X21JV7Y" target="_blank" style="color: var(--neon-green); text-decoration: none;">Mrg Miner Bot</a><br>
+                    🔹 <a href="https://t.me/MIMA_COIN_bot?start=ref_334f1c96314eb54c" target="_blank" style="color: var(--neon-green); text-decoration: none;">Mima Coin Bot</a><br>
+                    🔹 <a href="https://zmine.si/register?ref=WRFTHZXH" target="_blank" style="color: var(--neon-green); text-decoration: none;">Z-Mine Platform</a><br>
+                    🔹 <a href="https://atok.ai/referral/OeqE" target="_blank" style="color: var(--neon-green); text-decoration: none;">ATOK Game</a><br>
+                    🔹 <a href="https://t.me/trancemusicpsy" target="_blank" style="color: var(--neon-green); text-decoration: none;">Trance Music Channel</a>
                 </div>
             </div>
         </div>
@@ -408,10 +415,10 @@
     </div>
 
     <!-- DEPOSIT MODAL -->
-    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.92); z-index:1000; padding:15px; align-items:center; justify-content:center; overflow-y:auto;">
-        <div class="card" style="width:100%; max-width:380px; text-align:left; margin:0; border: 1px solid #ffd70033;">
-            <div class="card-title" style="text-align:center; font-size:16px; color:var(--gold-color); margin-bottom:10px; font-weight:bold;">⚡ BUY GHS POWER</div>
-            <p style="font-size:12px; color:#aaa; text-align:center; margin-bottom:12px;">
+    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(5,7,12,0.94); z-index:1000; padding:15px; align-items:center; justify-content:center; overflow-y:auto;">
+        <div class="card" style="width:100%; max-width:380px; text-align:left; margin:0; border-color:var(--gold-color); box-shadow: 0 0 20px var(--gold-glow);">
+            <div class="card-title" style="text-align:center; font-size:15px; color:var(--gold-color); margin-bottom:12px; font-weight:bold;">⚡ BUY GHS POWER</div>
+            <p style="font-size:11px; color:var(--sub-text); text-align:center; margin-bottom:12px;">
                 Select your package and transfer the exact amount:
             </p>
 
@@ -429,7 +436,7 @@
                         <div class="package-power">+450 GHS</div>
                         <div class="package-price">Price: <b>1.0 Gram (TON)</b></div>
                     </div>
-                    <div class="package-badge" style="color:#229ed9; border-color:#229ed9; background:rgba(34,158,217,0.15)">Silver</div>
+                    <div class="package-badge" style="color:#0088cc; border-color:#0088cc; background:rgba(0,136,204,0.1)">Silver</div>
                 </div>
 
                 <div class="package-card" onclick="selectPackage(5.0, 2500, this)">
@@ -437,30 +444,30 @@
                         <div class="package-power">+2,500 GHS</div>
                         <div class="package-price">Price: <b>5.0 Gram (TON)</b></div>
                     </div>
-                    <div class="package-badge" style="color:#ffd700; border-color:#ffd700; background:rgba(255,215,0,0.15)">Gold</div>
+                    <div class="package-badge" style="color:var(--gold-color); border-color:var(--gold-color); background:rgba(255,204,0,0.1)">Gold</div>
                 </div>
             </div>
 
-            <hr style="border:0; border-top:1px solid #282d3c; margin:15px 0;">
+            <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
 
             <div class="input-group">
-                <label style="color:#2ecc71; font-weight:bold;">Official Deposit Address (Gram / TON):</label>
-                <input type="text" id="admin-wallet-input" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; color:#fff; text-align:center;">
+                <label style="color:var(--neon-green);">Official Deposit Address (Gram / TON):</label>
+                <input type="text" id="admin-wallet-input" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; color:#fff; text-align:center;">
                 <button class="copy-btn-inline" onclick="copyAdminWallet()">Copy Address</button>
             </div>
 
             <div class="input-group" style="clear:both; padding-top:8px;">
-                <label style="color:var(--gold-color); font-weight:bold;">Required MEMO / Comment:</label>
+                <label style="color:var(--gold-color);">Required MEMO / Comment:</label>
                 <input type="text" id="user-memo" class="input-field" value="" readonly style="color:var(--gold-color); font-weight:bold; text-align:center;">
                 <button class="copy-btn-inline" onclick="copyUserMemo()">Copy MEMO</button>
             </div>
 
-            <p style="font-size:11px; color:#e74c3c; margin:10px 0; clear:both; text-align:center; font-weight:bold;">
-                ⚠️ You MUST include the MEMO above in your wallet transfer comment (e.g., Tonkeeper) for automatic crediting.
+            <p style="font-size:10px; color:#ff4444; margin:10px 0; clear:both; text-align:center; font-weight:bold;">
+                ⚠️ You MUST include the MEMO above in your wallet transfer comment for automatic crediting.
             </p>
 
-            <button class="btn" onclick="submitDeposit()" style="background: linear-gradient(135deg, #2ecc71, #27ae60); color:#fff; margin-bottom:10px;">I HAVE PAID</button>
-            <button class="btn btn-secondary" onclick="closeDepositModal()">Cancel</button>
+            <button class="btn" onclick="submitDeposit()" style="margin-bottom:10px;">I HAVE PAID</button>
+            <button class="btn btn-secondary" onclick="closeDepositModal()" style="color:#fff; border-color:var(--border-color);">Cancel</button>
         </div>
     </div>
 
@@ -671,6 +678,7 @@
         function selectPackage(amount, ghsPower, el) {
             selectedAmount = amount;
             selectedGhs = ghsPower;
+            document.querySelectorAll('.package-card').clear?.();
             document.querySelectorAll('.package-card').forEach(card => card.classList.remove('selected'));
             el.classList.add('selected');
         }
