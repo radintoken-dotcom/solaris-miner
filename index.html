@@ -38,10 +38,10 @@
 
         .header {
             text-align: center;
-            padding: 15px 0;
+            padding: 12px 0;
             font-weight: 900;
-            font-size: 20px;
-            letter-spacing: 3px;
+            font-size: 18px;
+            letter-spacing: 2px;
             color: var(--gold-color);
             text-shadow: 0 0 12px var(--gold-glow);
             border-bottom: 1px solid var(--border-color);
@@ -63,11 +63,28 @@
             display: block;
         }
 
+        .coin-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0 15px 0;
+        }
+
+        .coin-logo {
+            width: 85px;
+            height: 85px;
+            background: url('https://raw.githubusercontent.com/radintoken-dotcom/solaris-miner/main/1000004990.jpg') no-repeat center center;
+            background-size: cover;
+            border-radius: 50%;
+            border: 2px solid var(--gold-color);
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
         .card {
             background-color: var(--card-bg);
             border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 15px;
+            padding: 16px;
+            margin-bottom: 12px;
             text-align: center;
             border: 1px solid var(--neon-green);
             box-shadow: 0 0 15px var(--neon-glow), inset 0 0 10px rgba(0, 255, 204, 0.05);
@@ -82,18 +99,18 @@
         }
 
         .big-number {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 900;
             color: var(--gold-color);
             text-shadow: 0 0 10px var(--gold-glow);
-            margin: 6px 0;
+            margin: 4px 0;
         }
 
         .sub-rate {
             font-size: 11px;
             color: var(--neon-green);
             text-shadow: 0 0 6px var(--neon-glow);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .btn {
@@ -126,7 +143,7 @@
         .task-item {
             background: var(--card-bg);
             border-radius: 14px;
-            padding: 15px;
+            padding: 14px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -204,6 +221,7 @@
             align-items: center;
             border-top: 1px solid var(--border-color);
             box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+            z-index: 1000;
         }
 
         .nav-item {
@@ -300,25 +318,29 @@
         <!-- 1. MINER TAB -->
         <div id="tab-miner" class="tab-content active">
             <div class="card">
-                <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                     <button class="btn" onclick="openDepositModal()" style="font-size:12px; padding:10px;">⚡ BOOST GHS</button>
                     <button class="btn btn-secondary" style="font-size:12px; padding:10px; cursor:default;">FREE GHS</button>
                 </div>
                 <div class="card-title">TOTAL GHS POWER</div>
-                <div class="big-number" id="ghs-power">0.00 GHS</div>
-                <div class="sub-rate" id="rate-display">+0.00000000 Gram/s (0.00 Gram/day)</div>
+                <div class="big-number" id="ghs-power">247.00 GHS</div>
+                <div class="sub-rate" id="rate-display">+0.00000186 Gram/s (0.16 Gram/day)</div>
+            </div>
+
+            <div class="coin-logo-container">
+                <div class="coin-logo"></div>
             </div>
 
             <div class="card">
                 <div class="card-title">YOUR BALANCE</div>
-                <div class="big-number"><span id="main-balance">0.000000</span> Gram</div>
+                <div class="big-number"><span id="main-balance">0.008365</span> Gram</div>
                 
-                <div style="margin-top: 15px;">
+                <div style="margin-top: 12px;">
                     <div class="card-title">PENDING BALANCE</div>
-                    <div style="font-size: 18px; font-weight: 900; margin: 5px 0; color: var(--neon-green); text-shadow: 0 0 8px var(--neon-glow);" id="pending-balance">0.00000000 Gram</div>
+                    <div style="font-size: 18px; font-weight: 900; margin: 5px 0; color: var(--neon-green); text-shadow: 0 0 8px var(--neon-glow);" id="pending-balance">0.00013500 Gram</div>
                 </div>
 
-                <button class="btn" style="margin-top: 15px;" onclick="claimBalance()">CLAIM BALANCE</button>
+                <button class="btn" style="margin-top: 12px;" onclick="claimBalance()">CLAIM BALANCE</button>
             </div>
         </div>
 
@@ -363,7 +385,7 @@
         <div id="tab-withdraw" class="tab-content">
             <div class="card">
                 <div class="card-title">YOUR BALANCE</div>
-                <div class="big-number"><span id="withdraw-balance">0.000000</span> Gram</div>
+                <div class="big-number"><span id="withdraw-balance">0.008365</span> Gram</div>
             </div>
 
             <div class="card" style="text-align: left;">
@@ -384,7 +406,7 @@
     </div>
 
     <!-- DEPOSIT MODAL -->
-    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(5,7,12,0.94); z-index:1000; padding:15px; align-items:center; justify-content:center; overflow-y:auto;">
+    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(5,7,12,0.94); z-index:2000; padding:15px; align-items:center; justify-content:center; overflow-y:auto;">
         <div class="card" style="width:100%; max-width:380px; text-align:left; margin:0; border-color:var(--gold-color); box-shadow: 0 0 20px var(--gold-glow);">
             <div class="card-title" style="text-align:center; font-size:15px; color:var(--gold-color); margin-bottom:12px; font-weight:bold;">⚡ BUY GHS POWER</div>
             <p style="font-size:11px; color:var(--sub-text); text-align:center; margin-bottom:12px;">
@@ -560,7 +582,7 @@
                 if (isExpired) {
                     btnHtml = `<button class="btn task-btn" onclick="doTask(${task.id}, '${task.link}', ${task.reward})">Start (+${task.reward} GHS)</button>`;
                 } else {
-                    The hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
                     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
                     const timeStr = `${hours}h ${minutes}m ${seconds}s`;
