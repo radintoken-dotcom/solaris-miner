@@ -7,11 +7,13 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #0f1115;
-            --card-bg: #1a1d24;
-            --accent-color: #0088cc;
+            --bg-color: #0d0f12;
+            --card-bg: #161920;
+            --accent-color: #f39c12;
+            --gold-color: #ffd700;
+            --gold-glow: rgba(255, 215, 0, 0.3);
             --text-color: #ffffff;
-            --sub-text: #9a9ea7;
+            --sub-text: #a0a5b1;
             --btn-bg: #222630;
             --success: #2ecc71;
             --warning: #f1c40f;
@@ -37,11 +39,13 @@
         .header {
             text-align: center;
             padding: 15px 0;
-            font-weight: bold;
-            font-size: 18px;
-            letter-spacing: 1px;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: 2px;
+            color: var(--gold-color);
+            text-shadow: 0 0 10px var(--gold-glow);
             border-bottom: 1px solid #222;
-            background: #14171d;
+            background: #12141a;
         }
 
         .content {
@@ -61,16 +65,16 @@
 
         .card {
             background-color: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 20px;
             margin-bottom: 15px;
             text-align: center;
-            border: 1px solid #282c37;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 1px solid #282d3c;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
         }
 
         .card-title {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--sub-text);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -78,9 +82,10 @@
         }
 
         .big-number {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: bold;
-            color: #fff;
+            color: var(--gold-color);
+            text-shadow: 0 0 8px var(--gold-glow);
             margin: 8px 0;
         }
 
@@ -90,21 +95,50 @@
             margin-bottom: 15px;
         }
 
+        /* GOLDEN COIN ANIMATION */
+        .coin-container {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gold-coin {
+            width: 85px;
+            height: 85px;
+            background: radial-gradient(circle at 35% 35%, #fff7a1, #ffd700 60%, #b8860b);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 42px;
+            box-shadow: 0 0 25px var(--gold-glow), inset 0 0 10px rgba(0,0,0,0.5);
+            border: 3px solid #ffe866;
+            animation: pulseCoin 2.5s infinite ease-in-out;
+        }
+
+        @keyframes pulseCoin {
+            0% { transform: scale(1); box-shadow: 0 0 20px var(--gold-glow); }
+            50% { transform: scale(1.06); box-shadow: 0 0 35px rgba(255, 215, 0, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 0 20px var(--gold-glow); }
+        }
+
         .btn {
-            background: #ffffff;
+            background: linear-gradient(135deg, #ffd700, #ffa500);
             color: #000000;
             border: none;
             padding: 12px 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: bold;
             font-size: 14px;
             cursor: pointer;
             width: 100%;
             transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
         }
 
         .btn:active {
-            opacity: 0.8;
+            opacity: 0.85;
             transform: scale(0.98);
         }
 
@@ -112,17 +146,18 @@
             background: var(--btn-bg);
             color: #fff;
             border: 1px solid #333;
+            box-shadow: none;
         }
 
         .task-item {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 15px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid #282c37;
+            border: 1px solid #282d3c;
         }
 
         .task-info {
@@ -138,16 +173,18 @@
 
         .task-reward {
             font-size: 12px;
-            color: var(--success);
+            color: var(--gold-color);
             margin-top: 3px;
+            font-weight: bold;
         }
 
         .task-btn {
             width: auto;
             padding: 8px 14px;
             font-size: 12px;
-            background: var(--accent-color);
+            background: #229ed9;
             color: #fff;
+            box-shadow: none;
         }
 
         .task-btn.done {
@@ -179,31 +216,13 @@
             outline: none;
         }
 
-        .social-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .social-btn {
-            flex: 1;
-            background: #229ed9;
-            color: white;
-            padding: 10px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-            text-align: center;
-        }
-
         .nav-bar {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             height: 65px;
-            background: #14171d;
+            background: #12141a;
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -221,7 +240,7 @@
         }
 
         .nav-item.active {
-            color: #fff;
+            color: var(--gold-color);
         }
 
         .nav-icon {
@@ -237,19 +256,19 @@
     <div class="content">
         <!-- 1. MINER TAB -->
         <div id="tab-miner" class="tab-content active">
-            <div class="social-box">
-                <a href="https://t.me/Crypto_Hunters_ir" target="_blank" class="social-btn">📢 کانال تلگرام ما</a>
-                <a href="https://t.me/Crypto_Hunters_ltf" target="_blank" class="social-btn" style="background: #2b547e;">💬 گروه گفتگو</a>
-            </div>
-
             <div class="card">
                 <div style="display: flex; gap: 10px; margin-bottom: 12px;">
-                    <button class="btn" onclick="openDepositModal()" style="background:#2ecc71; color:#fff; font-size:13px; padding:10px;">ADD GHS</button>
+                    <button class="btn" onclick="openDepositModal()" style="background: linear-gradient(135deg, #2ecc71, #27ae60); color:#fff; font-size:13px; padding:10px;">ADD GHS</button>
                     <button class="btn btn-secondary" style="font-size:13px; padding:10px; cursor:default;">FREE GHS</button>
                 </div>
                 <div class="card-title">TOTAL GHS POWER</div>
                 <div class="big-number" id="ghs-power">160.00 GHS</div>
                 <div class="sub-rate" id="rate-display">+0.00001157 TON/s (0.1 TON/day)</div>
+            </div>
+
+            <!-- سکه طلایی زیبا در مرکز -->
+            <div class="coin-container">
+                <div class="gold-coin">🪙</div>
             </div>
 
             <div class="card">
@@ -258,7 +277,7 @@
                 
                 <div style="margin-top: 15px;">
                     <div class="card-title">PENDING BALANCE</div>
-                    <div style="font-size: 18px; font-weight: bold; margin: 5px 0; color: var(--warning);" id="pending-balance">0.00000000 TON</div>
+                    <div style="font-size: 18px; font-weight: bold; margin: 5px 0; color: var(--gold-color);" id="pending-balance">0.00000000 TON</div>
                 </div>
 
                 <button class="btn" style="margin-top: 15px;" onclick="claimBalance()">CLAIM BALANCE</button>
@@ -275,7 +294,7 @@
         <div id="tab-earn" class="tab-content">
             <div class="card">
                 <div class="card-title">YOUR EXCLUSIVE REFERRAL LINK</div>
-                <input type="text" class="input-field" id="ref-link" readonly style="text-align: center; margin: 10px 0;">
+                <input type="text" class="input-field" id="ref-link" readonly style="text-align: center; margin: 10px 0; color: var(--gold-color); font-weight: bold;">
                 <button class="btn" onclick="copyRefLink()">SHARE LINK</button>
             </div>
 
@@ -287,12 +306,12 @@
 
             <div class="card" style="text-align: left;">
                 <div class="card-title" style="margin-bottom: 10px;">PROMOTED GAMES</div>
-                <div style="font-size: 12px; line-height: 1.8; color: #ccc;">
-                    🔹 <a href="https://atok.ai/referral/OeqE" target="_blank" style="color: #0088cc;">ATOK Game</a><br>
-                    🔹 <a href="https://t.me/OilVoyageBot?startapp=t7kdz7a5" target="_blank" style="color: #0088cc;">Oil Voyage</a><br>
-                    🔹 <a href="https://t.me/MIMA_COIN_bot?start=ref_334f1c96314eb54c" target="_blank" style="color: #0088cc;">Mima Coin</a><br>
-                    🔹 <a href="https://t.me/AFL_Miningbot?start=1007321991" target="_blank" style="color: #0088cc;">AFL Mining</a><br>
-                    🔹 <a href="https://zmine.si/register?ref=WRFTHZXH" target="_blank" style="color: #0088cc;">Z-Mine</a>
+                <div style="font-size: 13px; line-height: 2; color: #ccc;">
+                    🔹 <a href="https://t.me/lifetime_energy_bot?start=1007321991" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Lifetime Energy Bot</a><br>
+                    🔹 <a href="https://g.cb.click/aVYJfp" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">CB Click Game</a><br>
+                    🔹 <a href="https://telegram.me/asanstars_bot?start=ref_636BD072" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Asan Stars Bot</a><br>
+                    🔹 <a href="https://t.me/ThunderWavesBot/App?startapp=ref_OU6LZU77" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Thunder Waves App</a><br>
+                    🔹 <a href="https://t.me/ASTRA_AIRDROP_BOT/app?startapp=ref_1007321991" target="_blank" style="color: #0088cc; font-weight: bold; text-decoration: none;">Astra Airdrop Bot</a>
                 </div>
             </div>
         </div>
@@ -322,9 +341,9 @@
     </div>
 
     <!-- DEPOSIT MODAL (ADD GHS) -->
-    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); z-index:1000; padding:20px; align-items:center; justify-content:center;">
+    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.88); z-index:1000; padding:20px; align-items:center; justify-content:center;">
         <div class="card" style="width:100%; max-width:350px; text-align:left; margin:0;">
-            <div class="card-title" style="text-align:center; font-size:16px; color:#fff; margin-bottom:15px;">ADD 200 GHS POWER</div>
+            <div class="card-title" style="text-align:center; font-size:16px; color:var(--gold-color); margin-bottom:15px; font-weight:bold;">ADD 200 GHS POWER</div>
             
             <p style="font-size:12px; color:#aaa; margin-bottom:10px;">
                 برای افزایش <b>200 GHS</b> به سرعت استخراج، مبلغ <b>0.2 TON</b> را به آدرس زیر واریز کنید:
@@ -337,14 +356,14 @@
 
             <div class="input-group">
                 <label>شناسه واریز اختصاصی (MEMO / Comment):</label>
-                <input type="text" id="user-memo" class="input-field" value="" readonly style="color:#f1c40f; font-weight:bold; text-align:center;">
+                <input type="text" id="user-memo" class="input-field" value="" readonly style="color:var(--gold-color); font-weight:bold; text-align:center;">
             </div>
 
             <p style="font-size:10px; color:#e74c3c; margin-bottom:15px;">
                 ⚠️ حتماً ممو بالا را موقع انتقال در بخش Comment کیف پول خود وارد کنید.
             </p>
 
-            <button class="btn" onclick="submitDeposit()" style="background:#2ecc71; color:#fff; margin-bottom:10px;">I HAVE PAID (تایید واریز)</button>
+            <button class="btn" onclick="submitDeposit()" style="background: linear-gradient(135deg, #2ecc71, #27ae60); color:#fff; margin-bottom:10px;">I HAVE PAID (تایید واریز)</button>
             <button class="btn btn-secondary" onclick="closeDepositModal()">انصراف</button>
         </div>
     </div>
@@ -385,12 +404,13 @@
         let pending = parseFloat(localStorage.getItem('pending_' + userId) || '0.0');
         let referrals = parseInt(localStorage.getItem('referrals_' + userId) || '0');
 
+        // بازی‌های جدید شما در بخش تسک‌ها
         const tasks = [
-            { id: 1, title: "Join Crypto Hunters Channel", reward: 20, link: "https://t.me/Crypto_Hunters_ir" },
-            { id: 2, title: "Join Crypto Hunters Group", reward: 20, link: "https://t.me/Crypto_Hunters_ltf" },
-            { id: 3, title: "Play Oil Voyage", reward: 15, link: "https://t.me/OilVoyageBot?startapp=t7kdz7a5" },
-            { id: 4, title: "Play Mima Coin", reward: 15, link: "https://t.me/MIMA_COIN_bot?start=ref_334f1c96314eb54c" },
-            { id: 5, title: "Play AFL Mining", reward: 15, link: "https://t.me/AFL_Miningbot?start=1007321991" }
+            { id: 1, title: "Play Lifetime Energy", reward: 20, link: "https://t.me/lifetime_energy_bot?start=1007321991" },
+            { id: 2, title: "Play CB Click Game", reward: 20, link: "https://g.cb.click/aVYJfp" },
+            { id: 3, title: "Play Asan Stars Bot", reward: 15, link: "https://telegram.me/asanstars_bot?start=ref_636BD072" },
+            { id: 4, title: "Play Thunder Waves", reward: 15, link: "https://t.me/ThunderWavesBot/App?startapp=ref_OU6LZU77" },
+            { id: 5, title: "Play Astra Airdrop", reward: 15, link: "https://t.me/ASTRA_AIRDROP_BOT/app?startapp=ref_1007321991" }
         ];
 
         function updateUI() {
@@ -492,7 +512,7 @@
         }
 
         function requestWithdraw() {
-            const addr = document.getElementById('wallet-addr').value;
+            const addr = document.getElementById('wallet-addr').value.trim();
             const amount = parseFloat(document.getElementById('withdraw-amount').value);
 
             if (!addr || addr.length < 10) {
@@ -519,10 +539,9 @@
             document.getElementById('withdraw-amount').value = '';
         }
 
-        // توابع پنجره خرید (ADD GHS)
         function openDepositModal() {
             document.getElementById('deposit-modal').style.display = 'flex';
-            document.getElementById('user-memo').value = userId; // ممو برابر با آیدی اختصاصی کاربر
+            document.getElementById('user-memo').value = userId;
         }
 
         function closeDepositModal() {
