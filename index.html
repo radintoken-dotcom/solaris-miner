@@ -215,7 +215,7 @@
                 </div>
 
                 <div class="input-group">
-                    <label>تعداد ممبر درخواستی:</label>
+                    <label>تعداد ممبر درخواستی (حداقل ۱k تا حداکثر ۵۰k):</label>
                     <input type="text" id="order-count" class="input-field" placeholder="مثلاً 1000" oninput="calcPrice()">
                 </div>
 
@@ -325,133 +325,11 @@
     </div>
 
     <script>
-        const tg = window.Telegram ? window.Telegram.WebApp : null;
-        if (tg) {
-            try { tg.expand(); } catch(e) {}
-        }
+        const tg = window.Telegram.WebApp;
+        tg.expand();
 
-        let userId = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? String(tg.initDataUnsafe.user.id) : 'user_' + Math.floor(100000 + Math.random() * 900000);
-        let userName = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.username) ? '@' + tg.initDataUnsafe.user.username : 'بدون آیدی عمومی';
-        let firstName = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.first_name) ? tg.initDataUnsafe.user.first_name : 'کاربر جدید';
+        let userId = tg.initDataUnsafe?.user?.id ? String(tg.initDataUnsafe.user.id) : 'user_' + Math.floor(100000 + Math.random() * 900000);
+        let userName = tg.initDataUnsafe?.user?.username ? '@' + tg.initDataUnsafe.user.username : 'بدون آیدی عمومی';
+        let firstName = tg.initDataUnsafe?.user?.first_name || 'کاربر جدید';
 
         const botToken = "7752636683:AAH4x_XXXXXXXXXXXXXX"; 
-        const adminChannelId = "-1002012345678"; 
-
-        let activePackagePrice = null;
-
-        function parseFaNum(str) {
-            if (!str) return 0;
-            let val = str.toString()
-                .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
-                .replace(/[0-9]/g, d => '0123456789'.indexOf(d))
-                .replace(/,/g, '').replace(/ /g, '');
-            return parseInt(val) || 0;
-        }
-
-        function showAlert(msg) {
-            if (tg && tg.showAlert) {
-                tg.showAlert(msg);
-            } else {
-                alert(msg);
-            }
-        }
-
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-            const targetTab = document.getElementById('tab-' + tabName);
-            if (targetTab) targetTab.classList.add('active');
-
-            const titles = {
-                'order': '🚀 ثبت سفارش و خرید ممبر',
-                'deposit': '💎 واریز تون‌کوین (TON)',
-                'history': '📋 پیگیری سفارش‌ها'
-            };
-            document.getElementById('page-title').innerText = titles[tabName] || '';
-
-            const navs = document.querySelectorAll('.nav-item');
-            if (tabName === 'order' && navs[0]) navs[0].classList.add('active');
-            if (tabName === 'deposit' && navs[1]) navs[1].classList.add('active');
-            if (tabName === 'history' && navs[2]) {
-                navs[2].classList.add('active');
-                loadOrders();
-            }
-        }
-
-        function calcPrice() {
-            activePackagePrice = null;
-            const count = parseFaNum(document.getElementById('order-count').value);
-            const pricePerMember = 0.0005; 
-            const total = count * pricePerMember;
-            document.getElementById('total-price').innerText = total.toFixed(2) + ' TON';
-        }
-
-        function selectPackage(count, price) {
-            activePackagePrice = price;
-            document.getElementById('order-count').value = count;
-            document.getElementById('total-price').innerText = price.toFixed(2) + ' TON';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            showAlert(`✅ پکیج ${count.toLocaleString('fa-IR')} ممبر انتخاب شد! لینک کانال را وارد کرده و ثبت سفارش را بزنید.`);
-        }
-
-        function openPaymentModal() {
-            const linkInput = document.getElementById('order-link');
-            const link = linkInput ? linkInput.value.trim() : '';
-            const count = parseFaNum(document.getElementById('order-count').value);
-
-            if (!link) {
-                showAlert("❌ لطفاً لینک کانال یا گروه خود را وارد کنید.");
-                return;
-            }
-
-            if (count <= 0) {
-                showAlert("❌ لطفاً تعداد ممبر را به درستی وارد کنید.");
-                return;
-            }
-
-            document.getElementById('user-memo').value = userId;
-            document.getElementById('payment-modal').style.display = 'flex';
-        }
-
-        function closePaymentModal() {
-            document.getElementById('payment-modal').style.display = 'none';
-        }
-
-        function confirmPayment() {
-            const link = document.getElementById('order-link').value.trim();
-            const count = parseFaNum(document.getElementById('order-count').value);
-            
-            let price = activePackagePrice ? activePackagePrice.toFixed(2) : (count * 0.0005).toFixed(2);
-            
-            try {
-                let orders = JSON.parse(localStorage.getItem('ads_orders_' + userId) || '[]');
-                orders.push({ link, count, price, date: new Date().toLocaleDateString('fa-IR'), status: 'در حال بررسی' });
-                localStorage.setItem('ads_orders_' + userId, JSON.stringify(orders));
-            } catch(e) {}
-
-            closePaymentModal();
-            showAlert("✅ سفارش شما با موفقیت ثبت شد و در صف بررسی قرار گرفت!");
-            
-            document.getElementById('order-link').value = '';
-            document.getElementById('order-count').value = '';
-            document.getElementById('total-price').innerText = '0.00 TON';
-            activePackagePrice = null;
-        }
-
-        function loadOrders() {
-            const container = document.getElementById('orders-list');
-            let orders = [];
-            try {
-                orders = JSON.parse(localStorage.getItem('ads_orders_' + userId) || '[]');
-            } catch(e) {}
-
-            if (orders.length === 0) {
-                container.innerHTML = 'هنوز سفارشی ثبت نکرده‌اید.';
-                return;
-            }
-
-            container.innerHTML = '';
-            orders.forEach((ord, index) => {
-                const div = document.createElement('div');
-                div.style.background = '#05081
