@@ -207,7 +207,7 @@
     <div class="header" id="page-title">🚀 ثبت سفارش و خرید ممبر</div>
 
     <div class="content">
-        <!-- 1. ORDER TAB -->
+        <!-- TAB 1: ORDER -->
         <div id="tab-order" class="tab-content active">
             
             <div class="card">
@@ -228,7 +228,7 @@
                     <div class="big-number" id="total-price">0.00 TON</div>
                 </div>
 
-                <button class="btn btn-green" id="btn-submit" onclick="openPaymentModal()">پرداخت با تون‌کوین و ثبت سفارش</button>
+                <button class="btn btn-green" onclick="openPaymentModal()">پرداخت با تون‌کوین و ثبت سفارش</button>
             </div>
 
             <!-- PACKAGES -->
@@ -262,8 +262,8 @@
 
         </div>
 
-        <!-- 2. DEPOSIT TAB -->
-        <div id="tab-deposit" class="tab-content">
+        <!-- TAB 2: DEPOSIT -->
+        <div id="tab-deposit" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
                 <div class="card-title">کیف پول اختصاصی واریز TON</div>
                 <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px;">
@@ -278,8 +278,8 @@
             </div>
         </div>
 
-        <!-- 3. HISTORY TAB -->
-        <div id="tab-history" class="tab-content">
+        <!-- TAB 3: HISTORY -->
+        <div id="tab-history" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
                 <div class="card-title">سفارش‌های ثبت شده شما</div>
                 <div id="orders-list" style="font-size:12px; color:var(--text-sub); margin-top:10px;">
@@ -418,4 +418,43 @@
             alert("✅ سفارش شما با موفقیت ثبت شد و در صف بررسی قرار گرفت!");
 
             document.getElementById('order-link').value = '';
-            document.getElementById('order-count').value =
+            document.getElementById('order-count').value = '';
+            document.getElementById('total-price').innerText = '0.00 TON';
+            customPackagePrice = null;
+        }
+
+        function loadOrders() {
+            var container = document.getElementById('orders-list');
+            var uId = getUserId();
+            var orders = [];
+
+            try {
+                orders = JSON.parse(localStorage.getItem('ads_orders_' + uId) || '[]');
+            } catch(e) {}
+
+            if (orders.length === 0) {
+                container.innerHTML = 'هنوز سفارشی ثبت نکرده‌اید.';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < orders.length; i++) {
+                html += '<div style="background:#050811; padding:10px; border-radius:8px; margin-bottom:8px; text-align:right;">' +
+                    '<div style="font-weight:bold; color:#00f0ff;">سفارش شماره #' + (i + 1) + '</div>' +
+                    '<div style="color:#fff; margin-top:4px;">کانال: ' + orders[i].link + '</div>' +
+                    '<div style="color:#8da0bf; font-size:11px;">تعداد: ' + orders[i].count + ' ممبر | مبلغ: ' + orders[i].price + ' TON</div>' +
+                    '<div style="color:#28a745; font-size:11px; margin-top:2px;">وضعیت: ' + orders[i].status + '</div>' +
+                    '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function copyWallet() {
+            var input = document.getElementById('admin-wallet');
+            input.select();
+            document.execCommand("copy");
+            alert("📋 آدرس کیف پول کپی شد!");
+        }
+    </script>
+</body>
+</html>
