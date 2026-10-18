@@ -150,4 +150,332 @@
             color: white;
             border: none;
             padding: 10px 16px;
-            border-radius: 20
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 3px 6px rgba(0,162,232,0.3);
+        }
+
+        .btn-disabled {
+            background-color: #87ceeb;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Profile Header */
+        .profile-header {
+            background: var(--primary-blue);
+            color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-balance {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+
+        .input-group {
+            margin-bottom: 12px;
+            text-align: right;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            background: #fff;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 11px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header" id="page-header">پروژه</div>
+
+    <div class="content">
+        <!-- 1. HOME TAB (خانه) -->
+        <div id="tab-home" class="tab-content">
+            <div class="hero-banner">
+                <img src="https://raw.githubusercontent.com/radintoken-dotcom/solaris-miner/main/1000004990.jpg" alt="ChargeGet Banner">
+            </div>
+
+            <div class="quick-grid">
+                <div class="quick-item" onclick="switchTab('account')">
+                    <span style="font-size:24px;">💰</span>
+                    <span>شارژ</span>
+                </div>
+                <div class="quick-item" onclick="switchTab('account')">
+                    <span style="font-size:24px;">💸</span>
+                    <span>برداشت</span>
+                </div>
+                <div class="quick-item" onclick="alert('پاداش روزانه فعال شد!')">
+                    <span style="font-size:24px;">🎁</span>
+                    <span>پاداش</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="font-weight:bold; margin-bottom:8px;">مدل عملیاتی ChargeGet</div>
+                <p style="font-size:12px; color:var(--text-muted); line-height:1.6;">
+                    چرا ChargeGet را انتخاب کنیم؟ تجربه بازار بالغ و درآمد پایدار از دستگاه‌های پاوربانک اشتراکی در سراسر جهان.
+                </p>
+            </div>
+        </div>
+
+        <!-- 2. PROJECTS TAB (پروژه) -->
+        <div id="tab-projects" class="tab-content active">
+            <!-- دستگاه رایگان -->
+            <div class="card">
+                <div class="project-title">دستگاه رایگان</div>
+                <div class="project-body">
+                    <div class="project-info">
+                        حداکثر دفعات سرمایه‌گذاری: <span>1</span><br>
+                        مبلغ سرمایه‌گذاری: <span>0.01$</span><br>
+                        دوره سرمایه‌گذاری: <span>3 روز</span><br>
+                        سود روزانه: <span>0.6666$</span>
+                    </div>
+                    <img src="https://img.icons8.com/color/96/powerbank.png" class="project-img" alt="Free Device">
+                </div>
+                <button class="btn-buy" onclick="invest('دستگاه رایگان', 0.01)">🛒 سرمایه‌گذاری فوری</button>
+            </div>
+
+            <!-- Get 1 -->
+            <div class="card">
+                <div class="project-title">Get 1</div>
+                <div class="project-body">
+                    <div class="project-info">
+                        حداکثر دفعات سرمایه‌گذاری: <span>1</span><br>
+                        مبلغ سرمایه‌گذاری: <span>10$</span><br>
+                        دوره سرمایه‌گذاری: <span>60 روز</span><br>
+                        سود روزانه: <span>0.333$</span>
+                    </div>
+                    <img src="https://img.icons8.com/color/96/battery-charging.png" class="project-img" alt="Get 1">
+                </div>
+                <button class="btn-buy" onclick="invest('Get 1', 10)">🛒 سرمایه‌گذاری فوری</button>
+            </div>
+
+            <!-- Get 4 -->
+            <div class="card">
+                <div class="project-title">Get 4</div>
+                <div class="project-body">
+                    <div class="project-info">
+                        حداکثر دفعات سرمایه‌گذاری: <span>1</span><br>
+                        مبلغ سرمایه‌گذاری: <span>50$</span><br>
+                        دوره سرمایه‌گذاری: <span>80 روز</span><br>
+                        سود روزانه: <span>1.72$</span>
+                    </div>
+                    <img src="https://img.icons8.com/color/96/usb-memory.png" class="project-img" alt="Get 4">
+                </div>
+                <button class="btn-buy" onclick="invest('Get 4', 50)">🛒 سرمایه‌گذاری فوری</button>
+            </div>
+
+            <!-- Get 8 -->
+            <div class="card">
+                <div class="project-title">Get 8</div>
+                <div class="project-body">
+                    <div class="project-info">
+                        حداکثر دفعات سرمایه‌گذاری: <span>1</span><br>
+                        مبلغ سرمایه‌گذاری: <span>150$</span><br>
+                        دوره سرمایه‌گذاری: <span>100 روز</span><br>
+                        سود روزانه: <span>5.28$</span>
+                    </div>
+                    <img src="https://img.icons8.com/color/96/charging-station.png" class="project-img" alt="Get 8">
+                </div>
+                <button class="btn-buy" onclick="invest('Get 8', 150)">🛒 سرمایه‌گذاری فوری</button>
+            </div>
+        </div>
+
+        <!-- 3. TEAM TAB (تیم) -->
+        <div id="tab-team" class="tab-content">
+            <div class="profile-header">
+                <div style="font-size:13px;">کل سود تیم</div>
+                <div class="profile-balance">$0.00</div>
+            </div>
+
+            <div class="card">
+                <div class="input-group">
+                    <label>لینک دعوت شما:</label>
+                    <input type="text" id="ref-link" class="input-field" readonly value="https://t.me/ChargeGetBot?start=user123">
+                </div>
+                <button class="btn-buy" onclick="copyRef()">کپی لینک دعوت</button>
+            </div>
+
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span>عضو سطح 1 (8%)</span>
+                    <span style="color:var(--primary-blue); font-weight:bold;">0 نفر</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span>عضو سطح 2 (3%)</span>
+                    <span style="color:var(--primary-blue); font-weight:bold;">0 نفر</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <span>عضو سطح 3 (1%)</span>
+                    <span style="color:var(--primary-blue); font-weight:bold;">0 نفر</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. ACCOUNT TAB (حساب) -->
+        <div id="tab-account" class="tab-content">
+            <div class="profile-header">
+                <div style="font-size:13px;">حساب سرمایه‌گذاری</div>
+                <div class="profile-balance">$<span id="user-balance">2489.80</span></div>
+                <div style="font-size:11px; opacity:0.8;">≈ 0.00 TON / USDT</div>
+            </div>
+
+            <div class="card">
+                <div class="input-group">
+                    <label>آدرس ولت جهت برداشت (USDT TRC20 / TON):</label>
+                    <input type="text" id="withdraw-addr" class="input-field" placeholder="آدرس کیف پول خود را وارد کنید">
+                </div>
+                <div class="input-group">
+                    <label>مبلغ برداشت ($):</label>
+                    <input type="number" id="withdraw-amount" class="input-field" placeholder="حداقل 10 دلار">
+                </div>
+                <button class="btn-buy" onclick="requestWithdraw()">برداشت فوری</button>
+            </div>
+
+            <div class="card">
+                <div style="font-weight:bold; margin-bottom:8px; font-size:13px;">آدرس واریز جهت شارژ حساب (USDT/TON):</div>
+                <input type="text" class="input-field" readonly value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" style="font-size:11px; text-align:center; margin-bottom:8px;">
+                <button class="btn-buy" style="background:#28a745;" onclick="alert('آدرس کپی شد!')">کپی آدرس شارژ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="nav-bar">
+        <div class="nav-item" onclick="switchTab('home')">
+            <div class="nav-icon">🏠</div>
+            <div>خانه</div>
+        </div>
+        <div class="nav-item active" onclick="switchTab('projects')">
+            <div class="nav-icon">🛒</div>
+            <div>پروژه</div>
+        </div>
+        <div class="nav-item" onclick="switchTab('team')">
+            <div class="nav-icon">⭐</div>
+            <div>تیم</div>
+        </div>
+        <div class="nav-item" onclick="switchTab('account')">
+            <div class="nav-icon">👤</div>
+            <div>حساب</div>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        let balance = 2489.80;
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            document.getElementById('tab-' + tabName).classList.add('active');
+            
+            const titles = {
+                'home': 'خانه',
+                'projects': 'پروژه',
+                'team': 'تیم',
+                'account': 'حساب کاربری'
+            };
+            document.getElementById('page-header').innerText = titles[tabName];
+
+            // Highlight nav button
+            const navs = document.querySelectorAll('.nav-item');
+            if (tabName === 'home') navs[0].classList.add('active');
+            if (tabName === 'projects') navs[1].classList.add('active');
+            if (tabName === 'team') navs[2].classList.add('active');
+            if (tabName === 'account') navs[3].classList.add('active');
+        }
+
+        function invest(name, price) {
+            tg.showAlert(`درخواست سرمایه‌گذاری در ${name} به مبلغ $${price} ثبت شد.`);
+        }
+
+        function copyRef() {
+            const input = document.getElementById('ref-link');
+            input.select();
+            document.execCommand('copy');
+            tg.showAlert('لینک دعوت کپی شد!');
+        }
+
+        function requestWithdraw() {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            const addr = document.getElementById('withdraw-addr').value;
+
+            if (!addr || addr.length < 5) {
+                tg.showAlert('لطفاً آدرس ولت معتبر وارد کنید.');
+                return;
+            }
+            if (isNaN(amount) || amount < 10) {
+                tg.showAlert('حداقل مبلغ برداشت 10 دلار می‌باشد.');
+                return;
+            }
+            if (amount > balance) {
+                tg.showAlert('موجودی کافی نیست.');
+                return;
+            }
+
+            balance -= amount;
+            document.getElementById('user-balance').innerText = balance.toFixed(2);
+            tg.showAlert('درخواست برداشت با موفقیت ثبت شد و در صف بررسی قرار گرفت.');
+        }
+    </script>
+</body>
+</html>
