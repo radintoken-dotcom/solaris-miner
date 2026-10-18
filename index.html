@@ -292,9 +292,9 @@
     <!-- PAYMENT MODAL -->
     <div id="payment-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.92); z-index:2000; padding:20px; align-items:center; justify-content:center;">
         <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0;">
-            <div style="font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:12px;">💳 واریز جهت تایید سفارش</div>
-            <p style="font-size:12px; color:var(--text-sub); text-align:center; margin-bottom:10px;">
-                مبلغ را به آدرس زیر بفرستید و حتماً <b>MEMO</b> را در تراکنش خود درج کنید:
+            <div style="font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:12px;">💳 تایید نهایی پرداخت</div>
+            <p style="font-size:12px; color:#ffd700; text-align:center; margin-bottom:10px; line-height: 1.6;">
+                ⚠️ <b>اخطار مهم:</b> تراکنش شما توسط ربات و مدیریت به صورت دستی بررسی می‌شود. اگر بدون واریز وجه یا بدون درج کد MEMO ثبت بزنید، سفارش شما به صورت <b>«رد شده / نامعتبر»</b> ثبت خواهد شد.
             </p>
 
             <div class="input-group">
@@ -307,7 +307,7 @@
                 <input type="text" id="user-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center;">
             </div>
 
-            <button class="btn btn-green" onclick="confirmPayment()" style="margin-bottom:8px;">پرداخت کردم (ثبت نهایی)</button>
+            <button class="btn btn-green" onclick="confirmPayment()" style="margin-bottom:8px;">واریز کردم و ثبت نهایی</button>
             <button class="btn" onclick="closePaymentModal()" style="background:#333;">انصراف</button>
         </div>
     </div>
@@ -410,12 +410,12 @@
 
             try {
                 var orders = JSON.parse(localStorage.getItem('ads_orders_' + uId) || '[]');
-                orders.push({ link: link, count: count, price: price, status: 'در حال بررسی' });
+                orders.push({ link: link, count: count, price: price, status: '⏳ در انتظار تایید تراکنش (بررسی ادمین)' });
                 localStorage.setItem('ads_orders_' + uId, JSON.stringify(orders));
             } catch(e) {}
 
             closePaymentModal();
-            alert("✅ سفارش شما با موفقیت ثبت شد و در صف بررسی قرار گرفت!");
+            alert("✅ سفارش شما ثبت شد! در صورت انجام واریز و داشتن MEMO، تا دقایقی دیگر توسط ادمین تایید خواهد شد.");
 
             document.getElementById('order-link').value = '';
             document.getElementById('order-count').value = '';
@@ -443,7 +443,7 @@
                     '<div style="font-weight:bold; color:#00f0ff;">سفارش شماره #' + (i + 1) + '</div>' +
                     '<div style="color:#fff; margin-top:4px;">کانال: ' + orders[i].link + '</div>' +
                     '<div style="color:#8da0bf; font-size:11px;">تعداد: ' + orders[i].count + ' ممبر | مبلغ: ' + orders[i].price + ' TON</div>' +
-                    '<div style="color:#28a745; font-size:11px; margin-top:2px;">وضعیت: ' + orders[i].status + '</div>' +
+                    '<div style="color:#ffd700; font-size:11px; margin-top:2px;">وضعیت: ' + orders[i].status + '</div>' +
                     '</div>';
             }
             container.innerHTML = html;
