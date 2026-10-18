@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>PulseAd Pro - Ad Platform</title>
+    <title>ChargeGet - Power Station Network</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #05070b;
-            --card-bg: #0c101d;
-            --gold-color: #00ffcc;
-            --gold-glow: rgba(0, 255, 204, 0.4);
+            --bg-color: #070a12;
+            --card-bg: #0e1526;
+            --gold-color: #00f0ff;
+            --gold-glow: rgba(0, 240, 255, 0.4);
+            --neon-green: #39ff14;
+            --neon-glow: rgba(57, 255, 20, 0.3);
             --neon-pink: #ff007f;
-            --pink-glow: rgba(255, 0, 127, 0.4);
             --text-color: #ffffff;
             --sub-text: #8b9bb4;
-            --border-color: #1a293b;
+            --border-color: #1c2a45;
         }
 
         * {
@@ -33,17 +34,17 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
-            background-image: radial-gradient(circle at 50% 10%, #111e38 0%, #05070b 80%);
+            background-image: radial-gradient(circle at 50% 15%, #101c38 0%, #070a12 85%);
         }
 
         .header {
             text-align: center;
-            padding: 15px 0;
+            padding: 14px 0;
             font-weight: 900;
-            font-size: 20px;
-            letter-spacing: 3px;
+            font-size: 19px;
+            letter-spacing: 2px;
             color: var(--gold-color);
-            text-shadow: 0 0 15px var(--gold-glow);
+            text-shadow: 0 0 12px var(--gold-glow);
             border-bottom: 1px solid var(--border-color);
             background: rgba(10, 14, 22, 0.95);
         }
@@ -69,29 +70,40 @@
             padding: 18px;
             margin-bottom: 15px;
             text-align: center;
-            border: 1px solid var(--gold-color);
-            box-shadow: 0 0 15px var(--gold-glow), inset 0 0 10px rgba(0, 255, 204, 0.05);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        .card-highlight {
+            border-color: var(--gold-color);
+            box-shadow: 0 0 15px var(--gold-glow), inset 0 0 10px rgba(0, 240, 255, 0.05);
         }
 
         .card-title {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--sub-text);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .big-number {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 900;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-            margin: 6px 0;
+            color: var(--gold-color);
+            text-shadow: 0 0 10px var(--gold-glow);
+            margin: 4px 0;
+        }
+
+        .sub-rate {
+            font-size: 11px;
+            color: var(--neon-green);
+            margin-bottom: 8px;
         }
 
         .btn {
-            background: linear-gradient(135deg, #00ffcc, #0088cc);
-            color: #000000;
+            background: linear-gradient(135deg, #00f0ff, #0088cc);
+            color: #000;
             border: none;
             padding: 12px 18px;
             border-radius: 12px;
@@ -109,59 +121,44 @@
             transform: scale(0.98);
         }
 
-        .btn-pink {
-            background: linear-gradient(135deg, #ff007f, #99004c);
-            color: #fff;
-            box-shadow: 0 0 12px var(--pink-glow);
+        .btn-green {
+            background: linear-gradient(135deg, #39ff14, #009922);
+            color: #000;
+            box-shadow: 0 0 12px var(--neon-glow);
         }
 
-        .task-item {
+        .station-item {
             background: var(--card-bg);
             border-radius: 14px;
             padding: 15px;
             margin-bottom: 12px;
+            border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
-        .task-info {
+        .station-info {
             text-align: left;
-            max-width: 55%;
         }
 
-        .task-title {
-            font-size: 13px;
+        .station-name {
+            font-size: 14px;
             font-weight: bold;
             color: #fff;
-            word-break: break-word;
         }
 
-        .task-reward {
+        .station-roi {
             font-size: 11px;
-            color: var(--gold-color);
-            margin-top: 4px;
-            font-weight: bold;
+            color: var(--neon-green);
+            margin-top: 3px;
         }
 
-        .task-btn {
-            width: auto;
-            padding: 9px 16px;
+        .station-price {
             font-size: 12px;
-            background: #00ffcc;
-            color: #000;
+            color: var(--gold-color);
             font-weight: bold;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .task-btn.done {
-            background: #1f293d;
-            color: var(--sub-text);
-            cursor: not-allowed;
+            margin-top: 2px;
         }
 
         .input-group {
@@ -173,23 +170,19 @@
             display: block;
             font-size: 11px;
             color: var(--sub-text);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             text-transform: uppercase;
         }
 
         .input-field {
             width: 100%;
             padding: 12px;
-            background: #05070b;
+            background: #05070f;
             border: 1px solid var(--border-color);
             border-radius: 10px;
             color: #fff;
             font-size: 13px;
             outline: none;
-        }
-
-        .input-field:focus {
-            border-color: var(--gold-color);
         }
 
         .nav-bar {
@@ -203,7 +196,6 @@
             justify-content: space-around;
             align-items: center;
             border-top: 1px solid var(--border-color);
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
             z-index: 1000;
         }
 
@@ -216,7 +208,6 @@
             cursor: pointer;
             flex: 1;
             font-weight: bold;
-            letter-spacing: 1px;
         }
 
         .nav-item.active {
@@ -228,98 +219,145 @@
             font-size: 20px;
             margin-bottom: 3px;
         }
+
+        .copy-btn-inline {
+            background: #0088cc;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            margin-top: 4px;
+            float: right;
+        }
     </style>
 </head>
 <body>
 
-    <div class="header">⚡ PULSEAD PRO</div>
+    <div class="header">⚡ CHARGEGET NETWORK</div>
 
     <div class="content">
-        <!-- 1. CAMPAIGNS / TASKS TAB -->
-        <div id="tab-tasks" class="tab-content active">
-            <div class="card" style="border-color: var(--neon-pink); box-shadow: 0 0 15px var(--pink-glow);">
-                <div class="card-title">YOUR EARNED CREDITS</div>
-                <div class="big-number" id="user-balance">0.00 Star</div>
-                <div style="font-size: 11px; color: var(--sub-text);">Join channels below to earn rewards & tokens!</div>
+        <!-- 1. STATIONS / MINER TAB -->
+        <div id="tab-stations" class="tab-content active">
+            <div class="card card-highlight">
+                <div class="card-title">TOTAL RENTED POWER</div>
+                <div class="big-number" id="user-power">0 Station</div>
+                <div class="sub-rate" id="daily-rate">+0.00000000 TON/sec (0.00 TON/day)</div>
+                <button class="btn" onclick="openRentModal()">⚡ BUY POWER STATION</button>
             </div>
 
-            <div style="text-align: center; margin-bottom: 12px; font-weight: bold; color: var(--gold-color); font-size: 12px; letter-spacing: 1px;">ACTIVE SPONSOR CHANNELS</div>
-            <div id="tasks-container"></div>
-        </div>
-
-        <!-- 2. PROMOTE / ADVERTISE TAB -->
-        <div id="tab-promote" class="tab-content">
-            <div class="card" style="text-align: left;">
-                <div class="card-title" style="text-align: center; color: var(--gold-color); font-size: 13px; margin-bottom: 12px;">📢 CREATE AD CAMPAIGN</div>
+            <div class="card">
+                <div class="card-title">COLLECTED REVENUE</div>
+                <div class="big-number"><span id="main-balance">0.000000</span> TON</div>
                 
-                <div class="input-group">
-                    <label>Channel / Bot Username or Link</label>
-                    <input type="text" id="ad-link" class="input-field" placeholder="https://t.me/your_channel">
+                <div style="margin-top: 12px;">
+                    <div class="card-title">PENDING EARNINGS</div>
+                    <div style="font-size: 18px; font-weight: 900; margin: 4px 0; color: var(--neon-green);" id="pending-balance">0.00000000 TON</div>
                 </div>
 
-                <div class="input-group">
-                    <label>Required Members / Views</label>
-                    <input type="number" id="ad-count" class="input-field" placeholder="100">
-                </div>
-
-                <div class="input-group">
-                    <label>Reward per user (Stars / TON)</label>
-                    <input type="number" id="ad-reward" class="input-field" value="0.5" step="0.1">
-                </div>
-
-                <button class="btn btn-pink" onclick="submitCampaign()">LAUNCH CAMPAIGN</button>
+                <button class="btn btn-green" style="margin-top: 12px;" onclick="claimBalance()">COLLECT REVENUE</button>
             </div>
         </div>
 
-        <!-- 3. EARN / REFERRAL TAB -->
-        <div id="tab-earn" class="tab-content">
-            <div class="card">
-                <div class="card-title">YOUR REFERRAL LINK</div>
-                <input type="text" class="input-field" id="ref-link" readonly style="text-align: center; margin: 10px 0; color: var(--gold-color); font-weight: bold;">
-                <button class="btn" onclick="copyRefLink()">COPY INVITE LINK</button>
+        <!-- 2. INVEST / PACKAGES TAB -->
+        <div id="tab-packages" class="tab-content">
+            <div style="text-align: center; margin-bottom: 12px; font-weight: bold; color: var(--gold-color);">AVAILABLE POWERSTATIONS</div>
+
+            <div class="station-item">
+                <div class="station-info">
+                    <div class="station-name">⚡ Lite Powerbank Slot</div>
+                    <div class="station-roi">ROI: +0.10 TON / day</div>
+                    <div class="station-price">Price: 1.0 TON</div>
+                </div>
+                <button class="btn" style="width: auto; padding: 8px 14px;" onclick="rentStation(1.0, 0.10, 'Lite Slot')">Rent</button>
             </div>
 
-            <div class="card">
-                <div class="card-title">TOTAL REFERRED USERS</div>
-                <div class="big-number" id="ref-count">0</div>
-                <div style="font-size: 11px; color: var(--gold-color);">Earn 10% from your friends' activities!</div>
+            <div class="station-item">
+                <div class="station-info">
+                    <div class="station-name">🔋 Station Pro (5 Slots)</div>
+                    <div class="station-roi">ROI: +0.65 TON / day</div>
+                    <div class="station-price">Price: 5.0 TON</div>
+                </div>
+                <button class="btn" style="width: auto; padding: 8px 14px;" onclick="rentStation(5.0, 0.65, 'Station Pro')">Rent</button>
+            </div>
+
+            <div class="station-item">
+                <div class="station-info">
+                    <div class="station-name">🏬 Enterprise Tower</div>
+                    <div class="station-roi">ROI: +2.80 TON / day</div>
+                    <div class="station-price">Price: 20.0 TON</div>
+                </div>
+                <button class="btn" style="width: auto; padding: 8px 14px;" onclick="rentStation(20.0, 2.80, 'Enterprise Tower')">Rent</button>
             </div>
         </div>
 
-        <!-- 4. WALLET / PROFILE TAB -->
-        <div id="tab-wallet" class="tab-content">
-            <div class="card">
-                <div class="card-title">MY WALLET BALANCE</div>
-                <div class="big-number"><span id="wallet-balance">0.00</span> Star</div>
+        <!-- 3. WITHDRAW TAB -->
+        <div id="tab-withdraw" class="tab-content">
+            <div class="card card-highlight">
+                <div class="card-title">AVAILABLE BALANCE</div>
+                <div class="big-number"><span id="withdraw-balance">0.000000</span> TON</div>
             </div>
 
             <div class="card" style="text-align: left;">
                 <div class="input-group">
-                    <label>Withdraw to Tonkeeper / Telegram Wallet</label>
-                    <input type="text" id="payout-addr" class="input-field" placeholder="UQ... or TON address">
+                    <label>Wallet Address (Tonkeeper TON)</label>
+                    <input type="text" id="wallet-addr" class="input-field" placeholder="UQ... or EQ...">
                 </div>
-                <button class="btn" onclick="requestPayout()">REQUEST WITHDRAWAL</button>
+
+                <div class="input-group">
+                    <label>Amount to withdraw</label>
+                    <input type="number" id="withdraw-amount" class="input-field" placeholder="0.00">
+                    <div style="font-size: 11px; color: var(--sub-text); margin-top: 4px;">Min payout: 0.50 TON</div>
+                </div>
+
+                <button class="btn btn-green" onclick="requestWithdraw()">WITHDRAW FUNDS</button>
             </div>
+        </div>
+    </div>
+
+    <!-- DEPOSIT MODAL -->
+    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(5,7,12,0.95); z-index:2000; padding:15px; align-items:center; justify-content:center;">
+        <div class="card card-highlight" style="width:100%; max-width:380px; text-align:left; margin:0;">
+            <div class="card-title" style="text-align:center; font-size:14px; color:var(--gold-color); margin-bottom:10px;">⚡ DEPOSIT & BUY STATION</div>
+            <p style="font-size:11px; color:var(--sub-text); text-align:center; margin-bottom:12px;">
+                Send TON to the wallet below with your unique MEMO:
+            </p>
+
+            <div class="input-group">
+                <label style="color:var(--neon-green);">Deposit Wallet Address:</label>
+                <input type="text" id="admin-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center;">
+                <button class="copy-btn-inline" onclick="copyWallet()">Copy Address</button>
+            </div>
+
+            <div class="input-group" style="clear:both; padding-top:8px;">
+                <label style="color:var(--gold-color);">Required MEMO / Comment:</label>
+                <input type="text" id="user-memo" class="input-field" value="" readonly style="color:var(--gold-color); font-weight:bold; text-align:center;">
+                <button class="copy-btn-inline" onclick="copyMemo()">Copy MEMO</button>
+            </div>
+
+            <p style="font-size:10px; color:#ff4444; margin:10px 0; clear:both; text-align:center; font-weight:bold;">
+                ⚠️ You MUST enter the MEMO in your Tonkeeper payment comment.
+            </p>
+
+            <button class="btn" onclick="submitDeposit()" style="margin-bottom:8px;">I HAVE PAID</button>
+            <button class="btn" onclick="closeRentModal()" style="background:#1a293b; color:#fff;">Cancel</button>
         </div>
     </div>
 
     <!-- BOTTOM NAV BAR -->
     <div class="nav-bar">
-        <div class="nav-item active" onclick="switchTab('tasks', this)">
-            <div class="nav-icon">🎯</div>
-            <div>TASKS</div>
+        <div class="nav-item active" onclick="switchTab('stations', this)">
+            <div class="nav-icon">🔋</div>
+            <div>MY POWER</div>
         </div>
-        <div class="nav-item" onclick="switchTab('promote', this)">
-            <div class="nav-icon">📢</div>
-            <div>PROMOTE</div>
+        <div class="nav-item" onclick="switchTab('packages', this)">
+            <div class="nav-icon">⚡</div>
+            <div>STATIONS</div>
         </div>
-        <div class="nav-item" onclick="switchTab('earn', this)">
-            <div class="nav-icon">🔗</div>
-            <div>INVITE</div>
-        </div>
-        <div class="nav-item" onclick="switchTab('wallet', this)">
-            <div class="nav-icon">💎</div>
-            <div>WALLET</div>
+        <div class="nav-item" onclick="switchTab('withdraw', this)">
+            <div class="nav-icon">💳</div>
+            <div>PAYOUT</div>
         </div>
     </div>
 
@@ -328,138 +366,24 @@
         tg.expand();
 
         let userId = tg.initDataUnsafe?.user?.id ? String(tg.initDataUnsafe.user.id) : 'user_' + Math.floor(100000 + Math.random() * 900000);
-        let balance = parseFloat(localStorage.getItem('pulse_bal_' + userId) || '2.50');
-        let referrals = parseInt(localStorage.getItem('pulse_refs_' + userId) || '0');
 
-        // لیست کانال‌ها و تبلیغات سفارشی که برای ممبرگیری ثبت شده‌اند
-        let tasks = JSON.parse(localStorage.getItem('pulse_tasks') || JSON.stringify([
-            { id: 1, title: "Crypto Whale Channel", reward: 0.5, link: "https://t.me/trancemusicpsy" },
-            { id: 2, title: "TON Airdrop Hub", reward: 0.5, link: "https://t.me/lifetime_energy_bot" },
-            { id: 3, title: "Metaverse Gaming News", reward: 1.0, link: "https://g.cb.click/aVYJfp" }
-        ]));
+        let stationsCount = parseInt(localStorage.getItem('cg_stations_' + userId) || '1');
+        let dailyIncome = parseFloat(localStorage.getItem('cg_daily_' + userId) || '0.10');
+        let balance = parseFloat(localStorage.getItem('cg_bal_' + userId) || '0.050000');
+        let pending = parseFloat(localStorage.getItem('cg_pend_' + userId) || '0.001200');
 
         function updateUI() {
-            document.getElementById('user-balance').innerText = balance.toFixed(2) + ' Star';
-            document.getElementById('wallet-balance').innerText = balance.toFixed(2);
-            document.getElementById('ref-count').innerText = referrals;
-            document.getElementById('ref-link').value = `https://t.me/PulseAdProBot?start=${userId}`;
+            document.getElementById('user-power').innerText = stationsCount + ' Station(s)';
+            document.getElementById('main-balance').innerText = balance.toFixed(6);
+            document.getElementById('withdraw-balance').innerText = balance.toFixed(6);
+            document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' TON';
+
+            const ratePerSec = dailyIncome / 86400;
+            document.getElementById('daily-rate').innerText = `+${ratePerSec.toFixed(8)} TON/sec (${dailyIncome.toFixed(2)} TON/day)`;
         }
 
-        function switchTab(tabName, el) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            
-            document.getElementById('tab-' + tabName).classList.add('active');
-            if (el) el.classList.add('active');
-            
-            if(tabName === 'tasks') {
-                renderTasks();
-            }
-        }
-
-        function renderTasks() {
-            const container = document.getElementById('tasks-container');
-            container.innerHTML = '';
-            
-            const now = new Date().getTime();
-
-            tasks.forEach(task => {
-                const expireKey = 'pulse_task_' + userId + '_' + task.id;
-                const expireTime = localStorage.getItem(expireKey);
-                const timeLeft = expireTime ? parseInt(expireTime) - now : 0;
-                const isDone = expireTime && timeLeft > 0;
-                
-                const div = document.createElement('div');
-                div.className = 'task-item';
-                
-                let btnHtml = '';
-                if (!isDone) {
-                    btnHtml = `<button class="task-btn" onclick="doTask(${task.id}, '${task.link}', ${task.reward})">Join (+${task.reward})</button>`;
-                } else {
-                    btnHtml = `<button class="task-btn done" disabled>Completed</button>`;
-                }
-
-                div.innerHTML = `
-                    <div class="task-info">
-                        <div class="task-title">${task.title}</div>
-                        <div class="task-reward">Reward: +${task.reward} Stars</div>
-                    </div>
-                    ${btnHtml}
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function doTask(id, link, reward) {
-            tg.openTelegramLink(link);
-            
-            setTimeout(() => {
-                balance += reward;
-                localStorage.setItem('pulse_bal_' + userId, balance);
-                
-                // قفل کردن تسک برای ۲۴ ساعت
-                const nextAvailable = new Date().getTime() + (24 * 60 * 60 * 1000);
-                localStorage.setItem('pulse_task_' + userId + '_' + id, nextAvailable);
-
-                renderTasks();
-                updateUI();
-                tg.showAlert(`🎉 Success! +${reward} Stars added to your balance.`);
-            }, 4000);
-        }
-
-        function submitCampaign() {
-            const link = document.getElementById('ad-link').value.trim();
-            const count = parseInt(document.getElementById('ad-count').value);
-            const reward = parseFloat(document.getElementById('ad-reward').value);
-
-            if (!link || !count || isNaN(reward)) {
-                tg.showAlert("❌ Please fill out all campaign fields correctly.");
-                return;
-            }
-
-            const newTask = {
-                id: tasks.length + 1,
-                title: "Sponsored: " + link.replace('https://t.me/', '@'),
-                reward: reward,
-                link: link
-            };
-
-            tasks.unshift(newTask);
-            localStorage.setItem('pulse_tasks', JSON.stringify(tasks));
-
-            tg.showAlert("🚀 Campaign successfully launched and added to active tasks!");
-            document.getElementById('ad-link').value = '';
-            document.getElementById('ad-count').value = '';
-            switchTab('tasks', document.querySelector('.nav-item'));
-        }
-
-        function copyRefLink() {
-            const copyText = document.getElementById("ref-link");
-            copyText.select();
-            document.execCommand("copy");
-            tg.showAlert("📋 Referral link copied to clipboard!");
-        }
-
-        function requestPayout() {
-            const addr = document.getElementById('payout-addr').value.trim();
-            if (!addr || addr.length < 5) {
-                tg.showAlert("❌ Please enter a valid wallet address.");
-                return;
-            }
-            if (balance < 5.0) {
-                tg.showAlert("❌ Minimum withdrawal is 5.0 Stars.");
-                return;
-            }
-
-            balance -= 5.0;
-            localStorage.setItem('pulse_bal_' + userId, balance);
-            updateUI();
-            tg.showAlert("✅ Withdrawal request submitted! Processing within 24h.");
-            document.getElementById('payout-addr').value = '';
-        }
-
-        updateUI();
-        renderTasks();
-    </script>
-</body>
-</html>
+        setInterval(() => {
+            if (dailyIncome > 0) {
+                const ratePerSec = dailyIncome / 86400;
+                pending += ratePerSec;
+                localStorage.setItem('cg_pend_' + userId, pending
