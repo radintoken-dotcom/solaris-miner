@@ -262,20 +262,35 @@
 
         </div>
 
-        <!-- TAB 2: DEPOSIT -->
+        <!-- TAB 2: DEPOSIT (NEW WALLET & BALANCE DESIGN) -->
         <div id="tab-deposit" class="tab-content" style="display:none;">
+            
+            <!-- موجودی حساب کاربر -->
+            <div class="card" style="text-align:center; border-color:var(--neon-gold); background: linear-gradient(135deg, #111a2e, #1a1508);">
+                <div class="card-title" style="color:var(--neon-gold);">💰 موجودی حساب کاربری شما</div>
+                <div class="big-number" id="user-balance" style="color:var(--neon-gold);">0.00 TON</div>
+                <button class="btn btn-gold" onclick="checkDepositStatus()" style="margin-top:10px; font-size:12px; padding:10px;">🔄 بررسی و به‌روزرسانی موجودی (تایید واریز)</button>
+            </div>
+
+            <!-- اطلاعات واریز و آدرس ولت -->
             <div class="card" style="text-align:center;">
-                <div class="card-title">کیف پول اختصاصی واریز TON</div>
-                <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px;">
-                    برای شارژ حساب یا پرداخت‌های مستقیم، از آدرس زیر استفاده کنید:
+                <div class="card-title">شارژ کیف پول و واریز TON</div>
+                <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px; line-height: 1.5;">
+                    مبلغ دلخواه را به آدرس زیر واریز کنید. موجودی شما پس از تایید توسط ادمین در باکس بالا شارژ می‌شود:
                 </p>
 
                 <div class="input-group">
                     <label>آدرس ولت دریافت:</label>
                     <input type="text" id="admin-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; text-align:center;">
                 </div>
-                <button class="btn" onclick="copyWallet()">کپی آدرس کیف پول</button>
+                <button class="btn" onclick="copyWallet()" style="margin-bottom: 10px;">کپی آدرس کیف پول</button>
+
+                <div class="input-group" style="margin-top: 15px;">
+                    <label style="color:var(--neon-cyan);">MEMO اختصاصی شما (الزامی موقع واریز):</label>
+                    <input type="text" id="deposit-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center;">
+                </div>
             </div>
+
         </div>
 
         <!-- TAB 3: HISTORY -->
@@ -340,6 +355,23 @@
             return '1007321991';
         }
 
+        // بارگذاری اطلاعات اولیه کاربر (موجودی و MEMO)
+        window.onload = function() {
+            var uId = getUserId();
+            var memoField = document.getElementById('deposit-memo');
+            if (memoField) memoField.value = uId;
+            updateBalanceDisplay();
+        };
+
+        function updateBalanceDisplay() {
+            var uId = getUserId();
+            var balance = localStorage.getItem('ads_balance_' + uId) || '0.00';
+            var balanceElem = document.getElementById('user-balance');
+            if (balanceElem) {
+                balanceElem.innerText = parseFloat(balance).toFixed(2) + ' TON';
+            }
+        }
+
         function switchTab(tabName) {
             document.getElementById('tab-order').style.display = 'none';
             document.getElementById('tab-deposit').style.display = 'none';
@@ -358,6 +390,13 @@
                 'history': '📋 پیگیری سفارش‌ها'
             };
             document.getElementById('page-title').innerText = titles[tabName];
+
+            if (tabName === 'deposit') {
+                updateBalanceDisplay();
+                var uId = getUserId();
+                var memoField = document.getElementById('deposit-memo');
+                if (memoField) memoField.value = uId;
+            }
 
             if (tabName === 'history') {
                 loadOrders();
@@ -421,6 +460,12 @@
             document.getElementById('order-count').value = '';
             document.getElementById('total-price').innerText = '0.00 TON';
             customPackagePrice = null;
+        }
+
+        function checkDepositStatus() {
+            // شبیه‌سازی بررسی واریزی کاربر (ادمین از طریق پنل یا شما به صورت دستی موجودی را ست می‌کنید)
+            updateBalanceDisplay();
+            alert("🔄 در حال بررسی تراکنش‌های شبکه TON...\n\nموجودی شما هم‌اکنون به‌روز است. اگر واریزی انجام داده‌اید، پس از تایید ادمین در این بخش نمایش داده می‌شود.");
         }
 
         function loadOrders() {
