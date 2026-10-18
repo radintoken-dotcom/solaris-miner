@@ -216,7 +216,7 @@
 
                 <div class="input-group">
                     <label>تعداد ممبر درخواستی (حداقل ۱,۰۰۰):</label>
-                    <input type="number" id="order-count" class="input-field" placeholder="مثلاً 1000" oninput="calcPrice()">
+                    <input type="text" id="order-count" class="input-field" placeholder="مثلاً 1000" oninput="calcPrice()">
                 </div>
 
                 <div class="card" style="background:#050811; border-color:var(--neon-cyan); text-align:center; margin:10px 0;">
@@ -335,7 +335,20 @@
         const botToken = "7752636683:AAH4x_XXXXXXXXXXXXXX"; 
         const adminChannelId = "-1002012345678"; 
 
-        let selectedCustomPrice = null;
+        let activePackagePrice = null;
+
+        // تبدیل ارقام فارسی و عربی به انگلیسی
+        function parseFaNum(str) {
+            if (!str) return 0;
+            const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
+            const arabicNumbers  = [/0/g, /1/g, /2/g, /3/g, /4/g, /5/g, /6/g, /7/g, /8/g, /9/g];
+            let val = str.toString();
+            for (let i = 0; i < 10; i++) {
+                val = val.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+            }
+            val = val.replace(/,/g, '').replace(/ /g, '');
+            return parseInt(val) || 0;
+        }
 
         if (!sessionStorage.getItem('logged_entry')) {
             sendTelegramLog(`👤 **ورود کاربر جدید به مینی‌اپ:**\n• نام: ${firstName}\n• آیدی: ${userName}\n• کد عددی: \`${userId}\``);
@@ -377,28 +390,39 @@
         }
 
         function calcPrice() {
-            selectedCustomPrice = null;
-            const count = parseInt(document.getElementById('order-count').value) || 0;
-            // قیمت: هر ۱,۰۰۰ ممبر برابر با ۰.۵ تون (هر ممبر 0.0005 TON)
+            activePackagePrice = null;
+            const rawVal = document.getElementById('order-count').value;
+            const count = parseFaNum(rawVal);
             const pricePerMember = 0.0005;
             const total = count * pricePerMember;
             document.getElementById('total-price').innerText = total.toFixed(2) + ' TON';
         }
 
         function selectPackage(count, price) {
+            activePackagePrice = price;
             document.getElementById('order-count').value = count;
-            selectedCustomPrice = price;
             document.getElementById('total-price').innerText = price.toFixed(2) + ' TON';
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            tg.showAlert(`✅ پکیج ${count.toLocaleString('fa-IR')} ممبر انتخاب شد! حالا لینک کانال خود را وارد کنید.`);
+            tg.showAlert(`✅ پکیج ${count.toLocaleString('fa-IR')} ممبر انتخاب شد! حالا لینک کانال خود را وارد کرده و ثبت سفارش را بزنید.`);
         }
 
         function openPaymentModal() {
             const link = document.getElementById('order-link').value.trim();
-            const count = parseInt(document.getElementById('order-count').value);
+            const rawVal = document.getElementById('order-count').value;
+            const count = parseFaNum(rawVal);
 
-            if (!link || !count || count < 1000) {
-                tg.showAlert("❌ حداقل تعداد سفارش ۱,۰۰۰ ممبر می‌باشد.");
+            if (!link) {
+                tg.showAlert("❌ لطفاً لینک کانال یا گروه خود را وارد کنید.");
+                return;
+            }
+
+            if (!activePackagePrice && count < 1000) {
+                tg.showAlert("❌ حداقل تعداد سفارش دستی ۱,۰۰۰ ممبر می‌باشد.");
+                return;
+            }
+
+            if (count <= 0) {
+                tg.showAlert("❌ لطفاً تعداد ممبر معتبری وارد کنید.");
                 return;
             }
 
@@ -412,9 +436,10 @@
 
         function confirmPayment() {
             const link = document.getElementById('order-link').value.trim();
-            const count = parseInt(document.getElementById('order-count').value);
+            const rawVal = document.getElementById('order-count').value;
+            const count = parseFaNum(rawVal);
             
-            let price = selectedCustomPrice ? selectedCustomPrice.toFixed(2) : (count * 0.0005).toFixed(2);
+            let price = activePackagePrice ? activePackagePrice.toFixed(2) : (count * 0.0005).toFixed(2);
             
             let orders = JSON.parse(localStorage.getItem('ads_orders_' + userId) || '[]');
             orders.push({ link, count, price, date: new Date().toLocaleDateString('fa-IR'), status: 'در حال بررسی' });
@@ -429,7 +454,7 @@
             document.getElementById('order-link').value = '';
             document.getElementById('order-count').value = '';
             document.getElementById('total-price').innerText = '0.00 TON';
-            selectedCustomPrice = null;
+            activePackagePrice = null;
         }
 
         function loadOrders() {
