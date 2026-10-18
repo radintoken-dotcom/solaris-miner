@@ -213,6 +213,21 @@
             stroke: var(--neon-cyan);
             filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.6));
         }
+
+        .stat-grid {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .stat-box {
+            flex: 1;
+            background: #050811;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -300,20 +315,39 @@
             </div>
         </div>
 
-        <!-- TAB 3: REFERRAL -->
+        <!-- TAB 3: REFERRAL (WITH INVITED USERS LIST) -->
         <div id="tab-ref" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
                 <div class="card-title" style="color:var(--neon-cyan); font-size:14px; font-weight:bold;">سیستم زیرمجموعه‌گیری و دعوت دوستان</div>
                 <p style="font-size:12px; color:var(--text-sub); margin:10px 0; line-height:1.6;">
-                    با اشتراک‌گذاری لینک اختصاصی خود، دوستانتان را دعوت کنید و از هر واریزی آنها پاداش اختصاصی دریافت کنید!
+                    با اشتراک‌گذاری لینک اختصاصی خود، دوستانتان را دعوت کنید و پاداش دریافت کنید!
                 </p>
 
-                <div class="input-group" style="margin-top:15px;">
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <div class="card-title">تعداد زیرمجموعه‌ها</div>
+                        <div id="ref-count" style="font-size:18px; font-weight:bold; color:var(--neon-gold);">0 نفر</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="card-title">درآمد کسب شده</div>
+                        <div id="ref-earnings" style="font-size:18px; font-weight:bold; color:var(--neon-green);">0.00 TON</div>
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-top:10px;">
                     <label>لینک دعوت اختصاصی شما:</label>
                     <input type="text" id="ref-link" class="input-field" readonly style="font-size:11px; text-align:center; color:var(--neon-gold);">
                 </div>
 
                 <button class="btn btn-gold" onclick="copyRefLink()" style="margin-top:5px;">کپی لینک دعوت</button>
+            </div>
+
+            <!-- لیست افراد دعوت شده -->
+            <div class="card">
+                <div style="font-size:13px; font-weight:bold; color:var(--neon-cyan); margin-bottom:10px; text-align:right;">👥 لیست افراد دعوت‌شده توسط شما:</div>
+                <div id="invited-users-list" style="font-size:12px; color:var(--text-sub); text-align:center;">
+                    هنوز کسی با لینک شما وارد نشده است.
+                </div>
             </div>
         </div>
 
@@ -390,8 +424,6 @@
 
     <script>
         var customPackagePrice = null;
-
-        // 👈 یوزرنیم رباتت رو اینجا قرار بده (بدون @)
         var MY_BOT_USERNAME = "SolarisMiner_bot"; 
 
         function getUserId() {
@@ -403,6 +435,16 @@
             return '1007321991';
         }
 
+        function getUserName() {
+            try {
+                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
+                    var u = window.Telegram.WebApp.initDataUnsafe.user;
+                    return u.username ? ('@' + u.username) : (u.first_name || 'کاربر جدید');
+                }
+            } catch(e) {}
+            return 'کاربر ناشناس';
+        }
+
         window.onload = function() {
             var uId = getUserId();
             var memoField = document.getElementById('deposit-memo');
@@ -412,7 +454,33 @@
             if (refLinkField) refLinkField.value = 'https://t.me/' + MY_BOT_USERNAME + '?start=' + uId;
 
             updateBalanceDisplay();
+            checkAndRegisterReferral();
         };
+
+        function checkAndRegisterReferral() {
+            try {
+                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
+                    var startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
+                    var myId = getUserId();
+                    var myName = getUserName();
+
+                    if (startParam && startParam !== myId) {
+                        var refKey = 'solaris_invites_' + startParam;
+                        var invites = JSON.parse(localStorage.getItem(refKey) || '[]');
+                        
+                        var alreadyExists = invites.some(function(inv) { return inv.id === myId; });
+                        if (!alreadyExists) {
+                            invites.push({
+                                id: myId,
+                                name: myName,
+                                date: new Date().toLocaleDateString('fa-IR')
+                            });
+                            localStorage.setItem(refKey, JSON.stringify(invites));
+                        }
+                    }
+                }
+            } catch(e) {}
+        }
 
         function updateBalanceDisplay() {
             var uId = getUserId();
@@ -421,6 +489,34 @@
             if (balanceElem) {
                 balanceElem.innerText = parseFloat(balance).toFixed(2) + ' TON';
             }
+        }
+
+        function loadReferrals() {
+            var uId = getUserId();
+            var invites = [];
+            try {
+                invites = JSON.parse(localStorage.getItem('solaris_invites_' + uId) || '[]');
+            } catch(e) {}
+
+            var countElem = document.getElementById('ref-count');
+            if (countElem) countElem.innerText = invites.length + ' نفر';
+
+            var container = document.getElementById('invited-users-list');
+            if (!container) return;
+
+            if (invites.length === 0) {
+                container.innerHTML = 'هنوز کسی با لینک شما وارد نشده است.';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < invites.length; i++) {
+                html += '<div style="background:#050811; padding:8px 12px; border-radius:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">' +
+                    '<span style="color:var(--neon-cyan); font-weight:bold;">' + invites[i].name + '</span>' +
+                    '<span style="color:var(--text-sub); font-size:10px;">' + invites[i].date + '</span>' +
+                    '</div>';
+            }
+            container.innerHTML = html;
         }
 
         function switchTab(tabName) {
@@ -450,6 +546,10 @@
 
             if (tabName === 'deposit') {
                 updateBalanceDisplay();
+            }
+
+            if (tabName === 'ref') {
+                loadReferrals();
             }
 
             if (tabName === 'history') {
