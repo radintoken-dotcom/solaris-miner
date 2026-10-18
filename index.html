@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>AdsGram Pro - پلتفرم جذب ممبر و تبلیغات</title>
+    <title>AdsGram Pro - پنل سفارش ممبر</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --bg-color: #080d1a;
             --card-bg: #111a2e;
-            --primary-blue: #0088cc;
             --neon-cyan: #00f0ff;
             --neon-green: #28a745;
             --text-main: #ffffff;
@@ -78,7 +77,7 @@
         }
 
         .big-number {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
             color: var(--neon-cyan);
             margin: 6px 0;
@@ -105,44 +104,6 @@
 
         .btn-green {
             background: linear-gradient(135deg, #28a745, #20c997);
-        }
-
-        .task-item {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid var(--border-color);
-        }
-
-        .task-info {
-            text-align: right;
-        }
-
-        .task-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .task-reward {
-            font-size: 12px;
-            color: var(--neon-green);
-            margin-top: 4px;
-        }
-
-        .task-btn {
-            background: var(--neon-cyan);
-            color: #000;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 12px;
-            cursor: pointer;
         }
 
         .input-group {
@@ -205,29 +166,17 @@
 </head>
 <body>
 
-    <div class="header" id="page-title">🎯 تسک‌ها و دریافت پاداش</div>
+    <div class="header" id="page-title">🚀 ثبت سفارش و خرید ممبر</div>
 
     <div class="content">
-        <!-- 1. TASKS TAB -->
-        <div id="tab-tasks" class="tab-content active">
-            <div class="card" style="text-align:center;">
-                <div class="card-title">موجودی درآمد شما</div>
-                <div class="big-number" id="user-balance">0.000 TON</div>
-                <div style="font-size:11px; color:var(--text-sub);">با عضویت در کانال‌های زیر پاداش TON بگیرید!</div>
-            </div>
-
-            <div style="font-size:13px; font-weight:bold; color:var(--neon-cyan); margin-bottom:10px;">📢 کانال‌های فعال جهت عضویت</div>
-            <div id="tasks-container"></div>
-        </div>
-
-        <!-- 2. ORDER / BUY MEMBERS TAB -->
-        <div id="tab-order" class="tab-content">
+        <!-- 1. ORDER / BUY MEMBERS TAB (سفارش ممبر) -->
+        <div id="tab-order" class="tab-content active">
             <div class="card">
-                <div style="font-weight:bold; font-size:15px; color:var(--neon-cyan); margin-bottom:12px; text-align:center;">🚀 ثبت سفارش ممبر (پرداخت با TON)</div>
+                <div style="font-weight:bold; font-size:15px; color:var(--neon-cyan); margin-bottom:12px; text-align:center;">⚡ ثبت سفارش جدید</div>
                 
                 <div class="input-group">
                     <label>لینک کانال یا گروه شما:</label>
-                    <input type="text" id="order-link" class="input-field" placeholder="https://t.me/your_channel">
+                    <input type="text" id="order-link" class="input-field" placeholder="@channel یا https://t.me/...">
                 </div>
 
                 <div class="input-group">
@@ -244,63 +193,69 @@
             </div>
         </div>
 
-        <!-- 3. WALLET / WITHDRAW TAB -->
-        <div id="tab-wallet" class="tab-content">
+        <!-- 2. DEPOSIT / WALLET TAB (فقط واریز) -->
+        <div id="tab-deposit" class="tab-content">
             <div class="card" style="text-align:center;">
-                <div class="card-title">موجودی قابل برداشت</div>
-                <div class="big-number" id="wallet-balance">0.000 TON</div>
-            </div>
+                <div class="card-title">کیف پول اختصاصی واریز TON</div>
+                <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px;">
+                    برای شارژ حساب یا پرداخت‌های مستقیم، از آدرس زیر استفاده کنید:
+                </p>
 
-            <div class="card">
                 <div class="input-group">
-                    <label>آدرس کیف پول TON (Tonkeeper):</label>
-                    <input type="text" id="withdraw-addr" class="input-field" placeholder="UQ... یا EQ...">
+                    <label>آدرس ولت شما:</label>
+                    <input type="text" id="admin-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; text-align:center;">
                 </div>
-                <div class="input-group">
-                    <label>مبلغ برداشت (TON):</label>
-                    <input type="number" id="withdraw-amt" class="input-field" placeholder="حداقل 0.5 TON">
+                <button class="btn" onclick="copyWallet()">کپی آدرس کیف پول</button>
+            </div>
+        </div>
+
+        <!-- 3. ORDERS HISTORY / INFO TAB (وضعیت سفارش‌ها) -->
+        <div id="tab-history" class="tab-content">
+            <div class="card" style="text-align:center;">
+                <div class="card-title">سفارش‌های ثبت شده</div>
+                <div id="orders-list" style="font-size:12px; color:var(--text-sub); margin-top:10px;">
+                    هنوز سفارشی ثبت نکرده‌اید.
                 </div>
-                <button class="btn" onclick="requestWithdraw()">ثبت درخواست برداشت</button>
             </div>
         </div>
     </div>
 
-    <!-- PAYMENT MODAL FOR ADVERTISERS -->
+    <!-- PAYMENT MODAL -->
     <div id="payment-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.9); z-index:2000; padding:20px; align-items:center; justify-content:center;">
-        <div class="card" style="width:100%; border-color:var(--neon-cyan);">
-            <div style="font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:12px;">💳 واریز جهت ثبت سفارش</div>
+        <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0;">
+            <div style="font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:12px;">💳 واریز جهت تایید سفارش</div>
             <p style="font-size:12px; color:var(--text-sub); text-align:center; margin-bottom:10px;">
-                مبلغ مورد نظر را به آدرس زیر واریز کنید و حتماً <b>MEMO</b> را در واریز خود قرار دهید:
+                مبلغ را به آدرس زیر بفرستید و حتماً <b>MEMO</b> را در تراکنش خود درج کنید:
             </p>
 
             <div class="input-group">
-                <label>آدرس ولت دریافت (TON):</label>
+                <label>آدرس دریافت:</label>
                 <input type="text" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center;">
             </div>
 
             <div class="input-group">
                 <label style="color:var(--neon-cyan);">MEMO اختصاصی شما:</label>
-                <input type="text" id="user-memo" class="input-field" value="" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center;">
+                <input type="text" id="user-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center;">
             </div>
 
-            <button class="btn btn-green" onclick="confirmPayment()" style="margin-bottom:8px;">پرداخت کردم</button>
+            <button class="btn btn-green" onclick="confirmPayment()" style="margin-bottom:8px;">پرداخت کردم (ثبت نهایی)</button>
             <button class="btn" onclick="closePaymentModal()" style="background:#333;">انصراف</button>
         </div>
     </div>
 
     <!-- BOTTOM NAV BAR -->
     <div class="nav-bar">
-        <div class="nav-item active" onclick="switchTab('tasks')">
-            <div class="nav-icon">🎯</div>
-            <div>تسک‌ها</div>
-        </div>
-        <div class="nav-item" onclick="switchTab('order')">
+        <div class="nav-item active" onclick="switchTab('order')">
             <div class="nav-icon">🚀</div>
             <div>سفارش ممبر</div>
         </div>
-        <div class="nav-item" onclick="switchTab('wallet')">
+        <div class="nav-item" onclick="switchTab('deposit')">
             <div class="nav-icon">💎</div>
-            <div>کیف پول</div>
+            <div>واریز تون</div>
+        </div>
+        <div class="nav-item" onclick="switchTab('history')">
+            <div class="nav-icon">📋</div>
+            <div>سفارش‌ها</div>
         </div>
     </div>
 
@@ -309,17 +264,6 @@
         tg.expand();
 
         let userId = tg.initDataUnsafe?.user?.id ? String(tg.initDataUnsafe.user.id) : 'user_' + Math.floor(100000 + Math.random() * 900000);
-        let balance = parseFloat(localStorage.getItem('ads_bal_' + userId) || '0.000');
-
-        let tasks = [
-            { id: 1, title: "کانال سیگنال و اخبار کریپتو", reward: 0.05, link: "https://t.me/trancemusicpsy" },
-            { id: 2, title: "ربات بازی و ایردراپ", reward: 0.05, link: "https://t.me/lifetime_energy_bot" }
-        ];
-
-        function updateUI() {
-            document.getElementById('user-balance').innerText = balance.toFixed(3) + ' TON';
-            document.getElementById('wallet-balance').innerText = balance.toFixed(3) + ' TON';
-        }
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -328,59 +272,24 @@
             document.getElementById('tab-' + tabName).classList.add('active');
 
             const titles = {
-                'tasks': '🎯 تسک‌ها و دریافت پاداش',
                 'order': '🚀 ثبت سفارش و خرید ممبر',
-                'wallet': '💎 برداشت درآمد'
+                'deposit': '💎 واریز تون‌کوین (TON)',
+                'history': '📋 پیگیری سفارش‌ها'
             };
             document.getElementById('page-title').innerText = titles[tabName];
 
             const navs = document.querySelectorAll('.nav-item');
-            if (tabName === 'tasks') navs[0].classList.add('active');
-            if (tabName === 'order') navs[1].classList.add('active');
-            if (tabName === 'wallet') navs[2].classList.add('active');
-
-            if (tabName === 'tasks') renderTasks();
-        }
-
-        function renderTasks() {
-            const container = document.getElementById('tasks-container');
-            container.innerHTML = '';
-
-            tasks.forEach(task => {
-                const isDone = localStorage.getItem('ads_task_' + userId + '_' + task.id);
-                const div = document.createElement('div');
-                div.className = 'task-item';
-
-                let btnHtml = isDone 
-                    ? `<button class="task-btn" style="background:#333; color:#aaa;" disabled>انجام شد</button>`
-                    : `<button class="task-btn" onclick="doTask(${task.id}, '${task.link}', ${task.reward})">عضویت (+${task.reward})</button>`;
-
-                div.innerHTML = `
-                    <div class="task-info">
-                        <div class="task-title">${task.title}</div>
-                        <div class="task-reward">پاداش: ${task.reward} TON</div>
-                    </div>
-                    ${btnHtml}
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function doTask(id, link, reward) {
-            tg.openTelegramLink(link);
-            setTimeout(() => {
-                balance += reward;
-                localStorage.setItem('ads_bal_' + userId, balance);
-                localStorage.setItem('ads_task_' + userId + '_' + id, 'true');
-                updateUI();
-                renderTasks();
-                tg.showAlert(`🎉 پاداش +${reward} TON به حساب شما اضافه شد!`);
-            }, 3000);
+            if (tabName === 'order') navs[0].classList.add('active');
+            if (tabName === 'deposit') navs[1].classList.add('active');
+            if (tabName === 'history') {
+                navs[2].classList.add('active');
+                loadOrders();
+            }
         }
 
         function calcPrice() {
             const count = parseInt(document.getElementById('order-count').value) || 0;
-            const pricePerMember = 0.01; // قیمت هر ممبر 0.01 تون
+            const pricePerMember = 0.01; // قیمت هر ممبر
             const total = count * pricePerMember;
             document.getElementById('total-price').innerText = total.toFixed(2) + ' TON';
         }
@@ -389,8 +298,8 @@
             const link = document.getElementById('order-link').value.trim();
             const count = parseInt(document.getElementById('order-count').value);
 
-            if (!link || !count || count < 10) {
-                tg.showAlert("❌ لطفاً لینک کانال و تعداد ممبر (حداقل ۱۰) را وارد کنید.");
+            if (!link || !count || count < 5) {
+                tg.showAlert("❌ لطفاً لینک کانال و تعداد ممبر (حداقل ۵) را بهادقت وارد کنید.");
                 return;
             }
 
@@ -403,38 +312,54 @@
         }
 
         function confirmPayment() {
+            const link = document.getElementById('order-link').value.trim();
+            const count = document.getElementById('order-count').value;
+            
+            // ذخیره سفارش در localStorage
+            let orders = JSON.parse(localStorage.getItem('ads_orders_' + userId) || '[]');
+            orders.push({ link, count, date: new Date().toLocaleDateString('fa-IR'), status: 'در حال بررسی' });
+            localStorage.setItem('ads_orders_' + userId, JSON.stringify(orders));
+
             closePaymentModal();
-            tg.showAlert("✅ تراکنش شما ثبت شد! پس از تایید شبکه، سفارش شما فعال خواهد شد.");
+            tg.showAlert("✅ سفارش شما با موفقیت ثبت شد و پس از تایید تراکنش در بلاک‌چین آغاز می‌گردد!");
+            
             document.getElementById('order-link').value = '';
             document.getElementById('order-count').value = '';
-            calcPrice();
+            document.getElementById('total-price').innerText = '0.00 TON';
         }
 
-        function requestWithdraw() {
-            const addr = document.getElementById('withdraw-addr').value.trim();
-            const amt = parseFloat(document.getElementById('withdraw-amt').value);
+        function loadOrders() {
+            const container = document.getElementById('orders-list');
+            let orders = JSON.parse(localStorage.getItem('ads_orders_' + userId) || '[]');
 
-            if (!addr || addr.length < 5) {
-                tg.showAlert("❌ لطفاً آدرس کیف پول معتبر وارد کنید.");
-                return;
-            }
-            if (isNaN(amt) || amt < 0.5) {
-                tg.showAlert("❌ حداقل مبلغ برداشت 0.5 TON می‌باشد.");
-                return;
-            }
-            if (amt > balance) {
-                tg.showAlert("❌ موجودی شما کافی نیست.");
+            if (orders.length === 0) {
+                container.innerHTML = 'هنوز سفارشی ثبت نکرده‌اید.';
                 return;
             }
 
-            balance -= amt;
-            localStorage.setItem('ads_bal_' + userId, balance);
-            updateUI();
-            tg.showAlert("✅ درخواست برداشت شما ثبت شد و تا ۲۴ ساعت آینده واریز می‌شود.");
+            container.innerHTML = '';
+            orders.forEach((ord, index) => {
+                const div = document.createElement('div');
+                div.style.background = '#050811';
+                div.style.padding = '10px';
+                div.style.borderRadius = '8px';
+                div.style.marginBottom = '8px';
+                div.style.textAlign = 'right';
+                div.innerHTML = `
+                    <div style="font-weight:bold; color:var(--neon-cyan);">سفارش شماره #${index + 1}</div>
+                    <div style="color:#fff; margin-top:4px;">کانال: ${ord.link}</div>
+                    <div style="color:var(--text-sub); font-size:11px;">تعداد: ${ord.count} ممبر | وضعیت: <span style="color:var(--neon-green);">${ord.status}</span></div>
+                `;
+                container.appendChild(div);
+            });
         }
 
-        updateUI();
-        renderTasks();
+        function copyWallet() {
+            const input = document.getElementById('admin-wallet');
+            input.select();
+            document.execCommand("copy");
+            tg.showAlert("📋 آدرس کیف پول کپی شد!");
+        }
     </script>
 </body>
 </html>
