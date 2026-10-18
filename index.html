@@ -203,9 +203,8 @@
     <div class="header" id="page-title">🚀 ثبت سفارش و خرید ممبر</div>
 
     <div class="content">
-        <!-- 1. ORDER / BUY MEMBERS TAB -->
+        <!-- TAB 1: ORDER -->
         <div id="tab-order" class="tab-content active">
-            
             <div class="card">
                 <div style="font-weight:bold; font-size:15px; color:var(--neon-cyan); margin-bottom:12px; text-align:center;">⚡ ثبت سفارش جدید</div>
                 
@@ -215,7 +214,7 @@
                 </div>
 
                 <div class="input-group">
-                    <label>تعداد ممبر درخواستی (حداقل ۱k تا حداکثر ۵۰k):</label>
+                    <label>تعداد ممبر درخواستی:</label>
                     <input type="text" id="order-count" class="input-field" placeholder="مثلاً 1000" oninput="calcPrice()">
                 </div>
 
@@ -227,7 +226,7 @@
                 <button class="btn btn-green" onclick="openPaymentModal()">پرداخت با تون‌کوین و ثبت سفارش</button>
             </div>
 
-            <!-- پکیج‌های ویژه اقتصادی -->
+            <!-- PACKAGES -->
             <div class="card">
                 <div style="font-weight:bold; font-size:14px; color:var(--neon-gold); margin-bottom:12px; text-align:center;">🔥 پکیج‌های ویژه و اقتصادی</div>
 
@@ -255,15 +254,14 @@
                     <button class="btn btn-gold" style="width:auto; padding:8px 12px; font-size:12px;" onclick="selectPackage(20000, 2.50)">انتخاب</button>
                 </div>
             </div>
-
         </div>
 
-        <!-- 2. DEPOSIT / WALLET TAB -->
+        <!-- TAB 2: DEPOSIT -->
         <div id="tab-deposit" class="tab-content">
             <div class="card" style="text-align:center;">
                 <div class="card-title">کیف پول اختصاصی واریز TON</div>
                 <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px;">
-                    برای شارژ حساب یا پرداخت‌های مستقیم، از آدرس زیر استفاده کنید:
+                    آدرس ولت دریافت واریزی‌ها:
                 </p>
 
                 <div class="input-group">
@@ -274,7 +272,7 @@
             </div>
         </div>
 
-        <!-- 3. ORDERS HISTORY TAB -->
+        <!-- TAB 3: HISTORY -->
         <div id="tab-history" class="tab-content">
             <div class="card" style="text-align:center;">
                 <div class="card-title">سفارش‌های ثبت شده شما</div>
@@ -290,7 +288,7 @@
         <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0;">
             <div style="font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:12px;">💳 واریز جهت تایید سفارش</div>
             <p style="font-size:12px; color:var(--text-sub); text-align:center; margin-bottom:10px;">
-                مبلغ را به آدرس زیر بفرستید و حتماً <b>MEMO</b> را در تراکنش خود درج کنید:
+                مبلغ را به آدرس زیر بفرستید و حتماً <b>MEMO</b> را درج کنید:
             </p>
 
             <div class="input-group">
@@ -325,11 +323,174 @@
     </div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
+        var tg = window.Telegram ? window.Telegram.WebApp : null;
+        if (tg) {
+            try { tg.expand(); } catch(e) {}
+        }
 
-        let userId = tg.initDataUnsafe?.user?.id ? String(tg.initDataUnsafe.user.id) : 'user_' + Math.floor(100000 + Math.random() * 900000);
-        let userName = tg.initDataUnsafe?.user?.username ? '@' + tg.initDataUnsafe.user.username : 'بدون آیدی عمومی';
-        let firstName = tg.initDataUnsafe?.user?.first_name || 'کاربر جدید';
+        var userId = '1007321991';
+        if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.id) {
+            userId = String(tg.initDataUnsafe.user.id);
+        }
 
-        const botToken = "7752636683:AAH4x_XXXXXXXXXXXXXX"; 
+        var activePackagePrice = null;
+
+        function showAppAlert(msg) {
+            if (tg && tg.showAlert) {
+                try {
+                    tg.showAlert(msg);
+                } catch(e) {
+                    alert(msg);
+                }
+            } else {
+                alert(msg);
+            }
+        }
+
+        function parseFaNum(str) {
+            if (!str) return 0;
+            var val = str.toString()
+                .replace(/[۰-۹]/g, function(d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); })
+                .replace(/[0-9]/g, function(d) { return '0123456789'.indexOf(d); })
+                .replace(/,/g, '').replace(/ /g, '');
+            return parseInt(val) || 0;
+        }
+
+        function switchTab(tabName) {
+            var tabs = document.querySelectorAll('.tab-content');
+            for(var i=0; i<tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            var navs = document.querySelectorAll('.nav-item');
+            for(var j=0; j<navs.length; j++) {
+                navs[j].classList.remove('active');
+            }
+
+            var targetTab = document.getElementById('tab-' + tabName);
+            if (targetTab) targetTab.classList.add('active');
+
+            var titles = {
+                'order': '🚀 ثبت سفارش و خرید ممبر',
+                'deposit': '💎 واریز تون‌کوین (TON)',
+                'history': '📋 پیگیری سفارش‌ها'
+            };
+            var titleElem = document.getElementById('page-title');
+            if (titleElem) titleElem.innerText = titles[tabName] || '';
+
+            if (tabName === 'order' && navs[0]) navs[0].classList.add('active');
+            if (tabName === 'deposit' && navs[1]) navs[1].classList.add('active');
+            if (tabName === 'history' && navs[2]) {
+                navs[2].classList.add('active');
+                loadOrders();
+            }
+        }
+
+        function calcPrice() {
+            activePackagePrice = null;
+            var countInput = document.getElementById('order-count');
+            var count = parseFaNum(countInput ? countInput.value : '');
+            var total = count * 0.0005;
+            var priceElem = document.getElementById('total-price');
+            if (priceElem) priceElem.innerText = total.toFixed(2) + ' TON';
+        }
+
+        function selectPackage(count, price) {
+            activePackagePrice = price;
+            var countInput = document.getElementById('order-count');
+            if (countInput) countInput.value = count;
+            
+            var priceElem = document.getElementById('total-price');
+            if (priceElem) priceElem.innerText = price.toFixed(2) + ' TON';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            showAppAlert('✅ پکیج ' + count.toLocaleString('fa-IR') + ' ممبر انتخاب شد! لینک کانال را وارد کرده و دکمه پرداخت را بزنید.');
+        }
+
+        function openPaymentModal() {
+            var linkInput = document.getElementById('order-link');
+            var link = linkInput ? linkInput.value.trim() : '';
+            
+            var countInput = document.getElementById('order-count');
+            var count = parseFaNum(countInput ? countInput.value : '');
+
+            if (!link) {
+                showAppAlert("❌ لطفاً لینک کانال یا گروه خود را وارد کنید.");
+                return;
+            }
+
+            if (count <= 0) {
+                showAppAlert("❌ لطفاً تعداد ممبر را وارد کنید.");
+                return;
+            }
+
+            var memoElem = document.getElementById('user-memo');
+            if (memoElem) memoElem.value = userId;
+            
+            var modal = document.getElementById('payment-modal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closePaymentModal() {
+            var modal = document.getElementById('payment-modal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function confirmPayment() {
+            var linkInput = document.getElementById('order-link');
+            var link = linkInput ? linkInput.value.trim() : '';
+            
+            var countInput = document.getElementById('order-count');
+            var count = parseFaNum(countInput ? countInput.value : '');
+            
+            var price = activePackagePrice ? activePackagePrice.toFixed(2) : (count * 0.0005).toFixed(2);
+            
+            try {
+                var orders = JSON.parse(localStorage.getItem('ads_orders_' + userId) || '[]');
+                orders.push({ 
+                    link: link, 
+                    count: count, 
+                    price: price, 
+                    date: new Date().toLocaleDateString('fa-IR'), 
+                    status: 'در حال بررسی' 
+                });
+                localStorage.setItem('ads_orders_' + userId, JSON.stringify(orders));
+            } catch(e) {}
+
+            closePaymentModal();
+            showAppAlert("✅ سفارش شما با موفقیت ثبت شد و در صف بررسی قرار گرفت!");
+            
+            if (linkInput) linkInput.value = '';
+            if (countInput) countInput.value = '';
+            var priceElem = document.getElementById('total-price');
+            if (priceElem) priceElem.innerText = '0.00 TON';
+            activePackagePrice = null;
+        }
+
+        function loadOrders() {
+            var container = document.getElementById('orders-list');
+            if (!container) return;
+
+            var orders = [];
+            try {
+                orders = JSON.parse(localStorage.getItem('ads_orders_' + userId) || '[]');
+            } catch(e) {}
+
+            if (orders.length === 0) {
+                container.innerHTML = 'هنوز سفارشی ثبت نکرده‌اید.';
+                return;
+            }
+
+            container.innerHTML = '';
+            for (var i = 0; i < orders.length; i++) {
+                var ord = orders[i];
+                var div = document.createElement('div');
+                div.style.background = '#050811';
+                div.style.padding = '10px';
+                div.style.borderRadius = '8px';
+                div.style.marginBottom = '8px';
+                div.style.textAlign = 'right';
+                div.innerHTML = 
+                    '<div style="font-weight:bold; color:var(--neon-cyan);">سفارش شماره #' + (i + 1) + '</div>' +
+                    '<div style="color:#fff; margin-top:4px;">کانال: ' + ord.link + '</div>' +
+                    '<div style="color:var(--text-sub); font-size
