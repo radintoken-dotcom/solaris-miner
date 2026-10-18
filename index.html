@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>AdsGram Pro - پنل سفارش ممبر</title>
+    <title>AdsGram Pro - سفارش ممبر اقتصادی</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -11,6 +11,7 @@
             --card-bg: #111a2e;
             --neon-cyan: #00f0ff;
             --neon-green: #28a745;
+            --neon-gold: #ffd700;
             --text-main: #ffffff;
             --text-sub: #8da0bf;
             --border-color: #1e2d4a;
@@ -106,6 +107,12 @@
             background: linear-gradient(135deg, #28a745, #20c997);
         }
 
+        .btn-gold {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
         .input-group {
             margin-bottom: 12px;
             text-align: right;
@@ -127,6 +134,33 @@
             color: #fff;
             font-size: 13px;
             outline: none;
+        }
+
+        .pkg-item {
+            background: #050811;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .pkg-info {
+            text-align: right;
+        }
+
+        .pkg-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--neon-gold);
+        }
+
+        .pkg-price {
+            font-size: 12px;
+            color: var(--neon-cyan);
+            margin-top: 2px;
         }
 
         .nav-bar {
@@ -169,8 +203,9 @@
     <div class="header" id="page-title">🚀 ثبت سفارش و خرید ممبر</div>
 
     <div class="content">
-        <!-- 1. ORDER / BUY MEMBERS TAB (سفارش ممبر) -->
+        <!-- 1. ORDER / BUY MEMBERS TAB -->
         <div id="tab-order" class="tab-content active">
+            
             <div class="card">
                 <div style="font-weight:bold; font-size:15px; color:var(--neon-cyan); margin-bottom:12px; text-align:center;">⚡ ثبت سفارش جدید</div>
                 
@@ -180,8 +215,8 @@
                 </div>
 
                 <div class="input-group">
-                    <label>تعداد ممبر درخواستی:</label>
-                    <input type="number" id="order-count" class="input-field" placeholder="مثلاً 100" oninput="calcPrice()">
+                    <label>تعداد ممبر درخواستی (حداقل ۱,۰۰۰):</label>
+                    <input type="number" id="order-count" class="input-field" placeholder="مثلاً 1000" oninput="calcPrice()">
                 </div>
 
                 <div class="card" style="background:#050811; border-color:var(--neon-cyan); text-align:center; margin:10px 0;">
@@ -191,9 +226,39 @@
 
                 <button class="btn btn-green" onclick="openPaymentModal()">پرداخت با تون‌کوین و ثبت سفارش</button>
             </div>
+
+            <!-- پکیج‌های ویژه اقتصادی -->
+            <div class="card">
+                <div style="font-weight:bold; font-size:14px; color:var(--neon-gold); margin-bottom:12px; text-align:center;">🔥 پکیج‌های ویژه و اقتصادی</div>
+
+                <div class="pkg-item">
+                    <div class="pkg-info">
+                        <div class="pkg-name">🌟 پکیج 5K (۵,۰۰۰ ممبر)</div>
+                        <div class="pkg-price">قیمت: 1.00 TON (تخفیف ویژه)</div>
+                    </div>
+                    <button class="btn btn-gold" style="width:auto; padding:8px 12px; font-size:12px;" onclick="selectPackage(5000, 1.00)">انتخاب</button>
+                </div>
+
+                <div class="pkg-item">
+                    <div class="pkg-info">
+                        <div class="pkg-name">🚀 پکیج 10K (۱۰,۰۰۰ ممبر)</div>
+                        <div class="pkg-price">قیمت: 1.50 TON (محبوب‌ترین)</div>
+                    </div>
+                    <button class="btn btn-gold" style="width:auto; padding:8px 12px; font-size:12px;" onclick="selectPackage(10000, 1.50)">انتخاب</button>
+                </div>
+
+                <div class="pkg-item">
+                    <div class="pkg-info">
+                        <div class="pkg-name">👑 پکیج 20K (۲۰,۰۰۰ ممبر)</div>
+                        <div class="pkg-price">قیمت: 2.50 TON (بهترین ارزش)</div>
+                    </div>
+                    <button class="btn btn-gold" style="width:auto; padding:8px 12px; font-size:12px;" onclick="selectPackage(20000, 2.50)">انتخاب</button>
+                </div>
+            </div>
+
         </div>
 
-        <!-- 2. DEPOSIT / WALLET TAB (فقط واریز) -->
+        <!-- 2. DEPOSIT / WALLET TAB -->
         <div id="tab-deposit" class="tab-content">
             <div class="card" style="text-align:center;">
                 <div class="card-title">کیف پول اختصاصی واریز TON</div>
@@ -202,17 +267,17 @@
                 </p>
 
                 <div class="input-group">
-                    <label>آدرس ولت شما:</label>
+                    <label>آدرس ولت دریافت:</label>
                     <input type="text" id="admin-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; text-align:center;">
                 </div>
                 <button class="btn" onclick="copyWallet()">کپی آدرس کیف پول</button>
             </div>
         </div>
 
-        <!-- 3. ORDERS HISTORY / INFO TAB (وضعیت سفارش‌ها) -->
+        <!-- 3. ORDERS HISTORY TAB -->
         <div id="tab-history" class="tab-content">
             <div class="card" style="text-align:center;">
-                <div class="card-title">سفارش‌های ثبت شده</div>
+                <div class="card-title">سفارش‌های ثبت شده شما</div>
                 <div id="orders-list" style="font-size:12px; color:var(--text-sub); margin-top:10px;">
                     هنوز سفارشی ثبت نکرده‌اید.
                 </div>
@@ -229,7 +294,7 @@
             </p>
 
             <div class="input-group">
-                <label>آدرس دریافت:</label>
+                <label>آدرس دریافت (TON):</label>
                 <input type="text" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center;">
             </div>
 
@@ -264,6 +329,30 @@
         tg.expand();
 
         let userId = tg.initDataUnsafe?.user?.id ? String(tg.initDataUnsafe.user.id) : 'user_' + Math.floor(100000 + Math.random() * 900000);
+        let userName = tg.initDataUnsafe?.user?.username ? '@' + tg.initDataUnsafe.user.username : 'بدون آیدی عمومی';
+        let firstName = tg.initDataUnsafe?.user?.first_name || 'کاربر جدید';
+
+        const botToken = "7752636683:AAH4x_XXXXXXXXXXXXXX"; 
+        const adminChannelId = "-1002012345678"; 
+
+        let selectedCustomPrice = null;
+
+        if (!sessionStorage.getItem('logged_entry')) {
+            sendTelegramLog(`👤 **ورود کاربر جدید به مینی‌اپ:**\n• نام: ${firstName}\n• آیدی: ${userName}\n• کد عددی: \`${userId}\``);
+            sessionStorage.setItem('logged_entry', 'true');
+        }
+
+        function sendTelegramLog(textMessage) {
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: adminChannelId,
+                    text: textMessage,
+                    parse_mode: 'Markdown'
+                })
+            }).catch(e => console.log('Log send error:', e));
+        }
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -288,18 +377,28 @@
         }
 
         function calcPrice() {
+            selectedCustomPrice = null;
             const count = parseInt(document.getElementById('order-count').value) || 0;
-            const pricePerMember = 0.01; // قیمت هر ممبر
+            // قیمت: هر ۱,۰۰۰ ممبر برابر با ۰.۵ تون (هر ممبر 0.0005 TON)
+            const pricePerMember = 0.0005;
             const total = count * pricePerMember;
             document.getElementById('total-price').innerText = total.toFixed(2) + ' TON';
+        }
+
+        function selectPackage(count, price) {
+            document.getElementById('order-count').value = count;
+            selectedCustomPrice = price;
+            document.getElementById('total-price').innerText = price.toFixed(2) + ' TON';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            tg.showAlert(`✅ پکیج ${count.toLocaleString('fa-IR')} ممبر انتخاب شد! حالا لینک کانال خود را وارد کنید.`);
         }
 
         function openPaymentModal() {
             const link = document.getElementById('order-link').value.trim();
             const count = parseInt(document.getElementById('order-count').value);
 
-            if (!link || !count || count < 5) {
-                tg.showAlert("❌ لطفاً لینک کانال و تعداد ممبر (حداقل ۵) را بهادقت وارد کنید.");
+            if (!link || !count || count < 1000) {
+                tg.showAlert("❌ حداقل تعداد سفارش ۱,۰۰۰ ممبر می‌باشد.");
                 return;
             }
 
@@ -313,19 +412,24 @@
 
         function confirmPayment() {
             const link = document.getElementById('order-link').value.trim();
-            const count = document.getElementById('order-count').value;
+            const count = parseInt(document.getElementById('order-count').value);
             
-            // ذخیره سفارش در localStorage
+            let price = selectedCustomPrice ? selectedCustomPrice.toFixed(2) : (count * 0.0005).toFixed(2);
+            
             let orders = JSON.parse(localStorage.getItem('ads_orders_' + userId) || '[]');
-            orders.push({ link, count, date: new Date().toLocaleDateString('fa-IR'), status: 'در حال بررسی' });
+            orders.push({ link, count, price, date: new Date().toLocaleDateString('fa-IR'), status: 'در حال بررسی' });
             localStorage.setItem('ads_orders_' + userId, JSON.stringify(orders));
 
+            const orderLog = `🚨 **سفارش جدید خرید ممبر!**\n\n👤 **خریدار:** ${firstName} (${userName})\n🆔 **شناسه:** \`${userId}\` \n📢 **کانال درخواستی:** ${link}\n🔢 **تعداد:** ${count.toLocaleString()} ممبر\n💰 **مبلغ:** ${price} TON\n🏷 **کد MEMO:** \`${userId}\``;
+            sendTelegramLog(orderLog);
+
             closePaymentModal();
-            tg.showAlert("✅ سفارش شما با موفقیت ثبت شد و پس از تایید تراکنش در بلاک‌چین آغاز می‌گردد!");
+            tg.showAlert("✅ سفارش شما با موفقیت ثبت شد و در صف بررسی قرار گرفت!");
             
             document.getElementById('order-link').value = '';
             document.getElementById('order-count').value = '';
             document.getElementById('total-price').innerText = '0.00 TON';
+            selectedCustomPrice = null;
         }
 
         function loadOrders() {
@@ -348,7 +452,8 @@
                 div.innerHTML = `
                     <div style="font-weight:bold; color:var(--neon-cyan);">سفارش شماره #${index + 1}</div>
                     <div style="color:#fff; margin-top:4px;">کانال: ${ord.link}</div>
-                    <div style="color:var(--text-sub); font-size:11px;">تعداد: ${ord.count} ممبر | وضعیت: <span style="color:var(--neon-green);">${ord.status}</span></div>
+                    <div style="color:var(--text-sub); font-size:11px;">تعداد: ${parseInt(ord.count).toLocaleString('fa-IR')} ممبر | مبلغ: ${ord.price} TON</div>
+                    <div style="color:var(--neon-green); font-size:11px; margin-top:2px;">وضعیت: ${ord.status}</div>
                 `;
                 container.appendChild(div);
             });
