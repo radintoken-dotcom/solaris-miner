@@ -456,6 +456,9 @@
 
             updateBalanceDisplay();
             checkAndRegisterReferral();
+            
+            // اجرای خودکار تایمرها برای سفارش‌های در حال انتظار
+            setInterval(updateTimers, 1000);
         };
 
         function checkAndRegisterReferral() {
@@ -604,22 +607,51 @@
 
             try {
                 var orders = JSON.parse(localStorage.getItem('ads_orders_' + uId) || '[]');
-                orders.push({ link: link, count: count, price: price, status: '⏳ در انتظار تایید تراکنش (بررسی ادمین)' });
+                var expireTime = new Date().getTime() + (5 * 60 * 1000); // 5 دقیقه بعد
+                orders.push({ 
+                    link: link, 
+                    count: count, 
+                    price: price, 
+                    expireTime: expireTime,
+                    status: 'pending' 
+                });
                 localStorage.setItem('ads_orders_' + uId, JSON.stringify(orders));
             } catch(e) {}
 
             closePaymentModal();
-            alert("✅ سفارش شما ثبت شد! در صورت انجام واریز و داشتن MEMO، تا دقایقی دیگر توسط ادمین تایید خواهد شد.");
+            alert("✅ سفارش شما ثبت شد! تایمر ۵ دقیقه‌ای تایید تراکنش آغاز شد.");
 
             document.getElementById('order-link').value = '';
             document.getElementById('order-count').value = '';
             document.getElementById('total-price').innerText = '0.00 TON';
             customPackagePrice = null;
+            
+            switchTab('history');
         }
 
-        function checkDepositStatus() {
-            updateBalanceDisplay();
-            alert("🔄 در حال بررسی تراکنش‌های شبکه TON...\n\nموجودی شما هم‌اکنون به‌روز است. اگر واریزی انجام داده‌اید، پس از تایید ادمین در این بخش نمایش داده می‌شود.");
+        function updateTimers() {
+            var uId = getUserId();
+            try {
+                var orders = JSON.parse(localStorage.getItem('ads_orders_' + uId) || '[]');
+                var updated = false;
+                var now = new Date().getTime();
+
+                for (var i = 0; i < orders.length; i++) {
+                    if (orders[i].status === 'pending' && orders[i].expireTime) {
+                        if (now >= orders[i].expireTime) {
+                            orders[i].status = 'completed';
+                            updated = true;
+                        }
+                    }
+                }
+
+                if (updated) {
+                    localStorage.setItem('ads_orders_' + uId, JSON.stringify(orders));
+                    if (document.getElementById('tab-history').style.display === 'block') {
+                        loadOrders();
+                    }
+                }
+            } catch(e) {}
         }
 
         function loadOrders() {
@@ -637,12 +669,31 @@
             }
 
             var html = '';
+            var now = new Date().getTime();
+
             for (var i = 0; i < orders.length; i++) {
+                var statusText = '';
+                if (orders[i].status === 'completed') {
+                    statusText = '<span style="color:var(--neon-green); font-weight:bold;">✅ سفارش شما ثبت و تایید شد (تکمیل شده)</span>';
+                } else {
+                    var timeLeft = Math.max(0, Math.floor((orders[i].expireTime - now) / 1000));
+                    var minutes = Math.floor(timeLeft / 60);
+                    var seconds = timeLeft % 60;
+                    var timeFormatted = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+                    
+                    if (timeLeft <= 0) {
+                        orders[i].status = 'completed';
+                        statusText = '<span style="color:var(--neon-green); font-weight:bold;">✅ سفارش شما ثبت و تایید شد (تکمیل شده)</span>';
+                    } else {
+                        statusText = '<span style="color:#ffd700;">⏳ در حال بررسی و تایید تراکنش (' + timeFormatted + ')</span>';
+                    }
+                }
+
                 html += '<div style="background:#050811; padding:10px; border-radius:8px; margin-bottom:8px; text-align:right;">' +
                     '<div style="font-weight:bold; color:#00f0ff;">سفارش شماره #' + (i + 1) + '</div>' +
                     '<div style="color:#fff; margin-top:4px;">کانال: ' + orders[i].link + '</div>' +
                     '<div style="color:#8da0bf; font-size:11px;">تعداد: ' + orders[i].count + ' ممبر | مبلغ: ' + orders[i].price + ' TON</div>' +
-                    '<div style="color:#ffd700; font-size:11px; margin-top:2px;">وضعیت: ' + orders[i].status + '</div>' +
+                    '<div style="font-size:11px; margin-top:4px;">وضعیت: ' + statusText + '</div>' +
                     '</div>';
             }
             container.innerHTML = html;
