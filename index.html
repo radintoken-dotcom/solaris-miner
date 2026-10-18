@@ -384,15 +384,17 @@
 
             <div class="input-group">
                 <label>آدرس دریافت (TON):</label>
-                <input type="text" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center;">
+                <input type="text" id="modal-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center; margin-bottom:6px;">
+                <button class="btn" onclick="copyModalWallet()" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan);">📋 کپی آدرس ولت</button>
             </div>
 
-            <div class="input-group">
+            <div class="input-group" style="margin-top: 10px;">
                 <label style="color:var(--neon-cyan);">MEMO اختصاصی شما:</label>
-                <input type="text" id="user-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center;">
+                <input type="text" id="user-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center; margin-bottom:6px;">
+                <button class="btn" onclick="copyModalMemo()" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-gold);">📋 کپی کد MEMO</button>
             </div>
 
-            <button class="btn btn-green" onclick="confirmPayment()" style="margin-bottom:8px;">واریز کردم و ثبت نهایی</button>
+            <button class="btn btn-green" onclick="confirmPayment()" style="margin-top:15px; margin-bottom:8px;">واریز کردم و ثبت نهایی</button>
             <button class="btn" onclick="closePaymentModal()" style="background:#333;">انصراف</button>
         </div>
     </div>
@@ -581,8 +583,8 @@
                 return;
             }
 
-            if (count <= 0) {
-                alert("❌ لطفاً تعداد ممبر را وارد کنید.");
+            if (count < 1000) {
+                alert("❌ حداقل تعداد سفارش 1000 ممبر است.");
                 return;
             }
 
@@ -651,6 +653,20 @@
             input.select();
             document.execCommand("copy");
             alert("📋 آدرس کیف پول کپی شد!");
+        }
+
+        function copyModalWallet() {
+            var input = document.getElementById('modal-wallet');
+            input.select();
+            document.execCommand("copy");
+            alert("📋 آدرس ولت کپی شد!");
+        }
+
+        function copyModalMemo() {
+            var input = document.getElementById('user-memo');
+            input.select();
+            document.execCommand("copy");
+            alert("📋 کد MEMO کپی شد!");
         }
 
         function copyRefLink() {
