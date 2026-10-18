@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Solaris Miner</title>
+    <title>PulseAd Pro - Ad Platform</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #07090e;
-            --card-bg: #0e131f;
-            --gold-color: #ffcc00;
-            --gold-glow: rgba(255, 204, 0, 0.4);
-            --neon-green: #00ffcc;
-            --neon-glow: rgba(0, 255, 204, 0.3);
+            --bg-color: #05070b;
+            --card-bg: #0c101d;
+            --gold-color: #00ffcc;
+            --gold-glow: rgba(0, 255, 204, 0.4);
+            --neon-pink: #ff007f;
+            --pink-glow: rgba(255, 0, 127, 0.4);
             --text-color: #ffffff;
             --sub-text: #8b9bb4;
             --border-color: #1a293b;
@@ -33,19 +33,19 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
-            background-image: radial-gradient(circle at 50% 20%, #0c1829 0%, #07090e 80%);
+            background-image: radial-gradient(circle at 50% 10%, #111e38 0%, #05070b 80%);
         }
 
         .header {
             text-align: center;
-            padding: 12px 0;
+            padding: 15px 0;
             font-weight: 900;
-            font-size: 18px;
-            letter-spacing: 2px;
+            font-size: 20px;
+            letter-spacing: 3px;
             color: var(--gold-color);
-            text-shadow: 0 0 12px var(--gold-glow);
+            text-shadow: 0 0 15px var(--gold-glow);
             border-bottom: 1px solid var(--border-color);
-            background: rgba(10, 14, 22, 0.9);
+            background: rgba(10, 14, 22, 0.95);
         }
 
         .content {
@@ -63,58 +63,34 @@
             display: block;
         }
 
-        .coin-logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px 0 15px 0;
-        }
-
-        .coin-logo {
-            width: 85px;
-            height: 85px;
-            background: url('https://raw.githubusercontent.com/radintoken-dotcom/solaris-miner/main/1000004990.jpg') no-repeat center center;
-            background-size: cover;
-            border-radius: 50%;
-            border: 2px solid var(--gold-color);
-            box-shadow: 0 0 20px var(--gold-glow);
-        }
-
         .card {
             background-color: var(--card-bg);
             border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
             text-align: center;
-            border: 1px solid var(--neon-green);
-            box-shadow: 0 0 15px var(--neon-glow), inset 0 0 10px rgba(0, 255, 204, 0.05);
+            border: 1px solid var(--gold-color);
+            box-shadow: 0 0 15px var(--gold-glow), inset 0 0 10px rgba(0, 255, 204, 0.05);
         }
 
         .card-title {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--sub-text);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        .big-number {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--gold-color);
-            text-shadow: 0 0 10px var(--gold-glow);
-            margin: 4px 0;
-        }
-
-        .sub-rate {
-            font-size: 11px;
-            color: var(--neon-green);
-            text-shadow: 0 0 6px var(--neon-glow);
             margin-bottom: 8px;
         }
 
+        .big-number {
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            margin: 6px 0;
+        }
+
         .btn {
-            background: linear-gradient(135deg, #ffcc00, #ff8800);
+            background: linear-gradient(135deg, #00ffcc, #0088cc);
             color: #000000;
             border: none;
             padding: 12px 18px;
@@ -124,7 +100,7 @@
             cursor: pointer;
             width: 100%;
             transition: 0.2s;
-            box-shadow: 0 0 12px rgba(255, 204, 0, 0.3);
+            box-shadow: 0 0 12px var(--gold-glow);
             letter-spacing: 1px;
         }
 
@@ -133,56 +109,59 @@
             transform: scale(0.98);
         }
 
-        .btn-secondary {
-            background: #111827;
-            color: var(--neon-green);
-            border: 1px solid var(--neon-green);
-            box-shadow: 0 0 8px var(--neon-glow);
+        .btn-pink {
+            background: linear-gradient(135deg, #ff007f, #99004c);
+            color: #fff;
+            box-shadow: 0 0 12px var(--pink-glow);
         }
 
         .task-item {
             background: var(--card-bg);
             border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border: 1px solid var(--border-color);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
         .task-info {
             text-align: left;
-            max-width: 60%;
+            max-width: 55%;
         }
 
         .task-title {
             font-size: 13px;
             font-weight: bold;
+            color: #fff;
             word-break: break-word;
         }
 
         .task-reward {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--gold-color);
-            margin-top: 3px;
+            margin-top: 4px;
             font-weight: bold;
         }
 
         .task-btn {
             width: auto;
-            padding: 8px 14px;
+            padding: 9px 16px;
             font-size: 12px;
-            background: #0088cc;
-            color: #fff;
-            box-shadow: none;
+            background: #00ffcc;
+            color: #000;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
         }
 
         .task-btn.done {
             background: #1f293d;
             color: var(--sub-text);
             cursor: not-allowed;
-            font-size: 11px;
         }
 
         .input-group {
@@ -194,19 +173,23 @@
             display: block;
             font-size: 11px;
             color: var(--sub-text);
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             text-transform: uppercase;
         }
 
         .input-field {
             width: 100%;
             padding: 12px;
-            background: #07090e;
+            background: #05070b;
             border: 1px solid var(--border-color);
             border-radius: 10px;
             color: #fff;
             font-size: 13px;
             outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--gold-color);
         }
 
         .nav-bar {
@@ -215,12 +198,12 @@
             left: 0;
             right: 0;
             height: 65px;
-            background: rgba(10, 14, 22, 0.95);
+            background: rgba(10, 14, 22, 0.98);
             display: flex;
             justify-content: space-around;
             align-items: center;
             border-top: 1px solid var(--border-color);
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
             z-index: 1000;
         }
 
@@ -245,240 +228,98 @@
             font-size: 20px;
             margin-bottom: 3px;
         }
-
-        .package-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .package-card {
-            background: #0e131f;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .package-card:hover, .package-card.selected {
-            border-color: var(--gold-color);
-            background: #151d30;
-            box-shadow: 0 0 12px var(--gold-glow);
-        }
-
-        .package-info {
-            text-align: left;
-        }
-
-        .package-power {
-            font-size: 15px;
-            font-weight: bold;
-            color: var(--gold-color);
-        }
-
-        .package-price {
-            font-size: 12px;
-            color: var(--sub-text);
-            margin-top: 2px;
-        }
-
-        .package-badge {
-            background: rgba(0, 255, 204, 0.1);
-            color: var(--neon-green);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            border: 1px solid var(--neon-green);
-        }
-
-        .copy-btn-inline {
-            background: #0088cc;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            cursor: pointer;
-            margin-top: 4px;
-            float: right;
-        }
     </style>
 </head>
 <body>
 
-    <div class="header">SOLARIS MINER</div>
+    <div class="header">⚡ PULSEAD PRO</div>
 
     <div class="content">
-        <!-- 1. MINER TAB -->
-        <div id="tab-miner" class="tab-content active">
-            <div class="card">
-                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                    <button class="btn" onclick="openDepositModal()" style="font-size:12px; padding:10px;">⚡ BOOST GHS</button>
-                    <button class="btn btn-secondary" style="font-size:12px; padding:10px; cursor:default;">FREE GHS</button>
-                </div>
-                <div class="card-title">TOTAL GHS POWER</div>
-                <div class="big-number" id="ghs-power">247.00 GHS</div>
-                <div class="sub-rate" id="rate-display">+0.00000186 Gram/s (0.16 Gram/day)</div>
+        <!-- 1. CAMPAIGNS / TASKS TAB -->
+        <div id="tab-tasks" class="tab-content active">
+            <div class="card" style="border-color: var(--neon-pink); box-shadow: 0 0 15px var(--pink-glow);">
+                <div class="card-title">YOUR EARNED CREDITS</div>
+                <div class="big-number" id="user-balance">0.00 Star</div>
+                <div style="font-size: 11px; color: var(--sub-text);">Join channels below to earn rewards & tokens!</div>
             </div>
 
-            <div class="coin-logo-container">
-                <div class="coin-logo"></div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">YOUR BALANCE</div>
-                <div class="big-number"><span id="main-balance">0.008365</span> Gram</div>
-                
-                <div style="margin-top: 12px;">
-                    <div class="card-title">PENDING BALANCE</div>
-                    <div style="font-size: 18px; font-weight: 900; margin: 5px 0; color: var(--neon-green); text-shadow: 0 0 8px var(--neon-glow);" id="pending-balance">0.00013500 Gram</div>
-                </div>
-
-                <button class="btn" style="margin-top: 12px;" onclick="claimBalance()">CLAIM BALANCE</button>
-            </div>
-        </div>
-
-        <!-- 2. TASKS TAB -->
-        <div id="tab-tasks" class="tab-content">
-            <div style="text-align: center; margin-bottom: 15px; font-weight: bold; color: var(--gold-color);">DAILY TASKS (24H)</div>
+            <div style="text-align: center; margin-bottom: 12px; font-weight: bold; color: var(--gold-color); font-size: 12px; letter-spacing: 1px;">ACTIVE SPONSOR CHANNELS</div>
             <div id="tasks-container"></div>
         </div>
 
-        <!-- 3. EARN TAB -->
+        <!-- 2. PROMOTE / ADVERTISE TAB -->
+        <div id="tab-promote" class="tab-content">
+            <div class="card" style="text-align: left;">
+                <div class="card-title" style="text-align: center; color: var(--gold-color); font-size: 13px; margin-bottom: 12px;">📢 CREATE AD CAMPAIGN</div>
+                
+                <div class="input-group">
+                    <label>Channel / Bot Username or Link</label>
+                    <input type="text" id="ad-link" class="input-field" placeholder="https://t.me/your_channel">
+                </div>
+
+                <div class="input-group">
+                    <label>Required Members / Views</label>
+                    <input type="number" id="ad-count" class="input-field" placeholder="100">
+                </div>
+
+                <div class="input-group">
+                    <label>Reward per user (Stars / TON)</label>
+                    <input type="number" id="ad-reward" class="input-field" value="0.5" step="0.1">
+                </div>
+
+                <button class="btn btn-pink" onclick="submitCampaign()">LAUNCH CAMPAIGN</button>
+            </div>
+        </div>
+
+        <!-- 3. EARN / REFERRAL TAB -->
         <div id="tab-earn" class="tab-content">
             <div class="card">
-                <div class="card-title">YOUR EXCLUSIVE REFERRAL LINK</div>
+                <div class="card-title">YOUR REFERRAL LINK</div>
                 <input type="text" class="input-field" id="ref-link" readonly style="text-align: center; margin: 10px 0; color: var(--gold-color); font-weight: bold;">
-                <button class="btn" onclick="copyRefLink()">SHARE LINK</button>
+                <button class="btn" onclick="copyRefLink()">COPY INVITE LINK</button>
             </div>
 
             <div class="card">
-                <div class="card-title">MY REFERRALS</div>
+                <div class="card-title">TOTAL REFERRED USERS</div>
                 <div class="big-number" id="ref-count">0</div>
-                <div class="sub-rate">+2 GHS per referral</div>
-            </div>
-
-            <div class="card" style="text-align: left;">
-                <div class="card-title" style="margin-bottom: 10px;">PROMOTED GAMES</div>
-                <div style="font-size: 12px; line-height: 2; color: #ccc;">
-                    🔹 <a href="https://t.me/lifetime_energy_bot?start=1007321991" target="_blank" style="color: var(--neon-green); text-decoration: none;">Lifetime Energy</a><br>
-                    🔹 <a href="https://g.cb.click/aVYJfp" target="_blank" style="color: var(--neon-green); text-decoration: none;">CB Click Game</a><br>
-                    🔹 <a href="https://telegram.me/asanstars_bot?start=ref_636BD072" target="_blank" style="color: var(--neon-green); text-decoration: none;">Asan Stars Bot</a><br>
-                    🔹 <a href="https://t.me/ThunderWavesBot/App?startapp=ref_OU6LZU77" target="_blank" style="color: var(--neon-green); text-decoration: none;">Thunder Waves</a><br>
-                    🔹 <a href="https://t.me/ASTRA_AIRDROP_BOT/app?startapp=ref_1007321991" target="_blank" style="color: var(--neon-green); text-decoration: none;">Astra Airdrop</a><br>
-                    🔹 <a href="https://t.me/mrgminerbot/app?startapp=ref_X21JV7Y" target="_blank" style="color: var(--neon-green); text-decoration: none;">Mrg Miner Bot</a><br>
-                    🔹 <a href="https://t.me/MIMA_COIN_bot?start=ref_334f1c96314eb54c" target="_blank" style="color: var(--neon-green); text-decoration: none;">Mima Coin Bot</a><br>
-                    🔹 <a href="https://zmine.si/register?ref=WRFTHZXH" target="_blank" style="color: var(--neon-green); text-decoration: none;">Z-Mine Platform</a><br>
-                    🔹 <a href="https://atok.ai/referral/OeqE" target="_blank" style="color: var(--neon-green); text-decoration: none;">ATOK Game</a><br>
-                    🔹 <a href="https://t.me/trancemusicpsy" target="_blank" style="color: var(--neon-green); text-decoration: none;">Trance Music Channel</a>
-                </div>
+                <div style="font-size: 11px; color: var(--gold-color);">Earn 10% from your friends' activities!</div>
             </div>
         </div>
 
-        <!-- 4. WITHDRAW TAB -->
-        <div id="tab-withdraw" class="tab-content">
+        <!-- 4. WALLET / PROFILE TAB -->
+        <div id="tab-wallet" class="tab-content">
             <div class="card">
-                <div class="card-title">YOUR BALANCE</div>
-                <div class="big-number"><span id="withdraw-balance">0.008365</span> Gram</div>
+                <div class="card-title">MY WALLET BALANCE</div>
+                <div class="big-number"><span id="wallet-balance">0.00</span> Star</div>
             </div>
 
             <div class="card" style="text-align: left;">
                 <div class="input-group">
-                    <label>Wallet Address (Tonkeeper Gram / TON)</label>
-                    <input type="text" id="wallet-addr" class="input-field" placeholder="UQ... or EQ...">
+                    <label>Withdraw to Tonkeeper / Telegram Wallet</label>
+                    <input type="text" id="payout-addr" class="input-field" placeholder="UQ... or TON address">
                 </div>
-
-                <div class="input-group">
-                    <label>Amount to withdraw</label>
-                    <input type="number" id="withdraw-amount" class="input-field" placeholder="0.00">
-                    <div style="font-size: 11px; color: var(--sub-text); margin-top: 4px;">Minimum is 0.2500 Gram</div>
-                </div>
-
-                <button class="btn" onclick="requestWithdraw()">WITHDRAW</button>
+                <button class="btn" onclick="requestPayout()">REQUEST WITHDRAWAL</button>
             </div>
-        </div>
-    </div>
-
-    <!-- DEPOSIT MODAL -->
-    <div id="deposit-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(5,7,12,0.94); z-index:2000; padding:15px; align-items:center; justify-content:center; overflow-y:auto;">
-        <div class="card" style="width:100%; max-width:380px; text-align:left; margin:0; border-color:var(--gold-color); box-shadow: 0 0 20px var(--gold-glow);">
-            <div class="card-title" style="text-align:center; font-size:15px; color:var(--gold-color); margin-bottom:12px; font-weight:bold;">⚡ BUY GHS POWER</div>
-            <p style="font-size:11px; color:var(--sub-text); text-align:center; margin-bottom:12px;">
-                Select your package and transfer the exact amount:
-            </p>
-
-            <div class="package-grid">
-                <div class="package-card selected" onclick="selectPackage(0.5, 200, this)">
-                    <div class="package-info">
-                        <div class="package-power">+200 GHS</div>
-                        <div class="package-price">Price: <b>0.5 Gram (TON)</b></div>
-                    </div>
-                    <div class="package-badge">Bronze</div>
-                </div>
-
-                <div class="package-card" onclick="selectPackage(1.0, 450, this)">
-                    <div class="package-info">
-                        <div class="package-power">+450 GHS</div>
-                        <div class="package-price">Price: <b>1.0 Gram (TON)</b></div>
-                    </div>
-                    <div class="package-badge" style="color:#0088cc; border-color:#0088cc; background:rgba(0,136,204,0.1)">Silver</div>
-                </div>
-
-                <div class="package-card" onclick="selectPackage(5.0, 2500, this)">
-                    <div class="package-info">
-                        <div class="package-power">+2,500 GHS</div>
-                        <div class="package-price">Price: <b>5.0 Gram (TON)</b></div>
-                    </div>
-                    <div class="package-badge" style="color:var(--gold-color); border-color:var(--gold-color); background:rgba(255,204,0,0.1)">Gold</div>
-                </div>
-            </div>
-
-            <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
-
-            <div class="input-group">
-                <label style="color:var(--neon-green);">Official Deposit Address (Gram / TON):</label>
-                <input type="text" id="admin-wallet-input" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; color:#fff; text-align:center;">
-                <button class="copy-btn-inline" onclick="copyAdminWallet()">Copy Address</button>
-            </div>
-
-            <div class="input-group" style="clear:both; padding-top:8px;">
-                <label style="color:var(--gold-color);">Required MEMO / Comment:</label>
-                <input type="text" id="user-memo" class="input-field" value="" readonly style="color:var(--gold-color); font-weight:bold; text-align:center;">
-                <button class="copy-btn-inline" onclick="copyUserMemo()">Copy MEMO</button>
-            </div>
-
-            <p style="font-size:10px; color:#ff4444; margin:10px 0; clear:both; text-align:center; font-weight:bold;">
-                ⚠️ You MUST include the MEMO above in your wallet transfer comment for automatic crediting.
-            </p>
-
-            <button class="btn" onclick="submitDeposit()" style="margin-bottom:10px;">I HAVE PAID</button>
-            <button class="btn btn-secondary" onclick="closeDepositModal()" style="color:#fff; border-color:var(--border-color);">Cancel</button>
         </div>
     </div>
 
     <!-- BOTTOM NAV BAR -->
     <div class="nav-bar">
-        <div class="nav-item active" onclick="switchTab('miner', this)">
-            <div class="nav-icon">⛏️</div>
-            <div>MINER</div>
-        </div>
-        <div class="nav-item" onclick="switchTab('tasks', this)">
-            <div class="nav-icon">📋</div>
+        <div class="nav-item active" onclick="switchTab('tasks', this)">
+            <div class="nav-icon">🎯</div>
             <div>TASKS</div>
+        </div>
+        <div class="nav-item" onclick="switchTab('promote', this)">
+            <div class="nav-icon">📢</div>
+            <div>PROMOTE</div>
         </div>
         <div class="nav-item" onclick="switchTab('earn', this)">
             <div class="nav-icon">🔗</div>
-            <div>EARN</div>
+            <div>INVITE</div>
         </div>
-        <div class="nav-item" onclick="switchTab('withdraw', this)">
-            <div class="nav-icon">💳</div>
-            <div>WITHDRAW</div>
+        <div class="nav-item" onclick="switchTab('wallet', this)">
+            <div class="nav-icon">💎</div>
+            <div>WALLET</div>
         </div>
     </div>
 
@@ -486,69 +327,22 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        let userId = tg.initDataUnsafe?.user?.id ? String(tg.initDataUnsafe.user.id) : null;
-        if (!userId) {
-            userId = localStorage.getItem('solaris_user_id');
-            if (!userId) {
-                userId = 'user_' + Math.floor(100000 + Math.random() * 900000);
-                localStorage.setItem('solaris_user_id', userId);
-            }
-        }
+        let userId = tg.initDataUnsafe?.user?.id ? String(tg.initDataUnsafe.user.id) : 'user_' + Math.floor(100000 + Math.random() * 900000);
+        let balance = parseFloat(localStorage.getItem('pulse_bal_' + userId) || '2.50');
+        let referrals = parseInt(localStorage.getItem('pulse_refs_' + userId) || '0');
 
-        let ghs = parseFloat(localStorage.getItem('ghs_' + userId) || '247.0');
-        let balance = parseFloat(localStorage.getItem('balance_' + userId) || '0.008365');
-        let pending = parseFloat(localStorage.getItem('pending_' + userId) || '0.000135');
-        let referrals = parseInt(localStorage.getItem('referrals_' + userId) || '0');
-
-        let selectedAmount = 0.5;
-        let selectedGhs = 200;
-
-        const tasks = [
-            { id: 1, title: "Lifetime Energy", reward: 2, link: "https://t.me/lifetime_energy_bot?start=1007321991" },
-            { id: 2, title: "CB Click Game", reward: 2, link: "https://g.cb.click/aVYJfp" },
-            { id: 3, title: "Asan Stars Bot", reward: 1, link: "https://telegram.me/asanstars_bot?start=ref_636BD072" },
-            { id: 4, title: "Thunder Waves", reward: 2, link: "https://t.me/ThunderWavesBot/App?startapp=ref_OU6LZU77" },
-            { id: 5, title: "Astra Airdrop", reward: 1, link: "https://t.me/ASTRA_AIRDROP_BOT/app?startapp=ref_1007321991" },
-            { id: 6, title: "Mrg Miner Bot", reward: 2, link: "https://t.me/mrgminerbot/app?startapp=ref_X21JV7Y" },
-            { id: 7, title: "Mima Coin Bot", reward: 1, link: "https://t.me/MIMA_COIN_bot?start=ref_334f1c96314eb54c" },
-            { id: 8, title: "Z-Mine Platform", reward: 2, link: "https://zmine.si/register?ref=WRFTHZXH" },
-            { id: 9, title: "ATOK Game", reward: 1, link: "https://atok.ai/referral/OeqE" },
-            { id: 10, title: "Trance Music Channel", reward: 1, link: "https://t.me/trancemusicpsy" }
-        ];
+        // لیست کانال‌ها و تبلیغات سفارشی که برای ممبرگیری ثبت شده‌اند
+        let tasks = JSON.parse(localStorage.getItem('pulse_tasks') || JSON.stringify([
+            { id: 1, title: "Crypto Whale Channel", reward: 0.5, link: "https://t.me/trancemusicpsy" },
+            { id: 2, title: "TON Airdrop Hub", reward: 0.5, link: "https://t.me/lifetime_energy_bot" },
+            { id: 3, title: "Metaverse Gaming News", reward: 1.0, link: "https://g.cb.click/aVYJfp" }
+        ]));
 
         function updateUI() {
-            document.getElementById('ghs-power').innerText = ghs.toFixed(2) + ' GHS';
-            document.getElementById('main-balance').innerText = balance.toFixed(6);
-            document.getElementById('withdraw-balance').innerText = balance.toFixed(6);
-            document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' Gram';
+            document.getElementById('user-balance').innerText = balance.toFixed(2) + ' Star';
+            document.getElementById('wallet-balance').innerText = balance.toFixed(2);
             document.getElementById('ref-count').innerText = referrals;
-
-            const dailyGram = (ghs / 200) * 0.13;
-            const ratePerSec = dailyGram / 86400;
-            document.getElementById('rate-display').innerText = `+${ratePerSec.toFixed(8)} Gram/s (${dailyGram.toFixed(2)} Gram/day)`;
-            
-            const botUsername = "SolarisMiner_bot";
-            document.getElementById('ref-link').value = `https://t.me/${botUsername}?start=${userId}`;
-        }
-
-        setInterval(() => {
-            if (ghs > 0) {
-                const dailyGram = (ghs / 200) * 0.13;
-                const ratePerSec = dailyGram / 86400;
-                pending += ratePerSec;
-                localStorage.setItem('pending_' + userId, pending);
-                document.getElementById('pending-balance').innerText = pending.toFixed(8) + ' Gram';
-            }
-        }, 1000);
-
-        function claimBalance() {
-            if (pending <= 0) return;
-            balance += pending;
-            pending = 0;
-            localStorage.setItem('balance_' + userId, balance);
-            localStorage.setItem('pending_' + userId, pending);
-            updateUI();
-            tg.showAlert("✅ Claimed successfully!");
+            document.getElementById('ref-link').value = `https://t.me/PulseAdProBot?start=${userId}`;
         }
 
         function switchTab(tabName, el) {
@@ -570,29 +364,25 @@
             const now = new Date().getTime();
 
             tasks.forEach(task => {
-                const expireKey = 'task_expire_' + userId + '_' + task.id;
+                const expireKey = 'pulse_task_' + userId + '_' + task.id;
                 const expireTime = localStorage.getItem(expireKey);
                 const timeLeft = expireTime ? parseInt(expireTime) - now : 0;
-                const isExpired = !expireTime || timeLeft <= 0;
+                const isDone = expireTime && timeLeft > 0;
                 
                 const div = document.createElement('div');
                 div.className = 'task-item';
                 
                 let btnHtml = '';
-                if (isExpired) {
-                    btnHtml = `<button class="btn task-btn" onclick="doTask(${task.id}, '${task.link}', ${task.reward})">Start (+${task.reward} GHS)</button>`;
+                if (!isDone) {
+                    btnHtml = `<button class="task-btn" onclick="doTask(${task.id}, '${task.link}', ${task.reward})">Join (+${task.reward})</button>`;
                 } else {
-                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                    const timeStr = `${hours}h ${minutes}m ${seconds}s`;
-                    btnHtml = `<button class="btn task-btn done" disabled>${timeStr}</button>`;
+                    btnHtml = `<button class="task-btn done" disabled>Completed</button>`;
                 }
 
                 div.innerHTML = `
                     <div class="task-info">
                         <div class="task-title">${task.title}</div>
-                        <div class="task-reward">+${task.reward} GHS</div>
+                        <div class="task-reward">Reward: +${task.reward} Stars</div>
                     </div>
                     ${btnHtml}
                 `;
@@ -600,105 +390,72 @@
             });
         }
 
-        setInterval(() => {
-            const activeTab = document.querySelector('.tab-content.active');
-            if (activeTab && activeTab.id === 'tab-tasks') {
-                renderTasks();
-            }
-        }, 1000);
-
         function doTask(id, link, reward) {
-            const expireKey = 'task_expire_' + userId + '_' + id;
-            const expireTime = localStorage.getItem(expireKey);
-            const now = new Date().getTime();
-
-            if (expireTime && now < parseInt(expireTime)) {
-                return;
-            }
-
             tg.openTelegramLink(link);
             
             setTimeout(() => {
-                ghs += reward;
-                localStorage.setItem('ghs_' + userId, ghs);
+                balance += reward;
+                localStorage.setItem('pulse_bal_' + userId, balance);
                 
+                // قفل کردن تسک برای ۲۴ ساعت
                 const nextAvailable = new Date().getTime() + (24 * 60 * 60 * 1000);
-                localStorage.setItem(expireKey, nextAvailable);
+                localStorage.setItem('pulse_task_' + userId + '_' + id, nextAvailable);
 
                 renderTasks();
                 updateUI();
-                tg.showAlert(`🎉 Task Completed! +${reward} GHS added to your power.`);
-            }, 5000);
+                tg.showAlert(`🎉 Success! +${reward} Stars added to your balance.`);
+            }, 4000);
+        }
+
+        function submitCampaign() {
+            const link = document.getElementById('ad-link').value.trim();
+            const count = parseInt(document.getElementById('ad-count').value);
+            const reward = parseFloat(document.getElementById('ad-reward').value);
+
+            if (!link || !count || isNaN(reward)) {
+                tg.showAlert("❌ Please fill out all campaign fields correctly.");
+                return;
+            }
+
+            const newTask = {
+                id: tasks.length + 1,
+                title: "Sponsored: " + link.replace('https://t.me/', '@'),
+                reward: reward,
+                link: link
+            };
+
+            tasks.unshift(newTask);
+            localStorage.setItem('pulse_tasks', JSON.stringify(tasks));
+
+            tg.showAlert("🚀 Campaign successfully launched and added to active tasks!");
+            document.getElementById('ad-link').value = '';
+            document.getElementById('ad-count').value = '';
+            switchTab('tasks', document.querySelector('.nav-item'));
         }
 
         function copyRefLink() {
             const copyText = document.getElementById("ref-link");
             copyText.select();
             document.execCommand("copy");
-            tg.showAlert("📋 Your exclusive referral link copied!");
+            tg.showAlert("📋 Referral link copied to clipboard!");
         }
 
-        function requestWithdraw() {
-            const addr = document.getElementById('wallet-addr').value.trim();
-            const amount = parseFloat(document.getElementById('withdraw-amount').value);
-
-            if (!addr || addr.length < 10) {
-                tg.showAlert("❌ Please enter a valid Tonkeeper Gram/TON wallet address.");
+        function requestPayout() {
+            const addr = document.getElementById('payout-addr').value.trim();
+            if (!addr || addr.length < 5) {
+                tg.showAlert("❌ Please enter a valid wallet address.");
+                return;
+            }
+            if (balance < 5.0) {
+                tg.showAlert("❌ Minimum withdrawal is 5.0 Stars.");
                 return;
             }
 
-            if (isNaN(amount) || amount < 0.25) {
-                tg.showAlert("❌ Minimum withdrawal amount is 0.25 Gram.");
-                return;
-            }
-
-            if (amount > balance) {
-                tg.showAlert("❌ Insufficient balance.");
-                return;
-            }
-
-            balance -= amount;
-            localStorage.setItem('balance_' + userId, balance);
+            balance -= 5.0;
+            localStorage.setItem('pulse_bal_' + userId, balance);
             updateUI();
-
-            tg.showAlert(`✅ Withdrawal Request Submitted!\n\nWallet: ${addr}\nAmount: ${amount} Gram\n\nStatus: Pending Admin Approval`);
-            document.getElementById('wallet-addr').value = '';
-            document.getElementById('withdraw-amount').value = '';
-        }
-
-        function selectPackage(amount, ghsPower, el) {
-            selectedAmount = amount;
-            selectedGhs = ghsPower;
-            document.querySelectorAll('.package-card').forEach(card => card.classList.remove('selected'));
-            el.classList.add('selected');
-        }
-
-        function openDepositModal() {
-            document.getElementById('deposit-modal').style.display = 'flex';
-            document.getElementById('user-memo').value = userId;
-        }
-
-        function closeDepositModal() {
-            document.getElementById('deposit-modal').style.display = 'none';
-        }
-
-        function copyAdminWallet() {
-            const walletInput = document.getElementById('admin-wallet-input');
-            walletInput.select();
-            document.execCommand("copy");
-            tg.showAlert("📋 Address copied to clipboard!");
-        }
-
-        function copyUserMemo() {
-            const memoInput = document.getElementById('user-memo');
-            memoInput.select();
-            document.execCommand("copy");
-            tg.showAlert("📋 MEMO copied to clipboard!");
-        }
-
-        function submitDeposit() {
-            closeDepositModal();
-            tg.showAlert(`✅ Deposit Request Submitted!\n\nPlease ensure you sent ${selectedAmount} Gram/TON with MEMO: ${userId}\nYour power will be updated soon (+${selectedGhs} GHS).`);
+            tg.showAlert("✅ Withdrawal request submitted! Processing within 24h.");
+            document.getElementById('payout-addr').value = '';
         }
 
         updateUI();
