@@ -340,7 +340,7 @@
             </div>
         </div>
 
-        <!-- TAB 4: DEPOSIT (کیف پول کامل‌تر) -->
+        <!-- TAB 4: DEPOSIT (کیف پول کامل) -->
         <div id="tab-deposit" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center; border-color:var(--neon-gold); background: linear-gradient(135deg, #111a2e, #1a1508);">
                 <div class="card-title" style="color:var(--neon-gold);">موجودی حساب کاربری شما</div>
@@ -355,7 +355,7 @@
                 </p>
 
                 <div class="input-group">
-                    <label>آدرس ولت دریافت:</label>
+                    <label>آدرس ولت دریافت (TON):</label>
                     <input type="text" id="deposit-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; text-align:center; margin-bottom:6px;">
                     <button class="btn" onclick="copyWallet('deposit-wallet')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan); margin-top:0;">📋 کپی آدرس کیف پول</button>
                 </div>
@@ -492,7 +492,7 @@
                 <div class="big-number" id="direct-total-price" style="color:var(--neon-gold);">0.00 TON</div>
             </div>
 
-            <button class="btn btn-green" onclick="proceedToPaymentModal()">پرداخت با تون‌کوین و ثبت نهایی</button>
+            <button class="btn btn-green" onclick="proceedToPaymentModal()">ادامه و پرداخت</button>
             <button class="btn" onclick="closeModal('modal-direct-order')" style="background:#333; margin-top:6px;">انصراف</button>
         </div>
     </div>
@@ -585,7 +585,6 @@
             if (balanceElem) {
                 balanceElem.innerText = parseFloat(balance).toFixed(2) + ' TON';
             }
-            alert("🔄 موجودی حساب به‌روزرسانی شد!");
         }
 
         function switchTab(tabName) {
@@ -628,6 +627,7 @@
             maxLimit = maxVal;
             
             document.getElementById('direct-order-title').innerText = 'ثبت سفارش: ' + serviceName;
+            document.getElementById('direct-order-link').value = '';
             document.getElementById('direct-order-count').value = '';
             document.getElementById('direct-order-count').placeholder = 'حداقل ' + minLimit.toLocaleString() + ' تا حداکثر ' + maxLimit.toLocaleString();
             document.getElementById('direct-total-price').innerText = '0.00 TON';
