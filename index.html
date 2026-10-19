@@ -7,17 +7,15 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-gradient: radial-gradient(circle at 50% -20%, #1a2a4a 0%, #080d1a 80%);
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            --glass-blur: blur(12px);
-            
+            --bg-color: #0d0e12;
+            --leather-bg: linear-gradient(145deg, #181a20, #0f1015);
+            --leather-card: linear-gradient(145deg, #1f222a, #12141a);
             --neon-cyan: #00f0ff;
             --neon-green: #28a745;
             --neon-gold: #ffd700;
-            --text-main: #ffffff;
-            --text-sub: #a0b2d6;
+            --text-main: #f0f3f8;
+            --text-sub: #8e99ac;
+            --border-leather: #2a2e38;
         }
 
         * {
@@ -30,8 +28,11 @@
         }
 
         body {
-            background: var(--bg-gradient);
-            background-attachment: fixed;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 50% 0%, #1a1e29 0%, transparent 75%),
+                radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+            background-size: 100% 100%, 8px 8px;
             color: var(--text-main);
             display: flex;
             flex-direction: column;
@@ -40,18 +41,17 @@
             direction: rtl;
         }
 
-        /* هدر شیشه‌ای */
+        /* هدر چرم مشکی */
         .header {
-            background: rgba(17, 26, 46, 0.4);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
+            background: var(--leather-card);
             color: var(--neon-cyan);
             text-align: center;
             width: 100%;
             padding: 15px 0;
             font-size: 18px;
             font-weight: bold;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 2px solid var(--border-leather);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.05);
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
             z-index: 10;
         }
@@ -71,16 +71,15 @@
             display: block;
         }
 
-        /* کارت‌های عمومی شیشه‌ای */
+        /* کارت‌های چرم براق با افکت برجسته */
         .card {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
+            background: var(--leather-card);
             border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 14px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
+            padding: 18px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-leather);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.08), inset 0 -2px 5px rgba(0,0,0,0.5);
+            position: relative;
         }
 
         .card-title {
@@ -97,21 +96,19 @@
             margin: 6px 0;
         }
 
-        /* دکمه‌های شیشه‌ای شیک */
+        /* دکمه‌های چرم مشکی و طلایی براق */
         .btn {
-            background: rgba(0, 240, 255, 0.15);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            background: linear-gradient(145deg, #1a2233, #0d121c);
             color: #fff;
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            padding: 11px 14px;
+            border: 1px solid var(--neon-cyan);
+            padding: 12px 14px;
             border-radius: 12px;
             font-weight: bold;
             font-size: 13px;
             cursor: pointer;
             width: 100%;
-            transition: 0.2s ease;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+            transition: 0.15s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255,255,255,0.1);
             display: block;
             text-align: center;
             text-decoration: none;
@@ -121,20 +118,21 @@
         .btn:active {
             opacity: 0.8;
             transform: scale(0.97);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
         }
 
         .btn-green {
-            background: rgba(40, 167, 69, 0.2);
-            border-color: rgba(40, 167, 69, 0.5);
-            box-shadow: 0 0 15px rgba(40, 167, 69, 0.2);
+            background: linear-gradient(145deg, #1b3d22, #0d2112);
+            border-color: var(--neon-green);
             color: #fff;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2), inset 0 1px 1px rgba(255,255,255,0.1);
         }
 
         .btn-gold {
-            background: rgba(255, 215, 0, 0.2);
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+            background: linear-gradient(145deg, #3d3314, #211b0a);
+            border-color: var(--neon-gold);
             color: var(--neon-gold);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1);
         }
 
         .input-group {
@@ -152,29 +150,28 @@
         .input-field {
             width: 100%;
             padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--glass-border);
+            background: #090a0d;
+            border: 1px solid var(--border-leather);
             border-radius: 10px;
             color: #fff;
             font-size: 13px;
             outline: none;
-            backdrop-filter: blur(5px);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
         }
 
-        /* منوی پایینی شیشه‌ای (Bottom Nav Bar) */
+        /* منوی پایینی چرم مشکی با دوخت دو طرفه */
         .nav-bar {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             height: 68px;
-            background: rgba(11, 18, 33, 0.5);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: var(--leather-card);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            border-top: 1px solid var(--glass-border);
+            border-top: 2px solid var(--border-leather);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.9), inset 0 1px 1px rgba(255,255,255,0.05);
             z-index: 1000;
         }
 
@@ -215,26 +212,16 @@
             filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.8));
         }
 
-        /* کارت‌های خدمات شیشه‌ای */
+        /* کارت‌های خدمات چرم مشکی */
         .service-card {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
+            background: var(--leather-card);
+            border: 1px solid var(--border-leather);
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 14px;
             text-align: right;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.05);
             position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
         }
 
         .service-title {
@@ -252,12 +239,13 @@
         }
 
         .sub-service-box {
-            background: rgba(0, 0, 0, 0.25);
-            border: 1px solid var(--glass-border);
+            background: #090a0d;
+            border: 1px solid var(--border-leather);
             border-radius: 12px;
             padding: 12px;
             margin-bottom: 12px;
             text-align: right;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
         }
 
         .sub-service-row {
@@ -273,19 +261,17 @@
             font-weight: bold;
             color: var(--neon-cyan);
             margin-bottom: 8px;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            border-bottom: 1px dashed var(--border-leather);
             padding-bottom: 4px;
             line-height: 1.4;
         }
 
-        /* پاپ‌آپ‌های شیشه‌ای (Modals) */
+        /* پاپ‌آپ تاریک چرم مشکی */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 2000;
             padding: 15px;
             align-items: center;
@@ -294,15 +280,13 @@
         }
 
         .support-card {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
+            background: var(--leather-card);
+            border: 1px solid var(--border-leather);
             border-radius: 16px;
             padding: 18px;
             margin-bottom: 14px;
             text-align: center;
-            box-shadow: var(--glass-shadow);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.05);
         }
 
         .support-icon {
@@ -324,7 +308,7 @@
             line-height: 1.5;
         }
 
-        /* گردونه شانس شیشه‌ای */
+        /* گردونه شانس با تم چرمی مشکی و طلایی */
         .wheel-wrapper {
             position: relative;
             width: 260px;
@@ -350,8 +334,8 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 4px solid rgba(255, 215, 0, 0.6);
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+            border: 5px solid var(--neon-gold);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
             transition: transform 4s cubic-bezier(0.1, 0.9, 0.1, 1);
         }
 
@@ -362,16 +346,15 @@
             transform: translate(-50%, -50%);
             width: 50px;
             height: 50px;
-            background: rgba(17, 26, 46, 0.8);
+            background: #0f1015;
             border: 2px solid var(--neon-gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.9);
             z-index: 10;
-            backdrop-filter: blur(5px);
         }
     </style>
 </head>
@@ -433,7 +416,7 @@
                     <button class="btn btn-gold" id="spin-btn" onclick="checkAndSpinWheel()">🎡 چرخاندن گردونه شانس</button>
                 </div>
 
-                <div id="wheel-result-box" style="display:none; background:rgba(0,0,0,0.3); border:1px solid var(--neon-green); border-radius:12px; padding:12px; margin-top:12px; backdrop-filter:blur(5px);">
+                <div id="wheel-result-box" style="display:none; background:#090a0d; border:1px solid var(--neon-green); border-radius:12px; padding:12px; margin-top:12px;">
                     <div style="color:var(--neon-green); font-weight:bold; font-size:14px; margin-bottom:6px;">🎉 تبریک! شما برنده شدید!</div>
                     <div id="prize-name" style="color:#fff; font-size:12px; font-weight:bold; margin-bottom:8px;">10% تخفیف خرید ممبر</div>
                     <a id="claim-prize-btn" href="#" target="_blank" class="btn btn-green" style="font-size:12px;">💬 ارسال کد شانس به پشتیبانی</a>
@@ -459,21 +442,21 @@
         <!-- TAB 4: SUPPORT -->
         <div id="tab-support" class="tab-content" style="display:none;">
             
-            <div class="support-card" style="border-color:rgba(40, 167, 69, 0.4);">
+            <div class="support-card" style="border-color:var(--neon-green);">
                 <div class="support-icon">🎧</div>
                 <div class="support-title" style="color:var(--neon-green);">ارتباط مستقیم با پشتیبانی</div>
                 <div class="support-sub">جهت پیگیری سفارشات، سوالات و مشاوره خرید به آیدی زیر پیام دهید:</div>
                 <a href="https://t.me/Dollar_Matrix" target="_blank" class="btn btn-green" style="font-size:12px;">💬 ارسال پیام به پشتیبانی</a>
             </div>
 
-            <div class="support-card" style="border-color:rgba(0, 240, 255, 0.4);">
+            <div class="support-card" style="border-color:var(--neon-cyan);">
                 <div class="support-icon">📢</div>
                 <div class="support-title">کانال اطلاع‌رسانی</div>
                 <div class="support-sub">برای اطلاع از اخبار، تخفیف‌های ویژه و سرویس‌های جدید عضو شوید:</div>
                 <a href="https://t.me/NOVATON_IR" target="_blank" class="btn" style="font-size:12px;">📢 ورود به کانال تلگرام</a>
             </div>
 
-            <div class="support-card" style="border-color:rgba(255, 215, 0, 0.4);">
+            <div class="support-card" style="border-color:var(--neon-gold);">
                 <div class="support-icon">👥</div>
                 <div class="support-title" style="color:var(--neon-gold);">گروه چت و تبادل نظر</div>
                 <div class="support-sub">جهت گفتگو با سایر کاربران و اشتراک‌گذاری نظرات:</div>
@@ -554,7 +537,7 @@
                 </div>
             </div>
 
-            <button class="btn" onclick="closeModal('modal-real-member')" style="background:rgba(255,255,255,0.1); margin-top:10px;">بستن</button>
+            <button class="btn" onclick="closeModal('modal-real-member')" style="background:#1f222a; margin-top:10px;">بستن</button>
         </div>
     </div>
 
@@ -596,7 +579,7 @@
                 </div>
             </div>
 
-            <button class="btn" onclick="closeModal('modal-fake-member')" style="background:rgba(255,255,255,0.1); margin-top:10px;">بستن</button>
+            <button class="btn" onclick="closeModal('modal-fake-member')" style="background:#1f222a; margin-top:10px;">بستن</button>
         </div>
     </div>
 
@@ -624,7 +607,7 @@
                 <input type="number" id="direct-order-count" class="input-field" placeholder="تعداد" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()">
             </div>
 
-            <div class="card" style="background:rgba(0,0,0,0.3); border-color:var(--neon-gold); text-align:center; margin:10px 0;">
+            <div class="card" style="background:#090a0d; border-color:var(--neon-gold); text-align:center; margin:10px 0;">
                 <div class="card-title">مبلغ قابل پرداخت</div>
                 <div class="big-number" id="direct-total-price" style="color:var(--neon-gold);">0.00 TON</div>
             </div>
@@ -633,7 +616,7 @@
                 💳 پرداخت آنلاین (نمایش آدرس ولت و MEMO)
             </button>
 
-            <div id="pay-info-box" style="display:none; background:rgba(0,0,0,0.4); border:1px solid var(--neon-cyan); border-radius:12px; padding:10px; margin-bottom:10px;">
+            <div id="pay-info-box" style="display:none; background:#090a0d; border:1px solid var(--neon-cyan); border-radius:12px; padding:10px; margin-bottom:10px;">
                 <p style="font-size:10px; color:#ffd700; text-align:center; margin-bottom:8px;">
                     ⚠️ مبلغ فوق را به ولت زیر واریز کرده و <b>MEMO</b> را حتماً درج کنید:
                 </p>
@@ -653,7 +636,7 @@
                 ✅ ثبت نهایی و ارسال به پشتیبانی
             </button>
             
-            <button class="btn" onclick="closeModal('modal-direct-order')" style="background:rgba(255,255,255,0.1); margin-top:6px;">انصراف</button>
+            <button class="btn" onclick="closeModal('modal-direct-order')" style="background:#1f222a; margin-top:6px;">انصراف</button>
         </div>
     </div>
 
@@ -693,12 +676,12 @@
             "کد شانس ویژه"
         ];
         var colors = [
-            "rgba(0, 240, 255, 0.45)", 
-            "rgba(17, 26, 46, 0.65)", 
-            "rgba(255, 215, 0, 0.55)", 
-            "rgba(40, 167, 69, 0.55)", 
-            "rgba(0, 136, 204, 0.55)", 
-            "rgba(255, 71, 87, 0.55)"
+            "#00f0ff", 
+            "#1b2233", 
+            "#ffd700", 
+            "#28a745", 
+            "#0088cc", 
+            "#8e24aa"
         ];
 
         function drawWheel() {
@@ -719,18 +702,16 @@
                 ctx.arc(150, 150, 145, angle, angle + sliceAngle);
                 ctx.lineTo(150, 150);
                 ctx.fill();
-                ctx.lineWidth = 1.5;
-                ctx.strokeStyle = "rgba(255, 215, 0, 0.7)";
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "#ffd700";
                 ctx.stroke();
 
                 ctx.save();
                 ctx.translate(150, 150);
                 ctx.rotate(angle + sliceAngle / 2);
                 ctx.textAlign = "right";
-                ctx.fillStyle = "#fff";
+                ctx.fillStyle = (i === 2 || i === 0) ? "#000" : "#fff";
                 ctx.font = "bold 11px tahoma";
-                ctx.shadowColor = "rgba(0,0,0,0.8)";
-                ctx.shadowBlur = 4;
                 ctx.fillText(prizes[i], 130, 4);
                 ctx.restore();
             }
