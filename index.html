@@ -209,7 +209,6 @@
             text-align: center;
         }
 
-        /* استایل اختصاصی کاردهای سرویس نئونی */
         .service-card {
             background: linear-gradient(145deg, #0d1527, #050811);
             border: 1px solid var(--neon-cyan);
@@ -234,7 +233,6 @@
             margin-bottom: 10px;
         }
 
-        /* جدول سرویس داخل پاپ‌آپ */
         .sub-service-box {
             background: #050811;
             border: 1px solid var(--border-color);
@@ -280,38 +278,33 @@
     <div class="header" id="page-title">خدمات و سرویس‌های ویژه</div>
 
     <div class="content">
-        <!-- TAB 1: SERVICES (صفحه اصلی برنامه) -->
+        <!-- TAB 1: SERVICES -->
         <div id="tab-services" class="tab-content active" style="display:block;">
             
-            <!-- سرویس ۱ -->
             <div class="service-card">
                 <div class="service-title">1. خرید ممبر واقعی تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> افزایش اعضای واقعی کانال و یا گروه تلگرام برای رشد بهتر و تعامل طبیعی تر</div>
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('real-member')">مشاهده سرویس</button>
             </div>
 
-            <!-- سرویس ۲ -->
             <div class="service-card">
                 <div class="service-title">2. خرید ممبر فیک تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> افزایش سریع تعداد اعضای کانال برای تقویت ظاهر اولیه و اعتبار عددی صفحه</div>
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
 
-            <!-- سرویس ۳ -->
             <div class="service-card">
                 <div class="service-title">3. خرید ممبر آپلودر</div>
                 <div class="service-desc"><b>کاربرد:</b> مناسب برای کانالهایی که به رشد عددی، فعالیت بیشتر و افزایش اعتبار نیاز دارند</div>
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
 
-            <!-- سرویس ۴ -->
             <div class="service-card">
                 <div class="service-title">4. خرید ممبر پرمیوم تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> جایگاه کانال و گروه خود را در نتایج جستجوی تلگرام تقویت کنید</div>
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
 
-            <!-- سرویس ۵ -->
             <div class="service-card">
                 <div class="service-title">5. خرید ویو تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> مناسب برای نمایش بهتر میزان دیده شدن محتوا</div>
@@ -347,20 +340,31 @@
             </div>
         </div>
 
-        <!-- TAB 4: DEPOSIT -->
+        <!-- TAB 4: DEPOSIT (کیف پول کامل‌تر) -->
         <div id="tab-deposit" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center; border-color:var(--neon-gold); background: linear-gradient(135deg, #111a2e, #1a1508);">
                 <div class="card-title" style="color:var(--neon-gold);">موجودی حساب کاربری شما</div>
                 <div class="big-number" id="user-balance" style="color:var(--neon-gold);">0.00 TON</div>
+                <button class="btn btn-gold" onclick="updateBalanceDisplay()" style="margin-top:10px; font-size:11px; padding:8px;">🔄 بروزرسانی موجودی</button>
             </div>
 
             <div class="card" style="text-align:center;">
                 <div class="card-title">شارژ کیف پول و واریز TON</div>
+                <p style="font-size:11px; color:#ffd700; margin-bottom:12px; line-height: 1.6;">
+                    ⚠️ <b>نکته مهم:</b> حداقل مقدار واریزی <b>1 TON</b> می‌باشد.<br>حتماً در هنگام واریز، کد MEMO اختصاصی خود را وارد کنید.
+                </p>
+
                 <div class="input-group">
                     <label>آدرس ولت دریافت:</label>
-                    <input type="text" id="admin-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; text-align:center;">
+                    <input type="text" id="deposit-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; text-align:center; margin-bottom:6px;">
+                    <button class="btn" onclick="copyWallet('deposit-wallet')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan); margin-top:0;">📋 کپی آدرس کیف پول</button>
                 </div>
-                <button class="btn" onclick="copyWallet()">کپی آدرس کیف پول</button>
+
+                <div class="input-group" style="margin-top: 15px;">
+                    <label style="color:var(--neon-cyan);">MEMO اختصاصی شما (الزامی):</label>
+                    <input type="text" id="deposit-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center; margin-bottom:6px;">
+                    <button class="btn" onclick="copyMemo('deposit-memo')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-gold); margin-top:0;">📋 کپی کد MEMO</button>
+                </div>
             </div>
         </div>
     </div>
@@ -468,7 +472,7 @@
         </div>
     </div>
 
-    <!-- POPUP 3: فرم ثبت سفارش مستقیم -->
+    <!-- POPUP 3: فرم ورود مشخصات سفارش -->
     <div id="modal-direct-order" class="modal-overlay">
         <div class="card" style="width:100%; border-color:var(--neon-green); margin:0;">
             <div id="direct-order-title" style="font-weight:bold; color:var(--neon-green); text-align:center; margin-bottom:12px; font-size:14px;">ثبت سفارش</div>
@@ -488,8 +492,33 @@
                 <div class="big-number" id="direct-total-price" style="color:var(--neon-gold);">0.00 TON</div>
             </div>
 
-            <button class="btn btn-green" onclick="confirmDirectPayment()">پرداخت با تون‌کوین و ثبت نهایی</button>
+            <button class="btn btn-green" onclick="proceedToPaymentModal()">پرداخت با تون‌کوین و ثبت نهایی</button>
             <button class="btn" onclick="closeModal('modal-direct-order')" style="background:#333; margin-top:6px;">انصراف</button>
+        </div>
+    </div>
+
+    <!-- POPUP 4: پنجره پرداخت و واریز نهایی -->
+    <div id="modal-payment-step" class="modal-overlay">
+        <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0;">
+            <div style="font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:12px;">تایید نهایی و واریز TON</div>
+            <p style="font-size:11px; color:#ffd700; text-align:center; margin-bottom:12px; line-height: 1.6;">
+                ⚠️ <b>اخطار مهم:</b> جهت تایید شدن تراکنش، حتماً مبلغ مشخص‌شده را به آدرس زیر واریز کرده و <b>کد MEMO اختصاصی</b> خود را درج نمایید.
+            </p>
+
+            <div class="input-group">
+                <label>آدرس ولت دریافت (TON):</label>
+                <input type="text" id="pay-modal-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center; margin-bottom:6px;">
+                <button class="btn" onclick="copyWallet('pay-modal-wallet')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan); margin-top:0;">📋 کپی آدرس ولت</button>
+            </div>
+
+            <div class="input-group" style="margin-top: 10px;">
+                <label style="color:var(--neon-cyan);">MEMO اختصاصی شما (الزامی):</label>
+                <input type="text" id="pay-modal-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center; margin-bottom:6px;">
+                <button class="btn" onclick="copyMemo('pay-modal-memo')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-gold); margin-top:0;">📋 کپی کد MEMO</button>
+            </div>
+
+            <button class="btn btn-green" onclick="confirmDirectPayment()" style="margin-top:15px;">واریز کردم و ثبت نهایی</button>
+            <button class="btn" onclick="closeModal('modal-payment-step')" style="background:#333; margin-top:6px;">انصراف</button>
         </div>
     </div>
 
@@ -536,6 +565,27 @@
                 }
             } catch(e) {}
             return 'کاربر ناشناس';
+        }
+
+        window.onload = function() {
+            var uId = getUserId();
+            var depositMemo = document.getElementById('deposit-memo');
+            if (depositMemo) depositMemo.value = uId;
+            
+            var refLinkField = document.getElementById('ref-link');
+            if (refLinkField) refLinkField.value = 'https://t.me/SolarisMiner_bot?start=' + uId;
+
+            updateBalanceDisplay();
+        };
+
+        function updateBalanceDisplay() {
+            var uId = getUserId();
+            var balance = localStorage.getItem('ads_balance_' + uId) || '0.00';
+            var balanceElem = document.getElementById('user-balance');
+            if (balanceElem) {
+                balanceElem.innerText = parseFloat(balance).toFixed(2) + ' TON';
+            }
+            alert("🔄 موجودی حساب به‌روزرسانی شد!");
         }
 
         function switchTab(tabName) {
@@ -590,7 +640,7 @@
             document.getElementById('direct-total-price').innerText = total.toFixed(2) + ' TON';
         }
 
-        function confirmDirectPayment() {
+        function proceedToPaymentModal() {
             var link = document.getElementById('direct-order-link').value;
             var count = parseInt(document.getElementById('direct-order-count').value) || 0;
 
@@ -603,6 +653,14 @@
                 return;
             }
 
+            document.getElementById('pay-modal-memo').value = getUserId();
+            closeModal('modal-direct-order');
+            document.getElementById('modal-payment-step').style.display = 'flex';
+        }
+
+        function confirmDirectPayment() {
+            var link = document.getElementById('direct-order-link').value;
+            var count = parseInt(document.getElementById('direct-order-count').value) || 0;
             var totalPrice = ((count / 1000) * currentUnitPrice).toFixed(2);
             var uId = getUserId();
             var userName = getUserName();
@@ -620,10 +678,9 @@
                 localStorage.setItem('ads_orders_' + uId, JSON.stringify(orders));
             } catch(e) {}
 
-            closeModal('modal-direct-order');
+            closeModal('modal-payment-step');
             closeModal('modal-real-member');
 
-            // ارسال پیام گزارش سفارش به پشتیبانی
             var messageText = "🔔 سفارش جدید از بخش خدمات!\n\n" +
                               "📦 سرویس: " + currentServiceName + "\n" +
                               "👤 کاربر: " + userName + " (ID: " + uId + ")\n" +
@@ -640,11 +697,22 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
-        function copyWallet() {
-            var input = document.getElementById('admin-wallet');
-            input.select();
-            document.execCommand("copy");
-            alert("📋 آدرس کپی شد!");
+        function copyWallet(inputId) {
+            var input = document.getElementById(inputId);
+            if (input) {
+                input.select();
+                document.execCommand("copy");
+                alert("📋 آدرس کیف پول کپی شد!");
+            }
+        }
+
+        function copyMemo(inputId) {
+            var input = document.getElementById(inputId);
+            if (input) {
+                input.select();
+                document.execCommand("copy");
+                alert("📋 کد MEMO اختصاصی کپی شد!");
+            }
         }
 
         function copyRefLink() {
