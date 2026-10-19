@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Leather Edition</title>
+    <title>NovaTon - Casino Wheel Edition</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -15,7 +15,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* پس‌زمینه چرم مشکی واقعی با بافت برجسته */
         body {
             background-color: #08090b !important;
             background-image: 
@@ -30,7 +29,6 @@
             direction: rtl;
         }
 
-        /* هدر چرم مشکی لوکس */
         .header {
             background: linear-gradient(180deg, #181b22, #0e1015) !important;
             color: #00f0ff;
@@ -60,14 +58,13 @@
             display: block;
         }
 
-        /* کارت‌های چرمی با لبه‌های برجسته و افکت دوخت */
         .card {
             background: linear-gradient(145deg, #161820, #0c0d12) !important;
             border-radius: 16px;
             padding: 18px;
             margin-bottom: 16px;
             border: 1px solid #252936 !important;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.95), inset 0 1px 1px rgba(255, 255, 255, 0.08), inset 0 -2px 6px rgba(0, 0, 0, 0.8) !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.95), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
             position: relative;
         }
 
@@ -85,7 +82,6 @@
             margin: 6px 0;
         }
 
-        /* دکمه‌های دوخت چرم با نور نئون */
         .btn {
             background: linear-gradient(145deg, #1a2233, #0d121c) !important;
             color: #fff !important;
@@ -107,21 +103,20 @@
         .btn:active {
             opacity: 0.8;
             transform: scale(0.97);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9) !important;
         }
 
         .btn-green {
             background: linear-gradient(145deg, #1b3d22, #0d2112) !important;
             border-color: #28a745 !important;
             color: #fff !important;
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3) !important;
         }
 
         .btn-gold {
             background: linear-gradient(145deg, #3d3314, #211b0a) !important;
             border-color: #ffd700 !important;
             color: #ffd700 !important;
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3) !important;
         }
 
         .input-group {
@@ -145,10 +140,8 @@
             color: #fff;
             font-size: 13px;
             outline: none;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
         }
 
-        /* منوی پایینی چرم مشکی دست‌دوز */
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -160,7 +153,7 @@
             justify-content: space-around;
             align-items: center;
             border-top: 2px solid #252936 !important;
-            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.95), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.95) !important;
             z-index: 1000;
         }
 
@@ -201,7 +194,6 @@
             filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.9));
         }
 
-        /* کارت‌های خدمات چرم */
         .service-card {
             background: linear-gradient(145deg, #161820, #0c0d12) !important;
             border: 1px solid #252936 !important;
@@ -209,8 +201,7 @@
             padding: 16px;
             margin-bottom: 14px;
             text-align: right;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
-            position: relative;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.85) !important;
         }
 
         .service-title {
@@ -234,7 +225,6 @@
             padding: 12px;
             margin-bottom: 12px;
             text-align: right;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
         }
 
         .sub-service-row {
@@ -274,75 +264,96 @@
             padding: 18px;
             margin-bottom: 14px;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
         }
 
-        .support-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
+        .support-icon { font-size: 32px; margin-bottom: 8px; }
+        .support-title { font-size: 15px; font-weight: bold; color: #00f0ff; margin-bottom: 4px; }
+        .support-sub { font-size: 11px; color: #8da0bf; margin-bottom: 12px; line-height: 1.5; }
 
-        .support-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: #00f0ff;
-            margin-bottom: 4px;
-        }
-
-        .support-sub {
-            font-size: 11px;
-            color: #8da0bf;
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-
-        /* گردونه شانس تم چرم مشکی */
-        .wheel-wrapper {
+        /* --- استایل جدید گردونه شانس مشابه عکس --- */
+        .wheel-stand-container {
             position: relative;
-            width: 260px;
-            height: 260px;
-            margin: 20px auto 10px auto;
+            width: 280px;
+            margin: 10px auto 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .wheel-outer-ring {
+            position: relative;
+            width: 270px;
+            height: 270px;
+            border-radius: 50%;
+            background: #111319;
+            border: 8px solid #1c202b;
+            box-shadow: 0 0 25px rgba(0,0,0,0.9), inset 0 0 15px rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* چراغ‌های LED دور گردونه */
+        .led-light {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 8px #fff, 0 0 12px #00f0ff;
+            animation: ledBlink 1.5s infinite alternate;
+        }
+
+        @keyframes ledBlink {
+            0% { opacity: 0.4; box-shadow: 0 0 4px #fff; }
+            100% { opacity: 1; box-shadow: 0 0 10px #fff, 0 0 15px #ffd700; }
         }
 
         .wheel-pointer {
             position: absolute;
-            top: -14px;
+            top: -16px;
             left: 50%;
             transform: translateX(-50%);
             width: 0; 
             height: 0; 
             border-left: 14px solid transparent;
             border-right: 14px solid transparent;
-            border-top: 24px solid #ffd700;
+            border-top: 26px solid #ffd700;
             filter: drop-shadow(0 0 8px #ffd700);
             z-index: 100;
         }
 
         .wheel-canvas {
-            width: 100%;
-            height: 100%;
+            width: 244px;
+            height: 244px;
             border-radius: 50%;
-            border: 5px solid #ffd700;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
             transition: transform 4s cubic-bezier(0.1, 0.9, 0.1, 1);
         }
 
-        .wheel-center-cap {
+        /* پایه مشکی زیر گردونه مشابه تصویر */
+        .wheel-base-stand {
+            width: 180px;
+            height: 45px;
+            background: linear-gradient(180deg, #1c202b, #0a0b0e);
+            border: 2px solid #282c37;
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+            margin-top: -10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wheel-base-stand::after {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            background: #0e1015;
-            border: 2px solid #ffd700;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.9);
-            z-index: 10;
+            bottom: 6px;
+            left: 15%;
+            right: 15%;
+            height: 6px;
+            background: linear-gradient(90deg, #ff0055, #ffd700, #00f0ff, #28a745);
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(255,215,0,0.8);
         }
     </style>
 </head>
@@ -386,18 +397,20 @@
 
         </div>
 
-        <!-- TAB 2: WHEEL -->
+        <!-- TAB 2: WHEEL (گردونه شانس جدید) -->
         <div id="tab-wheel" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
                 <p style="font-size:12px; color:#8da0bf; margin-bottom:5px;">گردونه را بچرخانید و هدیه اختصاصی بگیرید!</p>
 
-                <div class="wheel-wrapper">
-                    <div class="wheel-pointer"></div>
-                    <canvas id="wheelCanvas" class="wheel-canvas" width="300" height="300"></canvas>
-                    <div class="wheel-center-cap">🎰</div>
+                <div class="wheel-stand-container">
+                    <div class="wheel-outer-ring" id="wheelRing">
+                        <div class="wheel-pointer"></div>
+                        <canvas id="wheelCanvas" class="wheel-canvas" width="300" height="300"></canvas>
+                    </div>
+                    <div class="wheel-base-stand"></div>
                 </div>
 
-                <div id="wheel-status-box" style="margin-top:10px;">
+                <div id="wheel-status-box" style="margin-top:15px;">
                     <p style="font-size:11px; color:#ffd700; margin-bottom:10px; line-height:1.6;" id="wheel-msg">
                         ⚠️ <b>شرط چرخاندن گردونه:</b> حداقل ۱ نفر را با لینک اختصاصی خود دعوت کنید.
                     </p>
@@ -454,128 +467,42 @@
         </div>
     </div>
 
-    <!-- POPUPS FOR SERVICES -->
+    <!-- POPUPS -->
     <div id="modal-real-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
-            <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">
-                ممبر واقعی تلگرام
-            </div>
-
+            <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">ممبر واقعی تلگرام</div>
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ممبر واقعی کانال، اد اجباری، اقتصادی شروع زیر ۶ ساعت</div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:#00f0ff; font-weight:bold;">0.74 TON</span>
-                </div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
-                    <span style="color:#fff;">1,000 / 20,000</span>
-                </div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.74 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">1,000 / 20,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال، اد اجباری، اقتصادی', 0.74, 1000, 20000)">🛒 سفارش</button>
                 </div>
             </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: ممبر واقعی اد اجباری کیفیت A شروع آنی</div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:#00f0ff; font-weight:bold;">0.83 TON</span>
-                </div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
-                    <span style="color:#fff;">1,000 / 20,000</span>
-                </div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی اد اجباری کیفیت A', 0.83, 1000, 20000)">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: ممبر واقعی کانال اد اجباری کیفیت A+ شروع آنی</div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:#00f0ff; font-weight:bold;">0.90 TON</span>
-                </div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
-                    <span style="color:#fff;">1,000 / 20,000</span>
-                </div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال اد اجباری کیفیت A+', 0.90, 1000, 20000)">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟</div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:#00f0ff; font-weight:bold;">1.50 TON</span>
-                </div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
-                    <span style="color:#fff;">1,000 / 10,000</span>
-                </div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟', 1.50, 1000, 10000)">🛒 سفارش</button>
-                </div>
-            </div>
-
             <button class="btn" onclick="closeModal('modal-real-member')" style="background:#161820 !important; margin-top:10px;">بستن</button>
         </div>
     </div>
 
     <div id="modal-fake-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
-            <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">
-                ممبر فیک تلگرام
-            </div>
-
+            <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">ممبر فیک تلگرام</div>
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ممبر فیک ایرانی بدون ریزش شروع فوری</div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:#00f0ff; font-weight:bold;">0.5 TON</span>
-                </div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
-                    <span style="color:#fff;">500 / 10,000</span>
-                </div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.5 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('fake-rules')">📜 توضیحات</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر فیک ایرانی بدون ریزش شروع فوری', 0.5, 500, 10000)">🛒 سفارش</button>
                 </div>
             </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: ممبر فیک بدون ریزش شروع فوری</div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:#00f0ff; font-weight:bold;">0.55 TON</span>
-                </div>
-                <div class="sub-service-row">
-                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
-                    <span style="color:#fff;">500 / 20,000</span>
-                </div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('fake-rules')">📜 توضیحات</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر فیک بدون ریزش شروع فوری', 0.55, 500, 20000)">🛒 سفارش</button>
-                </div>
-            </div>
-
             <button class="btn" onclick="closeModal('modal-fake-member')" style="background:#161820 !important; margin-top:10px;">بستن</button>
         </div>
     </div>
 
     <div id="modal-rules" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#00f0ff !important; margin:0; text-align:right;">
-            <div style="font-size:15px; font-weight:bold; color:#00f0ff; text-align:center; margin-bottom:15px;">
-                📜 قوانین و نکات مهم سرویس
-            </div>
+            <div style="font-size:15px; font-weight:bold; color:#00f0ff; text-align:center; margin-bottom:15px;">📜 قوانین و نکات مهم سرویس</div>
             <div style="font-size:12px; color:#8da0bf; line-height:1.8;" id="rules-content"></div>
             <button class="btn btn-gold" onclick="closeModal('modal-rules')" style="margin-top:15px;">متوجه شدم</button>
         </div>
@@ -584,68 +511,26 @@
     <div id="modal-direct-order" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#28a745 !important; margin:0; max-height:90vh; overflow-y:auto;">
             <div id="direct-order-title" style="font-weight:bold; color:#28a745; text-align:center; margin-bottom:12px; font-size:14px;">ثبت سفارش</div>
-
-            <div class="input-group">
-                <label>لینک کانال یا گروه شما:</label>
-                <input type="text" id="direct-order-link" class="input-field" placeholder="@channel یا https://t.me/...">
-            </div>
-
-            <div class="input-group">
-                <label>تعداد درخواستی:</label>
-                <input type="number" id="direct-order-count" class="input-field" placeholder="تعداد" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()">
-            </div>
-
-            <div class="card" style="background:#050608 !important; border-color:#ffd700 !important; text-align:center; margin:10px 0;">
-                <div class="card-title">مبلغ قابل پرداخت</div>
-                <div class="big-number" id="direct-total-price" style="color:#ffd700;">0.00 TON</div>
-            </div>
-
-            <button class="btn btn-gold" onclick="togglePaymentBox()" style="font-size:12px; margin-bottom:8px;">
-                💳 پرداخت آنلاین (نمایش آدرس ولت و MEMO)
-            </button>
-
+            <div class="input-group"><label>لینک کانال یا گروه شما:</label><input type="text" id="direct-order-link" class="input-field" placeholder="@channel یا https://t.me/..."></div>
+            <div class="input-group"><label>تعداد درخواستی:</label><input type="number" id="direct-order-count" class="input-field" placeholder="تعداد" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()"></div>
+            <div class="card" style="background:#050608 !important; border-color:#ffd700 !important; text-align:center; margin:10px 0;"><div class="card-title">مبلغ قابل پرداخت</div><div class="big-number" id="direct-total-price" style="color:#ffd700;">0.00 TON</div></div>
+            <button class="btn btn-gold" onclick="togglePaymentBox()" style="font-size:12px; margin-bottom:8px;">💳 پرداخت آنلاین (نمایش آدرس ولت و MEMO)</button>
             <div id="pay-info-box" style="display:none; background:#050608 !important; border:1px solid #00f0ff !important; border-radius:12px; padding:10px; margin-bottom:10px;">
-                <p style="font-size:10px; color:#ffd700; text-align:center; margin-bottom:8px;">
-                    ⚠️ مبلغ فوق را به ولت زیر واریز کرده و <b>MEMO</b> را حتماً درج کنید:
-                </p>
-                <div class="input-group" style="margin-bottom:8px;">
-                    <label style="font-size:10px;">آدرس ولت (TON):</label>
-                    <input type="text" id="order-pay-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:9px; text-align:center; padding:8px; margin-bottom:4px;">
-                    <button class="btn" onclick="copyValue('order-pay-wallet', 'آدرس ولت')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی آدرس ولت</button>
-                </div>
-                <div class="input-group" style="margin-bottom:4px;">
-                    <label style="font-size:10px; color:#00f0ff;">MEMO اختصاصی شما:</label>
-                    <input type="text" id="order-pay-memo" class="input-field" readonly style="font-size:11px; font-weight:bold; color:#00f0ff; text-align:center; padding:8px; margin-bottom:4px;">
-                    <button class="btn btn-gold" onclick="copyValue('order-pay-memo', 'کد MEMO')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی کد MEMO</button>
-                </div>
+                <p style="font-size:10px; color:#ffd700; text-align:center; margin-bottom:8px;">⚠️ مبلغ فوق را به ولت زیر واریز کرده و <b>MEMO</b> را حتماً درج کنید:</p>
+                <div class="input-group" style="margin-bottom:8px;"><label style="font-size:10px;">آدرس ولت (TON):</label><input type="text" id="order-pay-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:9px; text-align:center; padding:8px; margin-bottom:4px;"><button class="btn" onclick="copyValue('order-pay-wallet', 'آدرس ولت')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی آدرس ولت</button></div>
+                <div class="input-group" style="margin-bottom:4px;"><label style="font-size:10px; color:#00f0ff;">MEMO اختصاصی شما:</label><input type="text" id="order-pay-memo" class="input-field" readonly style="font-size:11px; font-weight:bold; color:#00f0ff; text-align:center; padding:8px; margin-bottom:4px;"><button class="btn btn-gold" onclick="copyValue('order-pay-memo', 'کد MEMO')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی کد MEMO</button></div>
             </div>
-
-            <button class="btn btn-green" onclick="submitDirectOrder()">
-                ✅ ثبت نهایی و ارسال به پشتیبانی
-            </button>
-            
+            <button class="btn btn-green" onclick="submitDirectOrder()">✅ ثبت نهایی و ارسال به پشتیبانی</button>
             <button class="btn" onclick="closeModal('modal-direct-order')" style="background:#161820 !important; margin-top:6px;">انصراف</button>
         </div>
     </div>
 
     <!-- BOTTOM NAV BAR -->
     <div class="nav-bar">
-        <div class="nav-item active" id="nav-btn-services" onclick="switchTab('services')">
-            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-            <div>خدمات</div>
-        </div>
-        <div class="nav-item" id="nav-btn-wheel" onclick="switchTab('wheel')">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20M2 12h20M12 12l7-7M12 12l-7 7"></path></svg>
-            <div>گردونه شانس</div>
-        </div>
-        <div class="nav-item" id="nav-btn-ref" onclick="switchTab('ref')">
-            <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-            <div>دعوت دوستان</div>
-        </div>
-        <div class="nav-item" id="nav-btn-support" onclick="switchTab('support')">
-            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            <div>پشتیبانی</div>
-        </div>
+        <div class="nav-item active" id="nav-btn-services" onclick="switchTab('services')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg><div>خدمات</div></div>
+        <div class="nav-item" id="nav-btn-wheel" onclick="switchTab('wheel')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20M2 12h20M12 12l7-7M12 12l-7 7"></path></svg><div>گردونه شانس</div></div>
+        <div class="nav-item" id="nav-btn-ref" onclick="switchTab('ref')"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg><div>دعوت دوستان</div></div>
+        <div class="nav-item" id="nav-btn-support" onclick="switchTab('support')"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg><div>پشتیبانی</div></div>
     </div>
 
     <script>
@@ -663,15 +548,11 @@
             "۵۰ ممبر هدیه خرید بعد",
             "کد شانس ویژه"
         ];
-        var colors = [
-            "#00f0ff", 
-            "#1b2233", 
-            "#ffd700", 
-            "#28a745", 
-            "#0088cc", 
-            "#8e24aa"
-        ];
 
+        /* رنگین‌کمانی مشابه تصویر */
+        var colors = ["#e91e63", "#9c27b0", "#3f51b5", "#00bcd4", "#4caf50", "#ffeb3b"];
+
+        /* رسم گردونه دقیقا مشابه مدل سه بعدی عکس */
         function drawWheel() {
             var canvas = document.getElementById('wheelCanvas');
             if (!canvas) return;
@@ -681,27 +562,86 @@
 
             ctx.clearRect(0, 0, 300, 300);
 
+            // 1. رسم قاچ‌های رنگین‌کمانی شفاف
             for (var i = 0; i < numSlices; i++) {
                 var angle = i * sliceAngle;
-                
                 ctx.beginPath();
                 ctx.fillStyle = colors[i];
                 ctx.moveTo(150, 150);
-                ctx.arc(150, 150, 145, angle, angle + sliceAngle);
+                ctx.arc(150, 150, 148, angle, angle + sliceAngle);
                 ctx.lineTo(150, 150);
                 ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = "#ffd700";
+
+                // خطوط سیاه بین قاچ‌ها (مشابه دیواره‌های دایره در عکس)
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = "#111319";
                 ctx.stroke();
 
+                // متن‌های داخل قاچ
                 ctx.save();
                 ctx.translate(150, 150);
                 ctx.rotate(angle + sliceAngle / 2);
                 ctx.textAlign = "right";
-                ctx.fillStyle = (i === 2 || i === 0) ? "#000" : "#fff";
-                ctx.font = "bold 11px tahoma";
-                ctx.fillText(prizes[i], 130, 4);
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 10px tahoma";
+                ctx.shadowColor = "#000";
+                ctx.shadowBlur = 4;
+                ctx.fillText(prizes[i], 138, 4);
                 ctx.restore();
+            }
+
+            // 2. رسم حلقه نئون قرمز/نارنجی داخلی (دقیقاً مشابه مرکز گردونه در عکس)
+            ctx.beginPath();
+            ctx.arc(150, 150, 50, 0, 2 * Math.PI);
+            ctx.fillStyle = "#0a0b0e";
+            ctx.fill();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = "#ff3300";
+            ctx.shadowColor = "#ff3300";
+            ctx.shadowBlur = 12;
+            ctx.stroke();
+
+            // 3. پرپره‌های مشکی/سفید مرکزی مرکز گردونه
+            ctx.shadowBlur = 0;
+            var numSpokes = 16;
+            for (var j = 0; j < numSpokes; j++) {
+                var spokeAngle = (j * 2 * Math.PI) / numSpokes;
+                ctx.beginPath();
+                ctx.moveTo(150, 150);
+                ctx.lineTo(150 + 45 * Math.cos(spokeAngle), 150 + 45 * Math.sin(spokeAngle));
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = (j % 2 === 0) ? "#ffffff" : "#111319";
+                ctx.stroke();
+            }
+
+            // مرکز دایره کوچک
+            ctx.beginPath();
+            ctx.arc(150, 150, 12, 0, 2 * Math.PI);
+            ctx.fillStyle = "#1c202b";
+            ctx.fill();
+            ctx.strokeStyle = "#ffd700";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        /* ساخت چراغ‌های LED داینامیک دور تا دور گردونه */
+        function createLeds() {
+            var ring = document.getElementById('wheelRing');
+            if (!ring || ring.querySelector('.led-light')) return;
+            var totalLeds = 16;
+            var radius = 131; 
+
+            for (var i = 0; i < totalLeds; i++) {
+                var angle = (i * 2 * Math.PI) / totalLeds;
+                var x = 135 + radius * Math.cos(angle) - 5;
+                var y = 135 + radius * Math.sin(angle) - 5;
+
+                var led = document.createElement('div');
+                led.className = 'led-light';
+                led.style.left = x + 'px';
+                led.style.top = y + 'px';
+                led.style.animationDelay = (i * 0.1) + 's';
+                ring.appendChild(led);
             }
         }
 
@@ -729,6 +669,7 @@
             var refLinkField = document.getElementById('ref-link');
             if (refLinkField) refLinkField.value = 'https://t.me/SolarisMiner_bot?start=' + uId;
             drawWheel();
+            createLeds();
         };
 
         function switchTab(tabName) {
@@ -752,7 +693,10 @@
                 'support': 'ارتباط با پشتیبانی'
             };
             document.getElementById('page-title').innerText = titles[tabName];
-            if (tabName === 'wheel') drawWheel();
+            if (tabName === 'wheel') {
+                drawWheel();
+                createLeds();
+            }
         }
 
         function openServiceModal(type) {
