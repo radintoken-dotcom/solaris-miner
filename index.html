@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - خدمات و سفارشات</title>
+    <title>NovaTon - خدمات و سرویس‌ها</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -143,33 +143,6 @@
             outline: none;
         }
 
-        .pkg-item {
-            background: #050811;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .pkg-info {
-            text-align: right;
-        }
-
-        .pkg-name {
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--neon-gold);
-        }
-
-        .pkg-price {
-            font-size: 12px;
-            color: var(--neon-cyan);
-            margin-top: 2px;
-        }
-
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -307,95 +280,7 @@
     <div class="header" id="page-title">خدمات و سرویس‌های ویژه</div>
 
     <div class="content">
-        <!-- TAB 1: ORDER -->
-        <div id="tab-order" class="tab-content">
-            <div class="card">
-                <div style="font-weight:bold; font-size:15px; color:var(--neon-cyan); margin-bottom:12px; text-align:center;">ثبت سفارش جدید</div>
-                
-                <div class="input-group">
-                    <label>لینک کانال یا گروه شما:</label>
-                    <input type="text" id="order-link" class="input-field" placeholder="@channel یا https://t.me/...">
-                </div>
-
-                <div class="input-group">
-                    <label>تعداد ممبر درخواستی:</label>
-                    <input type="number" id="order-count" class="input-field" placeholder="حداقل 1000" onkeyup="calcPrice()" oninput="calcPrice()">
-                </div>
-
-                <div class="card" style="background:#050811; border-color:var(--neon-cyan); text-align:center; margin:10px 0;">
-                    <div class="card-title">مبلغ قابل پرداخت</div>
-                    <div class="big-number" id="total-price">0.00 TON</div>
-                </div>
-
-                <button class="btn btn-green" onclick="openPaymentModal()">پرداخت با تون‌کوین و ثبت سفارش</button>
-            </div>
-
-            <div class="card">
-                <div style="font-weight:bold; font-size:14px; color:var(--neon-gold); margin-bottom:12px; text-align:center;">پکیج‌های ویژه و اقتصادی</div>
-
-                <div class="pkg-item">
-                    <div class="pkg-info">
-                        <div class="pkg-name">پکیج 5K (۵,۰۰۰ ممبر)</div>
-                        <div class="pkg-price">قیمت: 1.00 TON</div>
-                    </div>
-                    <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px; margin-top:0;" onclick="selectPackage(5000, 1.00)">انتخاب</button>
-                </div>
-
-                <div class="pkg-item">
-                    <div class="pkg-info">
-                        <div class="pkg-name">پکیج 10K (۱۰,۰۰۰ ممبر)</div>
-                        <div class="pkg-price">قیمت: 1.50 TON</div>
-                    </div>
-                    <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px; margin-top:0;" onclick="selectPackage(10000, 1.50)">انتخاب</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 2: DEPOSIT -->
-        <div id="tab-deposit" class="tab-content" style="display:none;">
-            <div class="card" style="text-align:center; border-color:var(--neon-gold); background: linear-gradient(135deg, #111a2e, #1a1508);">
-                <div class="card-title" style="color:var(--neon-gold);">موجودی حساب کاربری شما</div>
-                <div class="big-number" id="user-balance" style="color:var(--neon-gold);">0.00 TON</div>
-            </div>
-
-            <div class="card" style="text-align:center;">
-                <div class="card-title">شارژ کیف پول و واریز TON</div>
-                <div class="input-group">
-                    <label>آدرس ولت دریافت:</label>
-                    <input type="text" id="admin-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; text-align:center;">
-                </div>
-                <button class="btn" onclick="copyWallet()">کپی آدرس کیف پول</button>
-            </div>
-        </div>
-
-        <!-- TAB 3: REFERRAL -->
-        <div id="tab-ref" class="tab-content" style="display:none;">
-            <div class="card" style="text-align:center;">
-                <div class="stat-grid">
-                    <div class="stat-box">
-                        <div class="card-title">تعداد دعوت‌ها</div>
-                        <div id="ref-count" style="font-size:18px; font-weight:bold; color:var(--neon-gold);">0 نفر</div>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label>لینک دعوت اختصاصی شما:</label>
-                    <input type="text" id="ref-link" class="input-field" readonly style="font-size:11px; text-align:center; color:var(--neon-gold);">
-                </div>
-                <button class="btn btn-gold" onclick="copyRefLink()">کپی لینک دعوت</button>
-            </div>
-        </div>
-
-        <!-- TAB 4: HISTORY -->
-        <div id="tab-history" class="tab-content" style="display:none;">
-            <div class="card" style="text-align:center;">
-                <div class="card-title">سفارش‌های ثبت شده شما</div>
-                <div id="orders-list" style="font-size:12px; color:var(--text-sub); margin-top:10px;">
-                    هنوز سفارشی ثبت نکرده‌اید.
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 5: SERVICES (فعال به‌صورت پیش‌فرض) -->
+        <!-- TAB 1: SERVICES (صفحه اصلی برنامه) -->
         <div id="tab-services" class="tab-content active" style="display:block;">
             
             <!-- سرویس ۱ -->
@@ -433,6 +318,50 @@
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
 
+        </div>
+
+        <!-- TAB 2: HISTORY -->
+        <div id="tab-history" class="tab-content" style="display:none;">
+            <div class="card" style="text-align:center;">
+                <div class="card-title">سفارش‌های ثبت شده شما</div>
+                <div id="orders-list" style="font-size:12px; color:var(--text-sub); margin-top:10px;">
+                    هنوز سفارشی ثبت نکرده‌اید.
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: REFERRAL -->
+        <div id="tab-ref" class="tab-content" style="display:none;">
+            <div class="card" style="text-align:center;">
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <div class="card-title">تعداد دعوت‌ها</div>
+                        <div id="ref-count" style="font-size:18px; font-weight:bold; color:var(--neon-gold);">0 نفر</div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>لینک دعوت اختصاصی شما:</label>
+                    <input type="text" id="ref-link" class="input-field" readonly style="font-size:11px; text-align:center; color:var(--neon-gold);">
+                </div>
+                <button class="btn btn-gold" onclick="copyRefLink()">کپی لینک دعوت</button>
+            </div>
+        </div>
+
+        <!-- TAB 4: DEPOSIT -->
+        <div id="tab-deposit" class="tab-content" style="display:none;">
+            <div class="card" style="text-align:center; border-color:var(--neon-gold); background: linear-gradient(135deg, #111a2e, #1a1508);">
+                <div class="card-title" style="color:var(--neon-gold);">موجودی حساب کاربری شما</div>
+                <div class="big-number" id="user-balance" style="color:var(--neon-gold);">0.00 TON</div>
+            </div>
+
+            <div class="card" style="text-align:center;">
+                <div class="card-title">شارژ کیف پول و واریز TON</div>
+                <div class="input-group">
+                    <label>آدرس ولت دریافت:</label>
+                    <input type="text" id="admin-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; text-align:center;">
+                </div>
+                <button class="btn" onclick="copyWallet()">کپی آدرس کیف پول</button>
+            </div>
         </div>
     </div>
 
@@ -564,45 +493,23 @@
         </div>
     </div>
 
-    <!-- PAYMENT MODAL -->
-    <div id="payment-modal" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0;">
-            <div style="font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:12px;">تایید نهایی پرداخت</div>
-            <p style="font-size:12px; color:#ffd700; text-align:center; margin-bottom:10px; line-height: 1.6;">
-                ⚠️ <b>اخطار مهم:</b> تراکنش شما به صورت دستی بررسی می‌شود.
-            </p>
-
-            <div class="input-group">
-                <label>آدرس دریافت (TON):</label>
-                <input type="text" id="modal-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center;">
-            </div>
-
-            <button class="btn btn-green" onclick="confirmPayment()" style="margin-top:15px;">واریز کردم و ثبت نهایی</button>
-            <button class="btn" onclick="closeModal('payment-modal')" style="background:#333; margin-top:6px;">انصراف</button>
-        </div>
-    </div>
-
     <!-- BOTTOM NAV BAR -->
     <div class="nav-bar">
-        <div class="nav-item" id="nav-btn-order" onclick="switchTab('order')">
-            <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <div>خرید ممبر</div>
-        </div>
-        <div class="nav-item" id="nav-btn-deposit" onclick="switchTab('deposit')">
-            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M12 8v8M8 12h8"></path></svg>
-            <div>واریز تون</div>
-        </div>
-        <div class="nav-item" id="nav-btn-ref" onclick="switchTab('ref')">
-            <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-            <div>دعوت دوستان</div>
+        <div class="nav-item active" id="nav-btn-services" onclick="switchTab('services')">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+            <div>خدمات</div>
         </div>
         <div class="nav-item" id="nav-btn-history" onclick="switchTab('history')">
             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
             <div>سفارش‌ها</div>
         </div>
-        <div class="nav-item active" id="nav-btn-services" onclick="switchTab('services')">
-            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-            <div>خدمات</div>
+        <div class="nav-item" id="nav-btn-ref" onclick="switchTab('ref')">
+            <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+            <div>دعوت دوستان</div>
+        </div>
+        <div class="nav-item" id="nav-btn-deposit" onclick="switchTab('deposit')">
+            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M12 8v8M8 12h8"></path></svg>
+            <div>واریز تون</div>
         </div>
     </div>
 
@@ -632,20 +539,26 @@
         }
 
         function switchTab(tabName) {
-            document.getElementById('tab-order').style.display = 'none';
-            document.getElementById('tab-deposit').style.display = 'none';
-            document.getElementById('tab-ref').style.display = 'none';
-            document.getElementById('tab-history').style.display = 'none';
             document.getElementById('tab-services').style.display = 'none';
+            document.getElementById('tab-history').style.display = 'none';
+            document.getElementById('tab-ref').style.display = 'none';
+            document.getElementById('tab-deposit').style.display = 'none';
 
-            document.getElementById('nav-btn-order').classList.remove('active');
-            document.getElementById('nav-btn-deposit').classList.remove('active');
-            document.getElementById('nav-btn-ref').classList.remove('active');
-            document.getElementById('nav-btn-history').classList.remove('active');
             document.getElementById('nav-btn-services').classList.remove('active');
+            document.getElementById('nav-btn-history').classList.remove('active');
+            document.getElementById('nav-btn-ref').classList.remove('active');
+            document.getElementById('nav-btn-deposit').classList.remove('active');
 
             document.getElementById('tab-' + tabName).style.display = 'block';
             document.getElementById('nav-btn-' + tabName).classList.add('active');
+
+            var titles = {
+                'services': 'خدمات و سرویس‌های ویژه',
+                'history': 'پیگیری سفارش‌ها',
+                'ref': 'زیرمجموعه‌گیری و دعوت از دوستان',
+                'deposit': 'واریز تون‌کوین (TON)'
+            };
+            document.getElementById('page-title').innerText = titles[tabName];
         }
 
         function openServiceModal(type) {
