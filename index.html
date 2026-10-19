@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - پشتیبانی و خدمات</title>
+    <title>NovaTon - خدمات و سفارشات</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -235,6 +235,35 @@
             padding: 10px;
             text-align: center;
         }
+
+        /* استایل اختصاصی کاردهای سرویس نئونی */
+        .service-card {
+            background: linear-gradient(145deg, #0d1527, #050811);
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 14px;
+            text-align: right;
+            transition: 0.2s;
+        }
+
+        .service-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--neon-gold);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-desc {
+            font-size: 11px;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -363,32 +392,57 @@
             </div>
         </div>
 
-        <!-- TAB 5: SUPPORT -->
-        <div id="tab-support" class="tab-content" style="display:none;">
-            <div class="card" style="text-align:center; padding:20px 15px; border-color:var(--neon-cyan);">
-                <div style="width:45px; height:45px; background:rgba(0,240,255,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px auto;">
-                    <svg style="width:24px; height:24px; stroke:var(--neon-cyan); fill:none; stroke-width:2;" viewBox="0 0 24 24">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                </div>
-                <div style="font-size:15px; font-weight:bold; color:var(--neon-cyan); margin-bottom:6px;">تیم پشتیبانی NovaTon</div>
-                <p style="font-size:12px; color:var(--text-sub); line-height:1.6; margin-bottom:15px;">
-                    کاربر گرامی، جهت پیگیری سفارش، مشاوره یا رفع مشکلات، می‌توانید مستقیماً از طریق دکمه زیر با مدیر و پشتیبان ما در ارتباط باشید:
-                </p>
-
-                <a href="https://t.me/Dollar_Matrix" target="_blank" class="btn btn-green" style="margin-bottom: 8px;">
-                    💬 ارتباط مستقیم با پشتیبان (@Dollar_Matrix)
-                </a>
-
-                <div style="display: flex; gap: 8px; margin-top: 10px;">
-                    <a href="https://t.me/NOVATON_IR" target="_blank" class="btn" style="flex:1; font-size:12px; padding:10px; background:#1e2d4a; color:var(--neon-cyan);">
-                        📢 کانال رسمی
-                    </a>
-                    <a href="https://t.me/nova_t_o_n_ir" target="_blank" class="btn" style="flex:1; font-size:12px; padding:10px; background:#1e2d4a; color:var(--neon-gold);">
-                        👥 گروه گفتگو
-                    </a>
-                </div>
+        <!-- TAB 5: SERVICES (جدید و نئونی) -->
+        <div id="tab-services" class="tab-content" style="display:none;">
+            
+            <!-- سرویس ۱ -->
+            <div class="service-card">
+                <div class="service-title">1. خرید ممبر واقعی تلگرام</div>
+                <div class="service-desc"><b>کاربرد:</b> افزایش اعضای واقعی کانال و یا گروه تلگرام برای رشد بهتر و تعامل طبیعی تر</div>
+                <button class="btn btn-gold" style="font-size:12px; padding:8px;" onclick="openServiceModal('خرید ممبر واقعی تلگرام')">مشاهده سرویس</button>
             </div>
+
+            <!-- سرویس ۲ -->
+            <div class="service-card">
+                <div class="service-title">2. خرید ممبر فیک تلگرام</div>
+                <div class="service-desc"><b>کاربرد:</b> افزایش سریع تعداد اعضای کانال برای تقویت ظاهر اولیه و اعتبار عددی صفحه</div>
+                <button class="btn btn-gold" style="font-size:12px; padding:8px;" onclick="openServiceModal('خرید ممبر فیک تلگرام')">مشاهده سرویس</button>
+            </div>
+
+            <!-- سرویس ۳ -->
+            <div class="service-card">
+                <div class="service-title">3. خرید ممبر آپلودر</div>
+                <div class="service-desc"><b>کاربرد:</b> مناسب برای کانالهایی که به رشد عددی، فعالیت بیشتر و افزایش اعتبار نیاز دارند</div>
+                <button class="btn btn-gold" style="font-size:12px; padding:8px;" onclick="openServiceModal('خرید ممبر آپلودر')">مشاهده سرویس</button>
+            </div>
+
+            <!-- سرویس ۴ -->
+            <div class="service-card">
+                <div class="service-title">4. خرید ممبر پرمیوم تلگرام</div>
+                <div class="service-desc"><b>کاربرد:</b> جایگاه کانال و گروه خود را در نتایج جستجوی تلگرام تقویت کنید</div>
+                <button class="btn btn-gold" style="font-size:12px; padding:8px;" onclick="openServiceModal('خرید ممبر پرمیوم تلگرام')">مشاهده سرویس</button>
+            </div>
+
+            <!-- سرویس ۵ -->
+            <div class="service-card">
+                <div class="service-title">5. خرید ویو تلگرام</div>
+                <div class="service-desc"><b>کاربرد:</b> مناسب برای نمایش بهتر میزان دیده شدن محتوا</div>
+                <button class="btn btn-gold" style="font-size:12px; padding:8px;" onclick="openServiceModal('خرید ویو تلگرام')">مشاهده سرویس</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SERVICE DETAIL MODAL (پنجره مشاهده سرویس) -->
+    <div id="service-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.92); z-index:2000; padding:20px; align-items:center; justify-content:center;">
+        <div class="card" style="width:100%; border-color:var(--neon-gold); margin:0; text-align:center;">
+            <div id="modal-service-name" style="font-size:16px; font-weight:bold; color:var(--neon-gold); margin-bottom:12px;">نام سرویس</div>
+            
+            <div style="background:#050811; border:1px solid var(--border-color); border-radius:10px; padding:15px; margin-bottom:15px; color:var(--text-sub); font-size:13px; line-height:1.6;" id="modal-service-content">
+                ⏳ لیست قیمت‌ها و گزینه‌های این سرویس به‌زودی آپدیت می‌شود...
+            </div>
+
+            <button class="btn" onclick="closeServiceModal()" style="background:#333; margin-top:0;">بستن</button>
         </div>
     </div>
 
@@ -435,9 +489,9 @@
             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
             <div>سفارش‌ها</div>
         </div>
-        <div class="nav-item" id="nav-btn-support" onclick="switchTab('support')">
-            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            <div>پشتیبانی</div>
+        <div class="nav-item" id="nav-btn-services" onclick="switchTab('services')">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+            <div>خدمات</div>
         </div>
     </div>
 
@@ -544,13 +598,13 @@
             document.getElementById('tab-deposit').style.display = 'none';
             document.getElementById('tab-ref').style.display = 'none';
             document.getElementById('tab-history').style.display = 'none';
-            document.getElementById('tab-support').style.display = 'none';
+            document.getElementById('tab-services').style.display = 'none';
 
             document.getElementById('nav-btn-order').classList.remove('active');
             document.getElementById('nav-btn-deposit').classList.remove('active');
             document.getElementById('nav-btn-ref').classList.remove('active');
             document.getElementById('nav-btn-history').classList.remove('active');
-            document.getElementById('nav-btn-support').classList.remove('active');
+            document.getElementById('nav-btn-services').classList.remove('active');
 
             document.getElementById('tab-' + tabName).style.display = 'block';
             document.getElementById('nav-btn-' + tabName).classList.add('active');
@@ -560,13 +614,22 @@
                 'deposit': 'واریز تون‌کوین (TON)',
                 'ref': 'زیرمجموعه‌گیری و دعوت از دوستان',
                 'history': 'پیگیری سفارش‌ها',
-                'support': 'پشتیبانی و ارتباط با ما'
+                'services': 'خدمات و سرویس‌های ویژه'
             };
             document.getElementById('page-title').innerText = titles[tabName];
 
             if (tabName === 'deposit') updateBalanceDisplay();
             if (tabName === 'ref') loadReferrals();
             if (tabName === 'history') loadOrders();
+        }
+
+        function openServiceModal(name) {
+            document.getElementById('modal-service-name').innerText = name;
+            document.getElementById('service-modal').style.display = 'flex';
+        }
+
+        function closeServiceModal() {
+            document.getElementById('service-modal').style.display = 'none';
         }
 
         function calcPrice() {
