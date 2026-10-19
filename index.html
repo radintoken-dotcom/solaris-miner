@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - v2.5</title>
-    <script src="https://telegram.org/js/telegram-web-app.js?v=2.5"></script>
+    <title>NovaTon - Services</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --bg-color: #080d1a;
@@ -257,48 +257,48 @@
             overflow-y: auto;
         }
 
-        /* --- استایل جدید سکه طلا (کاملاً دایره‌ای با چرخش ۳ بعدی) --- */
-        .coin-3d-box {
-            perspective: 800px;
+        /* سکه طلایی چرخان سه‌بعدی */
+        .coin-wrapper {
+            perspective: 1000px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
-        .coin-3d-circle {
+        .gold-coin-spin {
             width: 140px;
             height: 140px;
-            border-radius: 50% !important;
-            background: radial-gradient(circle at 30% 30%, #ffe875, #d4af37 60%, #8a5a00 100%);
-            border: 4px solid #fff;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset 0 0 15px rgba(0,0,0,0.5);
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffe066 0%, #d4af37 60%, #996515 100%);
+            border: 4px solid #ffffff;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), inset 0 0 15px rgba(0, 0, 0, 0.6);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            animation: rotateGoldCoin 5s infinite linear;
+            animation: spinCoinAnim 5s infinite linear;
             transform-style: preserve-3d;
         }
 
-        @keyframes rotateGoldCoin {
+        @keyframes spinCoinAnim {
             0% { transform: rotateY(0deg); }
             50% { transform: rotateY(180deg); }
             100% { transform: rotateY(360deg); }
         }
 
-        .coin-3d-title {
+        .coin-label {
             font-size: 10px;
-            color: #1a1a1a;
+            color: #000;
             font-weight: bold;
         }
 
-        .coin-3d-value {
-            font-size: 15px;
+        .coin-val {
+            font-size: 16px;
             font-weight: 900;
-            color: #080d1a;
-            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
-            margin-top: 4px;
+            color: #0d1527;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+            margin-top: 2px;
         }
     </style>
 </head>
@@ -370,15 +370,14 @@
         <!-- TAB 4: DEPOSIT -->
         <div id="tab-deposit" class="tab-content" style="display:none;">
             
-            <!-- سکه طلایی چرخان -->
-            <div class="coin-3d-box">
-                <div class="coin-3d-circle">
-                    <div class="coin-3d-title">موجودی حساب</div>
-                    <div class="coin-3d-value" id="user-balance">0.00 TON</div>
+            <!-- سکه چرخان -->
+            <div class="coin-wrapper">
+                <div class="gold-coin-spin">
+                    <div class="coin-label">موجودی حساب</div>
+                    <div class="coin-val" id="user-balance">0.00 TON</div>
                 </div>
             </div>
 
-            <!-- دکمه بروزرسانی موجودی -->
             <button class="btn btn-gold" onclick="updateBalanceDisplay()" style="margin-bottom:15px; font-size:12px; padding:10px;">
                 🔄 بروزرسانی موجودی
             </button>
@@ -389,14 +388,12 @@
                     ⚠️ <b>نکته مهم:</b> حداقل مقدار واریزی <b>1 TON</b> می‌باشد.<br>در هنگام واریز حتماً <b>MEMO اختصاصی</b> خود را وارد نمایید.
                 </p>
 
-                <!-- آدرس ولت -->
                 <div class="input-group">
                     <label>آدرس ولت دریافت (TON):</label>
                     <input type="text" id="deposit-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center; margin-bottom:6px;">
                     <button class="btn" onclick="copyValue('deposit-wallet', 'آدرس کیف پول')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan); margin-top:0;">📋 کپی آدرس کیف پول</button>
                 </div>
 
-                <!-- کادر MEMO اختصاصی -->
                 <div class="input-group" style="margin-top: 15px;">
                     <label style="color:var(--neon-cyan);">MEMO اختصاصی شما (الزامی):</label>
                     <input type="text" id="deposit-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center; margin-bottom:6px;">
@@ -460,7 +457,7 @@
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی اد اجباری کیفیت A+', 0.90, 1000, 20000)">🛒 سفارش</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال اد اجباری کیفیت A+', 0.90, 1000, 20000)">🛒 سفارش</button>
                 </div>
             </div>
 
@@ -505,7 +502,7 @@
         </div>
     </div>
 
-    <!-- POPUP 3: فرم سفارش -->
+    <!-- POPUP 3: فرم سفارش همراه دو دکمه پرداختی و ثبتی مجزا -->
     <div id="modal-direct-order" class="modal-overlay">
         <div class="card" style="width:100%; border-color:var(--neon-green); margin:0; max-height:90vh; overflow-y:auto;">
             <div id="direct-order-title" style="font-weight:bold; color:var(--neon-green); text-align:center; margin-bottom:12px; font-size:14px;">ثبت سفارش</div>
@@ -525,7 +522,7 @@
                 <div class="big-number" id="direct-total-price" style="color:var(--neon-gold);">0.00 TON</div>
             </div>
 
-            <!-- دکمه پرداخت -->
+            <!-- دکمه اول: پرداخت -->
             <button class="btn btn-gold" onclick="togglePaymentBox()" style="font-size:12px; margin-bottom:8px;">
                 💳 پرداخت آنلاین (نمایش آدرس ولت و MEMO)
             </button>
@@ -547,7 +544,7 @@
                 </div>
             </div>
 
-            <!-- دکمه ثبت نهایی -->
+            <!-- دکمه دوم: ثبت نهایی -->
             <button class="btn btn-green" onclick="submitDirectOrder()">
                 ✅ ثبت نهایی و ارسال به پشتیبانی
             </button>
