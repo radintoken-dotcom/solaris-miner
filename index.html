@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Casino Wheel Edition</title>
+    <title>NovaTon - Casino Wheel Edition v3</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -270,7 +270,6 @@
         .support-title { font-size: 15px; font-weight: bold; color: #00f0ff; margin-bottom: 4px; }
         .support-sub { font-size: 11px; color: #8da0bf; margin-bottom: 12px; line-height: 1.5; }
 
-        /* --- استایل جدید گردونه شانس مشابه عکس --- */
         .wheel-stand-container {
             position: relative;
             width: 280px;
@@ -293,7 +292,6 @@
             justify-content: center;
         }
 
-        /* چراغ‌های LED دور گردونه */
         .led-light {
             position: absolute;
             width: 10px;
@@ -330,7 +328,6 @@
             transition: transform 4s cubic-bezier(0.1, 0.9, 0.1, 1);
         }
 
-        /* پایه مشکی زیر گردونه مشابه تصویر */
         .wheel-base-stand {
             width: 180px;
             height: 45px;
@@ -364,40 +361,34 @@
     <div class="content">
         <!-- TAB 1: SERVICES -->
         <div id="tab-services" class="tab-content active" style="display:block;">
-            
             <div class="service-card">
                 <div class="service-title">1. خرید ممبر واقعی تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> افزایش اعضای واقعی کانال و یا گروه تلگرام برای رشد بهتر و تعامل طبیعی تر</div>
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('real-member')">مشاهده سرویس</button>
             </div>
-
             <div class="service-card">
                 <div class="service-title">2. خرید ممبر فیک تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> افزایش سریع تعداد اعضای کانال برای تقویت ظاهر اولیه و اعتبار عددی صفحه</div>
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('fake-member')">مشاهده سرویس</button>
             </div>
-
             <div class="service-card">
                 <div class="service-title">3. خرید ممبر آپلودر</div>
                 <div class="service-desc"><b>کاربرد:</b> مناسب برای کانالهایی که به رشد عددی، فعالیت بیشتر و افزایش اعتبار نیاز دارند</div>
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
-
             <div class="service-card">
                 <div class="service-title">4. خرید ممبر پرمیوم تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> جایگاه کانال و گروه خود را در نتایج جستجوی تلگرام تقویت کنید</div>
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
-
             <div class="service-card">
                 <div class="service-title">5. خرید ویو تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> مناسب برای نمایش بهتر میزان دیده شدن محتوا</div>
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
-
         </div>
 
-        <!-- TAB 2: WHEEL (گردونه شانس جدید) -->
+        <!-- TAB 2: WHEEL -->
         <div id="tab-wheel" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
                 <p style="font-size:12px; color:#8da0bf; margin-bottom:5px;">گردونه را بچرخانید و هدیه اختصاصی بگیرید!</p>
@@ -419,7 +410,7 @@
 
                 <div id="wheel-result-box" style="display:none; background:#050608; border:1px solid #28a745; border-radius:12px; padding:12px; margin-top:12px;">
                     <div style="color:#28a745; font-weight:bold; font-size:14px; margin-bottom:6px;">🎉 تبریک! شما برنده شدید!</div>
-                    <div id="prize-name" style="color:#fff; font-size:12px; font-weight:bold; margin-bottom:8px;">10% تخفیف خرید ممبر</div>
+                    <div id="prize-name" style="color:#fff; font-size:12px; font-weight:bold; margin-bottom:8px;">10درصد تخفیف خرید ✨</div>
                     <a id="claim-prize-btn" href="#" target="_blank" class="btn btn-green" style="font-size:12px;">💬 ارسال کد شانس به پشتیبانی</a>
                 </div>
             </div>
@@ -442,28 +433,24 @@
 
         <!-- TAB 4: SUPPORT -->
         <div id="tab-support" class="tab-content" style="display:none;">
-            
             <div class="support-card" style="border-color:#28a745 !important;">
                 <div class="support-icon">🎧</div>
                 <div class="support-title" style="color:#28a745;">ارتباط مستقیم با پشتیبانی</div>
                 <div class="support-sub">جهت پیگیری سفارشات، سوالات و مشاوره خرید به آیدی زیر پیام دهید:</div>
                 <a href="https://t.me/Dollar_Matrix" target="_blank" class="btn btn-green" style="font-size:12px;">💬 ارسال پیام به پشتیبانی</a>
             </div>
-
             <div class="support-card" style="border-color:#00f0ff !important;">
                 <div class="support-icon">📢</div>
                 <div class="support-title">کانال اطلاع‌رسانی</div>
                 <div class="support-sub">برای اطلاع از اخبار، تخفیف‌های ویژه و سرویس‌های جدید عضو شوید:</div>
                 <a href="https://t.me/NOVATON_IR" target="_blank" class="btn" style="font-size:12px;">📢 ورود به کانال تلگرام</a>
             </div>
-
             <div class="support-card" style="border-color:#ffd700 !important;">
                 <div class="support-icon">👥</div>
                 <div class="support-title" style="color:#ffd700;">گروه چت و تبادل نظر</div>
                 <div class="support-sub">جهت گفتگو با سایر کاربران و اشتراک‌گذاری نظرات:</div>
                 <a href="https://t.me/nova_t_o_n_ir" target="_blank" class="btn btn-gold" style="font-size:12px;">👥 ورود به گروه تلگرام</a>
             </div>
-
         </div>
     </div>
 
@@ -540,19 +527,18 @@
         var maxLimit = 10000;
         var hasSpun = false;
 
+        /* لیست جوایز جدید طبق درخواست شما */
         var prizes = [
-            "۱۰٪ تخفیف خرید",
-            "۲۰ عدد ویو هدیه",
-            "پوچ! دوباره تلاش کن",
-            "۵٪ تخفیف خرید",
-            "۵۰ ممبر هدیه خرید بعد",
-            "کد شانس ویژه"
+            "2000 ممبر 🎁",
+            "500ممبر واقعی 🌟",
+            "10درصد تخفیف خرید ✨",
+            "50عدد ویو 🤩",
+            "5درصد تخفیف خرید 🎉",
+            "پوچ دوباره تلاش کن 💣"
         ];
 
-        /* رنگین‌کمانی مشابه تصویر */
-        var colors = ["#e91e63", "#9c27b0", "#3f51b5", "#00bcd4", "#4caf50", "#ffeb3b"];
+        var colors = ["#d81b60", "#8e24aa", "#3949ab", "#00acc1", "#43a047", "#fdd835"];
 
-        /* رسم گردونه دقیقا مشابه مدل سه بعدی عکس */
         function drawWheel() {
             var canvas = document.getElementById('wheelCanvas');
             if (!canvas) return;
@@ -562,7 +548,6 @@
 
             ctx.clearRect(0, 0, 300, 300);
 
-            // 1. رسم قاچ‌های رنگین‌کمانی شفاف
             for (var i = 0; i < numSlices; i++) {
                 var angle = i * sliceAngle;
                 ctx.beginPath();
@@ -572,51 +557,54 @@
                 ctx.lineTo(150, 150);
                 ctx.fill();
 
-                // خطوط سیاه بین قاچ‌ها (مشابه دیواره‌های دایره در عکس)
                 ctx.lineWidth = 3;
                 ctx.strokeStyle = "#111319";
                 ctx.stroke();
 
-                // متن‌های داخل قاچ
+                /* تنظیمات فونت کاملاً پرنور، سفید و برجسته برای خوانایی عالی */
                 ctx.save();
                 ctx.translate(150, 150);
                 ctx.rotate(angle + sliceAngle / 2);
                 ctx.textAlign = "right";
-                ctx.fillStyle = "#fff";
-                ctx.font = "bold 10px tahoma";
-                ctx.shadowColor = "#000";
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 11px tahoma";
+                
+                // سایه مشکی قوی برای برجسته‌سازی متن
+                ctx.shadowColor = "#000000";
+                ctx.shadowOffsetX = 2;
+                ctx.shadowOffsetY = 2;
                 ctx.shadowBlur = 4;
-                ctx.fillText(prizes[i], 138, 4);
+                
+                ctx.fillText(prizes[i], 140, 4);
                 ctx.restore();
             }
 
-            // 2. رسم حلقه نئون قرمز/نارنجی داخلی (دقیقاً مشابه مرکز گردونه در عکس)
+            // مرکز دایره نئون سرخ/نارنجی
             ctx.beginPath();
-            ctx.arc(150, 150, 50, 0, 2 * Math.PI);
+            ctx.arc(150, 150, 45, 0, 2 * Math.PI);
             ctx.fillStyle = "#0a0b0e";
             ctx.fill();
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 4;
             ctx.strokeStyle = "#ff3300";
             ctx.shadowColor = "#ff3300";
             ctx.shadowBlur = 12;
             ctx.stroke();
 
-            // 3. پرپره‌های مشکی/سفید مرکزی مرکز گردونه
+            // پرپره‌های مشکی/سفید مرکزی
             ctx.shadowBlur = 0;
             var numSpokes = 16;
             for (var j = 0; j < numSpokes; j++) {
                 var spokeAngle = (j * 2 * Math.PI) / numSpokes;
                 ctx.beginPath();
                 ctx.moveTo(150, 150);
-                ctx.lineTo(150 + 45 * Math.cos(spokeAngle), 150 + 45 * Math.sin(spokeAngle));
+                ctx.lineTo(150 + 40 * Math.cos(spokeAngle), 150 + 40 * Math.sin(spokeAngle));
                 ctx.lineWidth = 2;
                 ctx.strokeStyle = (j % 2 === 0) ? "#ffffff" : "#111319";
                 ctx.stroke();
             }
 
-            // مرکز دایره کوچک
             ctx.beginPath();
-            ctx.arc(150, 150, 12, 0, 2 * Math.PI);
+            ctx.arc(150, 150, 10, 0, 2 * Math.PI);
             ctx.fillStyle = "#1c202b";
             ctx.fill();
             ctx.strokeStyle = "#ffd700";
@@ -624,7 +612,6 @@
             ctx.stroke();
         }
 
-        /* ساخت چراغ‌های LED داینامیک دور تا دور گردونه */
         function createLeds() {
             var ring = document.getElementById('wheelRing');
             if (!ring || ring.querySelector('.led-light')) return;
