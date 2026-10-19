@@ -3,21 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Services</title>
+    <title>NovaTon - Leather Edition</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root {
-            --bg-color: #0d0e12;
-            --leather-bg: linear-gradient(145deg, #181a20, #0f1015);
-            --leather-card: linear-gradient(145deg, #1f222a, #12141a);
-            --neon-cyan: #00f0ff;
-            --neon-green: #28a745;
-            --neon-gold: #ffd700;
-            --text-main: #f0f3f8;
-            --text-sub: #8e99ac;
-            --border-leather: #2a2e38;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -27,13 +15,14 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* پس‌زمینه چرم مشکی واقعی با بافت برجسته */
         body {
-            background-color: var(--bg-color);
+            background-color: #08090b !important;
             background-image: 
-                radial-gradient(circle at 50% 0%, #1a1e29 0%, transparent 75%),
-                radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
-            background-size: 100% 100%, 8px 8px;
-            color: var(--text-main);
+                radial-gradient(circle at 50% 0%, #151821 0%, #08090b 85%),
+                radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0) !important;
+            background-size: 100% 100%, 6px 6px !important;
+            color: #ffffff;
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -41,18 +30,18 @@
             direction: rtl;
         }
 
-        /* هدر چرم مشکی */
+        /* هدر چرم مشکی لوکس */
         .header {
-            background: var(--leather-card);
-            color: var(--neon-cyan);
+            background: linear-gradient(180deg, #181b22, #0e1015) !important;
+            color: #00f0ff;
             text-align: center;
             width: 100%;
             padding: 15px 0;
             font-size: 18px;
             font-weight: bold;
-            border-bottom: 2px solid var(--border-leather);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.05);
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+            border-bottom: 2px solid #282c37;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
             z-index: 10;
         }
 
@@ -71,20 +60,20 @@
             display: block;
         }
 
-        /* کارت‌های چرم براق با افکت برجسته */
+        /* کارت‌های چرمی با لبه‌های برجسته و افکت دوخت */
         .card {
-            background: var(--leather-card);
+            background: linear-gradient(145deg, #161820, #0c0d12) !important;
             border-radius: 16px;
             padding: 18px;
             margin-bottom: 16px;
-            border: 1px solid var(--border-leather);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.08), inset 0 -2px 5px rgba(0,0,0,0.5);
+            border: 1px solid #252936 !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.95), inset 0 1px 1px rgba(255, 255, 255, 0.08), inset 0 -2px 6px rgba(0, 0, 0, 0.8) !important;
             position: relative;
         }
 
         .card-title {
             font-size: 12px;
-            color: var(--text-sub);
+            color: #8da0bf;
             margin-bottom: 8px;
             text-transform: uppercase;
         }
@@ -92,15 +81,15 @@
         .big-number {
             font-size: 24px;
             font-weight: bold;
-            color: var(--neon-cyan);
+            color: #00f0ff;
             margin: 6px 0;
         }
 
-        /* دکمه‌های چرم مشکی و طلایی براق */
+        /* دکمه‌های دوخت چرم با نور نئون */
         .btn {
-            background: linear-gradient(145deg, #1a2233, #0d121c);
-            color: #fff;
-            border: 1px solid var(--neon-cyan);
+            background: linear-gradient(145deg, #1a2233, #0d121c) !important;
+            color: #fff !important;
+            border: 1px solid #00f0ff !important;
             padding: 12px 14px;
             border-radius: 12px;
             font-weight: bold;
@@ -108,7 +97,7 @@
             cursor: pointer;
             width: 100%;
             transition: 0.15s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255,255,255,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.15);
             display: block;
             text-align: center;
             text-decoration: none;
@@ -118,21 +107,21 @@
         .btn:active {
             opacity: 0.8;
             transform: scale(0.97);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9) !important;
         }
 
         .btn-green {
-            background: linear-gradient(145deg, #1b3d22, #0d2112);
-            border-color: var(--neon-green);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2), inset 0 1px 1px rgba(255,255,255,0.1);
+            background: linear-gradient(145deg, #1b3d22, #0d2112) !important;
+            border-color: #28a745 !important;
+            color: #fff !important;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
         }
 
         .btn-gold {
-            background: linear-gradient(145deg, #3d3314, #211b0a);
-            border-color: var(--neon-gold);
-            color: var(--neon-gold);
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1);
+            background: linear-gradient(145deg, #3d3314, #211b0a) !important;
+            border-color: #ffd700 !important;
+            color: #ffd700 !important;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
         }
 
         .input-group {
@@ -143,35 +132,35 @@
         .input-group label {
             display: block;
             font-size: 12px;
-            color: var(--text-sub);
+            color: #8da0bf;
             margin-bottom: 6px;
         }
 
         .input-field {
             width: 100%;
             padding: 12px;
-            background: #090a0d;
-            border: 1px solid var(--border-leather);
+            background: #050608 !important;
+            border: 1px solid #252936 !important;
             border-radius: 10px;
             color: #fff;
             font-size: 13px;
             outline: none;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
         }
 
-        /* منوی پایینی چرم مشکی با دوخت دو طرفه */
+        /* منوی پایینی چرم مشکی دست‌دوز */
         .nav-bar {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             height: 68px;
-            background: var(--leather-card);
+            background: linear-gradient(0deg, #090a0d, #14161f) !important;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            border-top: 2px solid var(--border-leather);
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.9), inset 0 1px 1px rgba(255,255,255,0.05);
+            border-top: 2px solid #252936 !important;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.95), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
             z-index: 1000;
         }
 
@@ -180,7 +169,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: var(--text-sub);
+            color: #8da0bf;
             font-size: 10px;
             cursor: pointer;
             flex: 1;
@@ -194,7 +183,7 @@
             width: 22px;
             height: 22px;
             fill: none;
-            stroke: var(--text-sub);
+            stroke: #8da0bf;
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
@@ -203,49 +192,49 @@
         }
 
         .nav-item.active {
-            color: var(--neon-cyan);
+            color: #00f0ff !important;
             font-weight: bold;
         }
 
         .nav-item.active svg {
-            stroke: var(--neon-cyan);
-            filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.8));
+            stroke: #00f0ff !important;
+            filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.9));
         }
 
-        /* کارت‌های خدمات چرم مشکی */
+        /* کارت‌های خدمات چرم */
         .service-card {
-            background: var(--leather-card);
-            border: 1px solid var(--border-leather);
+            background: linear-gradient(145deg, #161820, #0c0d12) !important;
+            border: 1px solid #252936 !important;
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 14px;
             text-align: right;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
             position: relative;
         }
 
         .service-title {
             font-size: 16px;
             font-weight: bold;
-            color: var(--neon-gold);
+            color: #ffd700;
             margin-bottom: 6px;
         }
 
         .service-desc {
             font-size: 11px;
-            color: var(--text-sub);
+            color: #8da0bf;
             line-height: 1.6;
             margin-bottom: 10px;
         }
 
         .sub-service-box {
-            background: #090a0d;
-            border: 1px solid var(--border-leather);
+            background: #050608 !important;
+            border: 1px solid #252936 !important;
             border-radius: 12px;
             padding: 12px;
             margin-bottom: 12px;
             text-align: right;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
         }
 
         .sub-service-row {
@@ -259,19 +248,18 @@
         .sub-service-title {
             font-size: 13px;
             font-weight: bold;
-            color: var(--neon-cyan);
+            color: #00f0ff;
             margin-bottom: 8px;
-            border-bottom: 1px dashed var(--border-leather);
+            border-bottom: 1px dashed #252936;
             padding-bottom: 4px;
             line-height: 1.4;
         }
 
-        /* پاپ‌آپ تاریک چرم مشکی */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 2000;
             padding: 15px;
             align-items: center;
@@ -280,13 +268,13 @@
         }
 
         .support-card {
-            background: var(--leather-card);
-            border: 1px solid var(--border-leather);
+            background: linear-gradient(145deg, #161820, #0c0d12) !important;
+            border: 1px solid #252936 !important;
             border-radius: 16px;
             padding: 18px;
             margin-bottom: 14px;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
         }
 
         .support-icon {
@@ -297,18 +285,18 @@
         .support-title {
             font-size: 15px;
             font-weight: bold;
-            color: var(--neon-cyan);
+            color: #00f0ff;
             margin-bottom: 4px;
         }
 
         .support-sub {
             font-size: 11px;
-            color: var(--text-sub);
+            color: #8da0bf;
             margin-bottom: 12px;
             line-height: 1.5;
         }
 
-        /* گردونه شانس با تم چرمی مشکی و طلایی */
+        /* گردونه شانس تم چرم مشکی */
         .wheel-wrapper {
             position: relative;
             width: 260px;
@@ -325,7 +313,7 @@
             height: 0; 
             border-left: 14px solid transparent;
             border-right: 14px solid transparent;
-            border-top: 24px solid var(--neon-gold);
+            border-top: 24px solid #ffd700;
             filter: drop-shadow(0 0 8px #ffd700);
             z-index: 100;
         }
@@ -334,7 +322,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 5px solid var(--neon-gold);
+            border: 5px solid #ffd700;
             box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
             transition: transform 4s cubic-bezier(0.1, 0.9, 0.1, 1);
         }
@@ -346,8 +334,8 @@
             transform: translate(-50%, -50%);
             width: 50px;
             height: 50px;
-            background: #0f1015;
-            border: 2px solid var(--neon-gold);
+            background: #0e1015;
+            border: 2px solid #ffd700;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -401,7 +389,7 @@
         <!-- TAB 2: WHEEL -->
         <div id="tab-wheel" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
-                <p style="font-size:12px; color:var(--text-sub); margin-bottom:5px;">گردونه را بچرخانید و هدیه اختصاصی بگیرید!</p>
+                <p style="font-size:12px; color:#8da0bf; margin-bottom:5px;">گردونه را بچرخانید و هدیه اختصاصی بگیرید!</p>
 
                 <div class="wheel-wrapper">
                     <div class="wheel-pointer"></div>
@@ -416,8 +404,8 @@
                     <button class="btn btn-gold" id="spin-btn" onclick="checkAndSpinWheel()">🎡 چرخاندن گردونه شانس</button>
                 </div>
 
-                <div id="wheel-result-box" style="display:none; background:#090a0d; border:1px solid var(--neon-green); border-radius:12px; padding:12px; margin-top:12px;">
-                    <div style="color:var(--neon-green); font-weight:bold; font-size:14px; margin-bottom:6px;">🎉 تبریک! شما برنده شدید!</div>
+                <div id="wheel-result-box" style="display:none; background:#050608; border:1px solid #28a745; border-radius:12px; padding:12px; margin-top:12px;">
+                    <div style="color:#28a745; font-weight:bold; font-size:14px; margin-bottom:6px;">🎉 تبریک! شما برنده شدید!</div>
                     <div id="prize-name" style="color:#fff; font-size:12px; font-weight:bold; margin-bottom:8px;">10% تخفیف خرید ممبر</div>
                     <a id="claim-prize-btn" href="#" target="_blank" class="btn btn-green" style="font-size:12px;">💬 ارسال کد شانس به پشتیبانی</a>
                 </div>
@@ -429,11 +417,11 @@
             <div class="card" style="text-align:center;">
                 <div style="margin-bottom:12px;">
                     <div class="card-title">تعداد دعوت‌های شما</div>
-                    <div id="ref-count" style="font-size:22px; font-weight:bold; color:var(--neon-gold);">0 نفر</div>
+                    <div id="ref-count" style="font-size:22px; font-weight:bold; color:#ffd700;">0 نفر</div>
                 </div>
                 <div class="input-group">
                     <label>لینک دعوت اختصاصی شما:</label>
-                    <input type="text" id="ref-link" class="input-field" readonly style="font-size:11px; text-align:center; color:var(--neon-gold);">
+                    <input type="text" id="ref-link" class="input-field" readonly style="font-size:11px; text-align:center; color:#ffd700;">
                 </div>
                 <button class="btn btn-gold" onclick="copyRefLink()">📋 کپی لینک دعوت</button>
             </div>
@@ -442,23 +430,23 @@
         <!-- TAB 4: SUPPORT -->
         <div id="tab-support" class="tab-content" style="display:none;">
             
-            <div class="support-card" style="border-color:var(--neon-green);">
+            <div class="support-card" style="border-color:#28a745 !important;">
                 <div class="support-icon">🎧</div>
-                <div class="support-title" style="color:var(--neon-green);">ارتباط مستقیم با پشتیبانی</div>
+                <div class="support-title" style="color:#28a745;">ارتباط مستقیم با پشتیبانی</div>
                 <div class="support-sub">جهت پیگیری سفارشات، سوالات و مشاوره خرید به آیدی زیر پیام دهید:</div>
                 <a href="https://t.me/Dollar_Matrix" target="_blank" class="btn btn-green" style="font-size:12px;">💬 ارسال پیام به پشتیبانی</a>
             </div>
 
-            <div class="support-card" style="border-color:var(--neon-cyan);">
+            <div class="support-card" style="border-color:#00f0ff !important;">
                 <div class="support-icon">📢</div>
                 <div class="support-title">کانال اطلاع‌رسانی</div>
                 <div class="support-sub">برای اطلاع از اخبار، تخفیف‌های ویژه و سرویس‌های جدید عضو شوید:</div>
                 <a href="https://t.me/NOVATON_IR" target="_blank" class="btn" style="font-size:12px;">📢 ورود به کانال تلگرام</a>
             </div>
 
-            <div class="support-card" style="border-color:var(--neon-gold);">
+            <div class="support-card" style="border-color:#ffd700 !important;">
                 <div class="support-icon">👥</div>
-                <div class="support-title" style="color:var(--neon-gold);">گروه چت و تبادل نظر</div>
+                <div class="support-title" style="color:#ffd700;">گروه چت و تبادل نظر</div>
                 <div class="support-sub">جهت گفتگو با سایر کاربران و اشتراک‌گذاری نظرات:</div>
                 <a href="https://t.me/nova_t_o_n_ir" target="_blank" class="btn btn-gold" style="font-size:12px;">👥 ورود به گروه تلگرام</a>
             </div>
@@ -468,19 +456,19 @@
 
     <!-- POPUPS FOR SERVICES -->
     <div id="modal-real-member" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:var(--neon-gold); margin:0; max-height:85vh; overflow-y:auto;">
-            <div style="font-size:15px; font-weight:bold; color:var(--neon-gold); text-align:center; margin-bottom:12px;">
+        <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
+            <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">
                 ممبر واقعی تلگرام
             </div>
 
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ممبر واقعی کانال، اد اجباری، اقتصادی شروع زیر ۶ ساعت</div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:var(--neon-cyan); font-weight:bold;">0.74 TON</span>
+                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:#00f0ff; font-weight:bold;">0.74 TON</span>
                 </div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
                     <span style="color:#fff;">1,000 / 20,000</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
@@ -492,11 +480,11 @@
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ممبر واقعی اد اجباری کیفیت A شروع آنی</div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:var(--neon-cyan); font-weight:bold;">0.83 TON</span>
+                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:#00f0ff; font-weight:bold;">0.83 TON</span>
                 </div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
                     <span style="color:#fff;">1,000 / 20,000</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
@@ -508,11 +496,11 @@
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ممبر واقعی کانال اد اجباری کیفیت A+ شروع آنی</div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:var(--neon-cyan); font-weight:bold;">0.90 TON</span>
+                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:#00f0ff; font-weight:bold;">0.90 TON</span>
                 </div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
                     <span style="color:#fff;">1,000 / 20,000</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
@@ -524,11 +512,11 @@
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟</div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:var(--neon-cyan); font-weight:bold;">1.50 TON</span>
+                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:#00f0ff; font-weight:bold;">1.50 TON</span>
                 </div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
                     <span style="color:#fff;">1,000 / 10,000</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
@@ -537,24 +525,24 @@
                 </div>
             </div>
 
-            <button class="btn" onclick="closeModal('modal-real-member')" style="background:#1f222a; margin-top:10px;">بستن</button>
+            <button class="btn" onclick="closeModal('modal-real-member')" style="background:#161820 !important; margin-top:10px;">بستن</button>
         </div>
     </div>
 
     <div id="modal-fake-member" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:var(--neon-gold); margin:0; max-height:85vh; overflow-y:auto;">
-            <div style="font-size:15px; font-weight:bold; color:var(--neon-gold); text-align:center; margin-bottom:12px;">
+        <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
+            <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">
                 ممبر فیک تلگرام
             </div>
 
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ممبر فیک ایرانی بدون ریزش شروع فوری</div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:var(--neon-cyan); font-weight:bold;">0.5 TON</span>
+                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:#00f0ff; font-weight:bold;">0.5 TON</span>
                 </div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
                     <span style="color:#fff;">500 / 10,000</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
@@ -566,11 +554,11 @@
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ممبر فیک بدون ریزش شروع فوری</div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
-                    <span style="color:var(--neon-cyan); font-weight:bold;">0.55 TON</span>
+                    <span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:#00f0ff; font-weight:bold;">0.55 TON</span>
                 </div>
                 <div class="sub-service-row">
-                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#8da0bf;">حداقل / حداکثر:</span>
                     <span style="color:#fff;">500 / 20,000</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
@@ -579,23 +567,23 @@
                 </div>
             </div>
 
-            <button class="btn" onclick="closeModal('modal-fake-member')" style="background:#1f222a; margin-top:10px;">بستن</button>
+            <button class="btn" onclick="closeModal('modal-fake-member')" style="background:#161820 !important; margin-top:10px;">بستن</button>
         </div>
     </div>
 
     <div id="modal-rules" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0; text-align:right;">
-            <div style="font-size:15px; font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:15px;">
+        <div class="card" style="width:100%; border-color:#00f0ff !important; margin:0; text-align:right;">
+            <div style="font-size:15px; font-weight:bold; color:#00f0ff; text-align:center; margin-bottom:15px;">
                 📜 قوانین و نکات مهم سرویس
             </div>
-            <div style="font-size:12px; color:var(--text-sub); line-height:1.8;" id="rules-content"></div>
+            <div style="font-size:12px; color:#8da0bf; line-height:1.8;" id="rules-content"></div>
             <button class="btn btn-gold" onclick="closeModal('modal-rules')" style="margin-top:15px;">متوجه شدم</button>
         </div>
     </div>
 
     <div id="modal-direct-order" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:var(--neon-green); margin:0; max-height:90vh; overflow-y:auto;">
-            <div id="direct-order-title" style="font-weight:bold; color:var(--neon-green); text-align:center; margin-bottom:12px; font-size:14px;">ثبت سفارش</div>
+        <div class="card" style="width:100%; border-color:#28a745 !important; margin:0; max-height:90vh; overflow-y:auto;">
+            <div id="direct-order-title" style="font-weight:bold; color:#28a745; text-align:center; margin-bottom:12px; font-size:14px;">ثبت سفارش</div>
 
             <div class="input-group">
                 <label>لینک کانال یا گروه شما:</label>
@@ -607,16 +595,16 @@
                 <input type="number" id="direct-order-count" class="input-field" placeholder="تعداد" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()">
             </div>
 
-            <div class="card" style="background:#090a0d; border-color:var(--neon-gold); text-align:center; margin:10px 0;">
+            <div class="card" style="background:#050608 !important; border-color:#ffd700 !important; text-align:center; margin:10px 0;">
                 <div class="card-title">مبلغ قابل پرداخت</div>
-                <div class="big-number" id="direct-total-price" style="color:var(--neon-gold);">0.00 TON</div>
+                <div class="big-number" id="direct-total-price" style="color:#ffd700;">0.00 TON</div>
             </div>
 
             <button class="btn btn-gold" onclick="togglePaymentBox()" style="font-size:12px; margin-bottom:8px;">
                 💳 پرداخت آنلاین (نمایش آدرس ولت و MEMO)
             </button>
 
-            <div id="pay-info-box" style="display:none; background:#090a0d; border:1px solid var(--neon-cyan); border-radius:12px; padding:10px; margin-bottom:10px;">
+            <div id="pay-info-box" style="display:none; background:#050608 !important; border:1px solid #00f0ff !important; border-radius:12px; padding:10px; margin-bottom:10px;">
                 <p style="font-size:10px; color:#ffd700; text-align:center; margin-bottom:8px;">
                     ⚠️ مبلغ فوق را به ولت زیر واریز کرده و <b>MEMO</b> را حتماً درج کنید:
                 </p>
@@ -626,8 +614,8 @@
                     <button class="btn" onclick="copyValue('order-pay-wallet', 'آدرس ولت')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی آدرس ولت</button>
                 </div>
                 <div class="input-group" style="margin-bottom:4px;">
-                    <label style="font-size:10px; color:var(--neon-cyan);">MEMO اختصاصی شما:</label>
-                    <input type="text" id="order-pay-memo" class="input-field" readonly style="font-size:11px; font-weight:bold; color:var(--neon-cyan); text-align:center; padding:8px; margin-bottom:4px;">
+                    <label style="font-size:10px; color:#00f0ff;">MEMO اختصاصی شما:</label>
+                    <input type="text" id="order-pay-memo" class="input-field" readonly style="font-size:11px; font-weight:bold; color:#00f0ff; text-align:center; padding:8px; margin-bottom:4px;">
                     <button class="btn btn-gold" onclick="copyValue('order-pay-memo', 'کد MEMO')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی کد MEMO</button>
                 </div>
             </div>
@@ -636,7 +624,7 @@
                 ✅ ثبت نهایی و ارسال به پشتیبانی
             </button>
             
-            <button class="btn" onclick="closeModal('modal-direct-order')" style="background:#1f222a; margin-top:6px;">انصراف</button>
+            <button class="btn" onclick="closeModal('modal-direct-order')" style="background:#161820 !important; margin-top:6px;">انصراف</button>
         </div>
     </div>
 
@@ -788,7 +776,7 @@
                 `;
             } else {
                 contentElem.innerHTML = `
-                    <p>1️⃣ <b>لینک عمومی (Public):</b> لینک کانال را وارد کنید. نمونه: <br><span style="color:var(--neon-gold);">https://t.me/your_channel</span> یا <span style="color:var(--neon-gold);">@your_channel</span></p><br>
+                    <p>1️⃣ <b>لینک عمومی (Public):</b> لینک کانال را وارد کنید. نمونه: <br><span style="color:#ffd700;">https://t.me/your_channel</span> یا <span style="color:#ffd700;">@your_channel</span></p><br>
                     <p>2️⃣ کانال را حتماً باید با شماره (اکانت) <b>ایرانی +98</b> ایجاد کنید.</p><br>
                     <p>3️⃣ موضوع کانال خلاف <b>قوانین کشور</b> نباشد.</p><br>
                     <p>4️⃣ هنگام ثبت سفارش <b>شماره همراه روشن</b> وارد کنید.</p><br>
