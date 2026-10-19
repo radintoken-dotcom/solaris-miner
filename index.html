@@ -194,21 +194,6 @@
             filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.6));
         }
 
-        .stat-grid {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .stat-box {
-            flex: 1;
-            background: #050811;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-        }
-
         .service-card {
             background: linear-gradient(145deg, #0d1527, #050811);
             border: 1px solid var(--neon-cyan);
@@ -326,11 +311,9 @@
         <!-- TAB 3: REFERRAL -->
         <div id="tab-ref" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
-                <div class="stat-grid">
-                    <div class="stat-box">
-                        <div class="card-title">تعداد دعوت‌ها</div>
-                        <div id="ref-count" style="font-size:18px; font-weight:bold; color:var(--neon-gold);">0 نفر</div>
-                    </div>
+                <div style="margin-bottom:12px;">
+                    <div class="card-title">تعداد دعوت‌ها</div>
+                    <div id="ref-count" style="font-size:18px; font-weight:bold; color:var(--neon-gold);">0 نفر</div>
                 </div>
                 <div class="input-group">
                     <label>لینک دعوت اختصاصی شما:</label>
@@ -340,7 +323,7 @@
             </div>
         </div>
 
-        <!-- TAB 4: DEPOSIT (کیف پول کامل) -->
+        <!-- TAB 4: DEPOSIT -->
         <div id="tab-deposit" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center; border-color:var(--neon-gold); background: linear-gradient(135deg, #111a2e, #1a1508);">
                 <div class="card-title" style="color:var(--neon-gold);">موجودی حساب کاربری شما</div>
@@ -357,19 +340,19 @@
                 <div class="input-group">
                     <label>آدرس ولت دریافت (TON):</label>
                     <input type="text" id="deposit-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; text-align:center; margin-bottom:6px;">
-                    <button class="btn" onclick="copyWallet('deposit-wallet')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan); margin-top:0;">📋 کپی آدرس کیف پول</button>
+                    <button class="btn" onclick="copyValue('deposit-wallet', 'آدرس کیف پول')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan); margin-top:0;">📋 کپی آدرس کیف پول</button>
                 </div>
 
                 <div class="input-group" style="margin-top: 15px;">
                     <label style="color:var(--neon-cyan);">MEMO اختصاصی شما (الزامی):</label>
                     <input type="text" id="deposit-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center; margin-bottom:6px;">
-                    <button class="btn" onclick="copyMemo('deposit-memo')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-gold); margin-top:0;">📋 کپی کد MEMO</button>
+                    <button class="btn" onclick="copyValue('deposit-memo', 'کد MEMO اختصاصی')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-gold); margin-top:0;">📋 کپی کد MEMO</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- POPUP 1: لیست ۴ سرویس ممبر واقعی -->
+    <!-- POPUP 1: لیست سرویس‌های ممبر واقعی -->
     <div id="modal-real-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:var(--neon-gold); margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:var(--neon-gold); text-align:center; margin-bottom:12px;">
@@ -387,7 +370,6 @@
                     <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
                     <span style="color:#fff;">1,000 / 20,000</span>
                 </div>
-                
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال، اد اجباری، اقتصادی', 0.74, 1000, 20000)">🛒 سفارش</button>
@@ -405,7 +387,6 @@
                     <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
                     <span style="color:#fff;">1,000 / 20,000</span>
                 </div>
-                
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی اد اجباری کیفیت A', 0.83, 1000, 20000)">🛒 سفارش</button>
@@ -423,7 +404,6 @@
                     <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
                     <span style="color:#fff;">1,000 / 20,000</span>
                 </div>
-                
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی اد اجباری کیفیت A+', 0.90, 1000, 20000)">🛒 سفارش</button>
@@ -441,7 +421,6 @@
                     <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
                     <span style="color:#fff;">1,000 / 10,000</span>
                 </div>
-                
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟', 1.50, 1000, 10000)">🛒 سفارش</button>
@@ -472,9 +451,9 @@
         </div>
     </div>
 
-    <!-- POPUP 3: فرم ورود مشخصات سفارش -->
+    <!-- POPUP 3: فرم سفارش همراه با دکمه‌های پرداخت و ثبت مجزا (دقیقاً مطابق تصویر) -->
     <div id="modal-direct-order" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:var(--neon-green); margin:0;">
+        <div class="card" style="width:100%; border-color:var(--neon-green); margin:0; max-height:90vh; overflow-y:auto;">
             <div id="direct-order-title" style="font-weight:bold; color:var(--neon-green); text-align:center; margin-bottom:12px; font-size:14px;">ثبت سفارش</div>
 
             <div class="input-group">
@@ -492,33 +471,34 @@
                 <div class="big-number" id="direct-total-price" style="color:var(--neon-gold);">0.00 TON</div>
             </div>
 
-            <button class="btn btn-green" onclick="proceedToPaymentModal()">ادامه و پرداخت</button>
+            <!-- دکمه اول: نمایش ولت و ممو -->
+            <button class="btn btn-gold" onclick="togglePaymentBox()" style="font-size:12px; margin-bottom:8px;">
+                💳 پرداخت آنلاین (نمایش آدرس ولت و MEMO)
+            </button>
+
+            <!-- باکس اطلاعات ولت و ممو که با زدن دکمه بالایی باز می‌شود -->
+            <div id="pay-info-box" style="display:none; background:#050811; border:1px solid var(--neon-cyan); border-radius:10px; padding:10px; margin-bottom:10px;">
+                <p style="font-size:10px; color:#ffd700; text-align:center; margin-bottom:8px;">
+                    ⚠️ مبلغ فوق را به ولت زیر واریز کرده و <b>MEMO</b> را حتماً درج کنید:
+                </p>
+                <div class="input-group" style="margin-bottom:8px;">
+                    <label style="font-size:10px;">آدرس ولت (TON):</label>
+                    <input type="text" id="order-pay-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:9px; text-align:center; padding:8px; margin-bottom:4px;">
+                    <button class="btn" onclick="copyValue('order-pay-wallet', 'آدرس ولت')" style="padding:6px; font-size:10px; background:#1e2d4a; color:var(--neon-cyan); margin-top:0;">📋 کپی آدرس ولت</button>
+                </div>
+                <div class="input-group" style="margin-bottom:4px;">
+                    <label style="font-size:10px; color:var(--neon-cyan);">MEMO اختصاصی شما:</label>
+                    <input type="text" id="order-pay-memo" class="input-field" readonly style="font-size:11px; font-weight:bold; color:var(--neon-cyan); text-align:center; padding:8px; margin-bottom:4px;">
+                    <button class="btn" onclick="copyValue('order-pay-memo', 'کد MEMO')" style="padding:6px; font-size:10px; background:#1e2d4a; color:var(--neon-gold); margin-top:0;">📋 کپی کد MEMO</button>
+                </div>
+            </div>
+
+            <!-- دکمه دوم: ثبت نهایی و ارسال به پشتیبانی -->
+            <button class="btn btn-green" onclick="submitDirectOrder()">
+                ✅ ثبت نهایی و ارسال به پشتیبانی
+            </button>
+            
             <button class="btn" onclick="closeModal('modal-direct-order')" style="background:#333; margin-top:6px;">انصراف</button>
-        </div>
-    </div>
-
-    <!-- POPUP 4: پنجره پرداخت و واریز نهایی -->
-    <div id="modal-payment-step" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0;">
-            <div style="font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:12px;">تایید نهایی و واریز TON</div>
-            <p style="font-size:11px; color:#ffd700; text-align:center; margin-bottom:12px; line-height: 1.6;">
-                ⚠️ <b>اخطار مهم:</b> جهت تایید شدن تراکنش، حتماً مبلغ مشخص‌شده را به آدرس زیر واریز کرده و <b>کد MEMO اختصاصی</b> خود را درج نمایید.
-            </p>
-
-            <div class="input-group">
-                <label>آدرس ولت دریافت (TON):</label>
-                <input type="text" id="pay-modal-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center; margin-bottom:6px;">
-                <button class="btn" onclick="copyWallet('pay-modal-wallet')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan); margin-top:0;">📋 کپی آدرس ولت</button>
-            </div>
-
-            <div class="input-group" style="margin-top: 10px;">
-                <label style="color:var(--neon-cyan);">MEMO اختصاصی شما (الزامی):</label>
-                <input type="text" id="pay-modal-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center; margin-bottom:6px;">
-                <button class="btn" onclick="copyMemo('pay-modal-memo')" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-gold); margin-top:0;">📋 کپی کد MEMO</button>
-            </div>
-
-            <button class="btn btn-green" onclick="confirmDirectPayment()" style="margin-top:15px;">واریز کردم و ثبت نهایی</button>
-            <button class="btn" onclick="closeModal('modal-payment-step')" style="background:#333; margin-top:6px;">انصراف</button>
         </div>
     </div>
 
@@ -631,6 +611,11 @@
             document.getElementById('direct-order-count').value = '';
             document.getElementById('direct-order-count').placeholder = 'حداقل ' + minLimit.toLocaleString() + ' تا حداکثر ' + maxLimit.toLocaleString();
             document.getElementById('direct-total-price').innerText = '0.00 TON';
+            
+            // مخفی کردن باکس ولت در ابتدا
+            document.getElementById('pay-info-box').style.display = 'none';
+            document.getElementById('order-pay-memo').value = getUserId();
+
             document.getElementById('modal-direct-order').style.display = 'flex';
         }
 
@@ -640,7 +625,17 @@
             document.getElementById('direct-total-price').innerText = total.toFixed(2) + ' TON';
         }
 
-        function proceedToPaymentModal() {
+        function togglePaymentBox() {
+            var count = parseInt(document.getElementById('direct-order-count').value) || 0;
+            if (count < minLimit || count > maxLimit) {
+                alert("❌ لطفاً ابتدا تعداد درخواستی مجاز را وارد کنید.");
+                return;
+            }
+            var box = document.getElementById('pay-info-box');
+            box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
+        }
+
+        function submitDirectOrder() {
             var link = document.getElementById('direct-order-link').value;
             var count = parseInt(document.getElementById('direct-order-count').value) || 0;
 
@@ -653,14 +648,6 @@
                 return;
             }
 
-            document.getElementById('pay-modal-memo').value = getUserId();
-            closeModal('modal-direct-order');
-            document.getElementById('modal-payment-step').style.display = 'flex';
-        }
-
-        function confirmDirectPayment() {
-            var link = document.getElementById('direct-order-link').value;
-            var count = parseInt(document.getElementById('direct-order-count').value) || 0;
             var totalPrice = ((count / 1000) * currentUnitPrice).toFixed(2);
             var uId = getUserId();
             var userName = getUserName();
@@ -678,10 +665,11 @@
                 localStorage.setItem('ads_orders_' + uId, JSON.stringify(orders));
             } catch(e) {}
 
-            closeModal('modal-payment-step');
+            closeModal('modal-direct-order');
             closeModal('modal-real-member');
 
-            var messageText = "🔔 سفارش جدید از بخش خدمات!\n\n" +
+            // ارسال مستقیم به تلگرام
+            var messageText = "🔔 سفارش جدید ثبت شد!\n\n" +
                               "📦 سرویس: " + currentServiceName + "\n" +
                               "👤 کاربر: " + userName + " (ID: " + uId + ")\n" +
                               "🔗 لینک: " + link + "\n" +
@@ -697,21 +685,12 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
-        function copyWallet(inputId) {
+        function copyValue(inputId, title) {
             var input = document.getElementById(inputId);
             if (input) {
                 input.select();
                 document.execCommand("copy");
-                alert("📋 آدرس کیف پول کپی شد!");
-            }
-        }
-
-        function copyMemo(inputId) {
-            var input = document.getElementById(inputId);
-            if (input) {
-                input.select();
-                document.execCommand("copy");
-                alert("📋 کد MEMO اختصاصی کپی شد!");
+                alert("📋 " + title + " با موفقیت کپی شد!");
             }
         }
 
@@ -719,7 +698,7 @@
             var input = document.getElementById('ref-link');
             input.select();
             document.execCommand("copy");
-            alert("🔗 لینک کپی شد!");
+            alert("🔗 لینک دعوت کپی شد!");
         }
     </script>
 </body>
