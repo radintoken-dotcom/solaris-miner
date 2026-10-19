@@ -257,7 +257,7 @@
             overflow-y: auto;
         }
 
-        /* سکه طلایی کاملاً گرد و ثابت - بدون هیچ چرخش یا انیمیشن */
+        /* سکه کاملاً گرد و ثابت */
         .coin-wrapper {
             display: flex;
             justify-content: center;
@@ -310,7 +310,7 @@
             <div class="service-card">
                 <div class="service-title">2. خرید ممبر فیک تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> افزایش سریع تعداد اعضای کانال برای تقویت ظاهر اولیه و اعتبار عددی صفحه</div>
-                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
+                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('fake-member')">مشاهده سرویس</button>
             </div>
 
             <div class="service-card">
@@ -361,7 +361,6 @@
         <!-- TAB 4: DEPOSIT -->
         <div id="tab-deposit" class="tab-content" style="display:none;">
             
-            <!-- سکه کاملاً گرد و ثابت -->
             <div class="coin-wrapper">
                 <div class="gold-coin-fixed">
                     <div class="coin-label">موجودی حساب</div>
@@ -394,7 +393,7 @@
         </div>
     </div>
 
-    <!-- POPUP 1: لیست ۴ سرویس ممبر واقعی -->
+    <!-- POPUP 1: لیست ممبر واقعی -->
     <div id="modal-real-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:var(--neon-gold); margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:var(--neon-gold); text-align:center; margin-bottom:12px;">
@@ -413,7 +412,7 @@
                     <span style="color:#fff;">1,000 / 20,000</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
+                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال، اد اجباری، اقتصادی', 0.74, 1000, 20000)">🛒 سفارش</button>
                 </div>
             </div>
@@ -430,7 +429,7 @@
                     <span style="color:#fff;">1,000 / 20,000</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
+                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی اد اجباری کیفیت A', 0.83, 1000, 20000)">🛒 سفارش</button>
                 </div>
             </div>
@@ -447,7 +446,7 @@
                     <span style="color:#fff;">1,000 / 20,000</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
+                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال اد اجباری کیفیت A+', 0.90, 1000, 20000)">🛒 سفارش</button>
                 </div>
             </div>
@@ -464,7 +463,7 @@
                     <span style="color:#fff;">1,000 / 10,000</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
+                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟', 1.50, 1000, 10000)">🛒 سفارش</button>
                 </div>
             </div>
@@ -473,20 +472,60 @@
         </div>
     </div>
 
-    <!-- POPUP 2: قوانین -->
+    <!-- POPUP 1-B: لیست ممبر فیک (جدید و دقیق طبق درخواست) -->
+    <div id="modal-fake-member" class="modal-overlay">
+        <div class="card" style="width:100%; border-color:var(--neon-gold); margin:0; max-height:85vh; overflow-y:auto;">
+            <div style="font-size:15px; font-weight:bold; color:var(--neon-gold); text-align:center; margin-bottom:12px;">
+                ممبر فیک تلگرام
+            </div>
+
+            <!-- سرویس اول فیک -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: ممبر فیک ایرانی بدون ریزش شروع فوری</div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:var(--neon-cyan); font-weight:bold;">0.5 TON</span>
+                </div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#fff;">500 / 10,000</span>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal('fake-rules')">📜 توضیحات</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر فیک ایرانی بدون ریزش شروع فوری', 0.5, 500, 10000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <!-- سرویس دوم فیک -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: ممبر فیک بدون ریزش شروع فوری</div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:var(--neon-cyan); font-weight:bold;">0.55 TON</span>
+                </div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#fff;">500 / 20,000</span>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal('fake-rules')">📜 توضیحات</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر فیک بدون ریزش شروع فوری', 0.55, 500, 20000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <button class="btn" onclick="closeModal('modal-fake-member')" style="background:#333; margin-top:10px;">بستن</button>
+        </div>
+    </div>
+
+    <!-- POPUP 2: قوانین و توضیحات -->
     <div id="modal-rules" class="modal-overlay">
         <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0; text-align:right;">
-            <div style="font-size:15px; font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:15px;">
+            <div style="font-size:15px; font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:15px;" id="rules-title">
                 📜 قوانین و نکات مهم سرویس
             </div>
 
-            <div style="font-size:12px; color:var(--text-sub); line-height:1.8;">
-                <p>1️⃣ <b>لینک عمومی (Public):</b> لینک کانال را وارد کنید. نمونه: <br><span style="color:var(--neon-gold);">https://t.me/your_channel</span> یا <span style="color:var(--neon-gold);">@your_channel</span></p><br>
-                <p>2️⃣ کانال را حتماً باید با شماره (اکانت) <b>ایرانی +98</b> ایجاد کنید.</p><br>
-                <p>3️⃣ موضوع کانال خلاف <b>قوانین کشور</b> نباشد.</p><br>
-                <p>4️⃣ هنگام ثبت سفارش <b>شماره همراه روشن</b> وارد کنید (جهت پیگیری سفارش به شماره همراه نیاز خواهید داشت).</p><br>
-                <p>5️⃣ این سرویس فقط مناسب کانال تلگرامی با <b>آمار زیر 100K</b> است.</p><br>
-                <p>6️⃣ تایم شروع سفارشات <b>۲۴ الی ۷۲ ساعت</b> است.</p>
+            <div style="font-size:12px; color:var(--text-sub); line-height:1.8;" id="rules-content">
+                <!-- محتوا بسته به نوع سرویس پر می‌شود -->
             </div>
 
             <button class="btn btn-gold" onclick="closeModal('modal-rules')" style="margin-top:15px;">متوجه شدم</button>
@@ -567,8 +606,8 @@
     <script>
         var currentUnitPrice = 0.74;
         var currentServiceName = '';
-        var minLimit = 1000;
-        var maxLimit = 20000;
+        var minLimit = 500;
+        var maxLimit = 10000;
 
         function getUserId() {
             try {
@@ -635,10 +674,31 @@
         function openServiceModal(type) {
             if (type === 'real-member') {
                 document.getElementById('modal-real-member').style.display = 'flex';
+            } else if (type === 'fake-member') {
+                document.getElementById('modal-fake-member').style.display = 'flex';
             }
         }
 
-        function openRulesModal() {
+        function openRulesModal(ruleType) {
+            var contentElem = document.getElementById('rules-content');
+            if (ruleType === 'fake-rules') {
+                contentElem.innerHTML = `
+                    <p>✔️ <b>زمان استارت آنی</b></p><br>
+                    <p>✔️ <b>زمان تکمیل 10k در هر روز</b></p><br>
+                    <p>✔️ <b>میزان ریزش حداقل 1 ماه ریزش ندارد</b></p><br>
+                    <p>✔️ <b>جهت تکمیل سفارش مطمئن شوید کانال حتما عمومی باشد.</b></p><br>
+                    <p>⚠️ <b>تا تکمیل شدن سفارش، سفارش جدیدی ثبت نکنید.</b></p><br>
+                    <p>⚠️ <b>در صورت اشتباه وارد کردن لینک یا باطل شدن هزینه برگشت داده نمی شود.</b></p>
+                `;
+            } else {
+                contentElem.innerHTML = `
+                    <p>1️⃣ <b>لینک عمومی (Public):</b> لینک کانال را وارد کنید. نمونه: <br><span style="color:var(--neon-gold);">https://t.me/your_channel</span> یا <span style="color:var(--neon-gold);">@your_channel</span></p><br>
+                    <p>2️⃣ کانال را حتماً باید با شماره (اکانت) <b>ایرانی +98</b> ایجاد کنید.</p><br>
+                    <p>3️⃣ موضوع کانال خلاف <b>قوانین کشور</b> نباشد.</p><br>
+                    <p>4️⃣ هنگام ثبت سفارش <b>شماره همراه روشن</b> وارد کنید.</p><br>
+                    <p>5️⃣ تایم شروع سفارشات <b>۲۴ الی ۷۲ ساعت</b> است.</p>
+                `;
+            }
             document.getElementById('modal-rules').style.display = 'flex';
         }
 
@@ -708,6 +768,7 @@
 
             closeModal('modal-direct-order');
             closeModal('modal-real-member');
+            closeModal('modal-fake-member');
 
             var messageText = "🔔 سفارش جدید ثبت شد!\n\n" +
                               "📦 سرویس: " + currentServiceName + "\n" +
