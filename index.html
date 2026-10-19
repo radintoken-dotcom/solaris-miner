@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SolarisMiner - سفارش ممبر اقتصادی</title>
+    <title>NovaTon - پشتیبانی و خدمات</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -100,6 +100,8 @@
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
             display: block;
             text-align: center;
+            text-decoration: none;
+            margin-top: 10px;
         }
 
         .btn:active {
@@ -109,6 +111,7 @@
 
         .btn-green {
             background: linear-gradient(135deg, #28a745, #20c997);
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
         }
 
         .btn-gold {
@@ -271,7 +274,7 @@
                         <div class="pkg-name">پکیج 5K (۵,۰۰۰ ممبر)</div>
                         <div class="pkg-price">قیمت: 1.00 TON (تخفیف ویژه)</div>
                     </div>
-                    <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px;" onclick="selectPackage(5000, 1.00)">انتخاب</button>
+                    <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px; margin-top:0;" onclick="selectPackage(5000, 1.00)">انتخاب</button>
                 </div>
 
                 <div class="pkg-item">
@@ -279,7 +282,7 @@
                         <div class="pkg-name">پکیج 10K (۱۰,۰۰۰ ممبر)</div>
                         <div class="pkg-price">قیمت: 1.50 TON (محبوب‌ترین)</div>
                     </div>
-                    <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px;" onclick="selectPackage(10000, 1.50)">انتخاب</button>
+                    <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px; margin-top:0;" onclick="selectPackage(10000, 1.50)">انتخاب</button>
                 </div>
 
                 <div class="pkg-item">
@@ -287,7 +290,7 @@
                         <div class="pkg-name">پکیج 20K (۲۰,۰۰۰ ممبر)</div>
                         <div class="pkg-price">قیمت: 2.50 TON (بهترین ارزش)</div>
                     </div>
-                    <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px;" onclick="selectPackage(20000, 2.50)">انتخاب</button>
+                    <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px; margin-top:0;" onclick="selectPackage(20000, 2.50)">انتخاب</button>
                 </div>
             </div>
         </div>
@@ -362,14 +365,29 @@
 
         <!-- TAB 5: SUPPORT -->
         <div id="tab-support" class="tab-content" style="display:none;">
-            <div class="card" style="text-align:center; padding:30px 15px;">
-                <svg style="width:50px; height:50px; stroke:var(--neon-gold); fill:none; stroke-width:2; margin-bottom:15px;" viewBox="0 0 24 24">
-                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-                </svg>
-                <div style="font-size:15px; font-weight:bold; color:var(--neon-gold); margin-bottom:10px;">بخش پشتیبانی</div>
-                <p style="font-size:13px; color:var(--text-sub); line-height:1.6;">
-                    🛠 این بخش در حال بروزرسانی می‌باشد و به‌زودی پشتیبانی مستقیم در دسترس قرار خواهد گرفت.
+            <div class="card" style="text-align:center; padding:20px 15px; border-color:var(--neon-cyan);">
+                <div style="width:45px; height:45px; background:rgba(0,240,255,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px auto;">
+                    <svg style="width:24px; height:24px; stroke:var(--neon-cyan); fill:none; stroke-width:2;" viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <div style="font-size:15px; font-weight:bold; color:var(--neon-cyan); margin-bottom:6px;">تیم پشتیبانی NovaTon</div>
+                <p style="font-size:12px; color:var(--text-sub); line-height:1.6; margin-bottom:15px;">
+                    کاربر گرامی، جهت پیگیری سفارش، مشاوره یا رفع مشکلات، می‌توانید مستقیماً از طریق دکمه زیر با مدیر و پشتیبان ما در ارتباط باشید:
                 </p>
+
+                <a href="https://t.me/Dollar_Matrix" target="_blank" class="btn btn-green" style="margin-bottom: 8px;">
+                    💬 ارتباط مستقیم با پشتیبان (@Dollar_Matrix)
+                </a>
+
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+                    <a href="https://t.me/NOVATON_IR" target="_blank" class="btn" style="flex:1; font-size:12px; padding:10px; background:#1e2d4a; color:var(--neon-cyan);">
+                        📢 کانال رسمی
+                    </a>
+                    <a href="https://t.me/nova_t_o_n_ir" target="_blank" class="btn" style="flex:1; font-size:12px; padding:10px; background:#1e2d4a; color:var(--neon-gold);">
+                        👥 گروه گفتگو
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -385,17 +403,17 @@
             <div class="input-group">
                 <label>آدرس دریافت (TON):</label>
                 <input type="text" id="modal-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center; margin-bottom:6px;">
-                <button class="btn" onclick="copyModalWallet()" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan);">📋 کپی آدرس ولت</button>
+                <button class="btn" onclick="copyModalWallet()" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan); margin-top:0;">📋 کپی آدرس ولت</button>
             </div>
 
             <div class="input-group" style="margin-top: 10px;">
                 <label style="color:var(--neon-cyan);">MEMO اختصاصی شما:</label>
                 <input type="text" id="user-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center; margin-bottom:6px;">
-                <button class="btn" onclick="copyModalMemo()" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-gold);">📋 کپی کد MEMO</button>
+                <button class="btn" onclick="copyModalMemo()" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-gold); margin-top:0;">📋 کپی کد MEMO</button>
             </div>
 
             <button class="btn btn-green" onclick="confirmPayment()" style="margin-top:15px; margin-bottom:8px;">واریز کردم و ثبت نهایی</button>
-            <button class="btn" onclick="closePaymentModal()" style="background:#333;">انصراف</button>
+            <button class="btn" onclick="closePaymentModal()" style="background:#333; margin-top:0;">انصراف</button>
         </div>
     </div>
 
@@ -456,8 +474,6 @@
 
             updateBalanceDisplay();
             checkAndRegisterReferral();
-            
-            // اجرای خودکار تایمرها برای سفارش‌های در حال انتظار
             setInterval(updateTimers, 1000);
         };
 
@@ -548,17 +564,9 @@
             };
             document.getElementById('page-title').innerText = titles[tabName];
 
-            if (tabName === 'deposit') {
-                updateBalanceDisplay();
-            }
-
-            if (tabName === 'ref') {
-                loadReferrals();
-            }
-
-            if (tabName === 'history') {
-                loadOrders();
-            }
+            if (tabName === 'deposit') updateBalanceDisplay();
+            if (tabName === 'ref') loadReferrals();
+            if (tabName === 'history') loadOrders();
         }
 
         function calcPrice() {
@@ -607,7 +615,7 @@
 
             try {
                 var orders = JSON.parse(localStorage.getItem('ads_orders_' + uId) || '[]');
-                var expireTime = new Date().getTime() + (5 * 60 * 1000); // 5 دقیقه بعد
+                var expireTime = new Date().getTime() + (5 * 60 * 1000); 
                 orders.push({ 
                     link: link, 
                     count: count, 
