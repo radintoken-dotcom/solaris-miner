@@ -267,7 +267,7 @@
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 12px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             text-align: right;
         }
 
@@ -286,6 +286,7 @@
             margin-bottom: 8px;
             border-bottom: 1px dashed var(--border-color);
             padding-bottom: 4px;
+            line-height: 1.4;
         }
 
         .modal-overlay {
@@ -435,14 +436,14 @@
         </div>
     </div>
 
-    <!-- POPUP 1: لیست سرویس‌های ممبر واقعی -->
+    <!-- POPUP 1: لیست ۴ سرویس ممبر واقعی -->
     <div id="modal-real-member" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:var(--neon-gold); margin:0;">
+        <div class="card" style="width:100%; border-color:var(--neon-gold); margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:var(--neon-gold); text-align:center; margin-bottom:12px;">
                 ممبر واقعی تلگرام
             </div>
 
-            <!-- نمونه سرویس 1 -->
+            <!-- کادر ۱ -->
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ممبر واقعی کانال، اد اجباری، اقتصادی شروع زیر ۶ ساعت</div>
                 <div class="sub-service-row">
@@ -456,7 +457,61 @@
                 
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال (اد اجباری)', 0.74)">🛒 سفارش</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال، اد اجباری، اقتصادی', 0.74, 1000, 20000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <!-- کادر ۲ -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: ممبر واقعی اد اجباری کیفیت A شروع آنی</div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:var(--neon-cyan); font-weight:bold;">0.83 TON</span>
+                </div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#fff;">1,000 / 20,000</span>
+                </div>
+                
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی اد اجباری کیفیت A', 0.83, 1000, 20000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <!-- کادر ۳ -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: ممبر واقعی کانال اد اجباری کیفیت A+ شروع آنی</div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:var(--neon-cyan); font-weight:bold;">0.90 TON</span>
+                </div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#fff;">1,000 / 20,000</span>
+                </div>
+                
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی اد اجباری کیفیت A+', 0.90, 1000, 20000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <!-- کادر ۴ -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟</div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:var(--neon-cyan); font-weight:bold;">1.50 TON</span>
+                </div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#fff;">1,000 / 10,000</span>
+                </div>
+                
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟', 1.50, 1000, 10000)">🛒 سفارش</button>
                 </div>
             </div>
 
@@ -464,7 +519,7 @@
         </div>
     </div>
 
-    <!-- POPUP 2: قوانین و توضیحات (طرح تصویر دومت) -->
+    <!-- POPUP 2: قوانین و توضیحات -->
     <div id="modal-rules" class="modal-overlay">
         <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0; text-align:right;">
             <div style="font-size:15px; font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:15px;">
@@ -496,7 +551,7 @@
 
             <div class="input-group">
                 <label>تعداد درخواستی:</label>
-                <input type="number" id="direct-order-count" class="input-field" placeholder="حداقل 1000" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()">
+                <input type="number" id="direct-order-count" class="input-field" placeholder="تعداد" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()">
             </div>
 
             <div class="card" style="background:#050811; border-color:var(--neon-gold); text-align:center; margin:10px 0;">
@@ -554,6 +609,8 @@
     <script>
         var currentUnitPrice = 0.74;
         var currentServiceName = '';
+        var minLimit = 1000;
+        var maxLimit = 20000;
 
         function getUserId() {
             try {
@@ -601,11 +658,15 @@
             document.getElementById('modal-rules').style.display = 'flex';
         }
 
-        function openDirectOrderModal(serviceName, unitPrice) {
+        function openDirectOrderModal(serviceName, unitPrice, minVal, maxVal) {
             currentServiceName = serviceName;
             currentUnitPrice = unitPrice;
+            minLimit = minVal;
+            maxLimit = maxVal;
+            
             document.getElementById('direct-order-title').innerText = 'ثبت سفارش: ' + serviceName;
             document.getElementById('direct-order-count').value = '';
+            document.getElementById('direct-order-count').placeholder = 'حداقل ' + minLimit.toLocaleString() + ' تا حداکثر ' + maxLimit.toLocaleString();
             document.getElementById('direct-total-price').innerText = '0.00 TON';
             document.getElementById('modal-direct-order').style.display = 'flex';
         }
@@ -624,8 +685,8 @@
                 alert("❌ لطفاً لینک کانال را وارد کنید.");
                 return;
             }
-            if (count < 1000) {
-                alert("❌ حداقل تعداد سفارش 1000 عدد است.");
+            if (count < minLimit || count > maxLimit) {
+                alert("❌ تعداد سفارش باید بین " + minLimit.toLocaleString() + " تا " + maxLimit.toLocaleString() + " باشد.");
                 return;
             }
 
