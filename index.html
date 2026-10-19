@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Casino Wheel Edition v3</title>
+    <title>NovaTon - Clean Edition v4</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -359,7 +359,7 @@
     <div class="header" id="page-title">خدمات و سرویس‌های ویژه</div>
 
     <div class="content">
-        <!-- TAB 1: SERVICES -->
+        <!-- TAB 1: SERVICES (فقط ۳ سرویس اصلی) -->
         <div id="tab-services" class="tab-content active" style="display:block;">
             <div class="service-card">
                 <div class="service-title">1. خرید ممبر واقعی تلگرام</div>
@@ -372,17 +372,7 @@
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('fake-member')">مشاهده سرویس</button>
             </div>
             <div class="service-card">
-                <div class="service-title">3. خرید ممبر آپلودر</div>
-                <div class="service-desc"><b>کاربرد:</b> مناسب برای کانالهایی که به رشد عددی، فعالیت بیشتر و افزایش اعتبار نیاز دارند</div>
-                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
-            </div>
-            <div class="service-card">
-                <div class="service-title">4. خرید ممبر پرمیوم تلگرام</div>
-                <div class="service-desc"><b>کاربرد:</b> جایگاه کانال و گروه خود را در نتایج جستجوی تلگرام تقویت کنید</div>
-                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
-            </div>
-            <div class="service-card">
-                <div class="service-title">5. خرید ویو تلگرام</div>
+                <div class="service-title">3. خرید ویو تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> مناسب برای نمایش بهتر میزان دیده شدن محتوا</div>
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
@@ -527,7 +517,6 @@
         var maxLimit = 10000;
         var hasSpun = false;
 
-        /* لیست جوایز جدید طبق درخواست شما */
         var prizes = [
             "2000 ممبر 🎁",
             "500ممبر واقعی 🌟",
@@ -561,7 +550,6 @@
                 ctx.strokeStyle = "#111319";
                 ctx.stroke();
 
-                /* تنظیمات فونت کاملاً پرنور، سفید و برجسته برای خوانایی عالی */
                 ctx.save();
                 ctx.translate(150, 150);
                 ctx.rotate(angle + sliceAngle / 2);
@@ -569,7 +557,6 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "bold 11px tahoma";
                 
-                // سایه مشکی قوی برای برجسته‌سازی متن
                 ctx.shadowColor = "#000000";
                 ctx.shadowOffsetX = 2;
                 ctx.shadowOffsetY = 2;
@@ -579,7 +566,6 @@
                 ctx.restore();
             }
 
-            // مرکز دایره نئون سرخ/نارنجی
             ctx.beginPath();
             ctx.arc(150, 150, 45, 0, 2 * Math.PI);
             ctx.fillStyle = "#0a0b0e";
@@ -590,7 +576,6 @@
             ctx.shadowBlur = 12;
             ctx.stroke();
 
-            // پرپره‌های مشکی/سفید مرکزی
             ctx.shadowBlur = 0;
             var numSpokes = 16;
             for (var j = 0; j < numSpokes; j++) {
