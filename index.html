@@ -90,10 +90,10 @@
             background: linear-gradient(135deg, #0088cc, #00f0ff);
             color: #fff;
             border: none;
-            padding: 12px;
+            padding: 10px 14px;
             border-radius: 10px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             width: 100%;
             transition: 0.1s;
@@ -101,7 +101,7 @@
             display: block;
             text-align: center;
             text-decoration: none;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .btn:active {
@@ -245,7 +245,6 @@
             padding: 15px;
             margin-bottom: 14px;
             text-align: right;
-            transition: 0.2s;
         }
 
         .service-title {
@@ -253,9 +252,6 @@
             font-weight: bold;
             color: var(--neon-gold);
             margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .service-desc {
@@ -264,15 +260,54 @@
             line-height: 1.6;
             margin-bottom: 10px;
         }
+
+        /* جدول سرویس داخل پاپ‌آپ */
+        .sub-service-box {
+            background: #050811;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+
+        .sub-service-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .sub-service-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--neon-cyan);
+            margin-bottom: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 4px;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 2000;
+            padding: 15px;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
 
-    <div class="header" id="page-title">ثبت سفارش و خرید ممبر</div>
+    <div class="header" id="page-title">خدمات و سرویس‌های ویژه</div>
 
     <div class="content">
         <!-- TAB 1: ORDER -->
-        <div id="tab-order" class="tab-content active">
+        <div id="tab-order" class="tab-content">
             <div class="card">
                 <div style="font-weight:bold; font-size:15px; color:var(--neon-cyan); margin-bottom:12px; text-align:center;">ثبت سفارش جدید</div>
                 
@@ -294,14 +329,13 @@
                 <button class="btn btn-green" onclick="openPaymentModal()">پرداخت با تون‌کوین و ثبت سفارش</button>
             </div>
 
-            <!-- PACKAGES -->
             <div class="card">
                 <div style="font-weight:bold; font-size:14px; color:var(--neon-gold); margin-bottom:12px; text-align:center;">پکیج‌های ویژه و اقتصادی</div>
 
                 <div class="pkg-item">
                     <div class="pkg-info">
                         <div class="pkg-name">پکیج 5K (۵,۰۰۰ ممبر)</div>
-                        <div class="pkg-price">قیمت: 1.00 TON (تخفیف ویژه)</div>
+                        <div class="pkg-price">قیمت: 1.00 TON</div>
                     </div>
                     <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px; margin-top:0;" onclick="selectPackage(5000, 1.00)">انتخاب</button>
                 </div>
@@ -309,17 +343,9 @@
                 <div class="pkg-item">
                     <div class="pkg-info">
                         <div class="pkg-name">پکیج 10K (۱۰,۰۰۰ ممبر)</div>
-                        <div class="pkg-price">قیمت: 1.50 TON (محبوب‌ترین)</div>
+                        <div class="pkg-price">قیمت: 1.50 TON</div>
                     </div>
                     <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px; margin-top:0;" onclick="selectPackage(10000, 1.50)">انتخاب</button>
-                </div>
-
-                <div class="pkg-item">
-                    <div class="pkg-info">
-                        <div class="pkg-name">پکیج 20K (۲۰,۰۰۰ ممبر)</div>
-                        <div class="pkg-price">قیمت: 2.50 TON (بهترین ارزش)</div>
-                    </div>
-                    <button class="btn btn-gold" style="width:auto; padding:8px 14px; font-size:12px; margin-top:0;" onclick="selectPackage(20000, 2.50)">انتخاب</button>
                 </div>
             </div>
         </div>
@@ -329,56 +355,32 @@
             <div class="card" style="text-align:center; border-color:var(--neon-gold); background: linear-gradient(135deg, #111a2e, #1a1508);">
                 <div class="card-title" style="color:var(--neon-gold);">موجودی حساب کاربری شما</div>
                 <div class="big-number" id="user-balance" style="color:var(--neon-gold);">0.00 TON</div>
-                <button class="btn btn-gold" onclick="checkDepositStatus()" style="margin-top:10px; font-size:12px; padding:10px;">بررسی و به‌روزرسانی موجودی</button>
             </div>
 
             <div class="card" style="text-align:center;">
                 <div class="card-title">شارژ کیف پول و واریز TON</div>
-                <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px; line-height: 1.5;">
-                    مبلغ دلخواه را به آدرس زیر واریز کنید. موجودی شما پس از تایید توسط ادمین در باکس بالا شارژ می‌شود:
-                </p>
-
                 <div class="input-group">
                     <label>آدرس ولت دریافت:</label>
                     <input type="text" id="admin-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:11px; text-align:center;">
                 </div>
-                <button class="btn" onclick="copyWallet()" style="margin-bottom: 10px;">کپی آدرس کیف پول</button>
-
-                <div class="input-group" style="margin-top: 15px;">
-                    <label style="color:var(--neon-cyan);">MEMO اختصاصی شما (الزامی):</label>
-                    <input type="text" id="deposit-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center;">
-                </div>
+                <button class="btn" onclick="copyWallet()">کپی آدرس کیف پول</button>
             </div>
         </div>
 
         <!-- TAB 3: REFERRAL -->
         <div id="tab-ref" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
-                <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px; line-height:1.6;">
-                    با اشتراک‌گذاری لینک اختصاصی خود، دوستانتان را دعوت کنید!
-                </p>
-
                 <div class="stat-grid">
                     <div class="stat-box">
                         <div class="card-title">تعداد دعوت‌ها</div>
                         <div id="ref-count" style="font-size:18px; font-weight:bold; color:var(--neon-gold);">0 نفر</div>
                     </div>
                 </div>
-
-                <div class="input-group" style="margin-top:10px;">
+                <div class="input-group">
                     <label>لینک دعوت اختصاصی شما:</label>
                     <input type="text" id="ref-link" class="input-field" readonly style="font-size:11px; text-align:center; color:var(--neon-gold);">
                 </div>
-
-                <button class="btn btn-gold" onclick="copyRefLink()" style="margin-top:5px;">کپی لینک دعوت</button>
-            </div>
-
-            <!-- لیست افراد دعوت شده -->
-            <div class="card">
-                <div style="font-size:13px; font-weight:bold; color:var(--neon-cyan); margin-bottom:10px; text-align:right;">👥 لیست دوستان دعوت‌شده:</div>
-                <div id="invited-users-list" style="font-size:12px; color:var(--text-sub); text-align:center;">
-                    هنوز کسی با لینک شما وارد نشده است.
-                </div>
+                <button class="btn btn-gold" onclick="copyRefLink()">کپی لینک دعوت</button>
             </div>
         </div>
 
@@ -392,88 +394,142 @@
             </div>
         </div>
 
-        <!-- TAB 5: SERVICES (جدید و نئونی) -->
-        <div id="tab-services" class="tab-content" style="display:none;">
+        <!-- TAB 5: SERVICES (فعال به‌صورت پیش‌فرض) -->
+        <div id="tab-services" class="tab-content active" style="display:block;">
             
             <!-- سرویس ۱ -->
             <div class="service-card">
                 <div class="service-title">1. خرید ممبر واقعی تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> افزایش اعضای واقعی کانال و یا گروه تلگرام برای رشد بهتر و تعامل طبیعی تر</div>
-                <button class="btn btn-gold" style="font-size:12px; padding:8px;" onclick="openServiceModal('خرید ممبر واقعی تلگرام')">مشاهده سرویس</button>
+                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('real-member')">مشاهده سرویس</button>
             </div>
 
             <!-- سرویس ۲ -->
             <div class="service-card">
                 <div class="service-title">2. خرید ممبر فیک تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> افزایش سریع تعداد اعضای کانال برای تقویت ظاهر اولیه و اعتبار عددی صفحه</div>
-                <button class="btn btn-gold" style="font-size:12px; padding:8px;" onclick="openServiceModal('خرید ممبر فیک تلگرام')">مشاهده سرویس</button>
+                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
 
             <!-- سرویس ۳ -->
             <div class="service-card">
                 <div class="service-title">3. خرید ممبر آپلودر</div>
                 <div class="service-desc"><b>کاربرد:</b> مناسب برای کانالهایی که به رشد عددی، فعالیت بیشتر و افزایش اعتبار نیاز دارند</div>
-                <button class="btn btn-gold" style="font-size:12px; padding:8px;" onclick="openServiceModal('خرید ممبر آپلودر')">مشاهده سرویس</button>
+                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
 
             <!-- سرویس ۴ -->
             <div class="service-card">
                 <div class="service-title">4. خرید ممبر پرمیوم تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> جایگاه کانال و گروه خود را در نتایج جستجوی تلگرام تقویت کنید</div>
-                <button class="btn btn-gold" style="font-size:12px; padding:8px;" onclick="openServiceModal('خرید ممبر پرمیوم تلگرام')">مشاهده سرویس</button>
+                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
 
             <!-- سرویس ۵ -->
             <div class="service-card">
                 <div class="service-title">5. خرید ویو تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> مناسب برای نمایش بهتر میزان دیده شدن محتوا</div>
-                <button class="btn btn-gold" style="font-size:12px; padding:8px;" onclick="openServiceModal('خرید ویو تلگرام')">مشاهده سرویس</button>
+                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
             </div>
 
         </div>
     </div>
 
-    <!-- SERVICE DETAIL MODAL (پنجره مشاهده سرویس) -->
-    <div id="service-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.92); z-index:2000; padding:20px; align-items:center; justify-content:center;">
-        <div class="card" style="width:100%; border-color:var(--neon-gold); margin:0; text-align:center;">
-            <div id="modal-service-name" style="font-size:16px; font-weight:bold; color:var(--neon-gold); margin-bottom:12px;">نام سرویس</div>
-            
-            <div style="background:#050811; border:1px solid var(--border-color); border-radius:10px; padding:15px; margin-bottom:15px; color:var(--text-sub); font-size:13px; line-height:1.6;" id="modal-service-content">
-                ⏳ لیست قیمت‌ها و گزینه‌های این سرویس به‌زودی آپدیت می‌شود...
+    <!-- POPUP 1: لیست سرویس‌های ممبر واقعی -->
+    <div id="modal-real-member" class="modal-overlay">
+        <div class="card" style="width:100%; border-color:var(--neon-gold); margin:0;">
+            <div style="font-size:15px; font-weight:bold; color:var(--neon-gold); text-align:center; margin-bottom:12px;">
+                ممبر واقعی تلگرام
             </div>
 
-            <button class="btn" onclick="closeServiceModal()" style="background:#333; margin-top:0;">بستن</button>
+            <!-- نمونه سرویس 1 -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: ممبر واقعی کانال، اد اجباری، اقتصادی شروع زیر ۶ ساعت</div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">قیمت هر ۱۰۰۰ عدد:</span>
+                    <span style="color:var(--neon-cyan); font-weight:bold;">0.74 TON</span>
+                </div>
+                <div class="sub-service-row">
+                    <span style="color:var(--text-sub);">حداقل / حداکثر:</span>
+                    <span style="color:#fff;">1,000 / 20,000</span>
+                </div>
+                
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; background:#1e2d4a; color:var(--neon-cyan); font-size:11px;" onclick="openRulesModal()">📜 توضیحات</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال (اد اجباری)', 0.74)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <button class="btn" onclick="closeModal('modal-real-member')" style="background:#333; margin-top:10px;">بستن</button>
+        </div>
+    </div>
+
+    <!-- POPUP 2: قوانین و توضیحات (طرح تصویر دومت) -->
+    <div id="modal-rules" class="modal-overlay">
+        <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0; text-align:right;">
+            <div style="font-size:15px; font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:15px;">
+                📜 قوانین و نکات مهم سرویس
+            </div>
+
+            <div style="font-size:12px; color:var(--text-sub); line-height:1.8;">
+                <p>1️⃣ <b>لینک عمومی (Public):</b> لینک کانال را وارد کنید. نمونه: <br><span style="color:var(--neon-gold);">https://t.me/your_channel</span> یا <span style="color:var(--neon-gold);">@your_channel</span></p><br>
+                <p>2️⃣ کانال را حتماً باید با شماره (اکانت) <b>ایرانی +98</b> ایجاد کنید.</p><br>
+                <p>3️⃣ موضوع کانال خلاف <b>قوانین کشور</b> نباشد.</p><br>
+                <p>4️⃣ هنگام ثبت سفارش <b>شماره همراه روشن</b> وارد کنید (جهت پیگیری سفارش به شماره همراه نیاز خواهید داشت).</p><br>
+                <p>5️⃣ این سرویس فقط مناسب کانال تلگرامی با <b>آمار زیر 100K</b> است.</p><br>
+                <p>6️⃣ تایم شروع سفارشات <b>۲۴ الی ۷۲ ساعت</b> است.</p>
+            </div>
+
+            <button class="btn btn-gold" onclick="closeModal('modal-rules')" style="margin-top:15px;">متوجه شدم</button>
+        </div>
+    </div>
+
+    <!-- POPUP 3: فرم ثبت سفارش مستقیم -->
+    <div id="modal-direct-order" class="modal-overlay">
+        <div class="card" style="width:100%; border-color:var(--neon-green); margin:0;">
+            <div id="direct-order-title" style="font-weight:bold; color:var(--neon-green); text-align:center; margin-bottom:12px; font-size:14px;">ثبت سفارش</div>
+
+            <div class="input-group">
+                <label>لینک کانال یا گروه شما:</label>
+                <input type="text" id="direct-order-link" class="input-field" placeholder="@channel یا https://t.me/...">
+            </div>
+
+            <div class="input-group">
+                <label>تعداد درخواستی:</label>
+                <input type="number" id="direct-order-count" class="input-field" placeholder="حداقل 1000" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()">
+            </div>
+
+            <div class="card" style="background:#050811; border-color:var(--neon-gold); text-align:center; margin:10px 0;">
+                <div class="card-title">مبلغ قابل پرداخت</div>
+                <div class="big-number" id="direct-total-price" style="color:var(--neon-gold);">0.00 TON</div>
+            </div>
+
+            <button class="btn btn-green" onclick="confirmDirectPayment()">پرداخت با تون‌کوین و ثبت نهایی</button>
+            <button class="btn" onclick="closeModal('modal-direct-order')" style="background:#333; margin-top:6px;">انصراف</button>
         </div>
     </div>
 
     <!-- PAYMENT MODAL -->
-    <div id="payment-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.92); z-index:2000; padding:20px; align-items:center; justify-content:center;">
+    <div id="payment-modal" class="modal-overlay">
         <div class="card" style="width:100%; border-color:var(--neon-cyan); margin:0;">
             <div style="font-weight:bold; color:var(--neon-cyan); text-align:center; margin-bottom:12px;">تایید نهایی پرداخت</div>
             <p style="font-size:12px; color:#ffd700; text-align:center; margin-bottom:10px; line-height: 1.6;">
-                ⚠️ <b>اخطار مهم:</b> تراکنش شما توسط ربات و مدیریت به صورت دستی بررسی می‌شود. اگر بدون واریز وجه یا بدون درج کد MEMO ثبت بزنید، سفارش شما به صورت <b>«رد شده / نامعتبر»</b> ثبت خواهد شد.
+                ⚠️ <b>اخطار مهم:</b> تراکنش شما به صورت دستی بررسی می‌شود.
             </p>
 
             <div class="input-group">
                 <label>آدرس دریافت (TON):</label>
-                <input type="text" id="modal-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center; margin-bottom:6px;">
-                <button class="btn" onclick="copyModalWallet()" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-cyan); margin-top:0;">📋 کپی آدرس ولت</button>
+                <input type="text" id="modal-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:10px; text-align:center;">
             </div>
 
-            <div class="input-group" style="margin-top: 10px;">
-                <label style="color:var(--neon-cyan);">MEMO اختصاصی شما:</label>
-                <input type="text" id="user-memo" class="input-field" readonly style="color:var(--neon-cyan); font-weight:bold; text-align:center; margin-bottom:6px;">
-                <button class="btn" onclick="copyModalMemo()" style="padding:8px; font-size:11px; background:#1e2d4a; color:var(--neon-gold); margin-top:0;">📋 کپی کد MEMO</button>
-            </div>
-
-            <button class="btn btn-green" onclick="confirmPayment()" style="margin-top:15px; margin-bottom:8px;">واریز کردم و ثبت نهایی</button>
-            <button class="btn" onclick="closePaymentModal()" style="background:#333; margin-top:0;">انصراف</button>
+            <button class="btn btn-green" onclick="confirmPayment()" style="margin-top:15px;">واریز کردم و ثبت نهایی</button>
+            <button class="btn" onclick="closeModal('payment-modal')" style="background:#333; margin-top:6px;">انصراف</button>
         </div>
     </div>
 
     <!-- BOTTOM NAV BAR -->
     <div class="nav-bar">
-        <div class="nav-item active" id="nav-btn-order" onclick="switchTab('order')">
+        <div class="nav-item" id="nav-btn-order" onclick="switchTab('order')">
             <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
             <div>خرید ممبر</div>
         </div>
@@ -489,15 +545,15 @@
             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
             <div>سفارش‌ها</div>
         </div>
-        <div class="nav-item" id="nav-btn-services" onclick="switchTab('services')">
+        <div class="nav-item active" id="nav-btn-services" onclick="switchTab('services')">
             <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
             <div>خدمات</div>
         </div>
     </div>
 
     <script>
-        var customPackagePrice = null;
-        var MY_BOT_USERNAME = "SolarisMiner_bot"; 
+        var currentUnitPrice = 0.74;
+        var currentServiceName = '';
 
         function getUserId() {
             try {
@@ -518,81 +574,6 @@
             return 'کاربر ناشناس';
         }
 
-        window.onload = function() {
-            var uId = getUserId();
-            var memoField = document.getElementById('deposit-memo');
-            if (memoField) memoField.value = uId;
-            
-            var refLinkField = document.getElementById('ref-link');
-            if (refLinkField) refLinkField.value = 'https://t.me/' + MY_BOT_USERNAME + '?start=' + uId;
-
-            updateBalanceDisplay();
-            checkAndRegisterReferral();
-            setInterval(updateTimers, 1000);
-        };
-
-        function checkAndRegisterReferral() {
-            try {
-                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
-                    var startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
-                    var myId = getUserId();
-                    var myName = getUserName();
-
-                    if (startParam && startParam !== myId) {
-                        var refKey = 'solaris_invites_' + startParam;
-                        var invites = JSON.parse(localStorage.getItem(refKey) || '[]');
-                        
-                        var alreadyExists = invites.some(function(inv) { return inv.id === myId; });
-                        if (!alreadyExists) {
-                            invites.push({
-                                id: myId,
-                                name: myName,
-                                date: new Date().toLocaleDateString('fa-IR')
-                            });
-                            localStorage.setItem(refKey, JSON.stringify(invites));
-                        }
-                    }
-                }
-            } catch(e) {}
-        }
-
-        function updateBalanceDisplay() {
-            var uId = getUserId();
-            var balance = localStorage.getItem('ads_balance_' + uId) || '0.00';
-            var balanceElem = document.getElementById('user-balance');
-            if (balanceElem) {
-                balanceElem.innerText = parseFloat(balance).toFixed(2) + ' TON';
-            }
-        }
-
-        function loadReferrals() {
-            var uId = getUserId();
-            var invites = [];
-            try {
-                invites = JSON.parse(localStorage.getItem('solaris_invites_' + uId) || '[]');
-            } catch(e) {}
-
-            var countElem = document.getElementById('ref-count');
-            if (countElem) countElem.innerText = invites.length + ' نفر';
-
-            var container = document.getElementById('invited-users-list');
-            if (!container) return;
-
-            if (invites.length === 0) {
-                container.innerHTML = 'هنوز کسی با لینک شما وارد نشده است.';
-                return;
-            }
-
-            var html = '';
-            for (var i = 0; i < invites.length; i++) {
-                html += '<div style="background:#050811; padding:8px 12px; border-radius:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">' +
-                    '<span style="color:var(--neon-cyan); font-weight:bold;">' + invites[i].name + '</span>' +
-                    '<span style="color:var(--text-sub); font-size:10px;">' + invites[i].date + '</span>' +
-                    '</div>';
-            }
-            container.innerHTML = html;
-        }
-
         function switchTab(tabName) {
             document.getElementById('tab-order').style.display = 'none';
             document.getElementById('tab-deposit').style.display = 'none';
@@ -608,73 +589,49 @@
 
             document.getElementById('tab-' + tabName).style.display = 'block';
             document.getElementById('nav-btn-' + tabName).classList.add('active');
-
-            var titles = {
-                'order': 'ثبت سفارش و خرید ممبر',
-                'deposit': 'واریز تون‌کوین (TON)',
-                'ref': 'زیرمجموعه‌گیری و دعوت از دوستان',
-                'history': 'پیگیری سفارش‌ها',
-                'services': 'خدمات و سرویس‌های ویژه'
-            };
-            document.getElementById('page-title').innerText = titles[tabName];
-
-            if (tabName === 'deposit') updateBalanceDisplay();
-            if (tabName === 'ref') loadReferrals();
-            if (tabName === 'history') loadOrders();
         }
 
-        function openServiceModal(name) {
-            document.getElementById('modal-service-name').innerText = name;
-            document.getElementById('service-modal').style.display = 'flex';
+        function openServiceModal(type) {
+            if (type === 'real-member') {
+                document.getElementById('modal-real-member').style.display = 'flex';
+            }
         }
 
-        function closeServiceModal() {
-            document.getElementById('service-modal').style.display = 'none';
+        function openRulesModal() {
+            document.getElementById('modal-rules').style.display = 'flex';
         }
 
-        function calcPrice() {
-            customPackagePrice = null;
-            var val = document.getElementById('order-count').value;
-            var count = parseInt(val) || 0;
-            var total = count * 0.0005;
-            document.getElementById('total-price').innerText = total.toFixed(2) + ' TON';
+        function openDirectOrderModal(serviceName, unitPrice) {
+            currentServiceName = serviceName;
+            currentUnitPrice = unitPrice;
+            document.getElementById('direct-order-title').innerText = 'ثبت سفارش: ' + serviceName;
+            document.getElementById('direct-order-count').value = '';
+            document.getElementById('direct-total-price').innerText = '0.00 TON';
+            document.getElementById('modal-direct-order').style.display = 'flex';
         }
 
-        function selectPackage(count, price) {
-            customPackagePrice = price;
-            document.getElementById('order-count').value = count;
-            document.getElementById('total-price').innerText = price.toFixed(2) + ' TON';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            alert('✅ پکیج ' + count + ' ممبر انتخاب شد! لینک کانال را وارد کرده و دکمه پرداخت را بزنید.');
+        function calcDirectPrice() {
+            var count = parseInt(document.getElementById('direct-order-count').value) || 0;
+            var total = (count / 1000) * currentUnitPrice;
+            document.getElementById('direct-total-price').innerText = total.toFixed(2) + ' TON';
         }
 
-        function openPaymentModal() {
-            var link = document.getElementById('order-link').value;
-            var count = parseInt(document.getElementById('order-count').value) || 0;
+        function confirmDirectPayment() {
+            var link = document.getElementById('direct-order-link').value;
+            var count = parseInt(document.getElementById('direct-order-count').value) || 0;
 
             if (!link || link.trim() === '') {
-                alert("❌ لطفاً لینک کانال یا گروه خود را وارد کنید.");
+                alert("❌ لطفاً لینک کانال را وارد کنید.");
                 return;
             }
-
             if (count < 1000) {
-                alert("❌ حداقل تعداد سفارش 1000 ممبر است.");
+                alert("❌ حداقل تعداد سفارش 1000 عدد است.");
                 return;
             }
 
-            document.getElementById('user-memo').value = getUserId();
-            document.getElementById('payment-modal').style.display = 'flex';
-        }
-
-        function closePaymentModal() {
-            document.getElementById('payment-modal').style.display = 'none';
-        }
-
-        function confirmPayment() {
-            var link = document.getElementById('order-link').value;
-            var count = parseInt(document.getElementById('order-count').value) || 0;
-            var price = customPackagePrice ? customPackagePrice.toFixed(2) : (count * 0.0005).toFixed(2);
+            var totalPrice = ((count / 1000) * currentUnitPrice).toFixed(2);
             var uId = getUserId();
+            var userName = getUserName();
 
             try {
                 var orders = JSON.parse(localStorage.getItem('ads_orders_' + uId) || '[]');
@@ -682,120 +639,45 @@
                 orders.push({ 
                     link: link, 
                     count: count, 
-                    price: price, 
+                    price: totalPrice, 
                     expireTime: expireTime,
                     status: 'pending' 
                 });
                 localStorage.setItem('ads_orders_' + uId, JSON.stringify(orders));
             } catch(e) {}
 
-            closePaymentModal();
-            alert("✅ سفارش شما ثبت شد! تایمر ۵ دقیقه‌ای تایید تراکنش آغاز شد.");
+            closeModal('modal-direct-order');
+            closeModal('modal-real-member');
 
-            document.getElementById('order-link').value = '';
-            document.getElementById('order-count').value = '';
-            document.getElementById('total-price').innerText = '0.00 TON';
-            customPackagePrice = null;
-            
+            // ارسال پیام گزارش سفارش به پشتیبانی
+            var messageText = "🔔 سفارش جدید از بخش خدمات!\n\n" +
+                              "📦 سرویس: " + currentServiceName + "\n" +
+                              "👤 کاربر: " + userName + " (ID: " + uId + ")\n" +
+                              "🔗 لینک: " + link + "\n" +
+                              "📊 تعداد: " + count + "\n" +
+                              "💰 مبلغ: " + totalPrice + " TON";
+
+            window.Telegram.WebApp.openTelegramLink("https://t.me/Dollar_Matrix?text=" + encodeURIComponent(messageText));
+
             switchTab('history');
         }
 
-        function updateTimers() {
-            var uId = getUserId();
-            try {
-                var orders = JSON.parse(localStorage.getItem('ads_orders_' + uId) || '[]');
-                var updated = false;
-                var now = new Date().getTime();
-
-                for (var i = 0; i < orders.length; i++) {
-                    if (orders[i].status === 'pending' && orders[i].expireTime) {
-                        if (now >= orders[i].expireTime) {
-                            orders[i].status = 'completed';
-                            updated = true;
-                        }
-                    }
-                }
-
-                if (updated) {
-                    localStorage.setItem('ads_orders_' + uId, JSON.stringify(orders));
-                    if (document.getElementById('tab-history').style.display === 'block') {
-                        loadOrders();
-                    }
-                }
-            } catch(e) {}
-        }
-
-        function loadOrders() {
-            var container = document.getElementById('orders-list');
-            var uId = getUserId();
-            var orders = [];
-
-            try {
-                orders = JSON.parse(localStorage.getItem('ads_orders_' + uId) || '[]');
-            } catch(e) {}
-
-            if (orders.length === 0) {
-                container.innerHTML = 'هنوز سفارشی ثبت نکرده‌اید.';
-                return;
-            }
-
-            var html = '';
-            var now = new Date().getTime();
-
-            for (var i = 0; i < orders.length; i++) {
-                var statusText = '';
-                if (orders[i].status === 'completed') {
-                    statusText = '<span style="color:var(--neon-green); font-weight:bold;">✅ سفارش شما ثبت و تایید شد (تکمیل شده)</span>';
-                } else {
-                    var timeLeft = Math.max(0, Math.floor((orders[i].expireTime - now) / 1000));
-                    var minutes = Math.floor(timeLeft / 60);
-                    var seconds = timeLeft % 60;
-                    var timeFormatted = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-                    
-                    if (timeLeft <= 0) {
-                        orders[i].status = 'completed';
-                        statusText = '<span style="color:var(--neon-green); font-weight:bold;">✅ سفارش شما ثبت و تایید شد (تکمیل شده)</span>';
-                    } else {
-                        statusText = '<span style="color:#ffd700;">⏳ در حال بررسی و تایید تراکنش (' + timeFormatted + ')</span>';
-                    }
-                }
-
-                html += '<div style="background:#050811; padding:10px; border-radius:8px; margin-bottom:8px; text-align:right;">' +
-                    '<div style="font-weight:bold; color:#00f0ff;">سفارش شماره #' + (i + 1) + '</div>' +
-                    '<div style="color:#fff; margin-top:4px;">کانال: ' + orders[i].link + '</div>' +
-                    '<div style="color:#8da0bf; font-size:11px;">تعداد: ' + orders[i].count + ' ممبر | مبلغ: ' + orders[i].price + ' TON</div>' +
-                    '<div style="font-size:11px; margin-top:4px;">وضعیت: ' + statusText + '</div>' +
-                    '</div>';
-            }
-            container.innerHTML = html;
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
 
         function copyWallet() {
             var input = document.getElementById('admin-wallet');
             input.select();
             document.execCommand("copy");
-            alert("📋 آدرس کیف پول کپی شد!");
-        }
-
-        function copyModalWallet() {
-            var input = document.getElementById('modal-wallet');
-            input.select();
-            document.execCommand("copy");
-            alert("📋 آدرس ولت کپی شد!");
-        }
-
-        function copyModalMemo() {
-            var input = document.getElementById('user-memo');
-            input.select();
-            document.execCommand("copy");
-            alert("📋 کد MEMO کپی شد!");
+            alert("📋 آدرس کپی شد!");
         }
 
         function copyRefLink() {
             var input = document.getElementById('ref-link');
             input.select();
             document.execCommand("copy");
-            alert("🔗 لینک دعوت اختصاصی شما کپی شد!");
+            alert("🔗 لینک کپی شد!");
         }
     </script>
 </body>
