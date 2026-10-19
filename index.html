@@ -257,7 +257,7 @@
             overflow-y: auto;
         }
 
-        /* سکه طلایی گرد و ثابت (بدون چرخش) */
+        /* سکه طلایی کاملاً گرد و ثابت - بدون هیچ چرخش یا انیمیشن */
         .coin-wrapper {
             display: flex;
             justify-content: center;
@@ -265,7 +265,7 @@
             margin: 15px 0;
         }
 
-        .gold-coin-static {
+        .gold-coin-fixed {
             width: 140px;
             height: 140px;
             border-radius: 50%;
@@ -361,9 +361,9 @@
         <!-- TAB 4: DEPOSIT -->
         <div id="tab-deposit" class="tab-content" style="display:none;">
             
-            <!-- سکه گرد ثابت -->
+            <!-- سکه کاملاً گرد و ثابت -->
             <div class="coin-wrapper">
-                <div class="gold-coin-static">
+                <div class="gold-coin-fixed">
                     <div class="coin-label">موجودی حساب</div>
                     <div class="coin-val" id="user-balance">0.00 TON</div>
                 </div>
