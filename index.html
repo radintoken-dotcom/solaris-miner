@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Casino Wheel Edition v3</title>
+    <title>NovaTon - Clean Edition v5</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -372,19 +372,9 @@
                 <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('fake-member')">مشاهده سرویس</button>
             </div>
             <div class="service-card">
-                <div class="service-title">3. خرید ممبر آپلودر</div>
-                <div class="service-desc"><b>کاربرد:</b> مناسب برای کانالهایی که به رشد عددی، فعالیت بیشتر و افزایش اعتبار نیاز دارند</div>
-                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
-            </div>
-            <div class="service-card">
-                <div class="service-title">4. خرید ممبر پرمیوم تلگرام</div>
-                <div class="service-desc"><b>کاربرد:</b> جایگاه کانال و گروه خود را در نتایج جستجوی تلگرام تقویت کنید</div>
-                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
-            </div>
-            <div class="service-card">
-                <div class="service-title">5. خرید ویو تلگرام</div>
+                <div class="service-title">3. خرید ویو تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> مناسب برای نمایش بهتر میزان دیده شدن محتوا</div>
-                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="alert('لیست این سرویس به‌زودی آپدیت می‌شود...')">مشاهده سرویس</button>
+                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('views-member')">مشاهده سرویس</button>
             </div>
         </div>
 
@@ -463,7 +453,7 @@
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.74 TON</span></div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">1,000 / 20,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات</button>
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات مهم</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال، اد اجباری، اقتصادی', 0.74, 1000, 20000)">🛒 سفارش</button>
                 </div>
             </div>
@@ -479,7 +469,7 @@
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.5 TON</span></div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('fake-rules')">📜 توضیحات</button>
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('fake-rules')">📜 توضیحات مهم</button>
                     <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر فیک ایرانی بدون ریزش شروع فوری', 0.5, 500, 10000)">🛒 سفارش</button>
                 </div>
             </div>
@@ -487,9 +477,84 @@
         </div>
     </div>
 
+    <!-- POPUP اختصاصی ویو تلگرام با ۶ سرویس -->
+    <div id="modal-views-member" class="modal-overlay">
+        <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
+            <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">خرید ویو تلگرام</div>
+
+            <!-- مورد ۱ -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: بازدید تک پست استارت فوری سرویس اضطراری</div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.10 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">100 / 10,000</span></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید تک پست استارت فوری سرویس اضطراری', 0.10, 100, 10000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <!-- مورد ۲ -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: بازدید 5 پست آخر کانال</div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.11 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 5 پست آخر کانال', 0.11, 500, 10000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <!-- مورد ۳ -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: بازدید 10 پست آخر کانال</div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.12 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 10 پست آخر کانال', 0.12, 500, 10000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <!-- مورد ۴ -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: بازدید 20 پست آخر کانال</div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.14 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 20 پست آخر کانال', 0.14, 500, 10000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <!-- مورد ۵ -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: بازدید 30 پست آخر کانال</div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.15 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 30 پست آخر کانال', 0.15, 500, 10000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <!-- مورد ۶ -->
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: بازدید 50 پست آخر کانال</div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.20 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 50 پست آخر کانال', 0.20, 500, 10000)">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <button class="btn" onclick="closeModal('modal-views-member')" style="background:#161820 !important; margin-top:10px;">بستن</button>
+        </div>
+    </div>
+
     <div id="modal-rules" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#00f0ff !important; margin:0; text-align:right;">
-            <div style="font-size:15px; font-weight:bold; color:#00f0ff; text-align:center; margin-bottom:15px;">📜 قوانین و نکات مهم سرویس</div>
+            <div style="font-size:15px; font-weight:bold; color:#00f0ff; text-align:center; margin-bottom:15px;">📜 توضیحات مهم سرویس</div>
             <div style="font-size:12px; color:#8da0bf; line-height:1.8;" id="rules-content"></div>
             <button class="btn btn-gold" onclick="closeModal('modal-rules')" style="margin-top:15px;">متوجه شدم</button>
         </div>
@@ -498,7 +563,7 @@
     <div id="modal-direct-order" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#28a745 !important; margin:0; max-height:90vh; overflow-y:auto;">
             <div id="direct-order-title" style="font-weight:bold; color:#28a745; text-align:center; margin-bottom:12px; font-size:14px;">ثبت سفارش</div>
-            <div class="input-group"><label>لینک کانال یا گروه شما:</label><input type="text" id="direct-order-link" class="input-field" placeholder="@channel یا https://t.me/..."></div>
+            <div class="input-group"><label>لینک کانال یا پست شما:</label><input type="text" id="direct-order-link" class="input-field" placeholder="@channel یا https://t.me/..."></div>
             <div class="input-group"><label>تعداد درخواستی:</label><input type="number" id="direct-order-count" class="input-field" placeholder="تعداد" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()"></div>
             <div class="card" style="background:#050608 !important; border-color:#ffd700 !important; text-align:center; margin:10px 0;"><div class="card-title">مبلغ قابل پرداخت</div><div class="big-number" id="direct-total-price" style="color:#ffd700;">0.00 TON</div></div>
             <button class="btn btn-gold" onclick="togglePaymentBox()" style="font-size:12px; margin-bottom:8px;">💳 پرداخت آنلاین (نمایش آدرس ولت و MEMO)</button>
@@ -527,7 +592,6 @@
         var maxLimit = 10000;
         var hasSpun = false;
 
-        /* لیست جوایز جدید طبق درخواست شما */
         var prizes = [
             "2000 ممبر 🎁",
             "500ممبر واقعی 🌟",
@@ -561,7 +625,6 @@
                 ctx.strokeStyle = "#111319";
                 ctx.stroke();
 
-                /* تنظیمات فونت کاملاً پرنور، سفید و برجسته برای خوانایی عالی */
                 ctx.save();
                 ctx.translate(150, 150);
                 ctx.rotate(angle + sliceAngle / 2);
@@ -569,7 +632,6 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "bold 11px tahoma";
                 
-                // سایه مشکی قوی برای برجسته‌سازی متن
                 ctx.shadowColor = "#000000";
                 ctx.shadowOffsetX = 2;
                 ctx.shadowOffsetY = 2;
@@ -579,7 +641,6 @@
                 ctx.restore();
             }
 
-            // مرکز دایره نئون سرخ/نارنجی
             ctx.beginPath();
             ctx.arc(150, 150, 45, 0, 2 * Math.PI);
             ctx.fillStyle = "#0a0b0e";
@@ -590,7 +651,6 @@
             ctx.shadowBlur = 12;
             ctx.stroke();
 
-            // پرپره‌های مشکی/سفید مرکزی
             ctx.shadowBlur = 0;
             var numSpokes = 16;
             for (var j = 0; j < numSpokes; j++) {
@@ -691,12 +751,24 @@
                 document.getElementById('modal-real-member').style.display = 'flex';
             } else if (type === 'fake-member') {
                 document.getElementById('modal-fake-member').style.display = 'flex';
+            } else if (type === 'views-member') {
+                document.getElementById('modal-views-member').style.display = 'flex';
             }
         }
 
         function openRulesModal(ruleType) {
             var contentElem = document.getElementById('rules-content');
-            if (ruleType === 'fake-rules') {
+            if (ruleType === 'views-rules') {
+                contentElem.innerHTML = `
+                    <p>⏳ <b>زمان استارت سرویس :</b> ۱ الی ۶ ساعت</p><br>
+                    <p>🚀 <b>سرعت ارسال روزانه :</b> ۱ الی ۱۰ کا</p><br>
+                    <p>⛔ <b>ریزش :</b> ندارد</p><br>
+                    <p>🔗 <b>نحوه درج لینک :</b> لینک پست مورد نظر ارسال شود : <br><span style="color:#00f0ff;">https://t.me/xxxxxxxxxx/123</span></p><br>
+                    <p>⭐ <b>قبل از استارت سرویس حتما نکات زیر را بخوانید :</b></p><br>
+                    <p>🔰 کانال باید عمومی باشد</p><br>
+                    <p>🔰 پس از ثبت سفارش، وضعیت سفارش به حالت تکمیل شده تغییر خواهد کرد.</p>
+                `;
+            } else if (ruleType === 'fake-rules') {
                 contentElem.innerHTML = `
                     <p>✔️ <b>زمان استارت آنی</b></p><br>
                     <p>✔️ <b>زمان تکمیل 10k در هر روز</b></p><br>
@@ -756,7 +828,7 @@
             var count = parseInt(document.getElementById('direct-order-count').value) || 0;
 
             if (!link || link.trim() === '') {
-                alert("❌ لطفاً لینک کانال را وارد کنید.");
+                alert("❌ لطفاً لینک کانال یا پست را وارد کنید.");
                 return;
             }
             if (count < minLimit || count > maxLimit) {
@@ -771,6 +843,7 @@
             closeModal('modal-direct-order');
             closeModal('modal-real-member');
             closeModal('modal-fake-member');
+            closeModal('modal-views-member');
 
             var messageText = "🔔 سفارش جدید ثبت شد!\n\n" +
                               "📦 سرویس: " + currentServiceName + "\n" +
