@@ -286,59 +286,53 @@
             line-height: 1.5;
         }
 
-        /* گردونه شانس شیک نئونی */
-        .wheel-container {
+        /* --- طراحی فوق‌العاده و حرفه‌ای گردونه شانس --- */
+        .wheel-wrapper {
             position: relative;
-            width: 220px;
-            height: 220px;
-            margin: 15px auto;
+            width: 260px;
+            height: 260px;
+            margin: 20px auto 10px auto;
         }
 
-        .wheel {
+        .wheel-pointer {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 14px solid transparent;
+            border-right: 14px solid transparent;
+            border-top: 24px solid var(--neon-gold);
+            filter: drop-shadow(0 0 8px #ffd700);
+            z-index: 100;
+        }
+
+        .wheel-canvas {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             border: 5px solid var(--neon-gold);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-            background: conic-gradient(
-                #00f0ff 0deg 60deg,
-                #111a2e 60deg 120deg,
-                #28a745 120deg 180deg,
-                #ffd700 180deg 240deg,
-                #0088cc 240deg 300deg,
-                #ff4757 300deg 360deg
-            );
-            transition: transform 3s cubic-bezier(0.15, 0.8, 0.15, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+            transition: transform 4s cubic-bezier(0.1, 0.9, 0.1, 1);
         }
 
-        .wheel-arrow {
+        .wheel-center-cap {
             position: absolute;
-            top: -12px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 0; height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-top: 20px solid var(--neon-gold);
-            z-index: 10;
-        }
-
-        .wheel-center-btn {
-            position: absolute;
-            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 55px; height: 55px;
-            background: #080d1a;
-            border: 2px solid var(--neon-gold);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #111a2e, #080d1a);
+            border: 3px solid var(--neon-gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.9);
+            z-index: 10;
         }
     </style>
 </head>
@@ -382,19 +376,17 @@
 
         </div>
 
-        <!-- TAB 2: WHEEL (گردونه شانس - جایگزین سفارشات) -->
+        <!-- TAB 2: WHEEL -->
         <div id="tab-wheel" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
-                <div class="card-title" style="color:var(--neon-gold); font-weight:bold; font-size:14px;">🎰 گردونه شانس و هدیه ویژه</div>
-                <p style="font-size:11px; color:var(--text-sub); margin-top:4px;">گردونه را بچرخانید و هدیه اختصاصی بگیرید!</p>
+                <p style="font-size:12px; color:var(--text-sub); margin-bottom:5px;">گردونه را بچرخانید و هدیه اختصاصی بگیرید!</p>
 
-                <div class="wheel-container">
-                    <div class="wheel-arrow"></div>
-                    <div class="wheel" id="lucky-wheel"></div>
-                    <div class="wheel-center-btn">🎁</div>
+                <div class="wheel-wrapper">
+                    <div class="wheel-pointer"></div>
+                    <canvas id="wheelCanvas" class="wheel-canvas" width="300" height="300"></canvas>
+                    <div class="wheel-center-cap">🎰</div>
                 </div>
 
-                <!-- وضعیت قفل بودن / شرط دعوت -->
                 <div id="wheel-status-box" style="margin-top:10px;">
                     <p style="font-size:11px; color:#ffd700; margin-bottom:10px; line-height:1.6;" id="wheel-msg">
                         ⚠️ <b>شرط چرخاندن گردونه:</b> حداقل ۱ نفر را با لینک اختصاصی خود دعوت کنید.
@@ -402,7 +394,6 @@
                     <button class="btn btn-gold" id="spin-btn" onclick="checkAndSpinWheel()">🎡 چرخاندن گردونه شانس</button>
                 </div>
 
-                <!-- نتیجه برنده شدن -->
                 <div id="wheel-result-box" style="display:none; background:#050811; border:1px solid var(--neon-green); border-radius:10px; padding:12px; margin-top:12px;">
                     <div style="color:var(--neon-green); font-weight:bold; font-size:14px; margin-bottom:6px;">🎉 تبریک! شما برنده شدید!</div>
                     <div id="prize-name" style="color:#fff; font-size:12px; font-weight:bold; margin-bottom:8px;">10% تخفیف خرید ممبر</div>
@@ -411,7 +402,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: REFERRAL (دعوت دوستان) -->
+        <!-- TAB 3: REFERRAL -->
         <div id="tab-ref" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
                 <div style="margin-bottom:12px;">
@@ -426,7 +417,7 @@
             </div>
         </div>
 
-        <!-- TAB 4: SUPPORT (پشتیبانی) -->
+        <!-- TAB 4: SUPPORT -->
         <div id="tab-support" class="tab-content" style="display:none;">
             
             <div class="support-card" style="border-color:var(--neon-green);">
@@ -627,7 +618,7 @@
         </div>
     </div>
 
-    <!-- BOTTOM NAV BAR (منوی ۴ تایی جدید) -->
+    <!-- BOTTOM NAV BAR -->
     <div class="nav-bar">
         <div class="nav-item active" id="nav-btn-services" onclick="switchTab('services')">
             <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
@@ -654,6 +645,52 @@
         var maxLimit = 10000;
         var hasSpun = false;
 
+        /* تنظیمات گردونه بوم */
+        var prizes = [
+            "۱۰٪ تخفیف خرید",
+            "۲۰ عدد ویو هدیه",
+            "پوچ! دوباره تلاش کن",
+            "۵٪ تخفیف خرید",
+            "۵۰ ممبر هدیه خرید بعد",
+            "کد شانس ویژه"
+        ];
+        var colors = ["#00f0ff", "#111a2e", "#ffd700", "#28a745", "#0088cc", "#ff4757"];
+
+        function drawWheel() {
+            var canvas = document.getElementById('wheelCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            var numSlices = prizes.length;
+            var sliceAngle = (2 * Math.PI) / numSlices;
+
+            ctx.clearRect(0, 0, 300, 300);
+
+            for (var i = 0; i < numSlices; i++) {
+                var angle = i * sliceAngle;
+                
+                // رسم قاچ‌ها
+                ctx.beginPath();
+                ctx.fillStyle = colors[i];
+                ctx.moveTo(150, 150);
+                ctx.arc(150, 150, 145, angle, angle + sliceAngle);
+                ctx.lineTo(150, 150);
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "#ffd700";
+                ctx.stroke();
+
+                // رسم متن‌ها
+                ctx.save();
+                ctx.translate(150, 150);
+                ctx.rotate(angle + sliceAngle / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = (i === 2 || i === 0) ? "#000" : "#fff";
+                ctx.font = "bold 11px tahoma";
+                ctx.fillText(prizes[i], 130, 4);
+                ctx.restore();
+            }
+        }
+
         function getUserId() {
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
@@ -677,6 +714,7 @@
             var uId = getUserId();
             var refLinkField = document.getElementById('ref-link');
             if (refLinkField) refLinkField.value = 'https://t.me/SolarisMiner_bot?start=' + uId;
+            drawWheel();
         };
 
         function switchTab(tabName) {
@@ -700,6 +738,7 @@
                 'support': 'ارتباط با پشتیبانی'
             };
             document.getElementById('page-title').innerText = titles[tabName];
+            if (tabName === 'wheel') drawWheel();
         }
 
         function openServiceModal(type) {
@@ -776,7 +815,7 @@
                 return;
             }
             if (count < minLimit || count > maxLimit) {
-                alert("❌ تعداد سفارش باید بین " + minLimit.toLocaleString() + " تا " + maxLimit.toLocaleString() + " باشد.");
+                alert("❌ تعداد سفارش باید بین " + minLimit.toLocaleString() + " تا حداکثر " + maxLimit.toLocaleString() + " باشد.");
                 return;
             }
 
@@ -798,34 +837,34 @@
             window.Telegram.WebApp.openTelegramLink("https://t.me/Dollar_Matrix?text=" + encodeURIComponent(messageText));
         }
 
-        /* منطق گردونه شانس */
+        /* منطق چرخاندن و محاسبه برنده شدن در گردونه */
         function checkAndSpinWheel() {
             if (hasSpun) {
                 alert("⚠️ شما قبلاً گردونه شانس امروز را چرخانده‌اید!");
                 return;
             }
 
-            // چک کردن تعداد دعوت‌ها
             var refCount = parseInt(document.getElementById('ref-count').innerText) || 0;
             
-            // اگر دعوت نداشت، قفل می‌مونه
             if (refCount < 1) {
                 alert("⚠️ برای چرخاندن گردونه باید حداقل ۱ دوست خود را با لینک اختصاصی‌تان دعوت کنید!");
                 switchTab('ref');
                 return;
             }
 
-            // اگر شرط برقرار بود گردونه می‌چرخه
-            var wheel = document.getElementById('lucky-wheel');
-            var randomDegrees = Math.floor(3600 + Math.random() * 360); 
-            wheel.style.transform = 'rotate(' + randomDegrees + 'deg)';
+            var canvas = document.getElementById('wheelCanvas');
+            var selectedIndex = Math.floor(Math.random() * prizes.length);
             
+            // زاویه محاسبه‌شده برای افتادن درست روی قاچ انتخابی
+            var sliceDeg = 360 / prizes.length;
+            var targetDeg = 3600 + (360 - (selectedIndex * sliceDeg) - (sliceDeg / 2));
+            
+            canvas.style.transform = 'rotate(' + targetDeg + 'deg)';
             document.getElementById('spin-btn').disabled = true;
 
             setTimeout(function() {
                 hasSpun = true;
-                var prizes = ["10% تخفیف خرید ممبر", "100 ممبر هدیه روی سفارش بعدی", "کد تخفیف طلایی 15%", "50 ممبر واقعی هدیه"];
-                var wonPrize = prizes[Math.floor(Math.random() * prizes.length)];
+                var wonPrize = prizes[selectedIndex];
                 var luckyCode = "LUCKY-" + Math.floor(10000 + Math.random() * 90000);
 
                 document.getElementById('prize-name').innerText = wonPrize + " (کد شانس: " + luckyCode + ")";
@@ -836,11 +875,11 @@
                 var userName = getUserName();
                 var msg = "🎁 دریافت هدیه گردونه شانس NovaTon!\n\n" +
                           "👤 کاربر: " + userName + " (ID: " + uId + ")\n" +
-                          "🎉 جایزه: " + wonPrize + "\n" +
+                          "🎉 جایزه برنده شده: " + wonPrize + "\n" +
                           "🔑 کد شانس اختصاصی: " + luckyCode;
 
                 document.getElementById('claim-prize-btn').href = "https://t.me/Dollar_Matrix?text=" + encodeURIComponent(msg);
-            }, 3200);
+            }, 4200);
         }
 
         function closeModal(modalId) {
