@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Clean Edition v5</title>
+    <title>NovaTon - Clean Edition v6</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -444,107 +444,146 @@
         </div>
     </div>
 
-    <!-- POPUPS -->
+    <!-- POPUPS: REAL MEMBERS (چند گزینه ای) -->
     <div id="modal-real-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">ممبر واقعی تلگرام</div>
+            
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ممبر واقعی کانال، اد اجباری، اقتصادی شروع زیر ۶ ساعت</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.74 TON</span></div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">1,000 / 20,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-1')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال، اد اجباری، اقتصادی', 0.74, 1000, 20000)">🛒 سفارش</button>
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال، اد اجباری، اقتصادی', 0.74, 1000, 20000, 'channel')">🛒 سفارش</button>
                 </div>
             </div>
+
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: ممبر واقعی اد اجباری کیفیت A شروع آنی</div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.83 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">1,000 / 20,000</span></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی اد اجباری کیفیت A', 0.83, 1000, 20000, 'channel')">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: ممبر واقعی کانال اد اجباری کیفیت A+ شروع آنی</div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.90 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">1,000 / 20,000</span></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال اد اجباری کیفیت A+', 0.90, 1000, 20000, 'channel')">🛒 سفارش</button>
+                </div>
+            </div>
+
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟</div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">1.50 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">1,000 / 10,000</span></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟', 1.50, 1000, 10000, 'channel')">🛒 سفارش</button>
+                </div>
+            </div>
+
             <button class="btn" onclick="closeModal('modal-real-member')" style="background:#161820 !important; margin-top:10px;">بستن</button>
         </div>
     </div>
 
+    <!-- POPUPS: FAKE MEMBERS -->
     <div id="modal-fake-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">ممبر فیک تلگرام</div>
+            
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ممبر فیک ایرانی بدون ریزش شروع فوری</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.5 TON</span></div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('fake-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر فیک ایرانی بدون ریزش شروع فوری', 0.5, 500, 10000)">🛒 سفارش</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر فیک ایرانی بدون ریزش شروع فوری', 0.5, 500, 10000, 'channel')">🛒 سفارش</button>
                 </div>
             </div>
+
+            <div class="sub-service-box">
+                <div class="sub-service-title">نام: ممبر فیک بدون ریزش شروع فوری</div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.55 TON</span></div>
+                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 20,000</span></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('fake-rules')">📜 توضیحات مهم</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر فیک بدون ریزش شروع فوری', 0.55, 500, 20000, 'channel')">🛒 سفارش</button>
+                </div>
+            </div>
+
             <button class="btn" onclick="closeModal('modal-fake-member')" style="background:#161820 !important; margin-top:10px;">بستن</button>
         </div>
     </div>
 
-    <!-- POPUP اختصاصی ویو تلگرام با ۶ سرویس -->
+    <!-- POPUP: VIEWS -->
     <div id="modal-views-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">خرید ویو تلگرام</div>
 
-            <!-- مورد ۱ -->
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: بازدید تک پست استارت فوری سرویس اضطراری</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.10 TON</span></div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">100 / 10,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید تک پست استارت فوری سرویس اضطراری', 0.10, 100, 10000)">🛒 سفارش</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید تک پست استارت فوری سرویس اضطراری', 0.10, 100, 10000, 'post')">🛒 سفارش</button>
                 </div>
             </div>
 
-            <!-- مورد ۲ -->
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: بازدید 5 پست آخر کانال</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.11 TON</span></div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 5 پست آخر کانال', 0.11, 500, 10000)">🛒 سفارش</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 5 پست آخر کانال', 0.11, 500, 10000, 'post')">🛒 سفارش</button>
                 </div>
             </div>
 
-            <!-- مورد ۳ -->
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: بازدید 10 پست آخر کانال</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.12 TON</span></div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 10 پست آخر کانال', 0.12, 500, 10000)">🛒 سفارش</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 10 پست آخر کانال', 0.12, 500, 10000, 'post')">🛒 سفارش</button>
                 </div>
             </div>
 
-            <!-- مورد ۴ -->
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: بازدید 20 پست آخر کانال</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.14 TON</span></div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 20 پست آخر کانال', 0.14, 500, 10000)">🛒 سفارش</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 20 پست آخر کانال', 0.14, 500, 10000, 'post')">🛒 سفارش</button>
                 </div>
             </div>
 
-            <!-- مورد ۵ -->
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: بازدید 30 پست آخر کانال</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.15 TON</span></div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 30 پست آخر کانال', 0.15, 500, 10000)">🛒 سفارش</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 30 پست آخر کانال', 0.15, 500, 10000, 'post')">🛒 سفارش</button>
                 </div>
             </div>
 
-            <!-- مورد ۶ -->
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: بازدید 50 پست آخر کانال</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.20 TON</span></div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 50 پست آخر کانال', 0.20, 500, 10000)">🛒 سفارش</button>
+                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 50 پست آخر کانال', 0.20, 500, 10000, 'post')">🛒 سفارش</button>
                 </div>
             </div>
 
@@ -552,6 +591,7 @@
         </div>
     </div>
 
+    <!-- RULES MODAL -->
     <div id="modal-rules" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#00f0ff !important; margin:0; text-align:right;">
             <div style="font-size:15px; font-weight:bold; color:#00f0ff; text-align:center; margin-bottom:15px;">📜 توضیحات مهم سرویس</div>
@@ -560,18 +600,42 @@
         </div>
     </div>
 
+    <!-- DIRECT ORDER MODAL -->
     <div id="modal-direct-order" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#28a745 !important; margin:0; max-height:90vh; overflow-y:auto;">
             <div id="direct-order-title" style="font-weight:bold; color:#28a745; text-align:center; margin-bottom:12px; font-size:14px;">ثبت سفارش</div>
-            <div class="input-group"><label>لینک کانال یا پست شما:</label><input type="text" id="direct-order-link" class="input-field" placeholder="@channel یا https://t.me/..."></div>
-            <div class="input-group"><label>تعداد درخواستی:</label><input type="number" id="direct-order-count" class="input-field" placeholder="تعداد" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()"></div>
-            <div class="card" style="background:#050608 !important; border-color:#ffd700 !important; text-align:center; margin:10px 0;"><div class="card-title">مبلغ قابل پرداخت</div><div class="big-number" id="direct-total-price" style="color:#ffd700;">0.00 TON</div></div>
+            
+            <div class="input-group">
+                <label id="direct-link-label">لینک کانال شما:</label>
+                <input type="text" id="direct-order-link" class="input-field" placeholder="@channel یا https://t.me/...">
+            </div>
+
+            <div class="input-group">
+                <label>تعداد درخواستی:</label>
+                <input type="number" id="direct-order-count" class="input-field" placeholder="تعداد" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()">
+            </div>
+
+            <div class="card" style="background:#050608 !important; border-color:#ffd700 !important; text-align:center; margin:10px 0;">
+                <div class="card-title">مبلغ قابل پرداخت</div>
+                <div class="big-number" id="direct-total-price" style="color:#ffd700;">0.00 TON</div>
+            </div>
+
             <button class="btn btn-gold" onclick="togglePaymentBox()" style="font-size:12px; margin-bottom:8px;">💳 پرداخت آنلاین (نمایش آدرس ولت و MEMO)</button>
+
             <div id="pay-info-box" style="display:none; background:#050608 !important; border:1px solid #00f0ff !important; border-radius:12px; padding:10px; margin-bottom:10px;">
                 <p style="font-size:10px; color:#ffd700; text-align:center; margin-bottom:8px;">⚠️ مبلغ فوق را به ولت زیر واریز کرده و <b>MEMO</b> را حتماً درج کنید:</p>
-                <div class="input-group" style="margin-bottom:8px;"><label style="font-size:10px;">آدرس ولت (TON):</label><input type="text" id="order-pay-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:9px; text-align:center; padding:8px; margin-bottom:4px;"><button class="btn" onclick="copyValue('order-pay-wallet', 'آدرس ولت')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی آدرس ولت</button></div>
-                <div class="input-group" style="margin-bottom:4px;"><label style="font-size:10px; color:#00f0ff;">MEMO اختصاصی شما:</label><input type="text" id="order-pay-memo" class="input-field" readonly style="font-size:11px; font-weight:bold; color:#00f0ff; text-align:center; padding:8px; margin-bottom:4px;"><button class="btn btn-gold" onclick="copyValue('order-pay-memo', 'کد MEMO')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی کد MEMO</button></div>
+                <div class="input-group" style="margin-bottom:8px;">
+                    <label style="font-size:10px;">آدرس ولت (TON):</label>
+                    <input type="text" id="order-pay-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:9px; text-align:center; padding:8px; margin-bottom:4px;">
+                    <button class="btn" onclick="copyValue('order-pay-wallet', 'آدرس ولت')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی آدرس ولت</button>
+                </div>
+                <div class="input-group" style="margin-bottom:4px;">
+                    <label style="font-size:10px; color:#00f0ff;">MEMO اختصاصی شما:</label>
+                    <input type="text" id="order-pay-memo" class="input-field" readonly style="font-size:11px; font-weight:bold; color:#00f0ff; text-align:center; padding:8px; margin-bottom:4px;">
+                    <button class="btn btn-gold" onclick="copyValue('order-pay-memo', 'کد MEMO')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی کد MEMO</button>
+                </div>
             </div>
+
             <button class="btn btn-green" onclick="submitDirectOrder()">✅ ثبت نهایی و ارسال به پشتیبانی</button>
             <button class="btn" onclick="closeModal('modal-direct-order')" style="background:#161820 !important; margin-top:6px;">انصراف</button>
         </div>
@@ -779,7 +843,7 @@
                 `;
             } else {
                 contentElem.innerHTML = `
-                    <p>1️⃣ <b>لینک عمومی (Public):</b> لینک کانال را وارد کنید. نمونه: <br><span style="color:#ffd700;">https://t.me/your_channel</span> یا <span style="color:#ffd700;">@your_channel</span></p><br>
+                    <p>1️⃣ <b>لینک کانال (Public):</b> لینک کانال را وارد کنید. نمونه: <br><span style="color:#ffd700;">https://t.me/your_channel</span> یا <span style="color:#ffd700;">@your_channel</span></p><br>
                     <p>2️⃣ کانال را حتماً باید با شماره (اکانت) <b>ایرانی +98</b> ایجاد کنید.</p><br>
                     <p>3️⃣ موضوع کانال خلاف <b>قوانین کشور</b> نباشد.</p><br>
                     <p>4️⃣ هنگام ثبت سفارش <b>شماره همراه روشن</b> وارد کنید.</p><br>
@@ -789,7 +853,7 @@
             document.getElementById('modal-rules').style.display = 'flex';
         }
 
-        function openDirectOrderModal(serviceName, unitPrice, minVal, maxVal) {
+        function openDirectOrderModal(serviceName, unitPrice, minVal, maxVal, linkType) {
             currentServiceName = serviceName;
             currentUnitPrice = unitPrice;
             minLimit = minVal;
@@ -800,6 +864,17 @@
             document.getElementById('direct-order-count').value = '';
             document.getElementById('direct-order-count').placeholder = 'حداقل ' + minLimit.toLocaleString() + ' تا حداکثر ' + maxLimit.toLocaleString();
             document.getElementById('direct-total-price').innerText = '0.00 TON';
+
+            // تنظیم لیبل فیلد لینک بر اساس نوع سرویس (ممبر یا ویو)
+            var labelElem = document.getElementById('direct-link-label');
+            var inputElem = document.getElementById('direct-order-link');
+            if (linkType === 'post') {
+                labelElem.innerText = 'لینک پست شما:';
+                inputElem.placeholder = 'https://t.me/channel/123';
+            } else {
+                labelElem.innerText = 'لینک کانال شما:';
+                inputElem.placeholder = '@channel یا https://t.me/...';
+            }
             
             document.getElementById('pay-info-box').style.display = 'none';
             document.getElementById('order-pay-memo').value = getUserId();
@@ -828,7 +903,7 @@
             var count = parseInt(document.getElementById('direct-order-count').value) || 0;
 
             if (!link || link.trim() === '') {
-                alert("❌ لطفاً لینک کانال یا پست را وارد کنید.");
+                alert("❌ لطفاً لینک کانال را وارد کنید.");
                 return;
             }
             if (count < minLimit || count > maxLimit) {
