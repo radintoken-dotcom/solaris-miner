@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Clean Edition v6</title>
+    <title>NovaTon - Smart Wheel Edition v7</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -393,7 +393,7 @@
 
                 <div id="wheel-status-box" style="margin-top:15px;">
                     <p style="font-size:11px; color:#ffd700; margin-bottom:10px; line-height:1.6;" id="wheel-msg">
-                        ⚠️ <b>شرط چرخاندن گردونه:</b> حداقل ۱ نفر را با لینک اختصاصی خود دعوت کنید.
+                        ⚠️ <b>شرط چرخاندن گردونه:</b> حداقل ۱ نفر را با لینک اختصاصی خود به ربات دعوت کنید.
                     </p>
                     <button class="btn btn-gold" id="spin-btn" onclick="checkAndSpinWheel()">🎡 چرخاندن گردونه شانس</button>
                 </div>
@@ -410,14 +410,14 @@
         <div id="tab-ref" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
                 <div style="margin-bottom:12px;">
-                    <div class="card-title">تعداد دعوت‌های شما</div>
-                    <div id="ref-count" style="font-size:22px; font-weight:bold; color:#ffd700;">0 نفر</div>
+                    <div class="card-title">لینک دعوت اختصاصی شما</div>
+                    <p style="font-size:11px; color:#8da0bf; margin-bottom:12px;">با ارسال لینک زیر به دوستانتان، شانس چرخاندن گردونه را فعال کنید:</p>
                 </div>
                 <div class="input-group">
-                    <label>لینک دعوت اختصاصی شما:</label>
                     <input type="text" id="ref-link" class="input-field" readonly style="font-size:11px; text-align:center; color:#ffd700;">
                 </div>
-                <button class="btn btn-gold" onclick="copyRefLink()">📋 کپی لینک دعوت</button>
+                <button class="btn btn-green" onclick="shareRefLinkDirect()" style="font-size:13px; padding:12px;">📲 ارسال مستقیم لینک دعوت به چت‌های تلگرام</button>
+                <button class="btn btn-gold" onclick="copyRefLink()" style="font-size:12px;">📋 کپی لینک دعوت</button>
             </div>
         </div>
 
@@ -444,7 +444,7 @@
         </div>
     </div>
 
-    <!-- POPUPS: REAL MEMBERS (چند گزینه ای) -->
+    <!-- POPUPS: REAL MEMBERS -->
     <div id="modal-real-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">ممبر واقعی تلگرام</div>
@@ -655,6 +655,7 @@
         var minLimit = 500;
         var maxLimit = 10000;
         var hasSpun = false;
+        var hasSharedLink = false;
 
         var prizes = [
             "2000 ممبر 🎁",
@@ -865,7 +866,6 @@
             document.getElementById('direct-order-count').placeholder = 'حداقل ' + minLimit.toLocaleString() + ' تا حداکثر ' + maxLimit.toLocaleString();
             document.getElementById('direct-total-price').innerText = '0.00 TON';
 
-            // تنظیم لیبل فیلد لینک بر اساس نوع سرویس (ممبر یا ویو)
             var labelElem = document.getElementById('direct-link-label');
             var inputElem = document.getElementById('direct-order-link');
             if (linkType === 'post') {
@@ -930,16 +930,23 @@
             window.Telegram.WebApp.openTelegramLink("https://t.me/Dollar_Matrix?text=" + encodeURIComponent(messageText));
         }
 
+        function shareRefLinkDirect() {
+            hasSharedLink = true;
+            var uId = getUserId();
+            var refUrl = 'https://t.me/SolarisMiner_bot?start=' + uId;
+            var shareText = "🚀 ربات ارتقا و خدمات حرفه‌ای تلگرام NovaTon!\n🎁 برای شرکت در گردونه شانس و دریافت ممبر و ویو رایگان روی لینک زیر کلیک کنید:\n\n" + refUrl;
+            
+            window.Telegram.WebApp.openTelegramLink("https://t.me/share/url?url=" + encodeURIComponent(refUrl) + "&text=" + encodeURIComponent(shareText));
+        }
+
         function checkAndSpinWheel() {
             if (hasSpun) {
                 alert("⚠️ شما قبلاً گردونه شانس امروز را چرخانده‌اید!");
                 return;
             }
 
-            var refCount = parseInt(document.getElementById('ref-count').innerText) || 0;
-            
-            if (refCount < 1) {
-                alert("⚠️ برای چرخاندن گردونه باید حداقل ۱ دوست خود را با لینک اختصاصی‌تان دعوت کنید!");
+            if (!hasSharedLink) {
+                alert("⚠️ برای فعالسازی گردونه، ابتدا باید لینک دعوت اختصاصی خود را حداقل برای ۱ نفر از دوستانتان ارسال کنید!");
                 switchTab('ref');
                 return;
             }
@@ -987,10 +994,11 @@
         }
 
         function copyRefLink() {
+            hasSharedLink = true;
             var input = document.getElementById('ref-link');
             input.select();
             document.execCommand("copy");
-            alert("🔗 لینک دعوت کپی شد!");
+            alert("🔗 لینک دعوت کپی شد! اکنون می‌توانید گردونه شانس را بچرخانید.");
         }
     </script>
 </body>
