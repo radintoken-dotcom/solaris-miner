@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Smart Wheel Edition v7</title>
+    <title>NovaTon - Luxury Edition v8</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -60,7 +60,7 @@
 
         .card {
             background: linear-gradient(145deg, #161820, #0c0d12) !important;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 18px;
             margin-bottom: 16px;
             border: 1px solid #252936 !important;
@@ -82,12 +82,13 @@
             margin: 6px 0;
         }
 
+        /* استایل تمام دکمه‌ها به‌صورت گرد و کپسولی */
         .btn {
             background: linear-gradient(145deg, #1a2233, #0d121c) !important;
             color: #fff !important;
             border: 1px solid #00f0ff !important;
-            padding: 12px 14px;
-            border-radius: 12px;
+            padding: 13px 18px;
+            border-radius: 30px !important; /* گرد و دایره‌ای */
             font-weight: bold;
             font-size: 13px;
             cursor: pointer;
@@ -97,7 +98,7 @@
             display: block;
             text-align: center;
             text-decoration: none;
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .btn:active {
@@ -109,14 +110,14 @@
             background: linear-gradient(145deg, #1b3d22, #0d2112) !important;
             border-color: #28a745 !important;
             color: #fff !important;
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3) !important;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.35) !important;
         }
 
         .btn-gold {
             background: linear-gradient(145deg, #3d3314, #211b0a) !important;
             border-color: #ffd700 !important;
             color: #ffd700 !important;
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3) !important;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.35) !important;
         }
 
         .input-group {
@@ -131,14 +132,15 @@
             margin-bottom: 6px;
         }
 
+        /* ورودی‌های دایره‌ای کپسولی */
         .input-field {
             width: 100%;
             padding: 12px;
             background: #050608 !important;
             border: 1px solid #252936 !important;
-            border-radius: 10px;
+            border-radius: 30px !important;
             color: #fff;
-            font-size: 13px;
+            font-size: 12px;
             outline: none;
         }
 
@@ -197,7 +199,7 @@
         .service-card {
             background: linear-gradient(145deg, #161820, #0c0d12) !important;
             border: 1px solid #252936 !important;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 16px;
             margin-bottom: 14px;
             text-align: right;
@@ -221,7 +223,7 @@
         .sub-service-box {
             background: #050608 !important;
             border: 1px solid #252936 !important;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 12px;
             margin-bottom: 12px;
             text-align: right;
@@ -260,7 +262,7 @@
         .support-card {
             background: linear-gradient(145deg, #161820, #0c0d12) !important;
             border: 1px solid #252936 !important;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 18px;
             margin-bottom: 14px;
             text-align: center;
@@ -352,6 +354,25 @@
             border-radius: 4px;
             box-shadow: 0 0 10px rgba(255,215,0,0.8);
         }
+
+        /* استایل لیست جوایز تشویقی پایین */
+        .prize-motivation-box {
+            background: rgba(12, 13, 18, 0.9);
+            border: 1px dashed #ffd700;
+            border-radius: 16px;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .prize-motivation-item {
+            font-size: 11px;
+            color: #8da0bf;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
     </style>
 </head>
 <body>
@@ -364,17 +385,17 @@
             <div class="service-card">
                 <div class="service-title">1. خرید ممبر واقعی تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> افزایش اعضای واقعی کانال و یا گروه تلگرام برای رشد بهتر و تعامل طبیعی تر</div>
-                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('real-member')">مشاهده سرویس</button>
+                <button class="btn btn-gold" style="font-size:13px;" onclick="openServiceModal('real-member')">مشاهده سرویس</button>
             </div>
             <div class="service-card">
                 <div class="service-title">2. خرید ممبر فیک تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> افزایش سریع تعداد اعضای کانال برای تقویت ظاهر اولیه و اعتبار عددی صفحه</div>
-                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('fake-member')">مشاهده سرویس</button>
+                <button class="btn btn-gold" style="font-size:13px;" onclick="openServiceModal('fake-member')">مشاهده سرویس</button>
             </div>
             <div class="service-card">
                 <div class="service-title">3. خرید ویو تلگرام</div>
                 <div class="service-desc"><b>کاربرد:</b> مناسب برای نمایش بهتر میزان دیده شدن محتوا</div>
-                <button class="btn btn-gold" style="font-size:13px; padding:10px;" onclick="openServiceModal('views-member')">مشاهده سرویس</button>
+                <button class="btn btn-gold" style="font-size:13px;" onclick="openServiceModal('views-member')">مشاهده سرویس</button>
             </div>
         </div>
 
@@ -398,7 +419,7 @@
                     <button class="btn btn-gold" id="spin-btn" onclick="checkAndSpinWheel()">🎡 چرخاندن گردونه شانس</button>
                 </div>
 
-                <div id="wheel-result-box" style="display:none; background:#050608; border:1px solid #28a745; border-radius:12px; padding:12px; margin-top:12px;">
+                <div id="wheel-result-box" style="display:none; background:#050608; border:1px solid #28a745; border-radius:30px; padding:12px; margin-top:12px;">
                     <div style="color:#28a745; font-weight:bold; font-size:14px; margin-bottom:6px;">🎉 تبریک! شما برنده شدید!</div>
                     <div id="prize-name" style="color:#fff; font-size:12px; font-weight:bold; margin-bottom:8px;">10درصد تخفیف خرید ✨</div>
                     <a id="claim-prize-btn" href="#" target="_blank" class="btn btn-green" style="font-size:12px;">💬 ارسال کد شانس به پشتیبانی</a>
@@ -406,18 +427,42 @@
             </div>
         </div>
 
-        <!-- TAB 3: REFERRAL -->
+        <!-- TAB 3: REFERRAL (اصلاح شده با دکمه‌های دایره‌ای و متن تشویقی) -->
         <div id="tab-ref" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
                 <div style="margin-bottom:12px;">
-                    <div class="card-title">لینک دعوت اختصاصی شما</div>
-                    <p style="font-size:11px; color:#8da0bf; margin-bottom:12px;">با ارسال لینک زیر به دوستانتان، شانس چرخاندن گردونه را فعال کنید:</p>
+                    <div class="card-title" style="color:#00f0ff; font-weight:bold;">لینک دعوت اختصاصی شما</div>
+                    <p style="font-size:11px; color:#8da0bf; margin-bottom:10px;">با اشتراک‌گذاری لینک زیر، گردونه شانس را فعال کنید:</p>
                 </div>
+                
                 <div class="input-group">
                     <input type="text" id="ref-link" class="input-field" readonly style="font-size:11px; text-align:center; color:#ffd700;">
                 </div>
-                <button class="btn btn-green" onclick="shareRefLinkDirect()" style="font-size:13px; padding:12px;">📲 ارسال مستقیم لینک دعوت به چت‌های تلگرام</button>
+
+                <!-- دکمه‌های گرد و کوتاه -->
+                <button class="btn btn-green" onclick="shareRefLinkDirect()" style="font-size:13px;">📲 ارسال مستقیم لینک</button>
                 <button class="btn btn-gold" onclick="copyRefLink()" style="font-size:12px;">📋 کپی لینک دعوت</button>
+            </div>
+
+            <!-- کارت متن تشویقی جذاب برای پر کردن فضای خالی پایین -->
+            <div class="card" style="border-color:#ffd700 !important;">
+                <div style="font-size:14px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:8px;">
+                    💎 جوایز هیجان‌انگیز دعوت از دوستان!
+                </div>
+                <p style="font-size:11px; color:#fff; text-align:center; line-height:1.7; margin-bottom:10px;">
+                    با هر بار ارسال لینک به دوستانتان، شانس چرخاندن **گردونه شانس NovaTon** را آزاد کنید و برنده جوایز زیر شوید:
+                </p>
+
+                <div class="prize-motivation-box">
+                    <div class="prize-motivation-item">🎁 <b>۲,۰۰۰ ممبر رایگان</b> تلگرام</div>
+                    <div class="prize-motivation-item">🌟 <b>۵۰۰ ممبر واقعی</b> کانال</div>
+                    <div class="prize-motivation-item">✨ <b>۱۰٪ و ۵٪ تخفیف ویژه</b> خرید سرویس‌ها</div>
+                    <div class="prize-motivation-item">🤩 <b>۵۰ عدد ویو هدیه</b> آنی برای پست‌ها</div>
+                </div>
+
+                <div style="font-size:10px; color:#00f0ff; text-align:center; margin-top:10px; font-weight:bold;">
+                    🔥 هم‌اکنون لینک خود را ارسال کنید و اولین جایزه را بگیرید!
+                </div>
             </div>
         </div>
 
@@ -622,7 +667,7 @@
 
             <button class="btn btn-gold" onclick="togglePaymentBox()" style="font-size:12px; margin-bottom:8px;">💳 پرداخت آنلاین (نمایش آدرس ولت و MEMO)</button>
 
-            <div id="pay-info-box" style="display:none; background:#050608 !important; border:1px solid #00f0ff !important; border-radius:12px; padding:10px; margin-bottom:10px;">
+            <div id="pay-info-box" style="display:none; background:#050608 !important; border:1px solid #00f0ff !important; border-radius:20px; padding:10px; margin-bottom:10px;">
                 <p style="font-size:10px; color:#ffd700; text-align:center; margin-bottom:8px;">⚠️ مبلغ فوق را به ولت زیر واریز کرده و <b>MEMO</b> را حتماً درج کنید:</p>
                 <div class="input-group" style="margin-bottom:8px;">
                     <label style="font-size:10px;">آدرس ولت (TON):</label>
