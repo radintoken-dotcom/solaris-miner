@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Luxury Edition v8</title>
+    <title>NovaTon - Secure Wheel Edition v9</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -82,13 +82,12 @@
             margin: 6px 0;
         }
 
-        /* استایل تمام دکمه‌ها به‌صورت گرد و کپسولی */
         .btn {
             background: linear-gradient(145deg, #1a2233, #0d121c) !important;
             color: #fff !important;
             border: 1px solid #00f0ff !important;
             padding: 13px 18px;
-            border-radius: 30px !important; /* گرد و دایره‌ای */
+            border-radius: 30px !important;
             font-weight: bold;
             font-size: 13px;
             cursor: pointer;
@@ -132,7 +131,6 @@
             margin-bottom: 6px;
         }
 
-        /* ورودی‌های دایره‌ای کپسولی */
         .input-field {
             width: 100%;
             padding: 12px;
@@ -355,7 +353,6 @@
             box-shadow: 0 0 10px rgba(255,215,0,0.8);
         }
 
-        /* استایل لیست جوایز تشویقی پایین */
         .prize-motivation-box {
             background: rgba(12, 13, 18, 0.9);
             border: 1px dashed #ffd700;
@@ -414,7 +411,8 @@
 
                 <div id="wheel-status-box" style="margin-top:15px;">
                     <p style="font-size:11px; color:#ffd700; margin-bottom:10px; line-height:1.6;" id="wheel-msg">
-                        ⚠️ <b>شرط چرخاندن گردونه:</b> حداقل ۱ نفر را با لینک اختصاصی خود به ربات دعوت کنید.
+                        🔒 <b>شرط چرخاندن گردونه:</b> حداقل ۱ نفر باید با لینک اختصاصی شما عضوشده باشد.<br>
+                        تعداد اعضای دعوت‌شده واقعی شما: <b id="real-ref-count-wheel" style="color:#00f0ff;">0 نفر</b>
                     </p>
                     <button class="btn btn-gold" id="spin-btn" onclick="checkAndSpinWheel()">🎡 چرخاندن گردونه شانس</button>
                 </div>
@@ -427,30 +425,29 @@
             </div>
         </div>
 
-        <!-- TAB 3: REFERRAL (اصلاح شده با دکمه‌های دایره‌ای و متن تشویقی) -->
+        <!-- TAB 3: REFERRAL -->
         <div id="tab-ref" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
                 <div style="margin-bottom:12px;">
-                    <div class="card-title" style="color:#00f0ff; font-weight:bold;">لینک دعوت اختصاصی شما</div>
-                    <p style="font-size:11px; color:#8da0bf; margin-bottom:10px;">با اشتراک‌گذاری لینک زیر، گردونه شانس را فعال کنید:</p>
+                    <div class="card-title" style="color:#00f0ff; font-weight:bold;">تعداد زیرمجموعه‌های فعال شما</div>
+                    <div id="ref-count-display" style="font-size:24px; font-weight:bold; color:#ffd700; margin:8px 0;">0 نفر</div>
+                    <p style="font-size:11px; color:#8da0bf;">به ازای هر ۱ عضو واقعی که با لینک شما وارد ربات شود، ۱ بار شانس چرخاندن گردونه دریافت می‌کنید.</p>
                 </div>
                 
                 <div class="input-group">
                     <input type="text" id="ref-link" class="input-field" readonly style="font-size:11px; text-align:center; color:#ffd700;">
                 </div>
 
-                <!-- دکمه‌های گرد و کوتاه -->
                 <button class="btn btn-green" onclick="shareRefLinkDirect()" style="font-size:13px;">📲 ارسال مستقیم لینک</button>
                 <button class="btn btn-gold" onclick="copyRefLink()" style="font-size:12px;">📋 کپی لینک دعوت</button>
             </div>
 
-            <!-- کارت متن تشویقی جذاب برای پر کردن فضای خالی پایین -->
             <div class="card" style="border-color:#ffd700 !important;">
                 <div style="font-size:14px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:8px;">
                     💎 جوایز هیجان‌انگیز دعوت از دوستان!
                 </div>
                 <p style="font-size:11px; color:#fff; text-align:center; line-height:1.7; margin-bottom:10px;">
-                    با هر بار ارسال لینک به دوستانتان، شانس چرخاندن **گردونه شانس NovaTon** را آزاد کنید و برنده جوایز زیر شوید:
+                    با هر بار عضویت واقعی دوستانتان، شانس چرخاندن **گردونه شانس NovaTon** را آزاد کنید و برنده شوید:
                 </p>
 
                 <div class="prize-motivation-box">
@@ -458,10 +455,6 @@
                     <div class="prize-motivation-item">🌟 <b>۵۰۰ ممبر واقعی</b> کانال</div>
                     <div class="prize-motivation-item">✨ <b>۱۰٪ و ۵٪ تخفیف ویژه</b> خرید سرویس‌ها</div>
                     <div class="prize-motivation-item">🤩 <b>۵۰ عدد ویو هدیه</b> آنی برای پست‌ها</div>
-                </div>
-
-                <div style="font-size:10px; color:#00f0ff; text-align:center; margin-top:10px; font-weight:bold;">
-                    🔥 هم‌اکنون لینک خود را ارسال کنید و اولین جایزه را بگیرید!
                 </div>
             </div>
         </div>
@@ -489,7 +482,7 @@
         </div>
     </div>
 
-    <!-- POPUPS: REAL MEMBERS -->
+    <!-- POPUPS -->
     <div id="modal-real-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">ممبر واقعی تلگرام</div>
@@ -538,7 +531,6 @@
         </div>
     </div>
 
-    <!-- POPUPS: FAKE MEMBERS -->
     <div id="modal-fake-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">ممبر فیک تلگرام</div>
@@ -567,7 +559,6 @@
         </div>
     </div>
 
-    <!-- POPUP: VIEWS -->
     <div id="modal-views-member" class="modal-overlay">
         <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">خرید ویو تلگرام</div>
@@ -700,7 +691,7 @@
         var minLimit = 500;
         var maxLimit = 10000;
         var hasSpun = false;
-        var hasSharedLink = false;
+        var realReferralCount = 0; // تعداد واقعی اعضا
 
         var prizes = [
             "2000 ممبر 🎁",
@@ -821,12 +812,21 @@
             return 'کاربر ناشناس';
         }
 
+        /* محاسبه و نمایش زیرمجموعه */
+        function updateReferralUI() {
+            var displayWheel = document.getElementById('real-ref-count-wheel');
+            var displayTab = document.getElementById('ref-count-display');
+            if (displayWheel) displayWheel.innerText = realReferralCount + " نفر";
+            if (displayTab) displayTab.innerText = realReferralCount + " نفر";
+        }
+
         window.onload = function() {
             var uId = getUserId();
             var refLinkField = document.getElementById('ref-link');
             if (refLinkField) refLinkField.value = 'https://t.me/SolarisMiner_bot?start=' + uId;
             drawWheel();
             createLeds();
+            updateReferralUI();
         };
 
         function switchTab(tabName) {
@@ -976,7 +976,6 @@
         }
 
         function shareRefLinkDirect() {
-            hasSharedLink = true;
             var uId = getUserId();
             var refUrl = 'https://t.me/SolarisMiner_bot?start=' + uId;
             var shareText = "🚀 ربات ارتقا و خدمات حرفه‌ای تلگرام NovaTon!\n🎁 برای شرکت در گردونه شانس و دریافت ممبر و ویو رایگان روی لینک زیر کلیک کنید:\n\n" + refUrl;
@@ -984,14 +983,16 @@
             window.Telegram.WebApp.openTelegramLink("https://t.me/share/url?url=" + encodeURIComponent(refUrl) + "&text=" + encodeURIComponent(shareText));
         }
 
+        /* بررسی امنیتی برای چرخاندن گردونه */
         function checkAndSpinWheel() {
             if (hasSpun) {
                 alert("⚠️ شما قبلاً گردونه شانس امروز را چرخانده‌اید!");
                 return;
             }
 
-            if (!hasSharedLink) {
-                alert("⚠️ برای فعالسازی گردونه، ابتدا باید لینک دعوت اختصاصی خود را حداقل برای ۱ نفر از دوستانتان ارسال کنید!");
+            // بررسی شرط اصلی: حداقل ۱ عضو واقعی
+            if (realReferralCount < 1) {
+                alert("❌ امکان چرخاندن گردونه وجود ندارد!\n\n⚠️ حداقل ۱ نفر باید با لینک اختصاصی شما عضوی از ربات شده باشد.");
                 switchTab('ref');
                 return;
             }
@@ -1039,11 +1040,10 @@
         }
 
         function copyRefLink() {
-            hasSharedLink = true;
             var input = document.getElementById('ref-link');
             input.select();
             document.execCommand("copy");
-            alert("🔗 لینک دعوت کپی شد! اکنون می‌توانید گردونه شانس را بچرخانید.");
+            alert("🔗 لینک دعوت کپی شد!");
         }
     </script>
 </body>
