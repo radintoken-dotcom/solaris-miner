@@ -1,1050 +1,346 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Secure Wheel Edition v9</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: tahoma, -apple-system, BlinkMacSystemFont, sans-serif;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NovaTon Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --accent-color: #0088cc;
+      --text-color: #ffffff;
+      --text-muted: #8b949e;
+      --wood-dark: #3e2723;
+      --wood-light: #5d4037;
+    }
 
-        body {
-            background-color: #08090b !important;
-            background-image: 
-                radial-gradient(circle at 50% 0%, #151821 0%, #08090b 85%),
-                radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0) !important;
-            background-size: 100% 100%, 6px 6px !important;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-            direction: rtl;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+    }
 
-        .header {
-            background: linear-gradient(180deg, #181b22, #0e1015) !important;
-            color: #00f0ff;
-            text-align: center;
-            width: 100%;
-            padding: 15px 0;
-            font-size: 18px;
-            font-weight: bold;
-            border-bottom: 2px solid #282c37;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-            z-index: 10;
-        }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
 
-        .content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            padding-bottom: 85px;
-        }
+    /* Header */
+    .header {
+      width: 100%;
+      padding: 15px 20px;
+      background: var(--card-bg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .header .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #0088cc;
+    }
 
-        .tab-content {
-            display: none;
-        }
+    /* Wheel Section - Wooden Fantasy Style */
+    .wheel-container {
+      position: relative;
+      width: 320px;
+      height: 380px;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        .tab-content.active {
-            display: block;
-        }
+    .wood-frame {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #5d4037 0%, #3e2723 100%);
+      border: 12px solid #271c19;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.7), inset 0 0 15px rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .card {
-            background: linear-gradient(145deg, #161820, #0c0d12) !important;
-            border-radius: 20px;
-            padding: 18px;
-            margin-bottom: 16px;
-            border: 1px solid #252936 !important;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.95), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
-            position: relative;
-        }
+    /* Outer Pins */
+    .wood-pin {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ffd700;
+      border-radius: 50%;
+      box-shadow: 0 0 5px #000;
+    }
 
-        .card-title {
-            font-size: 12px;
-            color: #8da0bf;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
+    #wheelCanvas {
+      border-radius: 50%;
+      transition: transform 4s cubic-bezier(0.15, 0.99, 0.15, 0.99);
+    }
 
-        .big-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #00f0ff;
-            margin: 6px 0;
-        }
+    /* Pointer */
+    .pointer {
+      position: absolute;
+      top: 130px;
+      right: -5px;
+      width: 0;
+      height: 0;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      border-right: 30px solid #ff3b30;
+      filter: drop-shadow(-2px 2px 4px rgba(0,0,0,0.6));
+      z-index: 10;
+    }
 
-        .btn {
-            background: linear-gradient(145deg, #1a2233, #0d121c) !important;
-            color: #fff !important;
-            border: 1px solid #00f0ff !important;
-            padding: 13px 18px;
-            border-radius: 30px !important;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.15s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-            display: block;
-            text-align: center;
-            text-decoration: none;
-            margin-top: 10px;
-        }
+    /* Center Badge */
+    .center-badge {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
+      border-radius: 50%;
+      border: 4px solid #3e2723;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      z-index: 5;
+    }
 
-        .btn:active {
-            opacity: 0.8;
-            transform: scale(0.97);
-        }
+    /* Wood Wooden Stand Button */
+    .spin-btn {
+      margin-top: 15px;
+      width: 220px;
+      padding: 12px;
+      background: linear-gradient(180deg, #d32f2f 0%, #8e0000 100%);
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border: 3px solid #ffc107;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .spin-btn:active {
+      transform: scale(0.95);
+    }
+    .spin-btn:disabled {
+      background: #555;
+      border-color: #777;
+      cursor: not-allowed;
+    }
 
-        .btn-green {
-            background: linear-gradient(145deg, #1b3d22, #0d2112) !important;
-            border-color: #28a745 !important;
-            color: #fff !important;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.35) !important;
-        }
+    /* Services Section */
+    .services-grid {
+      width: 90%;
+      max-width: 400px;
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
 
-        .btn-gold {
-            background: linear-gradient(145deg, #3d3314, #211b0a) !important;
-            border-color: #ffd700 !important;
-            color: #ffd700 !important;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.35) !important;
-        }
+    .service-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #30363d;
+    }
+    .service-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      color: #58a6ff;
+    }
+    .service-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
 
-        .input-group {
-            margin-bottom: 12px;
-            text-align: right;
-        }
+    /* Bottom Nav Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: var(--card-bg);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid #30363d;
+    }
+    .nav-item {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav-item.active {
+      color: var(--accent-color);
+    }
 
-        .input-group label {
-            display: block;
-            font-size: 12px;
-            color: #8da0bf;
-            margin-bottom: 6px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 12px;
-            background: #050608 !important;
-            border: 1px solid #252936 !important;
-            border-radius: 30px !important;
-            color: #fff;
-            font-size: 12px;
-            outline: none;
-        }
-
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 68px;
-            background: linear-gradient(0deg, #090a0d, #14161f) !important;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top: 2px solid #252936 !important;
-            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.95) !important;
-            z-index: 1000;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #8da0bf;
-            font-size: 10px;
-            cursor: pointer;
-            flex: 1;
-            height: 100%;
-            padding: 4px 0;
-            text-align: center;
-            transition: 0.2s;
-        }
-
-        .nav-item svg {
-            width: 22px;
-            height: 22px;
-            fill: none;
-            stroke: #8da0bf;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            margin-bottom: 3px;
-            transition: 0.2s;
-        }
-
-        .nav-item.active {
-            color: #00f0ff !important;
-            font-weight: bold;
-        }
-
-        .nav-item.active svg {
-            stroke: #00f0ff !important;
-            filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.9));
-        }
-
-        .service-card {
-            background: linear-gradient(145deg, #161820, #0c0d12) !important;
-            border: 1px solid #252936 !important;
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 14px;
-            text-align: right;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.85) !important;
-        }
-
-        .service-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffd700;
-            margin-bottom: 6px;
-        }
-
-        .service-desc {
-            font-size: 11px;
-            color: #8da0bf;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        .sub-service-box {
-            background: #050608 !important;
-            border: 1px solid #252936 !important;
-            border-radius: 16px;
-            padding: 12px;
-            margin-bottom: 12px;
-            text-align: right;
-        }
-
-        .sub-service-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            margin-bottom: 6px;
-        }
-
-        .sub-service-title {
-            font-size: 13px;
-            font-weight: bold;
-            color: #00f0ff;
-            margin-bottom: 8px;
-            border-bottom: 1px dashed #252936;
-            padding-bottom: 4px;
-            line-height: 1.4;
-        }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            padding: 15px;
-            align-items: center;
-            justify-content: center;
-            overflow-y: auto;
-        }
-
-        .support-card {
-            background: linear-gradient(145deg, #161820, #0c0d12) !important;
-            border: 1px solid #252936 !important;
-            border-radius: 20px;
-            padding: 18px;
-            margin-bottom: 14px;
-            text-align: center;
-        }
-
-        .support-icon { font-size: 32px; margin-bottom: 8px; }
-        .support-title { font-size: 15px; font-weight: bold; color: #00f0ff; margin-bottom: 4px; }
-        .support-sub { font-size: 11px; color: #8da0bf; margin-bottom: 12px; line-height: 1.5; }
-
-        .wheel-stand-container {
-            position: relative;
-            width: 280px;
-            margin: 10px auto 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .wheel-outer-ring {
-            position: relative;
-            width: 270px;
-            height: 270px;
-            border-radius: 50%;
-            background: #111319;
-            border: 8px solid #1c202b;
-            box-shadow: 0 0 25px rgba(0,0,0,0.9), inset 0 0 15px rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .led-light {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #fff;
-            box-shadow: 0 0 8px #fff, 0 0 12px #00f0ff;
-            animation: ledBlink 1.5s infinite alternate;
-        }
-
-        @keyframes ledBlink {
-            0% { opacity: 0.4; box-shadow: 0 0 4px #fff; }
-            100% { opacity: 1; box-shadow: 0 0 10px #fff, 0 0 15px #ffd700; }
-        }
-
-        .wheel-pointer {
-            position: absolute;
-            top: -16px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0; 
-            height: 0; 
-            border-left: 14px solid transparent;
-            border-right: 14px solid transparent;
-            border-top: 26px solid #ffd700;
-            filter: drop-shadow(0 0 8px #ffd700);
-            z-index: 100;
-        }
-
-        .wheel-canvas {
-            width: 244px;
-            height: 244px;
-            border-radius: 50%;
-            transition: transform 4s cubic-bezier(0.1, 0.9, 0.1, 1);
-        }
-
-        .wheel-base-stand {
-            width: 180px;
-            height: 45px;
-            background: linear-gradient(180deg, #1c202b, #0a0b0e);
-            border: 2px solid #282c37;
-            border-top: none;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
-            margin-top: -10px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .wheel-base-stand::after {
-            content: '';
-            position: absolute;
-            bottom: 6px;
-            left: 15%;
-            right: 15%;
-            height: 6px;
-            background: linear-gradient(90deg, #ff0055, #ffd700, #00f0ff, #28a745);
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(255,215,0,0.8);
-        }
-
-        .prize-motivation-box {
-            background: rgba(12, 13, 18, 0.9);
-            border: 1px dashed #ffd700;
-            border-radius: 16px;
-            padding: 12px;
-            margin-top: 10px;
-            text-align: right;
-        }
-
-        .prize-motivation-item {
-            font-size: 11px;
-            color: #8da0bf;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-    </style>
+    /* Referral Info Modal / Alert */
+    .status-msg {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #ffca28;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="header" id="page-title">خدمات و سرویس‌های ویژه</div>
+  <div class="header">
+    <div class="logo">NovaTon</div>
+    <div id="userInfo" style="font-size:0.85rem; color:#8b949e;">در حال دریافت...</div>
+  </div>
 
-    <div class="content">
-        <!-- TAB 1: SERVICES -->
-        <div id="tab-services" class="tab-content active" style="display:block;">
-            <div class="service-card">
-                <div class="service-title">1. خرید ممبر واقعی تلگرام</div>
-                <div class="service-desc"><b>کاربرد:</b> افزایش اعضای واقعی کانال و یا گروه تلگرام برای رشد بهتر و تعامل طبیعی تر</div>
-                <button class="btn btn-gold" style="font-size:13px;" onclick="openServiceModal('real-member')">مشاهده سرویس</button>
-            </div>
-            <div class="service-card">
-                <div class="service-title">2. خرید ممبر فیک تلگرام</div>
-                <div class="service-desc"><b>کاربرد:</b> افزایش سریع تعداد اعضای کانال برای تقویت ظاهر اولیه و اعتبار عددی صفحه</div>
-                <button class="btn btn-gold" style="font-size:13px;" onclick="openServiceModal('fake-member')">مشاهده سرویس</button>
-            </div>
-            <div class="service-card">
-                <div class="service-title">3. خرید ویو تلگرام</div>
-                <div class="service-desc"><b>کاربرد:</b> مناسب برای نمایش بهتر میزان دیده شدن محتوا</div>
-                <button class="btn btn-gold" style="font-size:13px;" onclick="openServiceModal('views-member')">مشاهده سرویس</button>
-            </div>
-        </div>
-
-        <!-- TAB 2: WHEEL -->
-        <div id="tab-wheel" class="tab-content" style="display:none;">
-            <div class="card" style="text-align:center;">
-                <p style="font-size:12px; color:#8da0bf; margin-bottom:5px;">گردونه را بچرخانید و هدیه اختصاصی بگیرید!</p>
-
-                <div class="wheel-stand-container">
-                    <div class="wheel-outer-ring" id="wheelRing">
-                        <div class="wheel-pointer"></div>
-                        <canvas id="wheelCanvas" class="wheel-canvas" width="300" height="300"></canvas>
-                    </div>
-                    <div class="wheel-base-stand"></div>
-                </div>
-
-                <div id="wheel-status-box" style="margin-top:15px;">
-                    <p style="font-size:11px; color:#ffd700; margin-bottom:10px; line-height:1.6;" id="wheel-msg">
-                        🔒 <b>شرط چرخاندن گردونه:</b> حداقل ۱ نفر باید با لینک اختصاصی شما عضوشده باشد.<br>
-                        تعداد اعضای دعوت‌شده واقعی شما: <b id="real-ref-count-wheel" style="color:#00f0ff;">0 نفر</b>
-                    </p>
-                    <button class="btn btn-gold" id="spin-btn" onclick="checkAndSpinWheel()">🎡 چرخاندن گردونه شانس</button>
-                </div>
-
-                <div id="wheel-result-box" style="display:none; background:#050608; border:1px solid #28a745; border-radius:30px; padding:12px; margin-top:12px;">
-                    <div style="color:#28a745; font-weight:bold; font-size:14px; margin-bottom:6px;">🎉 تبریک! شما برنده شدید!</div>
-                    <div id="prize-name" style="color:#fff; font-size:12px; font-weight:bold; margin-bottom:8px;">10درصد تخفیف خرید ✨</div>
-                    <a id="claim-prize-btn" href="#" target="_blank" class="btn btn-green" style="font-size:12px;">💬 ارسال کد شانس به پشتیبانی</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: REFERRAL -->
-        <div id="tab-ref" class="tab-content" style="display:none;">
-            <div class="card" style="text-align:center;">
-                <div style="margin-bottom:12px;">
-                    <div class="card-title" style="color:#00f0ff; font-weight:bold;">تعداد زیرمجموعه‌های فعال شما</div>
-                    <div id="ref-count-display" style="font-size:24px; font-weight:bold; color:#ffd700; margin:8px 0;">0 نفر</div>
-                    <p style="font-size:11px; color:#8da0bf;">به ازای هر ۱ عضو واقعی که با لینک شما وارد ربات شود، ۱ بار شانس چرخاندن گردونه دریافت می‌کنید.</p>
-                </div>
-                
-                <div class="input-group">
-                    <input type="text" id="ref-link" class="input-field" readonly style="font-size:11px; text-align:center; color:#ffd700;">
-                </div>
-
-                <button class="btn btn-green" onclick="shareRefLinkDirect()" style="font-size:13px;">📲 ارسال مستقیم لینک</button>
-                <button class="btn btn-gold" onclick="copyRefLink()" style="font-size:12px;">📋 کپی لینک دعوت</button>
-            </div>
-
-            <div class="card" style="border-color:#ffd700 !important;">
-                <div style="font-size:14px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:8px;">
-                    💎 جوایز هیجان‌انگیز دعوت از دوستان!
-                </div>
-                <p style="font-size:11px; color:#fff; text-align:center; line-height:1.7; margin-bottom:10px;">
-                    با هر بار عضویت واقعی دوستانتان، شانس چرخاندن **گردونه شانس NovaTon** را آزاد کنید و برنده شوید:
-                </p>
-
-                <div class="prize-motivation-box">
-                    <div class="prize-motivation-item">🎁 <b>۲,۰۰۰ ممبر رایگان</b> تلگرام</div>
-                    <div class="prize-motivation-item">🌟 <b>۵۰۰ ممبر واقعی</b> کانال</div>
-                    <div class="prize-motivation-item">✨ <b>۱۰٪ و ۵٪ تخفیف ویژه</b> خرید سرویس‌ها</div>
-                    <div class="prize-motivation-item">🤩 <b>۵۰ عدد ویو هدیه</b> آنی برای پست‌ها</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: SUPPORT -->
-        <div id="tab-support" class="tab-content" style="display:none;">
-            <div class="support-card" style="border-color:#28a745 !important;">
-                <div class="support-icon">🎧</div>
-                <div class="support-title" style="color:#28a745;">ارتباط مستقیم با پشتیبانی</div>
-                <div class="support-sub">جهت پیگیری سفارشات، سوالات و مشاوره خرید به آیدی زیر پیام دهید:</div>
-                <a href="https://t.me/Dollar_Matrix" target="_blank" class="btn btn-green" style="font-size:12px;">💬 ارسال پیام به پشتیبانی</a>
-            </div>
-            <div class="support-card" style="border-color:#00f0ff !important;">
-                <div class="support-icon">📢</div>
-                <div class="support-title">کانال اطلاع‌رسانی</div>
-                <div class="support-sub">برای اطلاع از اخبار، تخفیف‌های ویژه و سرویس‌های جدید عضو شوید:</div>
-                <a href="https://t.me/NOVATON_IR" target="_blank" class="btn" style="font-size:12px;">📢 ورود به کانال تلگرام</a>
-            </div>
-            <div class="support-card" style="border-color:#ffd700 !important;">
-                <div class="support-icon">👥</div>
-                <div class="support-title" style="color:#ffd700;">گروه چت و تبادل نظر</div>
-                <div class="support-sub">جهت گفتگو با سایر کاربران و اشتراک‌گذاری نظرات:</div>
-                <a href="https://t.me/nova_t_o_n_ir" target="_blank" class="btn btn-gold" style="font-size:12px;">👥 ورود به گروه تلگرام</a>
-            </div>
-        </div>
+  <!-- Wheel Section -->
+  <div class="wheel-container">
+    <div class="wood-frame">
+      <div class="pointer"></div>
+      <canvas id="wheelCanvas" width="270" height="270"></canvas>
+      <div class="center-badge">👑</div>
     </div>
+    <button class="spin-btn" id="spinBtn" onclick="spinWheel()">چرخاندن</button>
+    <div class="status-msg" id="statusMsg">برای چرخش نیاز به ۱ دعوت فعال دارید</div>
+  </div>
 
-    <!-- POPUPS -->
-    <div id="modal-real-member" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
-            <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">ممبر واقعی تلگرام</div>
-            
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: ممبر واقعی کانال، اد اجباری، اقتصادی شروع زیر ۶ ساعت</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.74 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">1,000 / 20,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال، اد اجباری، اقتصادی', 0.74, 1000, 20000, 'channel')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: ممبر واقعی اد اجباری کیفیت A شروع آنی</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.83 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">1,000 / 20,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی اد اجباری کیفیت A', 0.83, 1000, 20000, 'channel')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: ممبر واقعی کانال اد اجباری کیفیت A+ شروع آنی</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.90 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">1,000 / 20,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر واقعی کانال اد اجباری کیفیت A+', 0.90, 1000, 20000, 'channel')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">1.50 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">1,000 / 10,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('real-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('خرید ممبر واقعی آپلودری کانال پیشنهادی 🌟', 1.50, 1000, 10000, 'channel')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <button class="btn" onclick="closeModal('modal-real-member')" style="background:#161820 !important; margin-top:10px;">بستن</button>
-        </div>
+  <!-- Main Services Summary -->
+  <div class="services-grid">
+    <div class="service-card">
+      <h4>ممبر واقعی تلگرام</h4>
+      <p>از ۰.۷۴ TON تا ۱.۵۰ TON</p>
     </div>
-
-    <div id="modal-fake-member" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
-            <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">ممبر فیک تلگرام</div>
-            
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: ممبر فیک ایرانی بدون ریزش شروع فوری</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.5 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('fake-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر فیک ایرانی بدون ریزش شروع فوری', 0.5, 500, 10000, 'channel')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: ممبر فیک بدون ریزش شروع فوری</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.55 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 20,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('fake-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('ممبر فیک بدون ریزش شروع فوری', 0.55, 500, 20000, 'channel')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <button class="btn" onclick="closeModal('modal-fake-member')" style="background:#161820 !important; margin-top:10px;">بستن</button>
-        </div>
+    <div class="service-card">
+      <h4>ممبر فیک تلگرام</h4>
+      <p>از ۰.۵۰ TON تا ۰.۵۵ TON</p>
     </div>
-
-    <div id="modal-views-member" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:#ffd700 !important; margin:0; max-height:85vh; overflow-y:auto;">
-            <div style="font-size:15px; font-weight:bold; color:#ffd700; text-align:center; margin-bottom:12px;">خرید ویو تلگرام</div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: بازدید تک پست استارت فوری سرویس اضطراری</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.10 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">100 / 10,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید تک پست استارت فوری سرویس اضطراری', 0.10, 100, 10000, 'post')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: بازدید 5 پست آخر کانال</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.11 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 5 پست آخر کانال', 0.11, 500, 10000, 'post')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: بازدید 10 پست آخر کانال</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.12 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 10 پست آخر کانال', 0.12, 500, 10000, 'post')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: بازدید 20 پست آخر کانال</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.14 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 20 پست آخر کانال', 0.14, 500, 10000, 'post')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: بازدید 30 پست آخر کانال</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.15 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 30 پست آخر کانال', 0.15, 500, 10000, 'post')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <div class="sub-service-box">
-                <div class="sub-service-title">نام: بازدید 50 پست آخر کانال</div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#00f0ff; font-weight:bold;">0.20 TON</span></div>
-                <div class="sub-service-row"><span style="color:#8da0bf;">حداقل / حداکثر:</span><span style="color:#fff;">500 / 10,000</span></div>
-                <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn" style="flex:1; font-size:11px;" onclick="openRulesModal('views-rules')">📜 توضیحات مهم</button>
-                    <button class="btn btn-green" style="flex:1; font-size:11px;" onclick="openDirectOrderModal('بازدید 50 پست آخر کانال', 0.20, 500, 10000, 'post')">🛒 سفارش</button>
-                </div>
-            </div>
-
-            <button class="btn" onclick="closeModal('modal-views-member')" style="background:#161820 !important; margin-top:10px;">بستن</button>
-        </div>
+    <div class="service-card">
+      <h4>بازدید پست تلگرام</h4>
+      <p>از ۰.۱۰ TON (تک تا ۵۰ پست)</p>
     </div>
-
-    <!-- RULES MODAL -->
-    <div id="modal-rules" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:#00f0ff !important; margin:0; text-align:right;">
-            <div style="font-size:15px; font-weight:bold; color:#00f0ff; text-align:center; margin-bottom:15px;">📜 توضیحات مهم سرویس</div>
-            <div style="font-size:12px; color:#8da0bf; line-height:1.8;" id="rules-content"></div>
-            <button class="btn btn-gold" onclick="closeModal('modal-rules')" style="margin-top:15px;">متوجه شدم</button>
-        </div>
+    <div class="service-card">
+      <h4>خدمات جدید (بزودی)</h4>
+      <p>ری‌اکشن و اینستاگرام</p>
     </div>
+  </div>
 
-    <!-- DIRECT ORDER MODAL -->
-    <div id="modal-direct-order" class="modal-overlay">
-        <div class="card" style="width:100%; border-color:#28a745 !important; margin:0; max-height:90vh; overflow-y:auto;">
-            <div id="direct-order-title" style="font-weight:bold; color:#28a745; text-align:center; margin-bottom:12px; font-size:14px;">ثبت سفارش</div>
-            
-            <div class="input-group">
-                <label id="direct-link-label">لینک کانال شما:</label>
-                <input type="text" id="direct-order-link" class="input-field" placeholder="@channel یا https://t.me/...">
-            </div>
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="#" class="nav-item active">🏠 خانه</a>
+    <a href="https://t.me/SolarisMiner_bot" class="nav-item">🤖 ربات</a>
+    <a href="https://t.me/Dollar_Matrix" class="nav-item">🎧 پشتیبانی</a>
+  </div>
 
-            <div class="input-group">
-                <label>تعداد درخواستی:</label>
-                <input type="number" id="direct-order-count" class="input-field" placeholder="تعداد" onkeyup="calcDirectPrice()" oninput="calcDirectPrice()">
-            </div>
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
 
-            <div class="card" style="background:#050608 !important; border-color:#ffd700 !important; text-align:center; margin:10px 0;">
-                <div class="card-title">مبلغ قابل پرداخت</div>
-                <div class="big-number" id="direct-total-price" style="color:#ffd700;">0.00 TON</div>
-            </div>
+    // User Data display
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      document.getElementById('userInfo').innerText = tg.initDataUnsafe.user.first_name;
+    } else {
+      document.getElementById('userInfo').innerText = "کاربر مهمان";
+    }
 
-            <button class="btn btn-gold" onclick="togglePaymentBox()" style="font-size:12px; margin-bottom:8px;">💳 پرداخت آنلاین (نمایش آدرس ولت و MEMO)</button>
+    // Wheel Setup
+    const canvas = document.getElementById('wheelCanvas');
+    const ctx = canvas.getContext('2d');
+    const prizes = [
+      { text: "2000 ممبر 🎁", color: "#e53935" },
+      { text: "500 ممبر واقعی 🌟", color: "#43a047" },
+      { text: "10٪ تخفیف ✨", color: "#1e88e5" },
+      { text: "50 عدد ویو 🤩", color: "#fdd835", textColor: "#000" },
+      { text: "5٪ تخفیف 🎉", color: "#8e24aa" },
+      { text: "پوچ دوباره 💣", color: "#546e7a" }
+    ];
 
-            <div id="pay-info-box" style="display:none; background:#050608 !important; border:1px solid #00f0ff !important; border-radius:20px; padding:10px; margin-bottom:10px;">
-                <p style="font-size:10px; color:#ffd700; text-align:center; margin-bottom:8px;">⚠️ مبلغ فوق را به ولت زیر واریز کرده و <b>MEMO</b> را حتماً درج کنید:</p>
-                <div class="input-group" style="margin-bottom:8px;">
-                    <label style="font-size:10px;">آدرس ولت (TON):</label>
-                    <input type="text" id="order-pay-wallet" class="input-field" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly style="font-size:9px; text-align:center; padding:8px; margin-bottom:4px;">
-                    <button class="btn" onclick="copyValue('order-pay-wallet', 'آدرس ولت')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی آدرس ولت</button>
-                </div>
-                <div class="input-group" style="margin-bottom:4px;">
-                    <label style="font-size:10px; color:#00f0ff;">MEMO اختصاصی شما:</label>
-                    <input type="text" id="order-pay-memo" class="input-field" readonly style="font-size:11px; font-weight:bold; color:#00f0ff; text-align:center; padding:8px; margin-bottom:4px;">
-                    <button class="btn btn-gold" onclick="copyValue('order-pay-memo', 'کد MEMO')" style="padding:6px; font-size:10px; margin-top:0;">📋 کپی کد MEMO</button>
-                </div>
-            </div>
+    const numSlices = prizes.length;
+    const sliceAngle = (2 * Math.PI) / numSlices;
 
-            <button class="btn btn-green" onclick="submitDirectOrder()">✅ ثبت نهایی و ارسال به پشتیبانی</button>
-            <button class="btn" onclick="closeModal('modal-direct-order')" style="background:#161820 !important; margin-top:6px;">انصراف</button>
-        </div>
-    </div>
+    function drawWheel() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = canvas.width / 2;
 
-    <!-- BOTTOM NAV BAR -->
-    <div class="nav-bar">
-        <div class="nav-item active" id="nav-btn-services" onclick="switchTab('services')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg><div>خدمات</div></div>
-        <div class="nav-item" id="nav-btn-wheel" onclick="switchTab('wheel')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20M2 12h20M12 12l7-7M12 12l-7 7"></path></svg><div>گردونه شانس</div></div>
-        <div class="nav-item" id="nav-btn-ref" onclick="switchTab('ref')"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg><div>دعوت دوستان</div></div>
-        <div class="nav-item" id="nav-btn-support" onclick="switchTab('support')"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg><div>پشتیبانی</div></div>
-    </div>
+      for (let i = 0; i < numSlices; i++) {
+        const startAngle = i * sliceAngle;
+        const endAngle = startAngle + sliceAngle;
 
-    <script>
-        var currentUnitPrice = 0.74;
-        var currentServiceName = '';
-        var minLimit = 500;
-        var maxLimit = 10000;
-        var hasSpun = false;
-        var realReferralCount = 0; // تعداد واقعی اعضا
+        // Draw slice
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = prizes[i].color;
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#3e2723";
+        ctx.stroke();
 
-        var prizes = [
-            "2000 ممبر 🎁",
-            "500ممبر واقعی 🌟",
-            "10درصد تخفیف خرید ✨",
-            "50عدد ویو 🤩",
-            "5درصد تخفیف خرید 🎉",
-            "پوچ دوباره تلاش کن 💣"
-        ];
+        // Draw Text
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(startAngle + sliceAngle / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = prizes[i].textColor || "#ffffff";
+        ctx.font = "bold 12px Tahoma";
+        ctx.fillText(prizes[i].text, radius - 15, 5);
+        ctx.restore();
+      }
+    }
 
-        var colors = ["#d81b60", "#8e24aa", "#3949ab", "#00acc1", "#43a047", "#fdd835"];
+    drawWheel();
 
-        function drawWheel() {
-            var canvas = document.getElementById('wheelCanvas');
-            if (!canvas) return;
-            var ctx = canvas.getContext('2d');
-            var numSlices = prizes.length;
-            var sliceAngle = (2 * Math.PI) / numSlices;
+    // Anti-cheat Referral Check Logic
+    let realReferralCount = 0; // این مقدار باید از سمت سرور/ربات شما خوانده شود
 
-            ctx.clearRect(0, 0, 300, 300);
+    let currentRotation = 0;
+    let isSpinning = false;
 
-            for (var i = 0; i < numSlices; i++) {
-                var angle = i * sliceAngle;
-                ctx.beginPath();
-                ctx.fillStyle = colors[i];
-                ctx.moveTo(150, 150);
-                ctx.arc(150, 150, 148, angle, angle + sliceAngle);
-                ctx.lineTo(150, 150);
-                ctx.fill();
+    function spinWheel() {
+      if (isSpinning) return;
 
-                ctx.lineWidth = 3;
-                ctx.strokeStyle = "#111319";
-                ctx.stroke();
+      // Server side validation simulation
+      if (realReferralCount < 1) {
+        tg.showAlert("⚠️ برای چرخاندن گردونه باید حداقل ۱ نفر را با لینک اختصاصی خود دعوت کرده باشید!");
+        return;
+      }
 
-                ctx.save();
-                ctx.translate(150, 150);
-                ctx.rotate(angle + sliceAngle / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 11px tahoma";
-                
-                ctx.shadowColor = "#000000";
-                ctx.shadowOffsetX = 2;
-                ctx.shadowOffsetY = 2;
-                ctx.shadowBlur = 4;
-                
-                ctx.fillText(prizes[i], 140, 4);
-                ctx.restore();
-            }
+      isSpinning = true;
+      document.getElementById('spinBtn').disabled = true;
 
-            ctx.beginPath();
-            ctx.arc(150, 150, 45, 0, 2 * Math.PI);
-            ctx.fillStyle = "#0a0b0e";
-            ctx.fill();
-            ctx.lineWidth = 4;
-            ctx.strokeStyle = "#ff3300";
-            ctx.shadowColor = "#ff3300";
-            ctx.shadowBlur = 12;
-            ctx.stroke();
+      // Random prize selection
+      const prizeIndex = Math.floor(Math.random() * numSlices);
+      const extraRounds = 5; 
+      const targetAngle = (numSlices - prizeIndex - 1) * (360 / numSlices) + (360 / numSlices / 2);
+      
+      currentRotation += (extraRounds * 360) + targetAngle - (currentRotation % 360);
+      
+      canvas.style.transform = `rotate(${currentRotation}deg)`;
 
-            ctx.shadowBlur = 0;
-            var numSpokes = 16;
-            for (var j = 0; j < numSpokes; j++) {
-                var spokeAngle = (j * 2 * Math.PI) / numSpokes;
-                ctx.beginPath();
-                ctx.moveTo(150, 150);
-                ctx.lineTo(150 + 40 * Math.cos(spokeAngle), 150 + 40 * Math.sin(spokeAngle));
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = (j % 2 === 0) ? "#ffffff" : "#111319";
-                ctx.stroke();
-            }
-
-            ctx.beginPath();
-            ctx.arc(150, 150, 10, 0, 2 * Math.PI);
-            ctx.fillStyle = "#1c202b";
-            ctx.fill();
-            ctx.strokeStyle = "#ffd700";
-            ctx.lineWidth = 2;
-            ctx.stroke();
-        }
-
-        function createLeds() {
-            var ring = document.getElementById('wheelRing');
-            if (!ring || ring.querySelector('.led-light')) return;
-            var totalLeds = 16;
-            var radius = 131; 
-
-            for (var i = 0; i < totalLeds; i++) {
-                var angle = (i * 2 * Math.PI) / totalLeds;
-                var x = 135 + radius * Math.cos(angle) - 5;
-                var y = 135 + radius * Math.sin(angle) - 5;
-
-                var led = document.createElement('div');
-                led.className = 'led-light';
-                led.style.left = x + 'px';
-                led.style.top = y + 'px';
-                led.style.animationDelay = (i * 0.1) + 's';
-                ring.appendChild(led);
-            }
-        }
-
-        function getUserId() {
-            try {
-                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
-                    return String(window.Telegram.WebApp.initDataUnsafe.user.id);
-                }
-            } catch(e) {}
-            return '1007321991';
-        }
-
-        function getUserName() {
-            try {
-                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
-                    var u = window.Telegram.WebApp.initDataUnsafe.user;
-                    return u.username ? ('@' + u.username) : (u.first_name || 'کاربر جدید');
-                }
-            } catch(e) {}
-            return 'کاربر ناشناس';
-        }
-
-        /* محاسبه و نمایش زیرمجموعه */
-        function updateReferralUI() {
-            var displayWheel = document.getElementById('real-ref-count-wheel');
-            var displayTab = document.getElementById('ref-count-display');
-            if (displayWheel) displayWheel.innerText = realReferralCount + " نفر";
-            if (displayTab) displayTab.innerText = realReferralCount + " نفر";
-        }
-
-        window.onload = function() {
-            var uId = getUserId();
-            var refLinkField = document.getElementById('ref-link');
-            if (refLinkField) refLinkField.value = 'https://t.me/SolarisMiner_bot?start=' + uId;
-            drawWheel();
-            createLeds();
-            updateReferralUI();
-        };
-
-        function switchTab(tabName) {
-            document.getElementById('tab-services').style.display = 'none';
-            document.getElementById('tab-wheel').style.display = 'none';
-            document.getElementById('tab-ref').style.display = 'none';
-            document.getElementById('tab-support').style.display = 'none';
-
-            document.getElementById('nav-btn-services').classList.remove('active');
-            document.getElementById('nav-btn-wheel').classList.remove('active');
-            document.getElementById('nav-btn-ref').classList.remove('active');
-            document.getElementById('nav-btn-support').classList.remove('active');
-
-            document.getElementById('tab-' + tabName).style.display = 'block';
-            document.getElementById('nav-btn-' + tabName).classList.add('active');
-
-            var titles = {
-                'services': 'خدمات و سرویس‌های ویژه',
-                'wheel': 'گردونه شانس و هدیه ویژه',
-                'ref': 'زیرمجموعه‌گیری و دعوت از دوستان',
-                'support': 'ارتباط با پشتیبانی'
-            };
-            document.getElementById('page-title').innerText = titles[tabName];
-            if (tabName === 'wheel') {
-                drawWheel();
-                createLeds();
-            }
-        }
-
-        function openServiceModal(type) {
-            if (type === 'real-member') {
-                document.getElementById('modal-real-member').style.display = 'flex';
-            } else if (type === 'fake-member') {
-                document.getElementById('modal-fake-member').style.display = 'flex';
-            } else if (type === 'views-member') {
-                document.getElementById('modal-views-member').style.display = 'flex';
-            }
-        }
-
-        function openRulesModal(ruleType) {
-            var contentElem = document.getElementById('rules-content');
-            if (ruleType === 'views-rules') {
-                contentElem.innerHTML = `
-                    <p>⏳ <b>زمان استارت سرویس :</b> ۱ الی ۶ ساعت</p><br>
-                    <p>🚀 <b>سرعت ارسال روزانه :</b> ۱ الی ۱۰ کا</p><br>
-                    <p>⛔ <b>ریزش :</b> ندارد</p><br>
-                    <p>🔗 <b>نحوه درج لینک :</b> لینک پست مورد نظر ارسال شود : <br><span style="color:#00f0ff;">https://t.me/xxxxxxxxxx/123</span></p><br>
-                    <p>⭐ <b>قبل از استارت سرویس حتما نکات زیر را بخوانید :</b></p><br>
-                    <p>🔰 کانال باید عمومی باشد</p><br>
-                    <p>🔰 پس از ثبت سفارش، وضعیت سفارش به حالت تکمیل شده تغییر خواهد کرد.</p>
-                `;
-            } else if (ruleType === 'fake-rules') {
-                contentElem.innerHTML = `
-                    <p>✔️ <b>زمان استارت آنی</b></p><br>
-                    <p>✔️ <b>زمان تکمیل 10k در هر روز</b></p><br>
-                    <p>✔️ <b>میزان ریزش حداقل 1 ماه ریزش ندارد</b></p><br>
-                    <p>✔️ <b>جهت تکمیل سفارش مطمئن شوید کانال حتما عمومی باشد.</b></p><br>
-                    <p>⚠️ <b>تا تکمیل شدن سفارش، سفارش جدیدی ثبت نکنید.</b></p><br>
-                    <p>⚠️ <b>در صورت اشتباه وارد کردن لینک یا باطل شدن هزینه برگشت داده نمی شود.</b></p>
-                `;
-            } else {
-                contentElem.innerHTML = `
-                    <p>1️⃣ <b>لینک کانال (Public):</b> لینک کانال را وارد کنید. نمونه: <br><span style="color:#ffd700;">https://t.me/your_channel</span> یا <span style="color:#ffd700;">@your_channel</span></p><br>
-                    <p>2️⃣ کانال را حتماً باید با شماره (اکانت) <b>ایرانی +98</b> ایجاد کنید.</p><br>
-                    <p>3️⃣ موضوع کانال خلاف <b>قوانین کشور</b> نباشد.</p><br>
-                    <p>4️⃣ هنگام ثبت سفارش <b>شماره همراه روشن</b> وارد کنید.</p><br>
-                    <p>5️⃣ تایم شروع سفارشات <b>۲۴ الی ۷۲ ساعت</b> است.</p>
-                `;
-            }
-            document.getElementById('modal-rules').style.display = 'flex';
-        }
-
-        function openDirectOrderModal(serviceName, unitPrice, minVal, maxVal, linkType) {
-            currentServiceName = serviceName;
-            currentUnitPrice = unitPrice;
-            minLimit = minVal;
-            maxLimit = maxVal;
-            
-            document.getElementById('direct-order-title').innerText = 'ثبت سفارش: ' + serviceName;
-            document.getElementById('direct-order-link').value = '';
-            document.getElementById('direct-order-count').value = '';
-            document.getElementById('direct-order-count').placeholder = 'حداقل ' + minLimit.toLocaleString() + ' تا حداکثر ' + maxLimit.toLocaleString();
-            document.getElementById('direct-total-price').innerText = '0.00 TON';
-
-            var labelElem = document.getElementById('direct-link-label');
-            var inputElem = document.getElementById('direct-order-link');
-            if (linkType === 'post') {
-                labelElem.innerText = 'لینک پست شما:';
-                inputElem.placeholder = 'https://t.me/channel/123';
-            } else {
-                labelElem.innerText = 'لینک کانال شما:';
-                inputElem.placeholder = '@channel یا https://t.me/...';
-            }
-            
-            document.getElementById('pay-info-box').style.display = 'none';
-            document.getElementById('order-pay-memo').value = getUserId();
-
-            document.getElementById('modal-direct-order').style.display = 'flex';
-        }
-
-        function calcDirectPrice() {
-            var count = parseInt(document.getElementById('direct-order-count').value) || 0;
-            var total = (count / 1000) * currentUnitPrice;
-            document.getElementById('direct-total-price').innerText = total.toFixed(2) + ' TON';
-        }
-
-        function togglePaymentBox() {
-            var count = parseInt(document.getElementById('direct-order-count').value) || 0;
-            if (count < minLimit || count > maxLimit) {
-                alert("❌ لطفاً ابتدا تعداد درخواستی مجاز را وارد کنید.");
-                return;
-            }
-            var box = document.getElementById('pay-info-box');
-            box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
-        }
-
-        function submitDirectOrder() {
-            var link = document.getElementById('direct-order-link').value;
-            var count = parseInt(document.getElementById('direct-order-count').value) || 0;
-
-            if (!link || link.trim() === '') {
-                alert("❌ لطفاً لینک کانال را وارد کنید.");
-                return;
-            }
-            if (count < minLimit || count > maxLimit) {
-                alert("❌ تعداد سفارش باید بین " + minLimit.toLocaleString() + " تا حداکثر " + maxLimit.toLocaleString() + " باشد.");
-                return;
-            }
-
-            var totalPrice = ((count / 1000) * currentUnitPrice).toFixed(2);
-            var uId = getUserId();
-            var userName = getUserName();
-
-            closeModal('modal-direct-order');
-            closeModal('modal-real-member');
-            closeModal('modal-fake-member');
-            closeModal('modal-views-member');
-
-            var messageText = "🔔 سفارش جدید ثبت شد!\n\n" +
-                              "📦 سرویس: " + currentServiceName + "\n" +
-                              "👤 کاربر: " + userName + " (ID: " + uId + ")\n" +
-                              "🔗 لینک: " + link + "\n" +
-                              "📊 تعداد: " + count + "\n" +
-                              "💰 مبلغ: " + totalPrice + " TON";
-
-            window.Telegram.WebApp.openTelegramLink("https://t.me/Dollar_Matrix?text=" + encodeURIComponent(messageText));
-        }
-
-        function shareRefLinkDirect() {
-            var uId = getUserId();
-            var refUrl = 'https://t.me/SolarisMiner_bot?start=' + uId;
-            var shareText = "🚀 ربات ارتقا و خدمات حرفه‌ای تلگرام NovaTon!\n🎁 برای شرکت در گردونه شانس و دریافت ممبر و ویو رایگان روی لینک زیر کلیک کنید:\n\n" + refUrl;
-            
-            window.Telegram.WebApp.openTelegramLink("https://t.me/share/url?url=" + encodeURIComponent(refUrl) + "&text=" + encodeURIComponent(shareText));
-        }
-
-        /* بررسی امنیتی برای چرخاندن گردونه */
-        function checkAndSpinWheel() {
-            if (hasSpun) {
-                alert("⚠️ شما قبلاً گردونه شانس امروز را چرخانده‌اید!");
-                return;
-            }
-
-            // بررسی شرط اصلی: حداقل ۱ عضو واقعی
-            if (realReferralCount < 1) {
-                alert("❌ امکان چرخاندن گردونه وجود ندارد!\n\n⚠️ حداقل ۱ نفر باید با لینک اختصاصی شما عضوی از ربات شده باشد.");
-                switchTab('ref');
-                return;
-            }
-
-            var canvas = document.getElementById('wheelCanvas');
-            var selectedIndex = Math.floor(Math.random() * prizes.length);
-            
-            var sliceDeg = 360 / prizes.length;
-            var targetDeg = 3600 + (360 - (selectedIndex * sliceDeg) - (sliceDeg / 2));
-            
-            canvas.style.transform = 'rotate(' + targetDeg + 'deg)';
-            document.getElementById('spin-btn').disabled = true;
-
-            setTimeout(function() {
-                hasSpun = true;
-                var wonPrize = prizes[selectedIndex];
-                var luckyCode = "LUCKY-" + Math.floor(10000 + Math.random() * 90000);
-
-                document.getElementById('prize-name').innerText = wonPrize + " (کد شانس: " + luckyCode + ")";
-                document.getElementById('wheel-status-box').style.display = 'none';
-                document.getElementById('wheel-result-box').style.display = 'block';
-
-                var uId = getUserId();
-                var userName = getUserName();
-                var msg = "🎁 دریافت هدیه گردونه شانس NovaTon!\n\n" +
-                          "👤 کاربر: " + userName + " (ID: " + uId + ")\n" +
-                          "🎉 جایزه برنده شده: " + wonPrize + "\n" +
-                          "🔑 کد شانس اختصاصی: " + luckyCode;
-
-                document.getElementById('claim-prize-btn').href = "https://t.me/Dollar_Matrix?text=" + encodeURIComponent(msg);
-            }, 4200);
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        function copyValue(inputId, title) {
-            var input = document.getElementById(inputId);
-            if (input) {
-                input.select();
-                document.execCommand("copy");
-                alert("📋 " + title + " با موفقیت کپی شد!");
-            }
-        }
-
-        function copyRefLink() {
-            var input = document.getElementById('ref-link');
-            input.select();
-            document.execCommand("copy");
-            alert("🔗 لینک دعوت کپی شد!");
-        }
-    </script>
+      setTimeout(() => {
+        isSpinning = false;
+        document.getElementById('spinBtn').disabled = false;
+        tg.showAlert("تبریک! شما برنده شدید: " + prizes[prizeIndex].text);
+      }, 4000);
+    }
+  </script>
 </body>
 </html>
