@@ -314,9 +314,9 @@
             font-weight: bold;
         }
 
-        /* استایل اختصاصی لیست ۱۰۰ نفر برتر (رتبه ۴ تا ۱۰۰) */
+        /* استایل جدید و ساده‌شده برای رتبه‌های ۴ تا ۱۰۰ (بدون آواتار آبی و بدون @) */
         .leaderboard-list {
-            margin-top: 15px;
+            margin-top: 10px;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -351,33 +351,15 @@
             justify-content: center;
         }
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex: 1;
-            margin-right: 10px;
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #00f0ff, #0055ff);
-            color: #fff;
-            font-weight: bold;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         .user-name {
             font-size: 12px;
             font-weight: bold;
             color: #fff;
-            direction: ltr;
+            flex: 1;
             text-align: right;
+            margin-right: 12px;
+            margin-left: 12px;
+            direction: ltr;
         }
 
         .user-invites {
@@ -415,7 +397,7 @@
             </div>
         </div>
 
-        <!-- TAB 2: RANK (رتبه‌بندی فوق‌العاده شیک با اسامی ایرانی و ۱۰۰ نفر برتر) -->
+        <!-- TAB 2: RANK -->
         <div id="tab-rank" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center; border-color:#ffd700 !important;">
                 <div style="font-size:18px; font-weight:bold; color:#ffd700; margin-bottom:4px;">🏆 رتبه‌بندی و مسابقه</div>
@@ -433,17 +415,17 @@
                     </div>
                 </div>
 
-                <!-- وضعیت رتبه کاربر -->
+                <!-- وضعیت رتبه کاربر (پیش‌فرض ۰ برای همه) -->
                 <div class="card" style="background:#161820 !important; border-color:#ffd700 !important; display:flex; justify-content:space-between; align-items:center; padding:12px 15px; margin-bottom:15px;">
-                    <div style="background:#ffd700; color:#000; font-weight:bold; padding:8px 14px; border-radius:12px; font-size:15px;">#۹۳۶</div>
+                    <div style="background:#ffd700; color:#000; font-weight:bold; padding:8px 14px; border-radius:12px; font-size:15px;" id="user-rank-display">#0</div>
                     <div style="text-align:right;">
                         <div style="font-size:13px; font-weight:bold; color:#fff;">رتبه شما</div>
-                        <div style="font-size:11px; color:#8da0bf; margin-top:2px;">۱ دعوت تاییدشده</div>
+                        <div style="font-size:11px; color:#8da0bf; margin-top:2px;" id="user-invites-display">۰ دعوت تاییدشده</div>
                     </div>
                     <div style="font-size:11px; color:#ffd700; font-weight:bold; background:#050608; padding:6px 10px; border-radius:10px; border:1px solid #ffd700;">🏆 تاپ ۳</div>
                 </div>
 
-                <!-- سکوی ۳ نفر اول با اسامی کاملاً ایرانی -->
+                <!-- سکوی ۳ نفر اول -->
                 <div class="podium-container">
                     <div class="podium-box">
                         <div style="font-size:12px; font-weight:bold; color:#c0c0c0; margin-bottom:4px;">🥈 #۲</div>
@@ -464,14 +446,9 @@
                     </div>
                 </div>
 
-                <!-- عنوان لیست رتبه‌های بعدی -->
-                <div style="font-size:13px; font-weight:bold; color:#00f0ff; text-align:right; margin: 15px 5px 8px 0; display:flex; align-items:center; gap:6px;">
-                    📊 لیست برترین کاربران (رتبه ۴ تا ۱۰۰)
-                </div>
-
-                <!-- لیست اسکرولی ۱۰۰ نفر برتر با اسامی ایرانی -->
+                <!-- لیست رتبه‌های ۴ تا ۱۰۰ بدون آواتار آبی و بدون علامت @ و بدون تیتر اضافی -->
                 <div class="leaderboard-list" id="leaderboard-container">
-                    <!-- به صورت دینامیک با جاوااسکریپت پر می‌شود -->
+                    <!-- به‌صورت دینامیک پر می‌شود -->
                 </div>
             </div>
         </div>
@@ -740,9 +717,9 @@
         var currentServiceName = '';
         var minLimit = 500;
         var maxLimit = 10000;
-        var realReferralCount = 0;
+        var realReferralCount = 0; // پیش‌فرض 0 برای تمام کاربران جدید
 
-        /* لیست پیش‌فرض اسامی ایرانی طبیعی برای لیدربورد ۴ تا ۱۰۰ */
+        /* لیست پیش‌فرض اسامی ایرانی طبیعی */
         var iranianUsers = [
             "Reza_Crypto", "Ali_Ahmadi", "Hossein_Ton", "Mohammad_S", "Seyed_Amin", 
             "Morteza_D", "Farhad_Earn", "Milad_VIP", "Kaveh_Trade", "Ahmad_021", 
@@ -765,27 +742,23 @@
             "Behzad_VIP", "Farzan_Trader", "Mostafa_VIP", "Sami_Crypto", "Javad_Trader"
         ];
 
-        /* ساخت لیست ۱۰۰ نفر برتر (رتبه ۴ تا ۱۰۰) */
+        /* ساخت لیست ۱۰۰ نفر برتر (رتبه ۴ تا ۱۰۰ - بدون آواتار و بدون @) */
         function generateLeaderboard() {
             var container = document.getElementById('leaderboard-container');
             if (!container) return;
             container.innerHTML = '';
 
-            var startInvites = 148; // تعداد دعوت رتبه ۴ کمتر از رتبه ۳ (۱۵۰)
+            var startInvites = 148;
 
             for (var i = 0; i < 97; i++) {
                 var rank = i + 4;
                 var username = iranianUsers[i % iranianUsers.length] + (i > 30 ? Math.floor(Math.random() * 89 + 10) : "");
                 var invites = Math.max(1, startInvites - Math.floor(i * 1.5));
-                var firstLetter = username.charAt(0).toUpperCase();
 
                 var itemHtml = `
                     <div class="leaderboard-item">
                         <div class="rank-badge">#${rank}</div>
-                        <div class="user-info">
-                            <div class="user-avatar">${firstLetter}</div>
-                            <div class="user-name">@${username}</div>
-                        </div>
+                        <div class="user-name">${username}</div>
                         <div class="user-invites">${invites} دعوت</div>
                     </div>
                 `;
@@ -812,9 +785,21 @@
             return 'کاربر ناشناس';
         }
 
+        /* بروزرسانی اطلاعات دعوت کاربر (نمایش ۰ برای کاربر تازه وارد) */
         function updateReferralUI() {
             var displayTab = document.getElementById('ref-count-display');
+            var userRankElem = document.getElementById('user-rank-display');
+            var userInvitesElem = document.getElementById('user-invites-display');
+
             if (displayTab) displayTab.innerText = realReferralCount + " نفر";
+            
+            if (realReferralCount === 0) {
+                if (userRankElem) userRankElem.innerText = "#0";
+                if (userInvitesElem) userInvitesElem.innerText = "۰ دعوت تاییدشده";
+            } else {
+                if (userRankElem) userRankElem.innerText = "#" + (1000 - realReferralCount);
+                if (userInvitesElem) userInvitesElem.innerText = realReferralCount + " دعوت تاییدشده";
+            }
         }
 
         window.onload = function() {
