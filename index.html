@@ -270,7 +270,7 @@
         .support-title { font-size: 15px; font-weight: bold; color: #00f0ff; margin-bottom: 4px; }
         .support-sub { font-size: 11px; color: #8da0bf; margin-bottom: 12px; line-height: 1.5; }
 
-        /* استایل‌های بخش Rank (رتبه‌بندی) مطابق تصویر شما */
+        /* سکو و پودیوم نفرات برتر */
         .podium-container {
             display: flex;
             justify-content: space-between;
@@ -283,7 +283,7 @@
             background: linear-gradient(145deg, #161820, #0c0d12);
             border: 1px solid #252936;
             border-radius: 16px;
-            padding: 12px 8px;
+            padding: 12px 6px;
             text-align: center;
             flex: 1;
             box-shadow: 0 6px 15px rgba(0,0,0,0.8);
@@ -313,6 +313,82 @@
             color: #ffd700;
             font-weight: bold;
         }
+
+        /* استایل اختصاصی لیست ۱۰۰ نفر برتر (رتبه ۴ تا ۱۰۰) */
+        .leaderboard-list {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(145deg, #0d0f14, #12151e);
+            border: 1px solid #1f2330;
+            border-radius: 14px;
+            padding: 10px 14px;
+            transition: 0.2s ease;
+        }
+
+        .leaderboard-item:hover {
+            border-color: #00f0ff;
+        }
+
+        .rank-badge {
+            font-size: 11px;
+            font-weight: bold;
+            color: #8da0bf;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #050608;
+            border: 1px solid #252936;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00f0ff, #0055ff);
+            color: #fff;
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+            direction: ltr;
+            text-align: right;
+        }
+
+        .user-invites {
+            font-size: 11px;
+            color: #ffd700;
+            font-weight: bold;
+            background: rgba(255, 215, 0, 0.08);
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -339,7 +415,7 @@
             </div>
         </div>
 
-        <!-- TAB 2: RANK (جایگزین گردونه شانس - کاملاً فارسی و شیک) -->
+        <!-- TAB 2: RANK (رتبه‌بندی فوق‌العاده شیک با اسامی ایرانی و ۱۰۰ نفر برتر) -->
         <div id="tab-rank" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center; border-color:#ffd700 !important;">
                 <div style="font-size:18px; font-weight:bold; color:#ffd700; margin-bottom:4px;">🏆 رتبه‌بندی و مسابقه</div>
@@ -357,7 +433,8 @@
                     </div>
                 </div>
 
-                <div class="card" style="background:#161820 !important; border-color:#ffd700 !important; display:flex; justify-content:space-between; align-items:center; padding:15px; margin-bottom:15px;">
+                <!-- وضعیت رتبه کاربر -->
+                <div class="card" style="background:#161820 !important; border-color:#ffd700 !important; display:flex; justify-content:space-between; align-items:center; padding:12px 15px; margin-bottom:15px;">
                     <div style="background:#ffd700; color:#000; font-weight:bold; padding:8px 14px; border-radius:12px; font-size:15px;">#۹۳۶</div>
                     <div style="text-align:right;">
                         <div style="font-size:13px; font-weight:bold; color:#fff;">رتبه شما</div>
@@ -366,30 +443,40 @@
                     <div style="font-size:11px; color:#ffd700; font-weight:bold; background:#050608; padding:6px 10px; border-radius:10px; border:1px solid #ffd700;">🏆 تاپ ۳</div>
                 </div>
 
-                <!-- نفرات برتر -->
+                <!-- سکوی ۳ نفر اول با اسامی کاملاً ایرانی -->
                 <div class="podium-container">
                     <div class="podium-box">
                         <div style="font-size:12px; font-weight:bold; color:#c0c0c0; margin-bottom:4px;">🥈 #۲</div>
-                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;">@Souyaaaaaa</div>
+                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" dir="ltr">@Amir_Ton88</div>
                         <div style="font-size:10px; color:#8da0bf;">۱۵۵ دعوت</div>
                     </div>
 
                     <div class="podium-box first">
                         <div style="font-size:13px; font-weight:bold; color:#ffd700; margin-bottom:4px;">🥇 #۱</div>
-                        <div style="font-size:11px; color:#ffd700; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;">@Gyuu559</div>
+                        <div style="font-size:11px; color:#ffd700; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" dir="ltr">@Sajjad_Trade</div>
                         <div style="font-size:10px; color:#fff;">۱۵۶ دعوت</div>
                     </div>
 
                     <div class="podium-box">
                         <div style="font-size:12px; font-weight:bold; color:#cd7f32; margin-bottom:4px;">🥉 #۳</div>
-                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;">@bilisim73217</div>
-                        <div style="font-size:10px; color:#8da0bf;">۱۵۵ دعوت</div>
+                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" dir="ltr">@Mahdi_Crypt0</div>
+                        <div style="font-size:10px; color:#8da0bf;">۱۵۰ دعوت</div>
                     </div>
+                </div>
+
+                <!-- عنوان لیست رتبه‌های بعدی -->
+                <div style="font-size:13px; font-weight:bold; color:#00f0ff; text-align:right; margin: 15px 5px 8px 0; display:flex; align-items:center; gap:6px;">
+                    📊 لیست برترین کاربران (رتبه ۴ تا ۱۰۰)
+                </div>
+
+                <!-- لیست اسکرولی ۱۰۰ نفر برتر با اسامی ایرانی -->
+                <div class="leaderboard-list" id="leaderboard-container">
+                    <!-- به صورت دینامیک با جاوااسکریپت پر می‌شود -->
                 </div>
             </div>
         </div>
 
-        <!-- TAB 3: REFERRAL (اصلاح شده و بدون اسم گردونه) -->
+        <!-- TAB 3: REFERRAL -->
         <div id="tab-ref" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center;">
                 <div style="margin-bottom:12px;">
@@ -640,7 +727,7 @@
         </div>
     </div>
 
-    <!-- BOTTOM NAV BAR (تب گردونه به رتبه‌بندی تغییر کرد) -->
+    <!-- BOTTOM NAV BAR -->
     <div class="nav-bar">
         <div class="nav-item active" id="nav-btn-services" onclick="switchTab('services')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg><div>خدمات</div></div>
         <div class="nav-item" id="nav-btn-rank" onclick="switchTab('rank')"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17h4v-2.34A6 6 0 0 0 16 9V4H8v5a6 6 0 0 0 2 5.66z"></path></svg><div>رتبه‌بندی</div></div>
@@ -654,6 +741,57 @@
         var minLimit = 500;
         var maxLimit = 10000;
         var realReferralCount = 0;
+
+        /* لیست پیش‌فرض اسامی ایرانی طبیعی برای لیدربورد ۴ تا ۱۰۰ */
+        var iranianUsers = [
+            "Reza_Crypto", "Ali_Ahmadi", "Hossein_Ton", "Mohammad_S", "Seyed_Amin", 
+            "Morteza_D", "Farhad_Earn", "Milad_VIP", "Kaveh_Trade", "Ahmad_021", 
+            "Erfan_Sol", "Hamid_A", "Peyman_VIP", "Danial_Ton", "Arash_Crypto", 
+            "Shahram_B", "Yasin_L", "Pouya_Ton", "Vahid_Pro", "Meysam_R",
+            "Behnam_S", "Sina_Trade", "Ashkan_M", "Mani_Crypto", "Omid_K",
+            "Shayan_N", "Aria_Ton", "Soren_V", "Ali_Reza_M", "Ehsan_B",
+            "Arman_Trader", "Bardiya_K", "Mehrdad_S", "Nima_G", "Kian_M",
+            "Navid_Trade", "Soroush_R", "Kamyar_Crypto", "Yaser_H", "Pedram_T",
+            "Kourosh_Ton", "Majid_A", "Hamed_K", "Davood_M", "Saber_R",
+            "Siamak_P", "Ramin_B", "Babak_Crypto", "Behzad_T", "Farzan_K",
+            "Ayoub_M", "Mostafa_S", "Sami_Trade", "Javad_Ton", "Aria_K",
+            "Naser_R", "Pasha_Crypto", "Shahab_M", "Ebrahim_A", "Hashem_B",
+            "Kashayar_T", "Saman_R", "Alireza_Pro", "Hassan_M", "Abbas_K", "Mehdi_Ton",
+            "Reza_VIP", "Amir_Crypto", "Sina_A", "Hamid_Ton", "Pouya_Trader",
+            "Morteza_K", "Milad_Sol", "Sajjad_B", "Danial_M", "Arash_VIP",
+            "Meysam_Trade", "Ashkan_Ton", "Shayan_R", "Mehrdad_K", "Kourosh_VIP",
+            "Farhad_Crypto", "Arman_Ton", "Behnam_VIP", "Ehsan_Trader", "Nima_VIP",
+            "Navid_Crypto", "Soroush_Ton", "Siamak_VIP", "Ramin_Trade", "Babak_Ton",
+            "Behzad_VIP", "Farzan_Trader", "Mostafa_VIP", "Sami_Crypto", "Javad_Trader"
+        ];
+
+        /* ساخت لیست ۱۰۰ نفر برتر (رتبه ۴ تا ۱۰۰) */
+        function generateLeaderboard() {
+            var container = document.getElementById('leaderboard-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            var startInvites = 148; // تعداد دعوت رتبه ۴ کمتر از رتبه ۳ (۱۵۰)
+
+            for (var i = 0; i < 97; i++) {
+                var rank = i + 4;
+                var username = iranianUsers[i % iranianUsers.length] + (i > 30 ? Math.floor(Math.random() * 89 + 10) : "");
+                var invites = Math.max(1, startInvites - Math.floor(i * 1.5));
+                var firstLetter = username.charAt(0).toUpperCase();
+
+                var itemHtml = `
+                    <div class="leaderboard-item">
+                        <div class="rank-badge">#${rank}</div>
+                        <div class="user-info">
+                            <div class="user-avatar">${firstLetter}</div>
+                            <div class="user-name">@${username}</div>
+                        </div>
+                        <div class="user-invites">${invites} دعوت</div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', itemHtml);
+            }
+        }
 
         function getUserId() {
             try {
@@ -683,6 +821,7 @@
             var uId = getUserId();
             var refLinkField = document.getElementById('ref-link');
             if (refLinkField) refLinkField.value = 'https://t.me/SolarisMiner_bot?start=' + uId;
+            generateLeaderboard();
             updateReferralUI();
         };
 
