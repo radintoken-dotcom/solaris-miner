@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NovaTon - Rank Edition</title>
+    <title>NovaTon - Live Rank Edition</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -270,7 +270,6 @@
         .support-title { font-size: 15px; font-weight: bold; color: #00f0ff; margin-bottom: 4px; }
         .support-sub { font-size: 11px; color: #8da0bf; margin-bottom: 12px; line-height: 1.5; }
 
-        /* سکو و پودیوم نفرات برتر */
         .podium-container {
             display: flex;
             justify-content: space-between;
@@ -314,7 +313,6 @@
             font-weight: bold;
         }
 
-        /* استایل جدید و ساده‌شده برای رتبه‌های ۴ تا ۱۰۰ (بدون آواتار آبی و بدون @) */
         .leaderboard-list {
             margin-top: 10px;
             display: flex;
@@ -330,11 +328,6 @@
             border: 1px solid #1f2330;
             border-radius: 14px;
             padding: 10px 14px;
-            transition: 0.2s ease;
-        }
-
-        .leaderboard-item:hover {
-            border-color: #00f0ff;
         }
 
         .rank-badge {
@@ -406,7 +399,7 @@
                 <div class="card" style="background:#050608 !important; border-color:#252936 !important; text-align:center; padding:15px; margin-bottom:15px;">
                     <div style="font-size:12px; color:#ffd700; font-weight:bold; margin-bottom:6px;">🏆 مسابقه ۴۸ ساعته رتبه‌بندی</div>
                     <div class="big-number" style="color:#ffd700; letter-spacing: 2px;">۰۰:۰۰:۰۰</div>
-                    <div style="font-size:10px; color:#8da0bf; margin-top:4px;">مسابقه به پایان رسید • نتایج در حال بررسی</div>
+                    <div style="font-size:10px; color:#8da0bf; margin-top:4px;">مسابقه فعال • رقابت برای کسب جوایز نقدی</div>
                     
                     <div class="prize-pills-row">
                         <div class="prize-pill">🥈 دوم<br><span style="color:#fff;">۱۰ دلار</span></div>
@@ -415,40 +408,40 @@
                     </div>
                 </div>
 
-                <!-- وضعیت رتبه کاربر (پیش‌فرض ۰ برای همه) -->
+                <!-- رتبه زنده کاربر خودش -->
                 <div class="card" style="background:#161820 !important; border-color:#ffd700 !important; display:flex; justify-content:space-between; align-items:center; padding:12px 15px; margin-bottom:15px;">
                     <div style="background:#ffd700; color:#000; font-weight:bold; padding:8px 14px; border-radius:12px; font-size:15px;" id="user-rank-display">#0</div>
                     <div style="text-align:right;">
                         <div style="font-size:13px; font-weight:bold; color:#fff;">رتبه شما</div>
                         <div style="font-size:11px; color:#8da0bf; margin-top:2px;" id="user-invites-display">۰ دعوت تاییدشده</div>
                     </div>
-                    <div style="font-size:11px; color:#ffd700; font-weight:bold; background:#050608; padding:6px 10px; border-radius:10px; border:1px solid #ffd700;">🏆 تاپ ۳</div>
+                    <div style="font-size:11px; color:#ffd700; font-weight:bold; background:#050608; padding:6px 10px; border-radius:10px; border:1px solid #ffd700; cursor:pointer;" onclick="simulateInviteTest()">⚡ ثبت دعوت</div>
                 </div>
 
-                <!-- سکوی ۳ نفر اول -->
+                <!-- سکوی ۳ نفر اول کاملاً خام -->
                 <div class="podium-container">
                     <div class="podium-box">
                         <div style="font-size:12px; font-weight:bold; color:#c0c0c0; margin-bottom:4px;">🥈 #۲</div>
-                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" dir="ltr">@Amir_Ton88</div>
-                        <div style="font-size:10px; color:#8da0bf;">۱۵۵ دعوت</div>
+                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" id="podium-2-name" dir="ltr">---</div>
+                        <div style="font-size:10px; color:#8da0bf;" id="podium-2-invites">۰ دعوت</div>
                     </div>
 
                     <div class="podium-box first">
                         <div style="font-size:13px; font-weight:bold; color:#ffd700; margin-bottom:4px;">🥇 #۱</div>
-                        <div style="font-size:11px; color:#ffd700; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" dir="ltr">@Sajjad_Trade</div>
-                        <div style="font-size:10px; color:#fff;">۱۵۶ دعوت</div>
+                        <div style="font-size:11px; color:#ffd700; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" id="podium-1-name" dir="ltr">---</div>
+                        <div style="font-size:10px; color:#fff;" id="podium-1-invites">۰ دعوت</div>
                     </div>
 
                     <div class="podium-box">
                         <div style="font-size:12px; font-weight:bold; color:#cd7f32; margin-bottom:4px;">🥉 #۳</div>
-                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" dir="ltr">@Mahdi_Crypt0</div>
-                        <div style="font-size:10px; color:#8da0bf;">۱۵۰ دعوت</div>
+                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" id="podium-3-name" dir="ltr">---</div>
+                        <div style="font-size:10px; color:#8da0bf;" id="podium-3-invites">۰ دعوت</div>
                     </div>
                 </div>
 
-                <!-- لیست رتبه‌های ۴ تا ۱۰۰ بدون آواتار آبی و بدون علامت @ و بدون تیتر اضافی -->
+                <!-- لیست رتبه‌های بعدی -->
                 <div class="leaderboard-list" id="leaderboard-container">
-                    <!-- به‌صورت دینامیک پر می‌شود -->
+                    <!-- با دعوت کاربران جدید پر می‌شود -->
                 </div>
             </div>
         </div>
@@ -717,97 +710,97 @@
         var currentServiceName = '';
         var minLimit = 500;
         var maxLimit = 10000;
-        var realReferralCount = 0; // پیش‌فرض 0 برای تمام کاربران جدید
 
-        /* لیست پیش‌فرض اسامی ایرانی طبیعی */
-        var iranianUsers = [
-            "Reza_Crypto", "Ali_Ahmadi", "Hossein_Ton", "Mohammad_S", "Seyed_Amin", 
-            "Morteza_D", "Farhad_Earn", "Milad_VIP", "Kaveh_Trade", "Ahmad_021", 
-            "Erfan_Sol", "Hamid_A", "Peyman_VIP", "Danial_Ton", "Arash_Crypto", 
-            "Shahram_B", "Yasin_L", "Pouya_Ton", "Vahid_Pro", "Meysam_R",
-            "Behnam_S", "Sina_Trade", "Ashkan_M", "Mani_Crypto", "Omid_K",
-            "Shayan_N", "Aria_Ton", "Soren_V", "Ali_Reza_M", "Ehsan_B",
-            "Arman_Trader", "Bardiya_K", "Mehrdad_S", "Nima_G", "Kian_M",
-            "Navid_Trade", "Soroush_R", "Kamyar_Crypto", "Yaser_H", "Pedram_T",
-            "Kourosh_Ton", "Majid_A", "Hamed_K", "Davood_M", "Saber_R",
-            "Siamak_P", "Ramin_B", "Babak_Crypto", "Behzad_T", "Farzan_K",
-            "Ayoub_M", "Mostafa_S", "Sami_Trade", "Javad_Ton", "Aria_K",
-            "Naser_R", "Pasha_Crypto", "Shahab_M", "Ebrahim_A", "Hashem_B",
-            "Kashayar_T", "Saman_R", "Alireza_Pro", "Hassan_M", "Abbas_K", "Mehdi_Ton",
-            "Reza_VIP", "Amir_Crypto", "Sina_A", "Hamid_Ton", "Pouya_Trader",
-            "Morteza_K", "Milad_Sol", "Sajjad_B", "Danial_M", "Arash_VIP",
-            "Meysam_Trade", "Ashkan_Ton", "Shayan_R", "Mehrdad_K", "Kourosh_VIP",
-            "Farhad_Crypto", "Arman_Ton", "Behnam_VIP", "Ehsan_Trader", "Nima_VIP",
-            "Navid_Crypto", "Soroush_Ton", "Siamak_VIP", "Ramin_Trade", "Babak_Ton",
-            "Behzad_VIP", "Farzan_Trader", "Mostafa_VIP", "Sami_Crypto", "Javad_Trader"
-        ];
-
-        /* ساخت لیست ۱۰۰ نفر برتر (رتبه ۴ تا ۱۰۰ - بدون آواتار و بدون @) */
-        function generateLeaderboard() {
-            var container = document.getElementById('leaderboard-container');
-            if (!container) return;
-            container.innerHTML = '';
-
-            var startInvites = 148;
-
-            for (var i = 0; i < 97; i++) {
-                var rank = i + 4;
-                var username = iranianUsers[i % iranianUsers.length] + (i > 30 ? Math.floor(Math.random() * 89 + 10) : "");
-                var invites = Math.max(1, startInvites - Math.floor(i * 1.5));
-
-                var itemHtml = `
-                    <div class="leaderboard-item">
-                        <div class="rank-badge">#${rank}</div>
-                        <div class="user-name">${username}</div>
-                        <div class="user-invites">${invites} دعوت</div>
-                    </div>
-                `;
-                container.insertAdjacentHTML('beforeend', itemHtml);
-            }
-        }
-
-        function getUserId() {
-            try {
-                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
-                    return String(window.Telegram.WebApp.initDataUnsafe.user.id);
-                }
-            } catch(e) {}
-            return '1007321991';
-        }
-
-        function getUserName() {
+        function getUserInfo() {
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
                     var u = window.Telegram.WebApp.initDataUnsafe.user;
-                    return u.username ? ('@' + u.username) : (u.first_name || 'کاربر جدید');
+                    return {
+                        id: String(u.id),
+                        name: u.username ? u.username : (u.first_name || 'کاربر جدید')
+                    };
                 }
             } catch(e) {}
-            return 'کاربر ناشناس';
+            return { id: 'guest_100', name: 'کاربر جدید' };
         }
 
-        /* بروزرسانی اطلاعات دعوت کاربر (نمایش ۰ برای کاربر تازه وارد) */
-        function updateReferralUI() {
-            var displayTab = document.getElementById('ref-count-display');
-            var userRankElem = document.getElementById('user-rank-display');
-            var userInvitesElem = document.getElementById('user-invites-display');
+        /* ثبت و افزایش واقعی دعوت */
+        function simulateInviteTest() {
+            var user = getUserInfo();
+            var data = JSON.parse(localStorage.getItem('novaton_invites') || '{}');
+            if (!data[user.id]) data[user.id] = { name: user.name, count: 0 };
+            data[user.id].count += 1;
+            localStorage.setItem('novaton_invites', JSON.stringify(data));
+            loadLeaderboard();
+            alert("🎉 یک دعوت جدید اضافه شد!");
+        }
 
-            if (displayTab) displayTab.innerText = realReferralCount + " نفر";
+        function loadLeaderboard() {
+            var currentUser = getUserInfo();
+            var data = JSON.parse(localStorage.getItem('novaton_invites') || '{}');
             
-            if (realReferralCount === 0) {
-                if (userRankElem) userRankElem.innerText = "#0";
-                if (userInvitesElem) userInvitesElem.innerText = "۰ دعوت تاییدشده";
-            } else {
-                if (userRankElem) userRankElem.innerText = "#" + (1000 - realReferralCount);
-                if (userInvitesElem) userInvitesElem.innerText = realReferralCount + " دعوت تاییدشده";
+            if (!data[currentUser.id]) {
+                data[currentUser.id] = { name: currentUser.name, count: 0 };
+            }
+
+            var allUsers = [];
+            for (var id in data) {
+                allUsers.push({ id: id, name: data[id].name, count: data[id].count });
+            }
+
+            // مرتب‌سازی لیست بر اساس بیشترین دعوت
+            allUsers.sort(function(a, b) { return b.count - a.count; });
+
+            var myRank = 0;
+            var myCount = 0;
+            for (var i = 0; i < allUsers.length; i++) {
+                if (allUsers[i].id === currentUser.id) {
+                    myRank = i + 1;
+                    myCount = allUsers[i].count;
+                    break;
+                }
+            }
+
+            // اگر کاربر دعوتی نداشته باشه رتبه‌اش ۰ نشون داده بشه
+            document.getElementById('user-rank-display').innerText = "#" + (myCount === 0 ? "0" : myRank);
+            document.getElementById('user-invites-display').innerText = myCount + " دعوت تاییدشده";
+            document.getElementById('ref-count-display').innerText = myCount + " نفر";
+
+            // سکوی ۳ نفر اول (در صورت عدم وجود دعوت، خالی یا "---" قرار می‌گیرد)
+            document.getElementById('podium-1-name').innerText = (allUsers[0] && allUsers[0].count > 0) ? allUsers[0].name : "---";
+            document.getElementById('podium-1-invites').innerText = (allUsers[0] && allUsers[0].count > 0) ? allUsers[0].count + " دعوت" : "۰ دعوت";
+
+            document.getElementById('podium-2-name').innerText = (allUsers[1] && allUsers[1].count > 0) ? allUsers[1].name : "---";
+            document.getElementById('podium-2-invites').innerText = (allUsers[1] && allUsers[1].count > 0) ? allUsers[1].count + " دعوت" : "۰ دعوت";
+
+            document.getElementById('podium-3-name').innerText = (allUsers[2] && allUsers[2].count > 0) ? allUsers[2].name : "---";
+            document.getElementById('podium-3-invites').innerText = (allUsers[2] && allUsers[2].count > 0) ? allUsers[2].count + " دعوت" : "۰ دعوت";
+
+            // رتبه‌های ۴ به بعد
+            var container = document.getElementById('leaderboard-container');
+            if (container) {
+                container.innerHTML = '';
+                for (var j = 3; j < allUsers.length; j++) {
+                    if (allUsers[j].count > 0) {
+                        var rankNum = j + 1;
+                        var itemHtml = `
+                            <div class="leaderboard-item">
+                                <div class="rank-badge">#${rankNum}</div>
+                                <div class="user-name">${allUsers[j].name}</div>
+                                <div class="user-invites">${allUsers[j].count} دعوت</div>
+                            </div>
+                        `;
+                        container.insertAdjacentHTML('beforeend', itemHtml);
+                    }
+                }
             }
         }
 
         window.onload = function() {
-            var uId = getUserId();
+            var user = getUserInfo();
             var refLinkField = document.getElementById('ref-link');
-            if (refLinkField) refLinkField.value = 'https://t.me/SolarisMiner_bot?start=' + uId;
-            generateLeaderboard();
-            updateReferralUI();
+            if (refLinkField) refLinkField.value = 'https://t.me/SolarisMiner_bot?start=' + user.id;
+            loadLeaderboard();
         };
 
         function switchTab(tabName) {
@@ -831,6 +824,9 @@
                 'support': 'ارتباط با پشتیبانی'
             };
             document.getElementById('page-title').innerText = titles[tabName];
+            if (tabName === 'rank') {
+                loadLeaderboard();
+            }
         }
 
         function openServiceModal(type) {
@@ -899,7 +895,8 @@
             }
             
             document.getElementById('pay-info-box').style.display = 'none';
-            document.getElementById('order-pay-memo').value = getUserId();
+            var user = getUserInfo();
+            document.getElementById('order-pay-memo').value = user.id;
 
             document.getElementById('modal-direct-order').style.display = 'flex';
         }
@@ -934,8 +931,7 @@
             }
 
             var totalPrice = ((count / 1000) * currentUnitPrice).toFixed(2);
-            var uId = getUserId();
-            var userName = getUserName();
+            var user = getUserInfo();
 
             closeModal('modal-direct-order');
             closeModal('modal-real-member');
@@ -944,7 +940,7 @@
 
             var messageText = "🔔 سفارش جدید ثبت شد!\n\n" +
                               "📦 سرویس: " + currentServiceName + "\n" +
-                              "👤 کاربر: " + userName + " (ID: " + uId + ")\n" +
+                              "👤 کاربر: " + user.name + " (ID: " + user.id + ")\n" +
                               "🔗 لینک: " + link + "\n" +
                               "📊 تعداد: " + count + "\n" +
                               "💰 مبلغ: " + totalPrice + " TON";
@@ -953,8 +949,8 @@
         }
 
         function shareRefLinkDirect() {
-            var uId = getUserId();
-            var refUrl = 'https://t.me/SolarisMiner_bot?start=' + uId;
+            var user = getUserInfo();
+            var refUrl = 'https://t.me/SolarisMiner_bot?start=' + user.id;
             var shareText = "🚀 ربات ارتقا و خدمات حرفه‌ای تلگرام NovaTon!\n🎁 برای شرکت در مسابقات رتبه‌بندی و دریافت جوایز نقدی روی لینک زیر کلیک کنید:\n\n" + refUrl;
             
             window.Telegram.WebApp.openTelegramLink("https://t.me/share/url?url=" + encodeURIComponent(refUrl) + "&text=" + encodeURIComponent(shareText));
