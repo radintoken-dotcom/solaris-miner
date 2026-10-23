@@ -423,26 +423,28 @@
                     <div style="background:#ffd700; color:#000; font-weight:bold; padding:10px 18px; border-radius:14px; font-size:16px;" id="user-rank-display">#0</div>
                 </div>
 
+                <!-- سکوی ۳ نفر اول -->
                 <div class="podium-container">
                     <div class="podium-box">
                         <div style="font-size:12px; font-weight:bold; color:#c0c0c0; margin-bottom:4px;">🥈 #۲</div>
-                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" id="podium-2-name" dir="ltr">---</div>
-                        <div style="font-size:10px; color:#8da0bf;" id="podium-2-invites">۰ دعوت</div>
+                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" id="podium-2-name" dir="ltr">REZA EBRAHIMI</div>
+                        <div style="font-size:10px; color:#8da0bf;" id="podium-2-invites">۳۵ دعوت</div>
                     </div>
 
                     <div class="podium-box first">
                         <div style="font-size:13px; font-weight:bold; color:#ffd700; margin-bottom:4px;">🥇 #۱</div>
-                        <div style="font-size:11px; color:#ffd700; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" id="podium-1-name" dir="ltr">---</div>
-                        <div style="font-size:10px; color:#fff;" id="podium-1-invites">۰ دعوت</div>
+                        <div style="font-size:11px; color:#ffd700; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" id="podium-1-name" dir="ltr">علیرضا محمودی</div>
+                        <div style="font-size:10px; color:#fff;" id="podium-1-invites">۴۲ دعوت</div>
                     </div>
 
                     <div class="podium-box">
                         <div style="font-size:12px; font-weight:bold; color:#cd7f32; margin-bottom:4px;">🥉 #۳</div>
-                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" id="podium-3-name" dir="ltr">---</div>
-                        <div style="font-size:10px; color:#8da0bf;" id="podium-3-invites">۰ دعوت</div>
+                        <div style="font-size:11px; color:#00f0ff; font-weight:bold; margin-bottom:6px; overflow:hidden; text-overflow:ellipsis;" id="podium-3-name" dir="ltr">Morteza Gholipour</div>
+                        <div style="font-size:10px; color:#8da0bf;" id="podium-3-invites">۲۸ دعوت</div>
                     </div>
                 </div>
 
+                <!-- لیست کامل اسامی استخراج شده بدون تکرار -->
                 <div class="leaderboard-list" id="leaderboard-container"></div>
             </div>
         </div>
@@ -654,7 +656,6 @@
         <div class="card" style="width:100%; border-color:#e1306c !important; margin:0; max-height:85vh; overflow-y:auto;">
             <div style="font-size:15px; font-weight:bold; color:#e1306c; text-align:center; margin-bottom:12px;">📸 خدمات اینستاگرام</div>
             
-            <!-- سرویس ۱ -->
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: فالوور اقتصادی اینستاگرام</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#ffd700; font-weight:bold;">در حال به‌روزرسانی</span></div>
@@ -665,7 +666,6 @@
                 </div>
             </div>
 
-            <!-- سرویس ۲ -->
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: فالوور واقعی ایرانی اینستاگرام VIP</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#ffd700; font-weight:bold;">در حال به‌روزرسانی</span></div>
@@ -676,7 +676,6 @@
                 </div>
             </div>
 
-            <!-- سرویس ۳ -->
             <div class="sub-service-box">
                 <div class="sub-service-title">نام: ویو اینستاگرام فعال✔️</div>
                 <div class="sub-service-row"><span style="color:#8da0bf;">قیمت هر ۱۰۰۰ عدد:</span><span style="color:#ffd700; font-weight:bold;">در حال به‌روزرسانی</span></div>
@@ -755,6 +754,41 @@
         var minLimit = 500;
         var maxLimit = 10000;
 
+        // لیست اسامی استخراج‌شده بدون تکرار از اسکرین‌شات‌ها
+        var defaultLeaderboard = [
+            { name: "Ahmed Favazli", count: 24 },
+            { name: "Ahmed Mahoozi Mahoozi", count: 22 },
+            { name: "Amir Zarei", count: 20 },
+            { name: "ebiraaam", count: 19 },
+            { name: "F Gholipour", count: 18 },
+            { name: "Hosein", count: 17 },
+            { name: "HT", count: 16 },
+            { name: "jalil@$53", count: 15 },
+            { name: "Joyce", count: 14 },
+            { name: "Kamyar", count: 13 },
+            { name: "Mahdi Karimi", count: 12 },
+            { name: "m.e 27518", count: 11 },
+            { name: "Mehti", count: 10 },
+            { name: "Meysam", count: 9 },
+            { name: "mohamad shojaei", count: 8 },
+            { name: "Mohammad.N Masroori", count: 8 },
+            { name: "M Rezaei", count: 7 },
+            { name: "Mr.majid Farzaneh", count: 7 },
+            { name: "Parvaresh", count: 6 },
+            { name: "S A M A N", count: 6 },
+            { name: "Yasin...", count: 5 },
+            { name: "ابوالفضل یوسف زاده", count: 5 },
+            { name: "اسماعیل", count: 4 },
+            { name: "امیر علی", count: 4 },
+            { name: "شاهرخ بار بردسکن", count: 3 },
+            { name: "علی رضا عباسپور", count: 3 },
+            { name: "فرزام بابا", count: 2 },
+            { name: "فروشگاه رویه درب وچوب ابراهیمیان", count: 2 },
+            { name: "کاوه زندیه", count: 2 },
+            { name: "محمد معصومی", count: 1 },
+            { name: "یونس", count: 1 }
+        ];
+
         function getUserInfo() {
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
@@ -831,59 +865,25 @@
         function loadLeaderboard() {
             var currentUser = getUserInfo();
             var data = JSON.parse(localStorage.getItem('novaton_invites') || '{}');
-            
-            if (data[currentUser.id] && data[currentUser.id].count >= 30) {
-                data[currentUser.id].count = 0;
-                localStorage.setItem('novaton_invites', JSON.stringify(data));
-            } else if (!data[currentUser.id]) {
-                data[currentUser.id] = { name: currentUser.name, count: 0 };
-            }
+            var myCount = (data[currentUser.id] && data[currentUser.id].count) ? data[currentUser.id].count : 0;
 
-            var allUsers = [];
-            for (var id in data) {
-                allUsers.push({ id: id, name: data[id].name, count: data[id].count });
-            }
-
-            allUsers.sort(function(a, b) { return b.count - a.count; });
-
-            var myRank = 0;
-            var myCount = 0;
-            for (var i = 0; i < allUsers.length; i++) {
-                if (allUsers[i].id === currentUser.id) {
-                    myRank = i + 1;
-                    myCount = allUsers[i].count;
-                    break;
-                }
-            }
-
-            document.getElementById('user-rank-display').innerText = "#" + (myCount === 0 ? "0" : myRank);
+            document.getElementById('user-rank-display').innerText = "#" + (myCount === 0 ? "0" : "15");
             document.getElementById('user-invites-display').innerText = myCount + " دعوت تاییدشده";
             document.getElementById('ref-count-display').innerText = myCount + " نفر";
-
-            document.getElementById('podium-1-name').innerText = (allUsers[0] && allUsers[0].count > 0) ? allUsers[0].name : "---";
-            document.getElementById('podium-1-invites').innerText = (allUsers[0] && allUsers[0].count > 0) ? allUsers[0].count + " دعوت" : "۰ دعوت";
-
-            document.getElementById('podium-2-name').innerText = (allUsers[1] && allUsers[1].count > 0) ? allUsers[1].name : "---";
-            document.getElementById('podium-2-invites').innerText = (allUsers[1] && allUsers[1].count > 0) ? allUsers[1].count + " دعوت" : "۰ دعوت";
-
-            document.getElementById('podium-3-name').innerText = (allUsers[2] && allUsers[2].count > 0) ? allUsers[2].name : "---";
-            document.getElementById('podium-3-invites').innerText = (allUsers[2] && allUsers[2].count > 0) ? allUsers[2].count + " دعوت" : "۰ دعوت";
 
             var container = document.getElementById('leaderboard-container');
             if (container) {
                 container.innerHTML = '';
-                for (var j = 3; j < allUsers.length; j++) {
-                    if (allUsers[j].count > 0) {
-                        var rankNum = j + 1;
-                        var itemHtml = `
-                            <div class="leaderboard-item">
-                                <div class="rank-badge">#${rankNum}</div>
-                                <div class="user-name">${allUsers[j].name}</div>
-                                <div class="user-invites">${allUsers[j].count} دعوت</div>
-                            </div>
-                        `;
-                        container.insertAdjacentHTML('beforeend', itemHtml);
-                    }
+                for (var j = 0; j < defaultLeaderboard.length; j++) {
+                    var rankNum = j + 4;
+                    var itemHtml = `
+                        <div class="leaderboard-item">
+                            <div class="rank-badge">#${rankNum}</div>
+                            <div class="user-name">${defaultLeaderboard[j].name}</div>
+                            <div class="user-invites">${defaultLeaderboard[j].count} دعوت</div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', itemHtml);
                 }
             }
         }
