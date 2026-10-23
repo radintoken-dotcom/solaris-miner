@@ -390,7 +390,7 @@
             </div>
         </div>
 
-        <!-- TAB 2: RANK -->
+        <!-- TAB 2: RANK (کامل و بدون دکمه الکی) -->
         <div id="tab-rank" class="tab-content" style="display:none;">
             <div class="card" style="text-align:center; border-color:#ffd700 !important;">
                 <div style="font-size:18px; font-weight:bold; color:#ffd700; margin-bottom:4px;">🏆 رتبه‌بندی و مسابقه</div>
@@ -408,17 +408,17 @@
                     </div>
                 </div>
 
-                <!-- رتبه زنده کاربر خودش -->
+                <!-- وضعیت رتبه کاربر بدون هیچ دکمه الکی -->
                 <div class="card" style="background:#161820 !important; border-color:#ffd700 !important; display:flex; justify-content:space-between; align-items:center; padding:12px 15px; margin-bottom:15px;">
                     <div style="background:#ffd700; color:#000; font-weight:bold; padding:8px 14px; border-radius:12px; font-size:15px;" id="user-rank-display">#0</div>
                     <div style="text-align:right;">
                         <div style="font-size:13px; font-weight:bold; color:#fff;">رتبه شما</div>
                         <div style="font-size:11px; color:#8da0bf; margin-top:2px;" id="user-invites-display">۰ دعوت تاییدشده</div>
                     </div>
-                    <div style="font-size:11px; color:#ffd700; font-weight:bold; background:#050608; padding:6px 10px; border-radius:10px; border:1px solid #ffd700; cursor:pointer;" onclick="simulateInviteTest()">⚡ ثبت دعوت</div>
+                    <div style="font-size:11px; color:#ffd700; font-weight:bold; background:#050608; padding:6px 10px; border-radius:10px; border:1px solid #ffd700;">🏆 تاپ ۳</div>
                 </div>
 
-                <!-- سکوی ۳ نفر اول کاملاً خام -->
+                <!-- سکوی ۳ نفر اول -->
                 <div class="podium-container">
                     <div class="podium-box">
                         <div style="font-size:12px; font-weight:bold; color:#c0c0c0; margin-bottom:4px;">🥈 #۲</div>
@@ -439,9 +439,8 @@
                     </div>
                 </div>
 
-                <!-- لیست رتبه‌های بعدی -->
                 <div class="leaderboard-list" id="leaderboard-container">
-                    <!-- با دعوت کاربران جدید پر می‌شود -->
+                    <!-- با دعوت‌های واقعی پر می‌شود -->
                 </div>
             </div>
         </div>
@@ -724,15 +723,30 @@
             return { id: 'guest_100', name: 'کاربر جدید' };
         }
 
-        /* ثبت و افزایش واقعی دعوت */
-        function simulateInviteTest() {
-            var user = getUserInfo();
-            var data = JSON.parse(localStorage.getItem('novaton_invites') || '{}');
-            if (!data[user.id]) data[user.id] = { name: user.name, count: 0 };
-            data[user.id].count += 1;
-            localStorage.setItem('novaton_invites', JSON.stringify(data));
-            loadLeaderboard();
-            alert("🎉 یک دعوت جدید اضافه شد!");
+        /* بررسی و دریافت پارامتر دعوت از لینک استارت تلگرام */
+        function checkReferralFromLink() {
+            try {
+                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
+                    var startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
+                    var currentUser = getUserInfo();
+
+                    if (startParam && startParam !== currentUser.id) {
+                        var data = JSON.parse(localStorage.getItem('novaton_invites') || '{}');
+                        
+                        // اضافه کردن دعوت برای شخص دعوت‌کننده
+                        if (!data[startParam]) {
+                            data[startParam] = { name: "کاربر " + startParam, count: 0 };
+                        }
+                        
+                        var key = 'invited_' + currentUser.id;
+                        if (!localStorage.getItem(key)) {
+                            data[startParam].count += 1;
+                            localStorage.setItem(key, 'true');
+                            localStorage.setItem('novaton_invites', JSON.stringify(data));
+                        }
+                    }
+                }
+            } catch(e) {}
         }
 
         function loadLeaderboard() {
@@ -748,7 +762,6 @@
                 allUsers.push({ id: id, name: data[id].name, count: data[id].count });
             }
 
-            // مرتب‌سازی لیست بر اساس بیشترین دعوت
             allUsers.sort(function(a, b) { return b.count - a.count; });
 
             var myRank = 0;
@@ -761,12 +774,10 @@
                 }
             }
 
-            // اگر کاربر دعوتی نداشته باشه رتبه‌اش ۰ نشون داده بشه
             document.getElementById('user-rank-display').innerText = "#" + (myCount === 0 ? "0" : myRank);
             document.getElementById('user-invites-display').innerText = myCount + " دعوت تاییدشده";
             document.getElementById('ref-count-display').innerText = myCount + " نفر";
 
-            // سکوی ۳ نفر اول (در صورت عدم وجود دعوت، خالی یا "---" قرار می‌گیرد)
             document.getElementById('podium-1-name').innerText = (allUsers[0] && allUsers[0].count > 0) ? allUsers[0].name : "---";
             document.getElementById('podium-1-invites').innerText = (allUsers[0] && allUsers[0].count > 0) ? allUsers[0].count + " دعوت" : "۰ دعوت";
 
@@ -776,7 +787,6 @@
             document.getElementById('podium-3-name').innerText = (allUsers[2] && allUsers[2].count > 0) ? allUsers[2].name : "---";
             document.getElementById('podium-3-invites').innerText = (allUsers[2] && allUsers[2].count > 0) ? allUsers[2].count + " دعوت" : "۰ دعوت";
 
-            // رتبه‌های ۴ به بعد
             var container = document.getElementById('leaderboard-container');
             if (container) {
                 container.innerHTML = '';
@@ -800,6 +810,8 @@
             var user = getUserInfo();
             var refLinkField = document.getElementById('ref-link');
             if (refLinkField) refLinkField.value = 'https://t.me/SolarisMiner_bot?start=' + user.id;
+            
+            checkReferralFromLink();
             loadLeaderboard();
         };
 
