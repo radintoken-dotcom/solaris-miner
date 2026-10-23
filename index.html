@@ -76,7 +76,7 @@
         }
 
         .big-number {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: #00f0ff;
             margin: 6px 0;
@@ -397,9 +397,10 @@
                 <div style="font-size:11px; color:#8da0bf; margin-bottom:15px;">مخصوص زیرمجموعه‌های تاییدشده • جایزه نقدی ۳۵ دلاری</div>
 
                 <div class="card" style="background:#050608 !important; border-color:#252936 !important; text-align:center; padding:15px; margin-bottom:15px;">
-                    <div style="font-size:12px; color:#ffd700; font-weight:bold; margin-bottom:6px;">🏆 مسابقه ۴۸ ساعته رتبه‌بندی</div>
-                    <div class="big-number" style="color:#ffd700; letter-spacing: 2px;">۰۰:۰۰:۰۰</div>
-                    <div style="font-size:10px; color:#8da0bf; margin-top:4px;">مسابقه فعال • رقابت برای کسب جوایز نقدی</div>
+                    <div style="font-size:12px; color:#ffd700; font-weight:bold; margin-bottom:6px;">🏆 مسابقه ۳ روزه رتبه‌بندی</div>
+                    <!-- تایمر واقعی معکوس ۳ روزه -->
+                    <div class="big-number" id="countdown-timer" style="color:#ffd700; letter-spacing: 2px;">۰۳ روز ۰۰:۰۰:۰۰</div>
+                    <div style="font-size:10px; color:#8da0bf; margin-top:4px;">مسابقه فعال • زمان باقی‌مانده تا پایان مسابقه</div>
                     
                     <div class="prize-pills-row">
                         <div class="prize-pill">🥈 دوم<br><span style="color:#fff;">۱۰ دلار</span></div>
@@ -408,7 +409,7 @@
                     </div>
                 </div>
 
-                <!-- نمایش تمیز رتبه شما بدون دکمه‌های گیج‌کننده -->
+                <!-- نمایش تمیز رتبه شما -->
                 <div class="card" style="background:#161820 !important; border-color:#ffd700 !important; display:flex; justify-content:space-between; align-items:center; padding:15px; margin-bottom:15px;">
                     <div style="text-align:right;">
                         <div style="font-size:14px; font-weight:bold; color:#fff;">وضعیت رتبه شما</div>
@@ -722,7 +723,40 @@
             return { id: 'guest_100', name: 'کاربر جدید' };
         }
 
-        /* سیستم بررسی لینک دعوت ورودی */
+        /* تایمر زنده ۳ روزه معکوس */
+        function startCountdown() {
+            var endTimeKey = 'novaton_contest_endtime';
+            var endTime = localStorage.getItem(endTimeKey);
+
+            if (!endTime) {
+                endTime = new Date().getTime() + (3 * 24 * 60 * 60 * 1000); // ۳ روز برحسب میلی‌ثانیه
+                localStorage.setItem(endTimeKey, endTime);
+            }
+
+            setInterval(function() {
+                var now = new Date().getTime();
+                var distance = endTime - now;
+
+                if (distance < 0) {
+                    document.getElementById('countdown-timer').innerText = "پایان مسابقه";
+                    return;
+                }
+
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                var daysText = days < 10 ? '۰' + days : days;
+                document.getElementById('countdown-timer').innerText = daysText + " روز " + hours + ":" + minutes + ":" + seconds;
+            }, 1000);
+        }
+
+        /* بررسی و ثبت واقعی دعوت از طریق لینک */
         function checkReferralFromLink() {
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
@@ -751,7 +785,11 @@
             var currentUser = getUserInfo();
             var data = JSON.parse(localStorage.getItem('novaton_invites') || '{}');
             
-            if (!data[currentUser.id]) {
+            // صفر کردن تست‌های ۳۸ تایی قبلی اگر فقط در حافظه لوکال شما مانده بود
+            if (data[currentUser.id] && data[currentUser.id].count >= 30) {
+                data[currentUser.id].count = 0;
+                localStorage.setItem('novaton_invites', JSON.stringify(data));
+            } else if (!data[currentUser.id]) {
                 data[currentUser.id] = { name: currentUser.name, count: 0 };
             }
 
@@ -811,6 +849,7 @@
             
             checkReferralFromLink();
             loadLeaderboard();
+            startCountdown();
         };
 
         function switchTab(tabName) {
