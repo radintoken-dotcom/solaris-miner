@@ -1,64 +1,66 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Solaris Miner - ماینر خورشیدی</title>
+    <title>Solaris Miner - Cloud Mining</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: tahoma, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: #0b0e14;
-            color: #ffffff;
+            background-color: #f7f4ed;
+            color: #1a1a1a;
             display: flex;
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
-            direction: rtl;
+            direction: ltr;
         }
 
         .header {
-            background: linear-gradient(180deg, #151a23, #0b0e14);
+            background: linear-gradient(180deg, #ffffff, #f7f4ed);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 20px;
-            border-bottom: 1px solid #1f293d;
+            border-bottom: 1px solid #e6e0d4;
         }
 
         .brand-box h1 {
-            font-size: 16px;
-            color: #00f0ff;
+            font-size: 17px;
+            color: #0d3b33;
             font-weight: bold;
+            letter-spacing: 0.5px;
         }
 
         .balance-box {
-            background: #151a23;
-            border: 1px solid #1f293d;
+            background: #ffffff;
+            border: 1px solid #dcd5c6;
             padding: 8px 14px;
             border-radius: 20px;
             display: flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
 
         .balance-amount {
             font-size: 13px;
             font-weight: bold;
-            color: #ffd700;
+            color: #0d3b33;
         }
 
         .add-btn {
-            background: #00f0ff;
-            color: #0b0e14;
+            background: #0d3b33;
+            color: #ffffff;
             border: none;
             width: 22px;
             height: 22px;
@@ -86,51 +88,54 @@
         }
 
         .stats-card {
-            background: linear-gradient(145deg, #151a23, #0f131a);
-            border: 1px solid #1f293d;
+            background: #ffffff;
+            border: 1px solid #e6e0d4;
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .mining-live-card {
-            background: linear-gradient(145deg, #101c2c, #0b1420);
-            border: 1px solid #00f0ff;
+            background: linear-gradient(135deg, #0d3b33, #06231f);
+            border: 1px solid #145a4d;
             border-radius: 18px;
             padding: 18px;
             margin-bottom: 16px;
             text-align: center;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+            box-shadow: 0 8px 20px rgba(13, 59, 51, 0.15);
+            color: #ffffff;
         }
 
         .unclaimed-amount {
             font-size: 26px;
             font-weight: bold;
-            color: #00f0ff;
+            color: #a3e4d7;
             margin: 8px 0;
             letter-spacing: 1px;
-            direction: ltr;
         }
 
         .property-card {
-            background: linear-gradient(145deg, #151a23, #0f131a);
-            border: 1px solid #1f293d;
+            background: #ffffff;
+            border: 1px solid #e6e0d4;
             border-radius: 18px;
             padding: 16px;
             margin-bottom: 14px;
             position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .property-card.active-miner {
             border-color: #28a745;
+            background: #fdfefe;
         }
 
         .property-badge {
             position: absolute;
             top: 14px;
-            left: 14px;
-            background: #1f293d;
-            color: #00f0ff;
+            right: 14px;
+            background: #f0ece1;
+            color: #0d3b33;
             font-size: 10px;
             padding: 4px 10px;
             border-radius: 10px;
@@ -140,35 +145,35 @@
         .property-title {
             font-size: 15px;
             font-weight: bold;
-            color: #fff;
+            color: #1a1a1a;
             margin-bottom: 4px;
         }
 
         .property-desc {
             font-size: 11px;
-            color: #8da0bf;
+            color: #666666;
             margin-bottom: 12px;
         }
 
         .property-grid {
             display: flex;
             justify-content: space-between;
-            background: #0b0e14;
+            background: #f7f4ed;
             padding: 10px 14px;
             border-radius: 12px;
             margin-bottom: 12px;
-            border: 1px solid #192231;
+            border: 1px solid #e6e0d4;
         }
 
         .property-stat-item div:first-child {
             font-size: 10px;
-            color: #8da0bf;
+            color: #666666;
         }
 
         .property-stat-item div:last-child {
             font-size: 13px;
             font-weight: bold;
-            color: #00f0ff;
+            color: #0d3b33;
             margin-top: 2px;
         }
 
@@ -180,13 +185,13 @@
 
         .property-price {
             font-size: 14px;
-            color: #ffd700;
+            color: #b7950b;
             font-weight: bold;
         }
 
         .btn-buy {
-            background: linear-gradient(135deg, #00f0ff, #0088ff);
-            color: #0b0e14;
+            background: linear-gradient(135deg, #0d3b33, #114b40);
+            color: #ffffff;
             border: none;
             padding: 10px 18px;
             border-radius: 12px;
@@ -194,6 +199,7 @@
             font-size: 12px;
             cursor: pointer;
             transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(13, 59, 51, 0.2);
         }
 
         .btn-buy:active {
@@ -225,12 +231,13 @@
             left: 0;
             right: 0;
             height: 65px;
-            background: #0f131a;
+            background: #ffffff;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            border-top: 1px solid #1f293d;
+            border-top: 1px solid #e6e0d4;
             z-index: 1000;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.03);
         }
 
         .nav-item {
@@ -238,7 +245,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #8da0bf;
+            color: #888888;
             font-size: 10px;
             cursor: pointer;
             flex: 1;
@@ -246,7 +253,7 @@
         }
 
         .nav-item.active {
-            color: #00f0ff;
+            color: #0d3b33;
             font-weight: bold;
         }
 
@@ -265,18 +272,20 @@
             border-radius: 20px;
             padding: 18px;
             margin-bottom: 14px;
-            text-align: right;
+            text-align: left;
+            color: #ffffff;
         }
 
         .friends-collect-card {
-            background: #151a23;
-            border: 1px solid #1f293d;
+            background: #ffffff;
+            border: 1px solid #e6e0d4;
             border-radius: 18px;
             padding: 16px;
             margin-bottom: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .friends-stats-row {
@@ -287,11 +296,12 @@
 
         .friends-stat-box {
             flex: 1;
-            background: #151a23;
-            border: 1px solid #1f293d;
+            background: #ffffff;
+            border: 1px solid #e6e0d4;
             border-radius: 16px;
             padding: 14px 10px;
             text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .wallet-main-card {
@@ -300,7 +310,8 @@
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 20px rgba(13, 59, 51, 0.2);
+            color: #ffffff;
         }
 
         .wallet-btn-row {
@@ -311,8 +322,8 @@
 
         .wallet-action-btn {
             flex: 1;
-            background: #f4efe6;
-            color: #0b221e;
+            background: #ffffff;
+            color: #0d3b33;
             border: none;
             padding: 12px;
             border-radius: 14px;
@@ -323,6 +334,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .wallet-action-btn.outline {
@@ -332,28 +344,28 @@
         }
 
         .wallet-menu-box {
-            background: #151a23;
-            border: 1px solid #1f293d;
+            background: #ffffff;
+            border: 1px solid #e6e0d4;
             border-radius: 16px;
             padding: 14px 18px;
             margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .wallet-input {
             width: 100%;
-            background: #0b0e14;
-            border: 1px solid #1f293d;
+            background: #f7f4ed;
+            border: 1px solid #e6e0d4;
             border-radius: 12px;
             padding: 12px;
-            color: #00f0ff;
+            color: #0d3b33;
             font-size: 12px;
-            text-align: right;
+            text-align: left;
             margin-top: 6px;
             outline: none;
-            direction: ltr;
         }
 
         .profile-header-card {
@@ -369,64 +381,67 @@
             height: 68px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #00f0ff;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+            border: 2px solid #0d3b33;
+            box-shadow: 0 4px 12px rgba(13, 59, 51, 0.2);
         }
 
         .profile-title-name {
             font-size: 20px;
             font-weight: bold;
-            color: #28a745;
+            color: #0d3b33;
         }
 
         .profile-subtext {
             font-size: 12px;
-            color: #8da0bf;
+            color: #666666;
             margin-top: 2px;
         }
 
         .profile-info-card {
-            background: #151a23;
-            border: 1px solid #1f293d;
+            background: #ffffff;
+            border: 1px solid #e6e0d4;
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .profile-info-label {
             font-size: 13px;
-            color: #8da0bf;
+            color: #666666;
         }
 
         .profile-info-value {
             font-size: 18px;
             font-weight: bold;
-            color: #28a745;
+            color: #0d3b33;
         }
 
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.5);
             z-index: 2000;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            backdrop-filter: blur(4px);
         }
 
         .modal-card {
-            background: #151a23;
-            border: 1px solid #1f293d;
+            background: #ffffff;
+            border: 1px solid #e6e0d4;
             border-radius: 20px;
             padding: 20px;
             width: 100%;
             max-width: 400px;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -439,7 +454,7 @@
         </div>
         <div class="balance-box">
             <div>
-                <div style="font-size: 9px; color: #8da0bf;">موجودی:</div>
+                <div style="font-size: 9px; color: #666666;">Balance:</div>
                 <span class="balance-amount" id="user-balance">0.00 TON</span>
             </div>
             <button class="add-btn" onclick="switchTab('wallet')">+</button>
@@ -449,89 +464,89 @@
     <!-- CONTENT -->
     <div class="content">
 
-        <!-- TAB 1: PROPERTIES (ماینرها) -->
+        <!-- TAB 1: PROPERTIES (Miners) -->
         <div id="tab-properties" class="tab-content active">
             <div class="mining-live-card">
-                <div style="font-size: 11px; color: #8da0bf;">⚡ درآمد آماده برداشت (کلایم)</div>
+                <div style="font-size: 11px; color: #a3e4d7;">⚡ Ready to claim earnings</div>
                 <div class="unclaimed-amount" id="live-unclaimed">0.00000000 TON</div>
-                <button class="btn-claim" onclick="claimEarnings()">📥 برداشت و اضافه به کیف پول (Claim)</button>
+                <button class="btn-claim" onclick="claimEarnings()">Claim Rewards</button>
             </div>
 
             <div class="stats-card" style="display: flex; justify-content: space-between; align-items: center; padding: 14px;">
                 <div>
-                    <div style="font-size: 11px; color: #8da0bf;">تجهیزات فعال شما</div>
-                    <div style="font-size: 14px; font-weight: bold; color: #fff; margin-top: 2px;" id="owned-count">1 / 12 فعال</div>
+                    <div style="font-size: 11px; color: #666666;">Active Miners</div>
+                    <div style="font-size: 14px; font-weight: bold; color: #1a1a1a; margin-top: 2px;" id="owned-count">1 / 12 Active</div>
                 </div>
-                <div style="text-align: left;">
-                    <div style="font-size: 11px; color: #8da0bf;">سرعت استخراج روزانه</div>
-                    <div style="font-size: 14px; font-weight: bold; color: #00f0ff; margin-top: 2px;" id="total-daily">+0.10 TON</div>
+                <div style="text-align: right;">
+                    <div style="font-size: 11px; color: #666666;">Daily Income</div>
+                    <div style="font-size: 14px; font-weight: bold; color: #0d3b33; margin-top: 2px;" id="total-daily">+0.10 TON</div>
                 </div>
             </div>
 
             <div id="properties-list"></div>
         </div>
 
-        <!-- TAB 2: MY RESORT (دارایی من) -->
+        <!-- TAB 2: MY RESORT (My Miners) -->
         <div id="tab-myresort" class="tab-content">
             <div style="text-align: center; padding: 30px 15px;">
                 <div style="font-size: 32px; margin-bottom: 10px;">⚙️</div>
-                <h3 style="font-size: 16px; color: #fff; margin-bottom: 8px;">دستگاه‌های فعال و در حال ماین</h3>
-                <p style="font-size: 11px; color: #8da0bf; line-height: 1.6; margin-bottom: 15px;">لیست تمامی ماینرهایی که آنلاین بوده و ثانیه‌ای برای شما سود تولید می‌کنند.</p>
+                <h3 style="font-size: 16px; color: #1a1a1a; margin-bottom: 8px;">Active Mining Units</h3>
+                <p style="font-size: 11px; color: #666666; line-height: 1.6; margin-bottom: 15px;">All purchased mining devices are currently generating rewards every second.</p>
                 <div id="my-miners-list"></div>
             </div>
         </div>
 
-        <!-- TAB 3: FRIENDS (دعوت دوستان) -->
+        <!-- TAB 3: FRIENDS -->
         <div id="tab-friends" class="tab-content">
-            <div style="font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 4px;">Friends</div>
-            <div style="font-size: 11px; color: #8da0bf; margin-bottom: 14px;">YOUR CIRCLE OF FRIENDS</div>
+            <div style="font-size: 18px; font-weight: bold; color: #1a1a1a; margin-bottom: 4px;">Friends</div>
+            <div style="font-size: 11px; color: #666666; margin-bottom: 14px;">YOUR CIRCLE OF FRIENDS</div>
 
             <div class="friends-top-card">
-                <div style="font-size: 20px; font-weight: bold; color: #28a745; margin-bottom: 8px;">15% <span style="font-size: 12px; color: #a3b8b2; font-weight: normal;">of friends' deposits</span></div>
-                <div style="display: inline-block; background: #06231f; border: 1px solid #145a4d; color: #28a745; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">
-                    +0.01 TON <span style="color: #a3b8b2; font-weight: normal;">for every friend</span>
+                <div style="font-size: 20px; font-weight: bold; color: #a3e4d7; margin-bottom: 8px;">15% <span style="font-size: 12px; color: #ffffff; font-weight: normal;">of friends' deposits</span></div>
+                <div style="display: inline-block; background: #06231f; border: 1px solid #145a4d; color: #a3e4d7; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">
+                    +0.01 TON <span style="color: #ffffff; font-weight: normal;">for every friend</span>
                 </div>
             </div>
 
             <div class="friends-collect-card">
                 <div>
-                    <div style="font-size: 11px; color: #8da0bf;">Ready to collect</div>
-                    <div style="font-size: 20px; font-weight: bold; color: #fff; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #ffd700;">TON</span></div>
+                    <div style="font-size: 11px; color: #666666;">Ready to collect</div>
+                    <div style="font-size: 20px; font-weight: bold; color: #1a1a1a; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #b7950b;">TON</span></div>
                 </div>
-                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; border: 1px solid #145a4d; padding: 10px 20px;" onclick="collectFriendReward()">Collect</button>
+                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; padding: 10px 20px;" onclick="collectFriendReward()">Collect</button>
             </div>
 
             <div class="wallet-menu-box" style="flex-direction: column; align-items: flex-start; gap: 8px;">
-                <div style="font-size: 11px; color: #8da0bf;">Your invitation link</div>
+                <div style="font-size: 11px; color: #666666;">Your invitation link</div>
                 <div style="display: flex; width: 100%; gap: 8px;">
                     <input type="text" class="wallet-input" id="ref-link-input" readonly style="margin-top: 0; flex: 1;">
-                    <button class="wallet-action-btn" style="background: #e1dcd3; padding: 0 16px; font-size: 12px;" onclick="copyRefLink()">Copy</button>
+                    <button class="wallet-action-btn" style="background: #e6e0d4; padding: 0 16px; font-size: 12px;" onclick="shareRefLink()">Share Direct</button>
                 </div>
             </div>
 
             <div class="friends-stats-row">
                 <div class="friends-stat-box">
-                    <div style="font-size: 16px; font-weight: bold; color: #fff;" id="friend-count">0</div>
-                    <div style="font-size: 10px; color: #8da0bf; margin-top: 4px;">Friends</div>
+                    <div style="font-size: 16px; font-weight: bold; color: #1a1a1a;" id="friend-count">0</div>
+                    <div style="font-size: 10px; color: #666666; margin-top: 4px;">Friends</div>
                 </div>
                 <div class="friends-stat-box">
-                    <div style="font-size: 16px; font-weight: bold; color: #ffd700;" id="friend-earned">0.00</div>
-                    <div style="font-size: 10px; color: #8da0bf; margin-top: 4px;">Earned, TON</div>
+                    <div style="font-size: 16px; font-weight: bold; color: #b7950b;" id="friend-earned">0.00</div>
+                    <div style="font-size: 10px; color: #666666; margin-top: 4px;">Earned, TON</div>
                 </div>
                 <div class="friends-stat-box">
-                    <div style="font-size: 16px; font-weight: bold; color: #00f0ff;" id="friend-deposits">0.00</div>
-                    <div style="font-size: 10px; color: #8da0bf; margin-top: 4px;">Deposits, TON</div>
+                    <div style="font-size: 16px; font-weight: bold; color: #0d3b33;" id="friend-deposits">0.00</div>
+                    <div style="font-size: 10px; color: #666666; margin-top: 4px;">Deposits, TON</div>
                 </div>
             </div>
 
             <div class="wallet-menu-box" style="display: block; text-align: center; padding: 25px;">
-                <div style="font-size: 14px; font-weight: bold; color: #fff; margin-bottom: 6px;">My friends</div>
-                <div style="font-size: 11px; color: #8da0bf; margin-bottom: 15px;">No invited friends yet. Send a friend your link. They will appear here after joining.</div>
-                <div style="background: #0b0e14; border: 1px solid #1f293d; border-radius: 12px; padding: 10px; font-size: 12px; color: #8da0bf;">0</div>
+                <div style="font-size: 14px; font-weight: bold; color: #1a1a1a; margin-bottom: 6px;">My friends</div>
+                <div style="font-size: 11px; color: #666666; margin-bottom: 15px;">No invited friends yet. Send a friend your link. They will appear here after joining.</div>
+                <div style="background: #f7f4ed; border: 1px solid #e6e0d4; border-radius: 12px; padding: 10px; font-size: 12px; color: #666666;">0</div>
             </div>
         </div>
 
-        <!-- TAB 4: WALLET (کیف پول) -->
+        <!-- TAB 4: WALLET -->
         <div id="tab-wallet" class="tab-content">
             <div class="wallet-main-card">
                 <div style="font-size: 11px; color: #a3b8b2;">Available balance</div>
@@ -543,89 +558,83 @@
                 </div>
             </div>
 
-            <div class="wallet-menu-box" onclick="alert('تاریخچه واریزها خالی است.')">
+            <div class="wallet-menu-box" onclick="alert('Deposit history is empty.')">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">📥</span>
                     <div>
-                        <div style="font-size: 13px; font-weight: bold;">Deposits</div>
-                        <div style="font-size: 10px; color: #8da0bf;">Deposit history</div>
+                        <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">Deposits</div>
+                        <div style="font-size: 10px; color: #666666;">Deposit history</div>
                     </div>
                 </div>
-                <span style="color: #00f0ff; font-weight: bold;">مشاهده</span>
+                <span style="color: #0d3b33; font-weight: bold;">View</span>
             </div>
 
-            <div class="wallet-menu-box" onclick="alert('تاریخچه برداشت‌ها خالی است.')">
+            <div class="wallet-menu-box" onclick="alert('Withdrawal history is empty.')">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">📤</span>
                     <div>
-                        <div style="font-size: 13px; font-weight: bold;">Withdrawals</div>
-                        <div style="font-size: 10px; color: #8da0bf;">Withdrawal history</div>
+                        <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">Withdrawals</div>
+                        <div style="font-size: 10px; color: #666666;">Withdrawal history</div>
                     </div>
                 </div>
-                <span style="color: #00f0ff; font-weight: bold;">مشاهده</span>
+                <span style="color: #0d3b33; font-weight: bold;">View</span>
             </div>
         </div>
 
-        <!-- TAB 5: PROFILE (پروفایل) -->
+        <!-- TAB 5: PROFILE -->
         <div id="tab-profile" class="tab-content">
-            <div style="font-size: 11px; color: #8da0bf; margin-bottom: 2px;">YOUR ACCOUNT</div>
-            <div style="font-size: 22px; font-weight: bold; color: #28a745; margin-bottom: 4px;">Profile</div>
-            <div style="font-size: 11px; color: #8da0bf; margin-bottom: 18px;">Your account, statistics and useful links.</div>
+            <div style="font-size: 11px; color: #666666; margin-bottom: 2px;">YOUR ACCOUNT</div>
+            <div style="font-size: 22px; font-weight: bold; color: #0d3b33; margin-bottom: 4px;">Profile</div>
+            <div style="font-size: 11px; color: #666666; margin-bottom: 18px;">Your account, statistics and useful links.</div>
 
-            <!-- هدر کاربر -->
             <div class="profile-header-card">
                 <img id="profile-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-avatar" alt="User Avatar">
                 <div>
-                    <div class="profile-title-name" id="profile-user-name">کاربر گرامی</div>
-                    <div class="profile-subtext">Your island collection</div>
+                    <div class="profile-title-name" id="profile-user-name">User</div>
+                    <div class="profile-subtext">Solaris Miner Collection</div>
                 </div>
             </div>
 
-            <!-- برنامه دعوت -->
-            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: #0f231e; border-color: #145a4d;">
+            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: #f0f7f4; border-color: #145a4d;">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">🎁</span>
                     <div>
-                        <div style="font-size: 13px; color: #28a745; font-weight: bold;">Invite friends</div>
-                        <div style="font-size: 10px; color: #8da0bf;">Referral program and rewards</div>
+                        <div style="font-size: 13px; color: #0d3b33; font-weight: bold;">Invite friends</div>
+                        <div style="font-size: 10px; color: #666666;">Referral program and rewards</div>
                     </div>
                 </div>
-                <span style="color: #28a745; font-weight: bold; font-size: 16px;">&rarr;</span>
+                <span style="color: #0d3b33; font-weight: bold; font-size: 16px;">&rarr;</span>
             </div>
 
-            <!-- User ID اختصاصی -->
             <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
                 <div class="profile-info-label">User ID</div>
                 <div class="profile-info-value" id="profile-user-id">85354</div>
             </div>
 
-            <!-- واریز کل -->
             <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
                 <div class="profile-info-label">Total deposited</div>
                 <div class="profile-info-value" id="profile-total-deposited">0.00</div>
             </div>
 
-            <!-- برداشت کل -->
             <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
                 <div class="profile-info-label">Total withdrawn</div>
                 <div class="profile-info-value" id="profile-total-withdrawn">0.00</div>
             </div>
 
-            <!-- تاریخچه‌ها -->
             <div class="profile-info-card">
                 <div>
-                    <div style="font-size: 13px; font-weight: bold; color: #fff;">Deposits</div>
-                    <div style="font-size: 10px; color: #8da0bf;">Deposit history</div>
+                    <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">Deposits</div>
+                    <div style="font-size: 10px; color: #666666;">Deposit history</div>
                 </div>
-                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; border: 1px solid #145a4d; padding: 8px 16px; font-size: 12px;" onclick="alert('تاریخچه واریزها خالی است.')">Open</button>
+                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; padding: 8px 16px; font-size: 12px;" onclick="alert('Deposit history is empty.')">Open</button>
             </div>
 
             <div class="profile-info-card">
                 <div>
-                    <div style="font-size: 13px; font-weight: bold; color: #fff;">Withdrawals</div>
-                    <div style="font-size: 10px; color: #8da0bf;">Withdrawal history</div>
+                    <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">Withdrawals</div>
+                    <div style="font-size: 10px; color: #666666;">Withdrawal history</div>
                 </div>
-                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; border: 1px solid #145a4d; padding: 8px 16px; font-size: 12px;" onclick="alert('تاریخچه برداشت‌ها خالی است.')">Open</button>
+                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; padding: 8px 16px; font-size: 12px;" onclick="alert('Withdrawal history is empty.')">Open</button>
             </div>
 
         </div>
@@ -635,48 +644,48 @@
     <!-- MODAL: DEPOSIT -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #00f0ff; margin-bottom: 10px; text-align: center;">شارژ حساب (Deposit)</div>
-            <p style="font-size: 11px; color: #8da0bf; margin-bottom: 10px; text-align: center;">ارز TON یا تتر (USDT روی شبکه TON) را به آدرس زیر واریز کنید:</p>
+            <div style="font-size: 15px; font-weight: bold; color: #0d3b33; margin-bottom: 10px; text-align: center;">Account Deposit</div>
+            <p style="font-size: 11px; color: #666666; margin-bottom: 10px; text-align: center;">Send TON or USDT (TON Network) to the address below:</p>
             
-            <label style="font-size: 10px; color: #8da0bf;">آدرس ولت:</label>
+            <label style="font-size: 10px; color: #666666;">Wallet Address:</label>
             <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="dep-addr">
-            <button class="btn-buy" style="width: 100%; margin-top: 6px; font-size: 11px; padding: 8px;" onclick="copyWallet('dep-addr')">📋 کپی آدرس ولت</button>
+            <button class="btn-buy" style="width: 100%; margin-top: 6px; font-size: 11px; padding: 8px;" onclick="copyWallet('dep-addr')">Copy Wallet Address</button>
 
             <div style="margin-top: 12px;">
-                <label style="font-size: 10px; color: #ffd700;">ممو (Memo / Comment) اختصاصی شما:</label>
-                <input type="text" class="wallet-input" value="" readonly id="user-memo-code" style="color:#ffd700; font-weight:bold;">
-                <p style="font-size: 9px; color: #8da0bf; margin-top: 4px;">⚠️ حتماً این ممو را هنگام واریز وارد کنید تا حساب شما اتوماتیک شارژ شود.</p>
+                <label style="font-size: 10px; color: #b7950b;">Your Unique Memo (Telegram ID):</label>
+                <input type="text" class="wallet-input" value="" readonly id="user-memo-code" style="color:#0d3b33; font-weight:bold;">
+                <p style="font-size: 9px; color: #666666; margin-top: 4px;">⚠️ Include this memo when depositing for automatic crediting.</p>
             </div>
 
-            <button class="btn-buy" style="width: 100%; background: #1f293d; color: #8da0bf; margin-top: 15px;" onclick="closeModal('deposit-modal')">بستن</button>
+            <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 15px;" onclick="closeModal('deposit-modal')">Close</button>
         </div>
     </div>
 
     <!-- MODAL: WITHDRAW -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #ffd700; margin-bottom: 12px; text-align: center;">برداشت وجه (Withdraw)</div>
+            <div style="font-size: 15px; font-weight: bold; color: #0d3b33; margin-bottom: 12px; text-align: center;">Withdrawal</div>
             
             <div style="margin-bottom: 10px;">
-                <label style="font-size: 11px; color: #8da0bf;">انتخاب ارز / شبکه:</label>
+                <label style="font-size: 11px; color: #666666;">Select Currency / Network:</label>
                 <select id="withdraw-currency" class="wallet-input" style="cursor: pointer;">
-                    <option value="TON">TON (شبکه اصلی تون)</option>
-                    <option value="USDT">USDT (تتر روی شبکه تون)</option>
+                    <option value="TON">TON (TON Network)</option>
+                    <option value="USDT">USDT (TON Network)</option>
                 </select>
             </div>
 
             <div style="margin-bottom: 10px;">
-                <label style="font-size: 11px; color: #8da0bf;">مقدار برداشت (حداقل 1 دلار/تون):</label>
+                <label style="font-size: 11px; color: #666666;">Withdrawal Amount (Min 1 USD/TON):</label>
                 <input type="number" id="withdraw-amount" class="wallet-input" placeholder="1.00" min="1" step="0.1">
             </div>
 
             <div style="margin-bottom: 15px;">
-                <label style="font-size: 11px; color: #8da0bf;">آدرس کیف پول شما (Your address):</label>
-                <input type="text" id="withdraw-address" class="wallet-input" placeholder="UQ... آدرس ولت مقصد">
+                <label style="font-size: 11px; color: #666666;">Your Destination Address:</label>
+                <input type="text" id="withdraw-address" class="wallet-input" placeholder="UQ... wallet address">
             </div>
 
-            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); font-size: 13px;" onclick="processWithdraw()">✅ ثبت درخواست برداشت</button>
-            <button class="btn-buy" style="width: 100%; background: #1f293d; color: #8da0bf; margin-top: 8px;" onclick="closeModal('withdraw-modal')">انصراف</button>
+            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); font-size: 13px;" onclick="processWithdraw()">Confirm Withdrawal</button>
+            <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 8px;" onclick="closeModal('withdraw-modal')">Cancel</button>
         </div>
     </div>
 
@@ -684,40 +693,40 @@
     <div class="nav-bar">
         <div class="nav-item active" id="nav-properties" onclick="switchTab('properties')">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            <span>ماینرها</span>
+            <span>Miners</span>
         </div>
         <div class="nav-item" id="nav-myresort" onclick="switchTab('myresort')">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span>دارایی من</span>
+            <span>My Miners</span>
         </div>
         <div class="nav-item" id="nav-friends" onclick="switchTab('friends')">
             <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            <span>دوستان</span>
+            <span>Friends</span>
         </div>
         <div class="nav-item" id="nav-wallet" onclick="switchTab('wallet')">
             <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-            <span>کیف پول</span>
+            <span>Wallet</span>
         </div>
         <div class="nav-item" id="nav-profile" onclick="switchTab('profile')">
             <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <span>پروفایل</span>
+            <span>Profile</span>
         </div>
     </div>
 
     <script>
         const initialProperties = [
-            { id: 1, name: "Beach Bungalow", desc: "ماینر خورشیدی پایه ساحلی", daily: 0.10, monthly: 3.00, price: 0.00 },
-            { id: 2, name: "Seaside Café", desc: "نیروگاه کوچک ساحلی", daily: 0.66, monthly: 19.80, price: 3.00 },
-            { id: 3, name: "Thai Spa", desc: "سیستم ترکیبی انرژی گرمایی", daily: 1.20, monthly: 36.00, price: 5.00 },
-            { id: 4, name: "Pool Villa", desc: "پنل پیشرفته خورشیدی خانگی", daily: 2.60, monthly: 78.00, price: 10.00 },
-            { id: 5, name: "Overwater Restaurant", desc: "توربین آبی و خورشیدی ساحلی", daily: 7.00, monthly: 210.00, price: 25.00 },
-            { id: 6, name: "Villa Collection", desc: "مجموعه مزارع کوچک استخراج", daily: 15.00, monthly: 450.00, price: 50.00 },
-            { id: 7, name: "Beach Club", desc: "استیشن قدرتمند سولاریس", daily: 35.00, monthly: 1050.00, price: 100.00 },
-            { id: 8, name: "Boutique Hotel", desc: "مرکز داده و پردازش ابری", daily: 100.00, monthly: 3000.00, price: 250.00 },
-            { id: 9, name: "Yacht Marina", desc: "کلونی استخراج توربینی دریایی", daily: 175.00, monthly: 5250.00, price: 350.00 },
-            { id: 10, name: "Wellness Resort", desc: "مجتمع بزرگ انرژی پاک", daily: 500.00, monthly: 15000.00, price: 500.00 },
-            { id: 11, name: "Grand Hotel", desc: "شبکه پیشرفته استخراج صنعتی", daily: 1600.00, monthly: 48000.00, price: 800.00 },
-            { id: 12, name: "Island Resort", desc: "جزیره کامل استخراج اتوماتیک", daily: 3000.00, monthly: 90000.00, price: 1000.00 }
+            { id: 1, name: "Beach Bungalow", desc: "Base solar mining unit", daily: 0.10, monthly: 3.00, price: 0.00 },
+            { id: 2, name: "Seaside Café", desc: "Small coastal power station", daily: 0.66, monthly: 19.80, price: 3.00 },
+            { id: 3, name: "Thai Spa", desc: "Thermal energy hybrid system", daily: 1.20, monthly: 36.00, price: 5.00 },
+            { id: 4, name: "Pool Villa", desc: "Advanced home solar panel", daily: 2.60, monthly: 78.00, price: 10.00 },
+            { id: 5, name: "Overwater Restaurant", desc: "Hydro & solar coastal turbine", daily: 7.00, monthly: 210.00, price: 25.00 },
+            { id: 6, name: "Villa Collection", desc: "Small scale mining cluster", daily: 15.00, monthly: 450.00, price: 50.00 },
+            { id: 7, name: "Beach Club", desc: "Powerful Solaris station", daily: 35.00, monthly: 1050.00, price: 100.00 },
+            { id: 8, name: "Boutique Hotel", desc: "Cloud data & processing center", daily: 100.00, monthly: 3000.00, price: 250.00 },
+            { id: 9, name: "Yacht Marina", desc: "Offshore turbine mining colony", daily: 175.00, monthly: 5250.00, price: 350.00 },
+            { id: 10, name: "Wellness Resort", desc: "Large clean energy complex", daily: 500.00, monthly: 15000.00, price: 500.00 },
+            { id: 11, name: "Grand Hotel", desc: "Advanced industrial network", daily: 1600.00, monthly: 48000.00, price: 800.00 },
+            { id: 12, name: "Island Resort", desc: "Fully automated island miner", daily: 3000.00, monthly: 90000.00, price: 1000.00 }
         ];
 
         let state = {
@@ -726,7 +735,7 @@
             unclaimed: 0.0,
             lastTick: Date.now(),
             telegramId: "85354",
-            userName: "M_ltf_m",
+            userName: "User",
             photoUrl: "",
             friendReward: 0.0,
             friendCount: 0,
@@ -737,7 +746,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v7');
+            const saved = localStorage.getItem('solaris_miner_save_v9');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -753,7 +762,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v7', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v9', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -773,24 +782,24 @@
                 
                 const html = `
                     <div class="property-card ${isOwned ? 'active-miner' : ''}">
-                        <div class="property-badge" style="${isOwned ? 'background:#1b3d22; color:#28a745;' : ''}">${isOwned ? '⚡ فعال در حال ماین' : '#' + item.id}</div>
+                        <div class="property-badge" style="${isOwned ? 'background:#d4edda; color:#155724;' : ''}">${isOwned ? '⚡ Active' : '#' + item.id}</div>
                         <div class="property-title">${item.name}</div>
                         <div class="property-desc">${item.desc}</div>
                         
                         <div class="property-grid">
                             <div class="property-stat-item">
-                                <div>درآمد روزانه</div>
+                                <div>Daily Income</div>
                                 <div>+${item.daily.toFixed(2)} TON</div>
                             </div>
-                            <div class="property-stat-item" style="text-align: left;">
-                                <div>سود ۳۰ روزه</div>
+                            <div class="property-stat-item" style="text-align: right;">
+                                <div>30 Days Return</div>
                                 <div>${item.monthly.toFixed(2)} TON</div>
                             </div>
                         </div>
 
                         <div class="property-footer">
-                            <div class="property-price">${item.price === 0 ? 'رایگان' : item.price + ' TON'}</div>
-                            <button class="btn-buy" style="${isOwned ? 'background:#1f293d; color:#8da0bf; cursor:default;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'خریداری شده' : 'خرید و فعال‌سازی'}</button>
+                            <div class="property-price">${item.price === 0 ? 'Free' : item.price + ' TON'}</div>
+                            <button class="btn-buy" style="${isOwned ? 'background:#e6e0d4; color:#666666; cursor:default; box-shadow:none;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Open Property'}</button>
                         </div>
                     </div>
                 `;
@@ -798,9 +807,9 @@
 
                 if (isOwned) {
                     const myHtml = `
-                        <div class="property-card active-miner" style="text-align:right;">
-                            <div class="property-title" style="color:#00f0ff;">⚡ ${item.name}</div>
-                            <div class="property-desc">سرعت استخراج: +${item.daily.toFixed(2)} TON در روز</div>
+                        <div class="property-card active-miner" style="text-align:left;">
+                            <div class="property-title" style="color:#0d3b33;">⚡ ${item.name}</div>
+                            <div class="property-desc">Mining Speed: +${item.daily.toFixed(2)} TON / day</div>
                         </div>
                     `;
                     myContainer.insertAdjacentHTML('beforeend', myHtml);
@@ -815,21 +824,22 @@
 
             const prop = initialProperties.find(p => p.id === id);
             if (state.balance < prop.price) {
-                alert("موجودی شما کافی نیست. لطفا حساب خود را از طریق بخش کیف پول شارژ کنید.");
+                alert("Insufficient balance. Please deposit funds via wallet.");
                 switchTab('wallet');
                 return;
             }
 
             state.balance -= prop.price;
+            state.totalDeposited += prop.price;
             state.ownedIds.push(id);
             saveState();
             renderProperties();
-            alert(`🎉 ماینر ${prop.name} با موفقیت خریداری شد!`);
+            alert(`🎉 Miner ${prop.name} successfully activated!`);
         }
 
         function claimEarnings() {
             if (state.unclaimed <= 0) {
-                alert("هنوز سودی برای برداشت جمع نشده است.");
+                alert("No rewards available to claim yet.");
                 return;
             }
 
@@ -837,12 +847,12 @@
             state.unclaimed = 0;
             saveState();
             updateUI();
-            alert("✅ سود انباشته به موجودی اصلی شما اضافه شد!");
+            alert("✅ Rewards successfully added to your balance!");
         }
 
         function collectFriendReward() {
             if (state.friendReward <= 0) {
-                alert("پاداشی برای برداشت موجود نیست.");
+                alert("No referral rewards available.");
                 return;
             }
             state.balance += state.friendReward;
@@ -850,7 +860,7 @@
             state.friendReward = 0.0;
             saveState();
             updateUI();
-            alert("✅ پاداش دوستان به موجودی شما اضافه شد!");
+            alert("✅ Referral rewards collected!");
         }
 
         function processWithdraw() {
@@ -859,15 +869,15 @@
             const address = document.getElementById('withdraw-address').value.trim();
 
             if (amount < 1) {
-                alert("❌ حداقل مقدار برداشت ۱ دلار (یا تون) است.");
+                alert("❌ Minimum withdrawal is 1 USD/TON.");
                 return;
             }
             if (state.balance < amount) {
-                alert("❌ موجودی حساب شما برای این برداشت کافی نیست.");
+                alert("❌ Insufficient account balance.");
                 return;
             }
             if (!address || address.length < 10) {
-                alert("❌ لطفاً آدرس معتبر کیف پول خود را وارد کنید.");
+                alert("❌ Please enter a valid wallet address.");
                 return;
             }
 
@@ -876,7 +886,7 @@
             saveState();
             updateUI();
             closeModal('withdraw-modal');
-            alert(`✅ درخواست برداشت ${amount} ${currency} با موفقیت ثبت شد.`);
+            alert(`✅ Withdrawal request of ${amount} ${currency} submitted successfully.`);
         }
 
         function updateUI() {
@@ -884,7 +894,7 @@
             document.getElementById('wallet-balance-display').innerText = state.balance.toFixed(2) + ' TON';
             document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8) + ' TON';
             
-            document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 فعال";
+            document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 Active";
             document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
 
             document.getElementById('friend-reward-display').innerText = state.friendReward.toFixed(2);
@@ -912,7 +922,7 @@
             let input = document.getElementById(elemId);
             input.select();
             document.execCommand("copy");
-            alert("📋 آدرس ولت کپی شد!");
+            alert("📋 Wallet address copied!");
         }
 
         function openModal(modalId) {
@@ -931,11 +941,13 @@
             document.getElementById('nav-' + tabName).classList.add('active');
         }
 
-        function copyRefLink() {
-            let input = document.getElementById('ref-link-input');
-            input.select();
-            document.execCommand("copy");
-            alert("🔗 لینک دعوت کپی شد!");
+        function shareRefLink() {
+            let refUrl = "https://t.me/SolarisMiner_bot?start=" + state.telegramId;
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
+                window.Telegram.WebApp.openTelegramLink("https://t.me/share/url?url=" + encodeURIComponent(refUrl) + "&text=" + encodeURIComponent("🚀 Join Solaris Miner and start cloud mining with me!"));
+            } else {
+                window.open("https://t.me/share/url?url=" + encodeURIComponent(refUrl), "_blank");
+            }
         }
 
         window.onload = function() {
@@ -945,7 +957,7 @@
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
                     let u = window.Telegram.WebApp.initDataUnsafe.user;
                     state.telegramId = String(u.id);
-                    state.userName = u.username ? u.username : (u.first_name || 'کاربر گرامی');
+                    state.userName = u.username ? u.username : (u.first_name || 'User');
                     if (u.photo_url) {
                         state.photoUrl = u.photo_url;
                     }
