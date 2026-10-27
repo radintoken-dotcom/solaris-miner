@@ -265,7 +265,42 @@
             margin-bottom: 4px;
         }
 
-        /* استایل‌های اختصاصی کیف پول مشابه تصاویر جدید */
+        /* استایل‌های اختصاصی تب دوستان مطابق تصویر */
+        .friends-top-card {
+            background: linear-gradient(135deg, #0d3b33, #06231f);
+            border: 1px solid #145a4d;
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 14px;
+            text-align: right;
+        }
+
+        .friends-collect-card {
+            background: #151a23;
+            border: 1px solid #1f293d;
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .friends-stats-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .friends-stat-box {
+            flex: 1;
+            background: #151a23;
+            border: 1px solid #1f293d;
+            border-radius: 16px;
+            padding: 14px 10px;
+            text-align: center;
+        }
+
         .wallet-main-card {
             background: linear-gradient(135deg, #0d3b33, #06231f);
             border: 1px solid #145a4d;
@@ -403,16 +438,57 @@
             </div>
         </div>
 
-        <!-- TAB 3: FRIENDS (دعوت دوستان) -->
+        <!-- TAB 3: FRIENDS (دعوت دوستان مشابه تصویر جدید) -->
         <div id="tab-friends" class="tab-content">
-            <div class="stats-card" style="text-align: center; padding: 25px;">
-                <div style="font-size: 14px; font-weight: bold; color: #00f0ff; margin-bottom: 8px;">دعوت از دوستان و دریافت پاداش TON</div>
-                <p style="font-size: 11px; color: #8da0bf; line-height: 1.6;">با ارسال لینک اختصاصی خود، در درصد استخراج ماینرهای دوستانتان شریک شوید.</p>
-                <button class="btn-buy" style="width: 100%; margin-top: 15px;" onclick="copyRefLink()">🔗 کپی لینک دعوت</button>
+            <div style="font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 4px;">Friends</div>
+            <div style="font-size: 11px; color: #8da0bf; margin-bottom: 14px;">YOUR CIRCLE OF FRIENDS</div>
+
+            <div class="friends-top-card">
+                <div style="font-size: 20px; font-weight: bold; color: #28a745; margin-bottom: 8px;">15% <span style="font-size: 12px; color: #a3b8b2; font-weight: normal;">of friends' deposits</span></div>
+                <div style="display: inline-block; background: #06231f; border: 1px solid #145a4d; color: #28a745; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">
+                    +0.01 TON <span style="color: #a3b8b2; font-weight: normal;">for every friend</span>
+                </div>
+            </div>
+
+            <div class="friends-collect-card">
+                <div>
+                    <div style="font-size: 11px; color: #8da0bf;">Ready to collect</div>
+                    <div style="font-size: 20px; font-weight: bold; color: #fff; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #ffd700;">TON</span></div>
+                </div>
+                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; border: 1px solid #145a4d; padding: 10px 20px;" onclick="collectFriendReward()">Collect</button>
+            </div>
+
+            <div class="wallet-menu-box" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                <div style="font-size: 11px; color: #8da0bf;">Your invitation link</div>
+                <div style="display: flex; width: 100%; gap: 8px;">
+                    <input type="text" class="wallet-input" id="ref-link-input" readonly style="margin-top: 0; flex: 1;">
+                    <button class="wallet-action-btn" style="background: #e1dcd3; padding: 0 16px; font-size: 12px;" onclick="copyRefLink()">Copy</button>
+                </div>
+            </div>
+
+            <div class="friends-stats-row">
+                <div class="friends-stat-box">
+                    <div style="font-size: 16px; font-weight: bold; color: #fff;" id="friend-count">0</div>
+                    <div style="font-size: 10px; color: #8da0bf; margin-top: 4px;">Friends</div>
+                </div>
+                <div class="friends-stat-box">
+                    <div style="font-size: 16px; font-weight: bold; color: #ffd700;" id="friend-earned">0.00</div>
+                    <div style="font-size: 10px; color: #8da0bf; margin-top: 4px;">Earned, TON</div>
+                </div>
+                <div class="friends-stat-box">
+                    <div style="font-size: 16px; font-weight: bold; color: #00f0ff;" id="friend-deposits">0.00</div>
+                    <div style="font-size: 10px; color: #8da0bf; margin-top: 4px;">Deposits, TON</div>
+                </div>
+            </div>
+
+            <div class="wallet-menu-box" style="display: block; text-align: center; padding: 25px;">
+                <div style="font-size: 14px; font-weight: bold; color: #fff; margin-bottom: 6px;">My friends</div>
+                <div style="font-size: 11px; color: #8da0bf; margin-bottom: 15px;">No invited friends yet. Send a friend your link. They will appear here after joining.</div>
+                <div style="background: #0b0e14; border: 1px solid #1f293d; border-radius: 12px; padding: 10px; font-size: 12px; color: #8da0bf;">0</div>
             </div>
         </div>
 
-        <!-- TAB 4: WALLET (کیف پول مشابه تصاویر جدید) -->
+        <!-- TAB 4: WALLET (کیف پول) -->
         <div id="tab-wallet" class="tab-content">
             <div class="wallet-main-card">
                 <div style="font-size: 11px; color: #a3b8b2;">Available balance</div>
@@ -461,16 +537,24 @@
     <!-- MODAL: DEPOSIT -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #00f0ff; margin-bottom: 12px; text-align: center;">شارژ حساب (Deposit)</div>
+            <div style="font-size: 15px; font-weight: bold; color: #00f0ff; margin-bottom: 10px; text-align: center;">شارژ حساب (Deposit)</div>
             <p style="font-size: 11px; color: #8da0bf; margin-bottom: 10px; text-align: center;">ارز TON یا تتر (USDT روی شبکه TON) را به آدرس زیر واریز کنید:</p>
+            
+            <label style="font-size: 10px; color: #8da0bf;">آدرس ولت:</label>
             <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="dep-addr">
-            <button class="btn-buy" style="width: 100%; margin-top: 10px;" onclick="copyWallet('dep-addr')">📋 کپی آدرس ولت</button>
-            <button class="btn-buy" style="width: 100%; background: #28a745; margin-top: 8px;" onclick="simulateDeposit()">⚡ تست واریز (افزایش ۵ تون)</button>
-            <button class="btn-buy" style="width: 100%; background: #1f293d; color: #8da0bf; margin-top: 8px;" onclick="closeModal('deposit-modal')">بستن</button>
+            <button class="btn-buy" style="width: 100%; margin-top: 6px; font-size: 11px; padding: 8px;" onclick="copyWallet('dep-addr')">📋 کپی آدرس ولت</button>
+
+            <div style="margin-top: 12px;">
+                <label style="font-size: 10px; color: #ffd700;">ممو (Memo / Comment) اختصاصی شما:</label>
+                <input type="text" class="wallet-input" value="" readonly id="user-memo-code" style="color:#ffd700; font-weight:bold;">
+                <p style="font-size: 9px; color: #8da0bf; margin-top: 4px;">⚠️ حتماً این ممو را هنگام واریز وارد کنید تا حساب شما اتوماتیک شارژ شود.</p>
+            </div>
+
+            <button class="btn-buy" style="width: 100%; background: #1f293d; color: #8da0bf; margin-top: 15px;" onclick="closeModal('deposit-modal')">بستن</button>
         </div>
     </div>
 
-    <!-- MODAL: WITHDRAW (با قابلیت انتخاب شبکه، حداقل ۱ دلار و آدرس ولت) -->
+    <!-- MODAL: WITHDRAW -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #ffd700; margin-bottom: 12px; text-align: center;">برداشت وجه (Withdraw)</div>
@@ -542,11 +626,16 @@
             balance: 0.0,
             ownedIds: [1],
             unclaimed: 0.0,
-            lastTick: Date.now()
+            lastTick: Date.now(),
+            telegramId: "100928",
+            friendReward: 0.0,
+            friendCount: 0,
+            friendEarned: 0.0,
+            friendDeposits: 0.0
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v3');
+            const saved = localStorage.getItem('solaris_miner_save_v5');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -562,7 +651,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v3', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v5', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -649,6 +738,19 @@
             alert("✅ سود انباشته به موجودی اصلی شما اضافه شد!");
         }
 
+        function collectFriendReward() {
+            if (state.friendReward <= 0) {
+                alert("پاداشی برای برداشت موجود نیست.");
+                return;
+            }
+            state.balance += state.friendReward;
+            state.friendEarned += state.friendReward;
+            state.friendReward = 0.0;
+            saveState();
+            updateUI();
+            alert("✅ پاداش دوستان به موجودی شما اضافه شد!");
+        }
+
         function processWithdraw() {
             const currency = document.getElementById('withdraw-currency').value;
             const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
@@ -671,7 +773,7 @@
             saveState();
             updateUI();
             closeModal('withdraw-modal');
-            alert(`✅ درخواست برداشت ${amount} ${currency} با موفقیت ثبت شد و به زودی به آدرس شما واریز خواهد شد.`);
+            alert(`✅ درخواست برداشت ${amount} ${currency} با موفقیت ثبت شد.`);
         }
 
         function updateUI() {
@@ -681,6 +783,12 @@
             
             document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 فعال";
             document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
+
+            // به‌روزرسانی بخش دوستان
+            document.getElementById('friend-reward-display').innerText = state.friendReward.toFixed(2);
+            document.getElementById('friend-count').innerText = state.friendCount;
+            document.getElementById('friend-earned').innerText = state.friendEarned.toFixed(2);
+            document.getElementById('friend-deposits').innerText = state.friendDeposits.toFixed(2);
         }
 
         setInterval(() => {
@@ -688,14 +796,6 @@
             document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8) + ' TON';
             saveState();
         }, 1000);
-
-        function simulateDeposit() {
-            state.balance += 5.00;
-            saveState();
-            updateUI();
-            closeModal('deposit-modal');
-            alert("✅ ۵ تون آزمایشی به حساب شما واریز شد.");
-        }
 
         function copyWallet(elemId) {
             let input = document.getElementById(elemId);
@@ -721,7 +821,9 @@
         }
 
         function copyRefLink() {
-            navigator.clipboard.writeText("https://t.me/SolarisMiner_bot?start=ref_100928");
+            let input = document.getElementById('ref-link-input');
+            input.select();
+            document.execCommand("copy");
             alert("🔗 لینک دعوت کپی شد!");
         }
 
@@ -730,10 +832,16 @@
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
                     let u = window.Telegram.WebApp.initDataUnsafe.user;
+                    state.telegramId = String(u.id);
                     document.getElementById('user-profile-name').innerText = u.first_name || 'کاربر گرامی';
                     document.getElementById('user-profile-id').innerText = "ID: " + u.id;
                 }
             } catch(e) {}
+
+            document.getElementById('user-memo-code').value = state.telegramId;
+            document.getElementById('ref-link-input').value = "https://t.me/SolarisMiner_bot?start=" + state.telegramId;
+            saveState();
+
             renderProperties();
         };
     </script>
