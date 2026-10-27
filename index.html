@@ -455,7 +455,7 @@
         <div class="balance-box">
             <div>
                 <div style="font-size: 9px; color: #666666;">Balance:</div>
-                <span class="balance-amount" id="user-balance">0.00 TON</span>
+                <span class="balance-amount" id="user-balance">0.00000000 TON</span>
             </div>
             <button class="add-btn" onclick="switchTab('wallet')">+</button>
         </div>
@@ -550,7 +550,7 @@
         <div id="tab-wallet" class="tab-content">
             <div class="wallet-main-card">
                 <div style="font-size: 11px; color: #a3b8b2;">Available balance</div>
-                <div style="font-size: 26px; font-weight: bold; color: #ffffff; margin-top: 4px;" id="wallet-balance-display">0.00 TON</div>
+                <div style="font-size: 26px; font-weight: bold; color: #ffffff; margin-top: 4px;" id="wallet-balance-display">0.00000000 TON</div>
                 
                 <div class="wallet-btn-row">
                     <button class="wallet-action-btn" onclick="openModal('deposit-modal')">+ Deposit</button>
@@ -746,7 +746,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v9');
+            const saved = localStorage.getItem('solaris_miner_save_v10');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -762,7 +762,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v9', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v10', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -890,8 +890,8 @@
         }
 
         function updateUI() {
-            document.getElementById('user-balance').innerText = state.balance.toFixed(2) + ' TON';
-            document.getElementById('wallet-balance-display').innerText = state.balance.toFixed(2) + ' TON';
+            document.getElementById('user-balance').innerText = state.balance.toFixed(8) + ' TON';
+            document.getElementById('wallet-balance-display').innerText = state.balance.toFixed(8) + ' TON';
             document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8) + ' TON';
             
             document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 Active";
