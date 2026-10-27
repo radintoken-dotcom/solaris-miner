@@ -96,7 +96,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        /* بخش فن ماینر شبیه‌سازی شده بر اساس تصویر فرستاده شده */
+        /* فن بدون کادر اضافی، کاملاً گرد و شیک */
         .mining-circle-container {
             background: #ffffff;
             border: 1px solid #e6e0d4;
@@ -114,32 +114,28 @@
             position: relative;
             width: 170px;
             height: 170px;
-            background: #eef2f7;
-            border: 6px solid #dcdfe5;
-            border-radius: 22px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08), inset 0 2px 5px rgba(255,255,255,0.8);
+            background: radial-gradient(circle, rgba(0, 152, 234, 0.15) 0%, transparent 70%);
         }
 
-        /* حلقه‌ی نورانی آبی دور فن */
         .fan-ring {
             position: absolute;
-            width: 135px;
-            height: 135px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             border: 4px solid #0098ea;
-            box-shadow: 0 0 12px rgba(0, 152, 234, 0.6), inset 0 0 10px rgba(0, 152, 234, 0.4);
+            box-shadow: 0 0 15px rgba(0, 152, 234, 0.6), inset 0 0 10px rgba(0, 152, 234, 0.4);
             pointer-events: none;
             z-index: 2;
         }
 
-        /* پره‌های مشکی که می‌چرخند */
         .fan-blades {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             background: conic-gradient(
                 from 0deg,
@@ -151,7 +147,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.8);
             position: relative;
             z-index: 1;
         }
@@ -161,14 +157,13 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* هسته مرکزی براق فن */
         .fan-center-cap {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, #e2e8f0, #94a3b8);
-            border: 2px solid #cbd5e1;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ffffff, #cbd5e1);
+            border: 2px solid #94a3b8;
             border-radius: 50%;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
         }
 
         .mined-number {
@@ -286,7 +281,7 @@
             font-weight: bold;
         }
 
-        .btn-buy {
+.btn-buy {
             background: linear-gradient(135deg, #0098ea, #0077b5);
             color: #ffffff;
             border: none;
@@ -441,11 +436,22 @@
             border: 1px solid #e6e0d4;
             border-radius: 12px;
             padding: 12px;
-            color: #0d3b33;
+            color: #0098ea;
             font-size: 12px;
             text-align: left;
             margin-top: 6px;
             outline: none;
+        }
+
+        /* استایل لیست ارزها به صورت ستونی و شیک */
+        .crypto-list-col {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 220px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            padding-right: 4px;
         }
 
         .crypto-option-card {
@@ -454,23 +460,28 @@
             gap: 12px;
             background: #f7f4ed;
             border: 1px solid #e6e0d4;
-            padding: 12px;
-            border-radius: 14px;
-            margin-bottom: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
             cursor: pointer;
             transition: 0.2s;
         }
 
+        .crypto-option-card.selected {
+            border-color: #0098ea;
+            background: #e1f3fc;
+        }
+
         .crypto-icon {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             color: #ffffff;
-            font-size: 14px;
+            font-size: 13px;
+            flex-shrink: 0;
         }
 
         .profile-header-card {
@@ -571,7 +582,7 @@
 
         <!-- TAB 1: PROPERTIES (Miners) -->
         <div id="tab-properties" class="tab-content active">
-            <!-- کارت ماینینگ با فن متحرک و حلقه‌ی آبی -->
+            <!-- کارت ماینینگ با فن متحرک و حلقه‌ی آبی شیک -->
             <div class="mining-circle-container">
                 <div class="fan-wrapper">
                     <div class="fan-ring"></div>
@@ -633,7 +644,7 @@
                 <div style="font-size: 11px; color: #666666;">Your invitation link</div>
                 <div style="display: flex; width: 100%; gap: 8px;">
                     <input type="text" class="wallet-input" id="ref-link-input" readonly style="margin-top: 0; flex: 1;">
-                    <button class="wallet-action-btn" style="background: #e6e0d4; padding: 0 16px; font-size: 12px;" onclick="shareRefLink()">Share Direct</button>
+                    <button class="wallet-action-btn" style="background: #e6e0d4; color: #0098ea; padding: 0 16px; font-size: 12px;" onclick="shareRefLink()">Share Direct</button>
                 </div>
             </div>
 
@@ -754,26 +765,25 @@
 
     </div>
 
-    <!-- MODAL: DEPOSIT -->
+    <!-- MODAL: DEPOSIT (ارزهای ستونی با آدرس و ممو اختصاصی) -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #0098ea; margin-bottom: 10px; text-align: center;">Account Deposit</div>
             <p style="font-size: 11px; color: #666666; margin-bottom: 12px; text-align: center;">Select currency and send to the address below:</p>
             
-            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-                <div onclick="selectDepositCurrency('TON')" id="dep-curr-ton" class="crypto-option-card" style="flex: 1; margin-bottom: 0; border-color: #0098ea; background: #e1f3fc;">
-                    <div class="crypto-icon" style="background: #0098ea; width: 28px; height: 28px; font-size: 12px;">💎</div>
-                    <div style="font-size: 12px; font-weight: bold;">TON</div>
-                </div>
-                <div onclick="selectDepositCurrency('USDT')" id="dep-curr-usdt" class="crypto-option-card" style="flex: 1; margin-bottom: 0;">
-                    <div class="crypto-icon" style="background: #26a69a; width: 28px; height: 28px; font-size: 12px;">₮</div>
-                    <div style="font-size: 12px; font-weight: bold;">USDT <span style="font-size: 8px; color: #666;">TON</span></div>
-                </div>
+            <div class="crypto-list-col" id="deposit-currency-list">
+                <!-- JavaScript populated list -->
             </div>
 
-            <label style="font-size: 10px; color: #666666; margin-top: 5px; display: block;" id="dep-label-text">Wallet Address (TON Main Network):</label>
-            <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="dep-addr">
+            <label style="font-size: 10px; color: #666666; margin-top: 5px; display: block;" id="dep-label-text">Wallet Address:</label>
+            <input type="text" class="wallet-input" readonly id="dep-addr">
             <button class="btn-buy" style="width: 100%; margin-top: 6px; font-size: 11px; padding: 8px;" onclick="copyWallet('dep-addr')">Copy Wallet Address</button>
+
+            <div id="memo-container" style="margin-top: 10px; display: none;">
+                <label style="font-size: 10px; color: #666666; display: block;">MEMO / Tag (Required):</label>
+                <input type="text" class="wallet-input" readonly id="dep-memo">
+                <button class="btn-buy" style="width: 100%; margin-top: 6px; font-size: 11px; padding: 8px;" onclick="copyWallet('dep-memo')">Copy MEMO</button>
+            </div>
 
             <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 15px;" onclick="closeModal('deposit-modal')">Close</button>
         </div>
@@ -786,27 +796,19 @@
             
             <div style="margin-bottom: 10px;">
                 <label style="font-size: 11px; color: #666666; margin-bottom: 6px; display: block;">Select Currency / Network:</label>
-                
-                <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-                    <div onclick="selectWithdrawCurrency('TON')" id="curr-ton" class="crypto-option-card" style="flex: 1; margin-bottom: 0; border-color: #0098ea; background: #e1f3fc;">
-                        <div class="crypto-icon" style="background: #0098ea; width: 28px; height: 28px; font-size: 12px;">💎</div>
-                        <div style="font-size: 12px; font-weight: bold;">TON</div>
-                    </div>
-                    <div onclick="selectWithdrawCurrency('USDT')" id="curr-usdt" class="crypto-option-card" style="flex: 1; margin-bottom: 0;">
-                        <div class="crypto-icon" style="background: #26a69a; width: 28px; height: 28px; font-size: 12px;">₮</div>
-                        <div style="font-size: 12px; font-weight: bold;">USDT <span style="font-size: 8px; color: #666;">TON</span></div>
-                    </div>
+                <div class="crypto-list-col" id="withdraw-currency-list" style="max-height: 180px;">
+                    <!-- JavaScript populated list -->
                 </div>
             </div>
 
             <div style="margin-bottom: 10px;">
-                <label style="font-size: 11px; color: #666666;">Withdrawal Amount (Min 1 USD/TON):</label>
+                <label style="font-size: 11px; color: #666666;">Withdrawal Amount:</label>
                 <input type="number" id="withdraw-amount" class="wallet-input" placeholder="1.00" min="1" step="0.1">
             </div>
 
             <div style="margin-bottom: 15px;">
                 <label style="font-size: 11px; color: #666666;">Your Destination Address:</label>
-                <input type="text" id="withdraw-address" class="wallet-input" placeholder="UQ... wallet address">
+                <input type="text" id="withdraw-address" class="wallet-input" placeholder="Enter wallet address">
             </div>
 
             <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0098ea, #0077b5); font-size: 13px;" onclick="processWithdraw()">Confirm Withdrawal</button>
@@ -854,6 +856,17 @@
             { id: 12, name: "Island Resort", desc: "Fully automated island miner", daily: 3000.00, monthly: 90000.00, price: 1000.00 }
         ];
 
+        // لیست ارزها به ترتیب دقیق درخواستی شما
+        const cryptoCurrencies = [
+            { id: 'TON', name: 'TON', network: 'TON Main Network', icon: '💎', color: '#0098ea', addr: 'UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v', needsMemo: true },
+            { id: 'USDT_TON', name: 'USDT', network: 'Tether on TON Network', icon: '₮', color: '#26a69a', addr: 'UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v', needsMemo: true },
+            { id: 'USDT_BNB', name: 'USDT (BNB)', network: 'Tether on BNB Chain', icon: '🌐', color: '#f3ba2f', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false },
+            { id: 'BNB', name: 'BNB', network: 'BNB Smart Chain', icon: '🟡', color: '#f3ba2f', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false },
+            { id: 'AVAX', name: 'AVAX', network: 'Avalanche C-Chain', icon: '🔺', color: '#e84142', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false },
+            { id: 'TRON', name: 'TRON', network: 'TRON Network (TRC20)', icon: '🔴', color: '#ff0000', addr: 'TRxkGT4Ge4Vtt354YET5dZQScTSwqVyJ2n', needsMemo: false },
+            { id: 'SOL', name: 'SOLANA', network: 'Solana Main Network', icon: '🟣', color: '#9945ff', addr: 'ADtDse3bfk5r114yn6sYJ3fcQ8TEHY3bpJ67LvLSmorZ', needsMemo: false }
+        ];
+
         let state = {
             balance: 0.0,
             ownedIds: [1],
@@ -868,12 +881,12 @@
             friendDeposits: 0.0,
             totalDeposited: 0.0,
             totalWithdrawn: 0.0,
-            selectedDepositCurr: "TON",
-            selectedWithdrawCurr: "TON"
+            selectedDepositCurr: 'TON',
+            selectedWithdrawCurr: 'TON'
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v19');
+            const saved = localStorage.getItem('solaris_miner_save_v20');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -889,7 +902,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v19', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v20', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -948,14 +961,12 @@
 
         function buyProperty(id) {
             if (state.ownedIds.includes(id)) return;
-
             const prop = initialProperties.find(p => p.id === id);
             if (state.balance < prop.price) {
                 alert("Insufficient balance. Please deposit funds via wallet.");
                 switchTab('wallet');
                 return;
             }
-
             state.balance -= prop.price;
             state.totalDeposited += prop.price;
             state.ownedIds.push(id);
@@ -969,7 +980,6 @@
                 alert("No rewards available to claim yet.");
                 return;
             }
-
             state.balance += state.unclaimed;
             state.unclaimed = 0;
             saveState();
@@ -990,36 +1000,78 @@
             alert("✅ Referral rewards collected!");
         }
 
-        function selectDepositCurrency(curr) {
-            state.selectedDepositCurr = curr;
-            if (curr === 'TON') {
-                document.getElementById('dep-curr-ton').style.borderColor = '#0098ea';
-                document.getElementById('dep-curr-ton').style.background = '#e1f3fc';
-                document.getElementById('dep-curr-usdt').style.borderColor = '#e6e0d4';
-                document.getElementById('dep-curr-usdt').style.background = '#f7f4ed';
-                document.getElementById('dep-label-text').innerText = "Wallet Address (TON Main Network):";
+        function buildCryptoLists() {
+            // Deposit list
+            const depContainer = document.getElementById('deposit-currency-list');
+            depContainer.innerHTML = '';
+            cryptoCurrencies.forEach(c => {
+                const isSelected = c.id === state.selectedDepositCurr;
+                depContainer.insertAdjacentHTML('beforeend', `
+                    <div onclick="selectDepositCurrency('${c.id}')" class="crypto-option-card ${isSelected ? 'selected' : ''}" id="dep-card-${c.id}">
+                        <div class="crypto-icon" style="background: ${c.color};">${c.icon}</div>
+                        <div>
+                            <div style="font-size: 12px; font-weight: bold; color: #1a1a1a;">${c.name}</div>
+                            <div style="font-size: 9px; color: #666666;">${c.network}</div>
+                        </div>
+                    </div>
+                `);
+            });
+
+            // Withdraw list
+            const witContainer = document.getElementById('withdraw-currency-list');
+            witContainer.innerHTML = '';
+            cryptoCurrencies.forEach(c => {
+                const isSelected = c.id === state.selectedWithdrawCurr;
+                witContainer.insertAdjacentHTML('beforeend', `
+                    <div onclick="selectWithdrawCurrency('${c.id}')" class="crypto-option-card ${isSelected ? 'selected' : ''}" id="wit-card-${c.id}">
+                        <div class="crypto-icon" style="background: ${c.color};">${c.icon}</div>
+                        <div>
+                            <div style="font-size: 12px; font-weight: bold; color: #1a1a1a;">${c.name}</div>
+                            <div style="font-size: 9px; color: #666666;">${c.network}</div>
+                        </div>
+                    </div>
+                `);
+            });
+
+            updateDepositFields(state.selectedDepositCurr);
+        }
+
+        function selectDepositCurrency(currId) {
+            state.selectedDepositCurr = currId;
+            cryptoCurrencies.forEach(c => {
+                const card = document.getElementById(`dep-card-${c.id}`);
+                if (card) {
+                    if (c.id === currId) card.classList.add('selected');
+                    else card.classList.remove('selected');
+                }
+            });
+            updateDepositFields(currId);
+        }
+
+        function updateDepositFields(currId) {
+            const curr = cryptoCurrencies.find(c => c.id === currId);
+            if (!curr) return;
+            document.getElementById('dep-label-text').innerText = `Wallet Address (${curr.network}):`;
+            document.getElementById('dep-addr').value = curr.addr;
+
+            const memoContainer = document.getElementById('memo-container');
+            if (curr.needsMemo) {
+                memoContainer.style.display = 'block';
+                document.getElementById('dep-memo').value = "MEMO-" + state.telegramId;
             } else {
-                document.getElementById('dep-curr-usdt').style.borderColor = '#0098ea';
-                document.getElementById('dep-curr-usdt').style.background = '#e1f3fc';
-                document.getElementById('dep-curr-ton').style.borderColor = '#e6e0d4';
-                document.getElementById('dep-curr-ton').style.background = '#f7f4ed';
-                document.getElementById('dep-label-text').innerText = "Wallet Address (USDT - TON Network):";
+                memoContainer.style.display = 'none';
             }
         }
 
-        function selectWithdrawCurrency(curr) {
-            state.selectedWithdrawCurr = curr;
-            if (curr === 'TON') {
-                document.getElementById('curr-ton').style.borderColor = '#0098ea';
-                document.getElementById('curr-ton').style.background = '#e1f3fc';
-                document.getElementById('curr-usdt').style.borderColor = '#e6e0d4';
-                document.getElementById('curr-usdt').style.background = '#f7f4ed';
-            } else {
-                document.getElementById('curr-usdt').style.borderColor = '#0098ea';
-                document.getElementById('curr-usdt').style.background = '#e1f3fc';
-                document.getElementById('curr-ton').style.borderColor = '#e6e0d4';
-                document.getElementById('curr-ton').style.background = '#f7f4ed';
-            }
+        function selectWithdrawCurrency(currId) {
+            state.selectedWithdrawCurr = currId;
+            cryptoCurrencies.forEach(c => {
+                const card = document.getElementById(`wit-card-${c.id}`);
+                if (card) {
+                    if (c.id === currId) card.classList.add('selected');
+                    else card.classList.remove('selected');
+                }
+            });
         }
 
         function processWithdraw() {
@@ -1027,15 +1079,15 @@
             const address = document.getElementById('withdraw-address').value.trim();
 
             if (amount < 1) {
-                alert("❌ Minimum withdrawal is 1 USD/TON.");
+                alert("❌ Minimum withdrawal amount is 1.");
                 return;
             }
             if (state.balance < amount) {
                 alert("❌ Insufficient account balance.");
                 return;
             }
-            if (!address || address.length < 10) {
-                alert("❌ Please enter a valid wallet address.");
+            if (!address || address.length < 6) {
+                alert("❌ Please enter a valid destination address.");
                 return;
             }
 
@@ -1044,7 +1096,7 @@
             saveState();
             updateUI();
             closeModal('withdraw-modal');
-            alert(`✅ Withdrawal request of ${amount} ${state.selectedWithdrawCurr} submitted successfully.`);
+            alert(`✅ Withdrawal request submitted successfully!`);
         }
 
         function updateUI() {
@@ -1081,11 +1133,13 @@
             let input = document.getElementById(elemId);
             input.select();
             document.execCommand("copy");
-            alert("📋 Wallet address copied!");
+            alert("📋 Copied to clipboard!");
         }
 
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'flex';
+            if (modalId === 'deposit-modal') buildCryptoLists();
+            if (modalId === 'withdraw-modal') buildCryptoLists();
         }
 
         function closeModal(modalId) {
@@ -1125,8 +1179,8 @@
 
             document.getElementById('ref-link-input').value = "https://t.me/SolarisMiner_bot?start=" + state.telegramId;
             saveState();
-
             renderProperties();
+            buildCryptoLists();
         };
     </script>
 </body>
