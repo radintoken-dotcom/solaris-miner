@@ -96,7 +96,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        /* بخش ماینینگ با دایره سفید و خط چرخان آبی تک‌رنگ و رعد بزرگ وسط */
+        /* بخش فن ماینر شبیه‌سازی شده بر اساس تصویر فرستاده شده */
         .mining-circle-container {
             background: #ffffff;
             border: 1px solid #e6e0d4;
@@ -110,44 +110,65 @@
             align-items: center;
         }
 
-        .spinning-circle-wrapper {
+        .fan-wrapper {
             position: relative;
-            width: 180px;
-            height: 180px;
+            width: 170px;
+            height: 170px;
+            background: #eef2f7;
+            border: 6px solid #dcdfe5;
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
-            background: radial-gradient(circle, rgba(0, 152, 234, 0.12) 0%, transparent 70%);
-            border-radius: 50%;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08), inset 0 2px 5px rgba(255,255,255,0.8);
         }
 
-        .rotating-border {
+        /* حلقه‌ی نورانی آبی دور فن */
+        .fan-ring {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: 135px;
+            height: 135px;
             border-radius: 50%;
-            border: 4px solid transparent;
-            border-top-color: #0098ea;
-            animation: spin 2.5s linear infinite;
+            border: 4px solid #0098ea;
+            box-shadow: 0 0 12px rgba(0, 152, 234, 0.6), inset 0 0 10px rgba(0, 152, 234, 0.4);
+            pointer-events: none;
+            z-index: 2;
         }
 
-        @keyframes spin {
+        /* پره‌های مشکی که می‌چرخند */
+        .fan-blades {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #111 0deg, #333 45deg, #111 90deg,
+                #333 135deg, #111 180deg, #333 225deg,
+                #111 270deg, #333 315deg, #111 360deg
+            );
+            animation: fanSpin 2s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fanSpin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        .inner-circle-content {
-            width: 146px;
-            height: 146px;
-            background: #ffffff;
-            border: 2px solid #e6e0d4;
+        /* هسته مرکزی براق فن */
+        .fan-center-cap {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+            border: 2px solid #cbd5e1;
             border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05), inset 0 2px 5px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
         .mined-number {
@@ -550,15 +571,12 @@
 
         <!-- TAB 1: PROPERTIES (Miners) -->
         <div id="tab-properties" class="tab-content active">
-            <!-- کارت ماینینگ با دایره سفید، رعد بزرگ وسط و خط چرخان آبی -->
+            <!-- کارت ماینینگ با فن متحرک و حلقه‌ی آبی -->
             <div class="mining-circle-container">
-                <div class="spinning-circle-wrapper">
-                    <div class="rotating-border"></div>
-                    <div class="inner-circle-content">
-                        <!-- آیکون رعد بزرگ و آبی -->
-                        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#0098ea" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                        </svg>
+                <div class="fan-wrapper">
+                    <div class="fan-ring"></div>
+                    <div class="fan-blades">
+                        <div class="fan-center-cap"></div>
                     </div>
                 </div>
                 <div class="mined-number" id="live-unclaimed">0.00000000</div>
@@ -855,7 +873,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v18');
+            const saved = localStorage.getItem('solaris_miner_save_v19');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -871,7 +889,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v18', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v19', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
