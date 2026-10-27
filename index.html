@@ -40,12 +40,6 @@
             font-weight: bold;
         }
 
-        .brand-box p {
-            font-size: 10px;
-            color: #8da0bf;
-            margin-top: 2px;
-        }
-
         .balance-box {
             background: #151a23;
             border: 1px solid #1f293d;
@@ -265,7 +259,6 @@
             margin-bottom: 4px;
         }
 
-        /* استایل‌های اختصاصی تب کیف پول و دوستان */
         .friends-top-card {
             background: linear-gradient(135deg, #0d3b33, #06231f);
             border: 1px solid #145a4d;
@@ -363,7 +356,6 @@
             direction: ltr;
         }
 
-        /* استایل‌های اختصاصی تب پروفایل جدید */
         .profile-header-card {
             display: flex;
             align-items: center;
@@ -444,7 +436,6 @@
     <div class="header">
         <div class="brand-box">
             <h1>Solaris Miner</h1>
-            <p>شبکه استخراج ابری TON</p>
         </div>
         <div class="balance-box">
             <div>
@@ -575,28 +566,19 @@
             </div>
         </div>
 
-        <!-- TAB 5: PROFILE (پروفایل کاملاً مطابق با تصاویر جدید) -->
+        <!-- TAB 5: PROFILE (پروفایل) -->
         <div id="tab-profile" class="tab-content">
             <div style="font-size: 11px; color: #8da0bf; margin-bottom: 2px;">YOUR ACCOUNT</div>
             <div style="font-size: 22px; font-weight: bold; color: #28a745; margin-bottom: 4px;">Profile</div>
             <div style="font-size: 11px; color: #8da0bf; margin-bottom: 18px;">Your account, statistics and useful links.</div>
 
-            <!-- هدر کاربر (عکس، اسم و زیرعنوان) -->
+            <!-- هدر کاربر -->
             <div class="profile-header-card">
                 <img id="profile-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-avatar" alt="User Avatar">
                 <div>
                     <div class="profile-title-name" id="profile-user-name">کاربر گرامی</div>
                     <div class="profile-subtext">Your island collection</div>
                 </div>
-            </div>
-
-            <!-- انتخاب زبان -->
-            <div class="profile-info-card">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span style="font-size: 18px;">🌐</span>
-                    <span style="font-size: 13px; color: #fff;">Interface language</span>
-                </div>
-                <button class="wallet-action-btn" style="background: #e8f5e9; border: 1px solid #28a745; color: #0b221e; padding: 6px 14px; font-size: 12px;">🇬🇧 English &gt;</button>
             </div>
 
             <!-- برنامه دعوت -->
@@ -755,7 +737,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v6');
+            const saved = localStorage.getItem('solaris_miner_save_v7');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -771,7 +753,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v6', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v7', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -905,13 +887,11 @@
             document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 فعال";
             document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
 
-            // به‌روزرسانی بخش دوستان
             document.getElementById('friend-reward-display').innerText = state.friendReward.toFixed(2);
             document.getElementById('friend-count').innerText = state.friendCount;
             document.getElementById('friend-earned').innerText = state.friendEarned.toFixed(2);
             document.getElementById('friend-deposits').innerText = state.friendDeposits.toFixed(2);
 
-            // به‌روزرسانی تب پروفایل
             document.getElementById('profile-user-name').innerText = state.userName;
             document.getElementById('profile-user-id').innerText = state.telegramId;
             document.getElementById('profile-total-deposited').innerText = state.totalDeposited.toFixed(2);
@@ -961,7 +941,6 @@
         window.onload = function() {
             loadState();
             
-            // دریافت اطلاعات زنده کاربر تلگرام
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
                     let u = window.Telegram.WebApp.initDataUnsafe.user;
