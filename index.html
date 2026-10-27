@@ -265,7 +265,7 @@
             margin-bottom: 4px;
         }
 
-        /* استایل‌های اختصاصی تب دوستان مطابق تصویر */
+        /* استایل‌های اختصاصی تب کیف پول و دوستان */
         .friends-top-card {
             background: linear-gradient(135deg, #0d3b33, #06231f);
             border: 1px solid #145a4d;
@@ -363,6 +363,58 @@
             direction: ltr;
         }
 
+        /* استایل‌های اختصاصی تب پروفایل جدید */
+        .profile-header-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding: 5px;
+        }
+
+        .profile-avatar {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #00f0ff;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .profile-title-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .profile-subtext {
+            font-size: 12px;
+            color: #8da0bf;
+            margin-top: 2px;
+        }
+
+        .profile-info-card {
+            background: #151a23;
+            border: 1px solid #1f293d;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-info-label {
+            font-size: 13px;
+            color: #8da0bf;
+        }
+
+        .profile-info-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
         .modal-overlay {
             display: none;
             position: fixed;
@@ -438,7 +490,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: FRIENDS (دعوت دوستان مشابه تصویر جدید) -->
+        <!-- TAB 3: FRIENDS (دعوت دوستان) -->
         <div id="tab-friends" class="tab-content">
             <div style="font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 4px;">Friends</div>
             <div style="font-size: 11px; color: #8da0bf; margin-bottom: 14px;">YOUR CIRCLE OF FRIENDS</div>
@@ -523,13 +575,77 @@
             </div>
         </div>
 
-        <!-- TAB 5: PROFILE (پروفایل) -->
+        <!-- TAB 5: PROFILE (پروفایل کاملاً مطابق با تصاویر جدید) -->
         <div id="tab-profile" class="tab-content">
-            <div class="stats-card" style="text-align: center; padding: 25px;">
-                <div style="font-size: 36px; margin-bottom: 5px;">👤</div>
-                <div style="font-size: 15px; font-weight: bold;" id="user-profile-name">کاربر گرامی</div>
-                <div style="font-size: 11px; color: #8da0bf; margin-top: 4px;" id="user-profile-id">ID: 100928</div>
+            <div style="font-size: 11px; color: #8da0bf; margin-bottom: 2px;">YOUR ACCOUNT</div>
+            <div style="font-size: 22px; font-weight: bold; color: #28a745; margin-bottom: 4px;">Profile</div>
+            <div style="font-size: 11px; color: #8da0bf; margin-bottom: 18px;">Your account, statistics and useful links.</div>
+
+            <!-- هدر کاربر (عکس، اسم و زیرعنوان) -->
+            <div class="profile-header-card">
+                <img id="profile-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-avatar" alt="User Avatar">
+                <div>
+                    <div class="profile-title-name" id="profile-user-name">کاربر گرامی</div>
+                    <div class="profile-subtext">Your island collection</div>
+                </div>
             </div>
+
+            <!-- انتخاب زبان -->
+            <div class="profile-info-card">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 18px;">🌐</span>
+                    <span style="font-size: 13px; color: #fff;">Interface language</span>
+                </div>
+                <button class="wallet-action-btn" style="background: #e8f5e9; border: 1px solid #28a745; color: #0b221e; padding: 6px 14px; font-size: 12px;">🇬🇧 English &gt;</button>
+            </div>
+
+            <!-- برنامه دعوت -->
+            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: #0f231e; border-color: #145a4d;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 18px;">🎁</span>
+                    <div>
+                        <div style="font-size: 13px; color: #28a745; font-weight: bold;">Invite friends</div>
+                        <div style="font-size: 10px; color: #8da0bf;">Referral program and rewards</div>
+                    </div>
+                </div>
+                <span style="color: #28a745; font-weight: bold; font-size: 16px;">&rarr;</span>
+            </div>
+
+            <!-- User ID اختصاصی -->
+            <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
+                <div class="profile-info-label">User ID</div>
+                <div class="profile-info-value" id="profile-user-id">85354</div>
+            </div>
+
+            <!-- واریز کل -->
+            <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
+                <div class="profile-info-label">Total deposited</div>
+                <div class="profile-info-value" id="profile-total-deposited">0.00</div>
+            </div>
+
+            <!-- برداشت کل -->
+            <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
+                <div class="profile-info-label">Total withdrawn</div>
+                <div class="profile-info-value" id="profile-total-withdrawn">0.00</div>
+            </div>
+
+            <!-- تاریخچه‌ها -->
+            <div class="profile-info-card">
+                <div>
+                    <div style="font-size: 13px; font-weight: bold; color: #fff;">Deposits</div>
+                    <div style="font-size: 10px; color: #8da0bf;">Deposit history</div>
+                </div>
+                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; border: 1px solid #145a4d; padding: 8px 16px; font-size: 12px;" onclick="alert('تاریخچه واریزها خالی است.')">Open</button>
+            </div>
+
+            <div class="profile-info-card">
+                <div>
+                    <div style="font-size: 13px; font-weight: bold; color: #fff;">Withdrawals</div>
+                    <div style="font-size: 10px; color: #8da0bf;">Withdrawal history</div>
+                </div>
+                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; border: 1px solid #145a4d; padding: 8px 16px; font-size: 12px;" onclick="alert('تاریخچه برداشت‌ها خالی است.')">Open</button>
+            </div>
+
         </div>
 
     </div>
@@ -627,15 +743,19 @@
             ownedIds: [1],
             unclaimed: 0.0,
             lastTick: Date.now(),
-            telegramId: "100928",
+            telegramId: "85354",
+            userName: "M_ltf_m",
+            photoUrl: "",
             friendReward: 0.0,
             friendCount: 0,
             friendEarned: 0.0,
-            friendDeposits: 0.0
+            friendDeposits: 0.0,
+            totalDeposited: 0.0,
+            totalWithdrawn: 0.0
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v5');
+            const saved = localStorage.getItem('solaris_miner_save_v6');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -651,7 +771,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v5', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v6', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -770,6 +890,7 @@
             }
 
             state.balance -= amount;
+            state.totalWithdrawn += amount;
             saveState();
             updateUI();
             closeModal('withdraw-modal');
@@ -789,6 +910,16 @@
             document.getElementById('friend-count').innerText = state.friendCount;
             document.getElementById('friend-earned').innerText = state.friendEarned.toFixed(2);
             document.getElementById('friend-deposits').innerText = state.friendDeposits.toFixed(2);
+
+            // به‌روزرسانی تب پروفایل
+            document.getElementById('profile-user-name').innerText = state.userName;
+            document.getElementById('profile-user-id').innerText = state.telegramId;
+            document.getElementById('profile-total-deposited').innerText = state.totalDeposited.toFixed(2);
+            document.getElementById('profile-total-withdrawn').innerText = state.totalWithdrawn.toFixed(2);
+            
+            if (state.photoUrl) {
+                document.getElementById('profile-img').src = state.photoUrl;
+            }
         }
 
         setInterval(() => {
@@ -829,12 +960,16 @@
 
         window.onload = function() {
             loadState();
+            
+            // دریافت اطلاعات زنده کاربر تلگرام
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
                     let u = window.Telegram.WebApp.initDataUnsafe.user;
                     state.telegramId = String(u.id);
-                    document.getElementById('user-profile-name').innerText = u.first_name || 'کاربر گرامی';
-                    document.getElementById('user-profile-id').innerText = "ID: " + u.id;
+                    state.userName = u.username ? u.username : (u.first_name || 'کاربر گرامی');
+                    if (u.photo_url) {
+                        state.photoUrl = u.photo_url;
+                    }
                 }
             } catch(e) {}
 
