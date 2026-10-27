@@ -265,26 +265,89 @@
             margin-bottom: 4px;
         }
 
-        .wallet-box-card {
+        /* استایل‌های اختصاصی کیف پول مشابه تصاویر جدید */
+        .wallet-main-card {
+            background: linear-gradient(135deg, #0d3b33, #06231f);
+            border: 1px solid #145a4d;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        .wallet-btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .wallet-action-btn {
+            flex: 1;
+            background: #f4efe6;
+            color: #0b221e;
+            border: none;
+            padding: 12px;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .wallet-action-btn.outline {
+            background: rgba(255,255,255,0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .wallet-menu-box {
             background: #151a23;
             border: 1px solid #1f293d;
             border-radius: 16px;
-            padding: 15px;
+            padding: 14px 18px;
             margin-bottom: 12px;
-            text-align: right;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .wallet-input {
             width: 100%;
             background: #0b0e14;
             border: 1px solid #1f293d;
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 12px;
+            padding: 12px;
             color: #00f0ff;
-            font-size: 11px;
-            text-align: center;
+            font-size: 12px;
+            text-align: right;
             margin-top: 6px;
             outline: none;
+            direction: ltr;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: #151a23;
+            border: 1px solid #1f293d;
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
     </style>
 </head>
@@ -299,7 +362,7 @@
         <div class="balance-box">
             <div>
                 <div style="font-size: 9px; color: #8da0bf;">موجودی:</div>
-                <span class="balance-amount" id="user-balance">0.000000 TON</span>
+                <span class="balance-amount" id="user-balance">0.00 TON</span>
             </div>
             <button class="add-btn" onclick="switchTab('wallet')">+</button>
         </div>
@@ -310,22 +373,20 @@
 
         <!-- TAB 1: PROPERTIES (ماینرها) -->
         <div id="tab-properties" class="tab-content active">
-            
-            <!-- کارت استخراج زنده -->
             <div class="mining-live-card">
                 <div style="font-size: 11px; color: #8da0bf;">⚡ درآمد آماده برداشت (کلایم)</div>
                 <div class="unclaimed-amount" id="live-unclaimed">0.00000000 TON</div>
                 <button class="btn-claim" onclick="claimEarnings()">📥 برداشت و اضافه به کیف پول (Claim)</button>
             </div>
 
-            <div class="stats-card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="stats-card" style="display: flex; justify-content: space-between; align-items: center; padding: 14px;">
                 <div>
                     <div style="font-size: 11px; color: #8da0bf;">تجهیزات فعال شما</div>
-                    <div style="font-size: 15px; font-weight: bold; color: #fff; margin-top: 2px;" id="owned-count">1 / 12 فعال</div>
+                    <div style="font-size: 14px; font-weight: bold; color: #fff; margin-top: 2px;" id="owned-count">1 / 12 فعال</div>
                 </div>
                 <div style="text-align: left;">
                     <div style="font-size: 11px; color: #8da0bf;">سرعت استخراج روزانه</div>
-                    <div style="font-size: 15px; font-weight: bold; color: #00f0ff; margin-top: 2px;" id="total-daily">+0.10 TON</div>
+                    <div style="font-size: 14px; font-weight: bold; color: #00f0ff; margin-top: 2px;" id="total-daily">+0.10 TON</div>
                 </div>
             </div>
 
@@ -351,28 +412,39 @@
             </div>
         </div>
 
-        <!-- TAB 4: WALLET (کیف پول) -->
+        <!-- TAB 4: WALLET (کیف پول مشابه تصاویر جدید) -->
         <div id="tab-wallet" class="tab-content">
-            <div class="stats-card" style="text-align: center; padding: 20px; margin-bottom: 15px;">
-                <div style="font-size: 11px; color: #8da0bf;">موجودی کل کیف پول شما</div>
-                <div style="font-size: 22px; font-weight: bold; color: #ffd700; margin-top: 4px;" id="wallet-balance-display">0.000000 TON</div>
+            <div class="wallet-main-card">
+                <div style="font-size: 11px; color: #a3b8b2;">Available balance</div>
+                <div style="font-size: 26px; font-weight: bold; color: #ffffff; margin-top: 4px;" id="wallet-balance-display">0.00 TON</div>
+                
+                <div class="wallet-btn-row">
+                    <button class="wallet-action-btn" onclick="openModal('deposit-modal')">+ Deposit</button>
+                    <button class="wallet-action-btn outline" onclick="openModal('withdraw-modal')">↑ Withdraw</button>
+                </div>
             </div>
 
-            <div class="wallet-box-card">
-                <div style="font-size: 13px; font-weight: bold; color: #00f0ff; margin-bottom: 4px;">💎 واریز ارز TON</div>
-                <div style="font-size: 10px; color: #8da0bf; line-height: 1.5;">فقط ارز TON را به آدرس زیر واریز کرده تا حساب شما برای خرید ماینر شارژ شود:</div>
-                <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="ton-wallet-addr">
-                <button class="btn-buy" style="width: 100%; margin-top: 8px; font-size: 11px; padding: 8px;" onclick="copyWallet('ton-wallet-addr')">📋 کپی آدرس ولت TON</button>
+            <div class="wallet-menu-box" onclick="alert('تاریخچه واریزها خالی است.')">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 18px;">📥</span>
+                    <div>
+                        <div style="font-size: 13px; font-weight: bold;">Deposits</div>
+                        <div style="font-size: 10px; color: #8da0bf;">Deposit history</div>
+                    </div>
+                </div>
+                <span style="color: #00f0ff; font-weight: bold;">مشاهده</span>
             </div>
 
-            <div class="wallet-box-card">
-                <div style="font-size: 13px; font-weight: bold; color: #28a745; margin-bottom: 4px;">💵 واریز تتر (USDT روی شبکه TON)</div>
-                <div style="font-size: 10px; color: #8da0bf; line-height: 1.5;">حتماً از شبکه <b>TON (Jetton)</b> برای واریز تتر استفاده کنید:</div>
-                <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="usdt-wallet-addr">
-                <button class="btn-buy" style="width: 100%; margin-top: 8px; font-size: 11px; padding: 8px; background: linear-gradient(135deg, #28a745, #1e7e34); color:#fff;" onclick="copyWallet('usdt-wallet-addr')">📋 کپی آدرس تتر (شبکه TON)</button>
+            <div class="wallet-menu-box" onclick="alert('تاریخچه برداشت‌ها خالی است.')">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 18px;">📤</span>
+                    <div>
+                        <div style="font-size: 13px; font-weight: bold;">Withdrawals</div>
+                        <div style="font-size: 10px; color: #8da0bf;">Withdrawal history</div>
+                    </div>
+                </div>
+                <span style="color: #00f0ff; font-weight: bold;">مشاهده</span>
             </div>
-
-            <button class="btn-buy" style="width: 100%; background: #1f293d; color: #00f0ff; margin-top: 5px;" onclick="simulateDeposit()">⚡ افزایش ۵ TON آزمایشی (برای تست خرید)</button>
         </div>
 
         <!-- TAB 5: PROFILE (پروفایل) -->
@@ -384,6 +456,46 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- MODAL: DEPOSIT -->
+    <div id="deposit-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div style="font-size: 15px; font-weight: bold; color: #00f0ff; margin-bottom: 12px; text-align: center;">شارژ حساب (Deposit)</div>
+            <p style="font-size: 11px; color: #8da0bf; margin-bottom: 10px; text-align: center;">ارز TON یا تتر (USDT روی شبکه TON) را به آدرس زیر واریز کنید:</p>
+            <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="dep-addr">
+            <button class="btn-buy" style="width: 100%; margin-top: 10px;" onclick="copyWallet('dep-addr')">📋 کپی آدرس ولت</button>
+            <button class="btn-buy" style="width: 100%; background: #28a745; margin-top: 8px;" onclick="simulateDeposit()">⚡ تست واریز (افزایش ۵ تون)</button>
+            <button class="btn-buy" style="width: 100%; background: #1f293d; color: #8da0bf; margin-top: 8px;" onclick="closeModal('deposit-modal')">بستن</button>
+        </div>
+    </div>
+
+    <!-- MODAL: WITHDRAW (با قابلیت انتخاب شبکه، حداقل ۱ دلار و آدرس ولت) -->
+    <div id="withdraw-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div style="font-size: 15px; font-weight: bold; color: #ffd700; margin-bottom: 12px; text-align: center;">برداشت وجه (Withdraw)</div>
+            
+            <div style="margin-bottom: 10px;">
+                <label style="font-size: 11px; color: #8da0bf;">انتخاب ارز / شبکه:</label>
+                <select id="withdraw-currency" class="wallet-input" style="cursor: pointer;">
+                    <option value="TON">TON (شبکه اصلی تون)</option>
+                    <option value="USDT">USDT (تتر روی شبکه تون)</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 10px;">
+                <label style="font-size: 11px; color: #8da0bf;">مقدار برداشت (حداقل 1 دلار/تون):</label>
+                <input type="number" id="withdraw-amount" class="wallet-input" placeholder="1.00" min="1" step="0.1">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 11px; color: #8da0bf;">آدرس کیف پول شما (Your address):</label>
+                <input type="text" id="withdraw-address" class="wallet-input" placeholder="UQ... آدرس ولت مقصد">
+            </div>
+
+            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); font-size: 13px;" onclick="processWithdraw()">✅ ثبت درخواست برداشت</button>
+            <button class="btn-buy" style="width: 100%; background: #1f293d; color: #8da0bf; margin-top: 8px;" onclick="closeModal('withdraw-modal')">انصراف</button>
+        </div>
     </div>
 
     <!-- NAVIGATION BAR -->
@@ -434,20 +546,15 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v2');
+            const saved = localStorage.getItem('solaris_miner_save_v3');
             if (saved) {
-                try {
-                    state = JSON.parse(saved);
-                } catch(e) {}
+                try { state = JSON.parse(saved); } catch(e) {}
             }
-
-            // محاسبه میزان آفلاین ماینینگ (سودی که موقع بستن برنامه کسب شده)
             const now = Date.now();
             const elapsedSeconds = (now - state.lastTick) / 1000;
             if (elapsedSeconds > 0) {
                 const totalDailyRate = getTotalDailyRate();
-                const perSecondRate = totalDailyRate / 86400;
-                state.unclaimed += elapsedSeconds * perSecondRate;
+                state.unclaimed += elapsedSeconds * (totalDailyRate / 86400);
             }
             state.lastTick = now;
             saveState();
@@ -455,7 +562,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v2', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v3', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -473,7 +580,6 @@
             initialProperties.forEach(item => {
                 const isOwned = state.ownedIds.includes(item.id);
                 
-                // لیست اصلی
                 const html = `
                     <div class="property-card ${isOwned ? 'active-miner' : ''}">
                         <div class="property-badge" style="${isOwned ? 'background:#1b3d22; color:#28a745;' : ''}">${isOwned ? '⚡ فعال در حال ماین' : '#' + item.id}</div>
@@ -499,7 +605,6 @@
                 `;
                 container.insertAdjacentHTML('beforeend', html);
 
-                // لیست دارایی من
                 if (isOwned) {
                     const myHtml = `
                         <div class="property-card active-miner" style="text-align:right;">
@@ -515,13 +620,11 @@
         }
 
         function buyProperty(id) {
-            if (state.ownedIds.includes(id)) {
-                return;
-            }
+            if (state.ownedIds.includes(id)) return;
 
             const prop = initialProperties.find(p => p.id === id);
             if (state.balance < prop.price) {
-                alert("موجودی شما کافی نیست. لطفاً از طریق بخش کیف پول حساب خود را شارژ کنید.");
+                alert("موجودی شما کافی نیست. لطفا حساب خود را از طریق بخش کیف پول شارژ کنید.");
                 switchTab('wallet');
                 return;
             }
@@ -530,7 +633,7 @@
             state.ownedIds.push(id);
             saveState();
             renderProperties();
-            alert(`🎉 ماینر ${prop.name} با موفقیت خریداری شد و فوراً شروع به استخراج کرد!`);
+            alert(`🎉 ماینر ${prop.name} با موفقیت خریداری شد!`);
         }
 
         function claimEarnings() {
@@ -539,29 +642,49 @@
                 return;
             }
 
-            const claimedAmount = state.unclaimed;
-            state.balance += claimedAmount;
+            state.balance += state.unclaimed;
             state.unclaimed = 0;
             saveState();
             updateUI();
-            alert(`✅ مقدار ${claimedAmount.toFixed(6)} TON با موفقیت به موجودی اصلی شما اضافه شد!`);
+            alert("✅ سود انباشته به موجودی اصلی شما اضافه شد!");
+        }
+
+        function processWithdraw() {
+            const currency = document.getElementById('withdraw-currency').value;
+            const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
+            const address = document.getElementById('withdraw-address').value.trim();
+
+            if (amount < 1) {
+                alert("❌ حداقل مقدار برداشت ۱ دلار (یا تون) است.");
+                return;
+            }
+            if (state.balance < amount) {
+                alert("❌ موجودی حساب شما برای این برداشت کافی نیست.");
+                return;
+            }
+            if (!address || address.length < 10) {
+                alert("❌ لطفاً آدرس معتبر کیف پول خود را وارد کنید.");
+                return;
+            }
+
+            state.balance -= amount;
+            saveState();
+            updateUI();
+            closeModal('withdraw-modal');
+            alert(`✅ درخواست برداشت ${amount} ${currency} با موفقیت ثبت شد و به زودی به آدرس شما واریز خواهد شد.`);
         }
 
         function updateUI() {
-            document.getElementById('user-balance').innerText = state.balance.toFixed(6) + ' TON';
-            document.getElementById('wallet-balance-display').innerText = state.balance.toFixed(6) + ' TON';
+            document.getElementById('user-balance').innerText = state.balance.toFixed(2) + ' TON';
+            document.getElementById('wallet-balance-display').innerText = state.balance.toFixed(2) + ' TON';
             document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8) + ' TON';
             
             document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 فعال";
             document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
         }
 
-        // حلقه تایمر استخراج زنده ثانیه‌ای
         setInterval(() => {
-            const totalDailyRate = getTotalDailyRate();
-            const perSecondRate = totalDailyRate / 86400; // محاسبه مقدار دقیق درآمد در هر ثانیه
-            state.unclaimed += perSecondRate;
-            
+            state.unclaimed += getTotalDailyRate() / 86400;
             document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8) + ' TON';
             saveState();
         }, 1000);
@@ -570,14 +693,23 @@
             state.balance += 5.00;
             saveState();
             updateUI();
-            alert("✅ مبلغ ۵ TON آزمایشی به موجودی شما اضافه شد.");
+            closeModal('deposit-modal');
+            alert("✅ ۵ تون آزمایشی به حساب شما واریز شد.");
         }
 
         function copyWallet(elemId) {
             let input = document.getElementById(elemId);
             input.select();
             document.execCommand("copy");
-            alert("📋 آدرس کیف پول کپی شد!");
+            alert("📋 آدرس ولت کپی شد!");
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
 
         function switchTab(tabName) {
@@ -595,7 +727,6 @@
 
         window.onload = function() {
             loadState();
-            
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
                     let u = window.Telegram.WebApp.initDataUnsafe.user;
@@ -603,7 +734,6 @@
                     document.getElementById('user-profile-id').innerText = "ID: " + u.id;
                 }
             } catch(e) {}
-
             renderProperties();
         };
     </script>
