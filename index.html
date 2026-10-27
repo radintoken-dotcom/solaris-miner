@@ -97,9 +97,25 @@
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        }
+
+        .mining-live-card {
+            background: linear-gradient(145deg, #101c2c, #0b1420);
+            border: 1px solid #00f0ff;
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 16px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+        }
+
+        .unclaimed-amount {
+            font-size: 26px;
+            font-weight: bold;
+            color: #00f0ff;
+            margin: 8px 0;
+            letter-spacing: 1px;
+            direction: ltr;
         }
 
         .property-card {
@@ -109,6 +125,10 @@
             padding: 16px;
             margin-bottom: 14px;
             position: relative;
+        }
+
+        .property-card.active-miner {
+            border-color: #28a745;
         }
 
         .property-badge {
@@ -174,7 +194,7 @@
             background: linear-gradient(135deg, #00f0ff, #0088ff);
             color: #0b0e14;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 12px;
             font-weight: bold;
             font-size: 12px;
@@ -185,6 +205,24 @@
         .btn-buy:active {
             transform: scale(0.96);
             opacity: 0.8;
+        }
+
+        .btn-claim {
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-claim:active {
+            transform: scale(0.97);
         }
 
         .nav-bar {
@@ -256,12 +294,12 @@
     <div class="header">
         <div class="brand-box">
             <h1>Solaris Miner</h1>
-            <p>شبکه اختصاصی TON</p>
+            <p>شبکه استخراج ابری TON</p>
         </div>
         <div class="balance-box">
             <div>
                 <div style="font-size: 9px; color: #8da0bf;">موجودی:</div>
-                <span class="balance-amount" id="user-balance">0.00 TON</span>
+                <span class="balance-amount" id="user-balance">0.000000 TON</span>
             </div>
             <button class="add-btn" onclick="switchTab('wallet')">+</button>
         </div>
@@ -272,14 +310,22 @@
 
         <!-- TAB 1: PROPERTIES (ماینرها) -->
         <div id="tab-properties" class="tab-content active">
-            <div class="stats-card">
+            
+            <!-- کارت استخراج زنده -->
+            <div class="mining-live-card">
+                <div style="font-size: 11px; color: #8da0bf;">⚡ درآمد آماده برداشت (کلایم)</div>
+                <div class="unclaimed-amount" id="live-unclaimed">0.00000000 TON</div>
+                <button class="btn-claim" onclick="claimEarnings()">📥 برداشت و اضافه به کیف پول (Claim)</button>
+            </div>
+
+            <div class="stats-card" style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <div style="font-size: 11px; color: #8da0bf;">تجهیزات فعال شما</div>
-                    <div style="font-size: 16px; font-weight: bold; color: #fff; margin-top: 2px;" id="owned-count">1 / 12 فعال</div>
+                    <div style="font-size: 15px; font-weight: bold; color: #fff; margin-top: 2px;" id="owned-count">1 / 12 فعال</div>
                 </div>
                 <div style="text-align: left;">
-                    <div style="font-size: 11px; color: #8da0bf;">درآمد روزانه کل</div>
-                    <div style="font-size: 16px; font-weight: bold; color: #00f0ff; margin-top: 2px;" id="total-daily">+0.10 TON</div>
+                    <div style="font-size: 11px; color: #8da0bf;">سرعت استخراج روزانه</div>
+                    <div style="font-size: 15px; font-weight: bold; color: #00f0ff; margin-top: 2px;" id="total-daily">+0.10 TON</div>
                 </div>
             </div>
 
@@ -288,32 +334,33 @@
 
         <!-- TAB 2: MY RESORT (دارایی من) -->
         <div id="tab-myresort" class="tab-content">
-            <div style="text-align: center; padding: 40px 20px;">
-                <div style="font-size: 32px; margin-bottom: 10px;">⚡</div>
-                <h3 style="font-size: 16px; color: #fff; margin-bottom: 6px;">مایترهای فعال شما</h3>
-                <p style="font-size: 12px; color: #8da0bf; line-height: 1.6;">تمامی تجهیزات خریداری شده به شبکه تون متصل بوده و سود خود را به صورت لحظه‌ای واریز می‌کنند.</p>
+            <div style="text-align: center; padding: 30px 15px;">
+                <div style="font-size: 32px; margin-bottom: 10px;">⚙️</div>
+                <h3 style="font-size: 16px; color: #fff; margin-bottom: 8px;">دستگاه‌های فعال و در حال ماین</h3>
+                <p style="font-size: 11px; color: #8da0bf; line-height: 1.6; margin-bottom: 15px;">لیست تمامی ماینرهایی که آنلاین بوده و ثانیه‌ای برای شما سود تولید می‌کنند.</p>
+                <div id="my-miners-list"></div>
             </div>
         </div>
 
         <!-- TAB 3: FRIENDS (دعوت دوستان) -->
         <div id="tab-friends" class="tab-content">
-            <div class="stats-card" style="flex-direction: column; text-align: center; gap: 10px; padding: 25px;">
-                <div style="font-size: 14px; font-weight: bold; color: #00f0ff;">دعوت از دوستان و دریافت پاداش TON</div>
-                <p style="font-size: 11px; color: #8da0bf; line-height: 1.6;">با ارسال لینک اختصاصی خود، در تراکنش‌های دوستانتان شریک شوید.</p>
-                <button class="btn-buy" style="width: 100%; margin-top: 10px;" onclick="copyRefLink()">🔗 کپی لینک دعوت</button>
+            <div class="stats-card" style="text-align: center; padding: 25px;">
+                <div style="font-size: 14px; font-weight: bold; color: #00f0ff; margin-bottom: 8px;">دعوت از دوستان و دریافت پاداش TON</div>
+                <p style="font-size: 11px; color: #8da0bf; line-height: 1.6;">با ارسال لینک اختصاصی خود، در درصد استخراج ماینرهای دوستانتان شریک شوید.</p>
+                <button class="btn-buy" style="width: 100%; margin-top: 15px;" onclick="copyRefLink()">🔗 کپی لینک دعوت</button>
             </div>
         </div>
 
-        <!-- TAB 4: WALLET (کیف پول - واریز تون و تتر شبکه تون) -->
+        <!-- TAB 4: WALLET (کیف پول) -->
         <div id="tab-wallet" class="tab-content">
-            <div class="stats-card" style="flex-direction: column; text-align: center; gap: 6px; padding: 20px; margin-bottom: 15px;">
-                <div style="font-size: 11px; color: #8da0bf;">موجودی حساب شما</div>
-                <div style="font-size: 22px; font-weight: bold; color: #ffd700;" id="wallet-balance-display">0.00 TON</div>
+            <div class="stats-card" style="text-align: center; padding: 20px; margin-bottom: 15px;">
+                <div style="font-size: 11px; color: #8da0bf;">موجودی کل کیف پول شما</div>
+                <div style="font-size: 22px; font-weight: bold; color: #ffd700; margin-top: 4px;" id="wallet-balance-display">0.000000 TON</div>
             </div>
 
             <div class="wallet-box-card">
                 <div style="font-size: 13px; font-weight: bold; color: #00f0ff; margin-bottom: 4px;">💎 واریز ارز TON</div>
-                <div style="font-size: 10px; color: #8da0bf; line-height: 1.5;">فقط ارز TON را به آدرس زیر واریز کنید تا حساب شما شارژ شود:</div>
+                <div style="font-size: 10px; color: #8da0bf; line-height: 1.5;">فقط ارز TON را به آدرس زیر واریز کرده تا حساب شما برای خرید ماینر شارژ شود:</div>
                 <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="ton-wallet-addr">
                 <button class="btn-buy" style="width: 100%; margin-top: 8px; font-size: 11px; padding: 8px;" onclick="copyWallet('ton-wallet-addr')">📋 کپی آدرس ولت TON</button>
             </div>
@@ -325,15 +372,15 @@
                 <button class="btn-buy" style="width: 100%; margin-top: 8px; font-size: 11px; padding: 8px; background: linear-gradient(135deg, #28a745, #1e7e34); color:#fff;" onclick="copyWallet('usdt-wallet-addr')">📋 کپی آدرس تتر (شبکه TON)</button>
             </div>
 
-            <button class="btn-buy" style="width: 100%; background: #1f293d; color: #00f0ff; margin-top: 5px;" onclick="simulateDeposit()">⚡ تایید واریز و افزایش موجودی تستی</button>
+            <button class="btn-buy" style="width: 100%; background: #1f293d; color: #00f0ff; margin-top: 5px;" onclick="simulateDeposit()">⚡ افزایش ۵ TON آزمایشی (برای تست خرید)</button>
         </div>
 
         <!-- TAB 5: PROFILE (پروفایل) -->
         <div id="tab-profile" class="tab-content">
-            <div class="stats-card" style="flex-direction: column; text-align: center; gap: 8px; padding: 25px;">
+            <div class="stats-card" style="text-align: center; padding: 25px;">
                 <div style="font-size: 36px; margin-bottom: 5px;">👤</div>
                 <div style="font-size: 15px; font-weight: bold;" id="user-profile-name">کاربر گرامی</div>
-                <div style="font-size: 11px; color: #8da0bf;" id="user-profile-id">ID: 100928</div>
+                <div style="font-size: 11px; color: #8da0bf; margin-top: 4px;" id="user-profile-id">ID: 100928</div>
             </div>
         </div>
 
@@ -364,29 +411,72 @@
     </div>
 
     <script>
-        const propertiesData = [
-            { id: 1, name: "Beach Bungalow", desc: "ماینر خورشیدی پایه ساحلی", daily: 0.10, monthly: 3.00, price: 0.00, owned: true },
-            { id: 2, name: "Seaside Café", desc: "نیروگاه کوچک ساحلی", daily: 0.66, monthly: 19.80, price: 3.00, owned: false },
-            { id: 3, name: "Thai Spa", desc: "سیستم ترکیبی انرژی گرمایی", daily: 1.20, monthly: 36.00, price: 5.00, owned: false },
-            { id: 4, name: "Pool Villa", desc: "پنل پیشرفته خورشیدی خانگی", daily: 2.60, monthly: 78.00, price: 10.00, owned: false },
-            { id: 5, name: "Overwater Restaurant", desc: "توربین آبی و خورشیدی ساحلی", daily: 7.00, monthly: 210.00, price: 25.00, owned: false },
-            { id: 6, name: "Villa Collection", desc: "مجموعه مزارع کوچک استخراج", daily: 15.00, monthly: 450.00, price: 50.00, owned: false },
-            { id: 7, name: "Beach Club", desc: "استیشن قدرتمند سولاریس", daily: 35.00, monthly: 1050.00, price: 100.00, owned: false },
-            { id: 8, name: "Boutique Hotel", desc: "مرکز داده و پردازش ابری", daily: 100.00, monthly: 3000.00, price: 250.00, owned: false },
-            { id: 9, name: "Yacht Marina", desc: "کلونی استخراج توربینی دریایی", daily: 175.00, monthly: 5250.00, price: 350.00, owned: false },
-            { id: 10, name: "Wellness Resort", desc: "مجتمع بزرگ انرژی پاک", daily: 500.00, monthly: 15000.00, price: 500.00, owned: false },
-            { id: 11, name: "Grand Hotel", desc: "شبکه پیشرفته استخراج صنعتی", daily: 1600.00, monthly: 48000.00, price: 800.00, owned: false },
-            { id: 12, name: "Island Resort", desc: "جزیره کامل استخراج اتوماتیک", daily: 3000.00, monthly: 90000.00, price: 1000.00, owned: false }
+        const initialProperties = [
+            { id: 1, name: "Beach Bungalow", desc: "ماینر خورشیدی پایه ساحلی", daily: 0.10, monthly: 3.00, price: 0.00 },
+            { id: 2, name: "Seaside Café", desc: "نیروگاه کوچک ساحلی", daily: 0.66, monthly: 19.80, price: 3.00 },
+            { id: 3, name: "Thai Spa", desc: "سیستم ترکیبی انرژی گرمایی", daily: 1.20, monthly: 36.00, price: 5.00 },
+            { id: 4, name: "Pool Villa", desc: "پنل پیشرفته خورشیدی خانگی", daily: 2.60, monthly: 78.00, price: 10.00 },
+            { id: 5, name: "Overwater Restaurant", desc: "توربین آبی و خورشیدی ساحلی", daily: 7.00, monthly: 210.00, price: 25.00 },
+            { id: 6, name: "Villa Collection", desc: "مجموعه مزارع کوچک استخراج", daily: 15.00, monthly: 450.00, price: 50.00 },
+            { id: 7, name: "Beach Club", desc: "استیشن قدرتمند سولاریس", daily: 35.00, monthly: 1050.00, price: 100.00 },
+            { id: 8, name: "Boutique Hotel", desc: "مرکز داده و پردازش ابری", daily: 100.00, monthly: 3000.00, price: 250.00 },
+            { id: 9, name: "Yacht Marina", desc: "کلونی استخراج توربینی دریایی", daily: 175.00, monthly: 5250.00, price: 350.00 },
+            { id: 10, name: "Wellness Resort", desc: "مجتمع بزرگ انرژی پاک", daily: 500.00, monthly: 15000.00, price: 500.00 },
+            { id: 11, name: "Grand Hotel", desc: "شبکه پیشرفته استخراج صنعتی", daily: 1600.00, monthly: 48000.00, price: 800.00 },
+            { id: 12, name: "Island Resort", desc: "جزیره کامل استخراج اتوماتیک", daily: 3000.00, monthly: 90000.00, price: 1000.00 }
         ];
+
+        let state = {
+            balance: 0.0,
+            ownedIds: [1],
+            unclaimed: 0.0,
+            lastTick: Date.now()
+        };
+
+        function loadState() {
+            const saved = localStorage.getItem('solaris_miner_save_v2');
+            if (saved) {
+                try {
+                    state = JSON.parse(saved);
+                } catch(e) {}
+            }
+
+            // محاسبه میزان آفلاین ماینینگ (سودی که موقع بستن برنامه کسب شده)
+            const now = Date.now();
+            const elapsedSeconds = (now - state.lastTick) / 1000;
+            if (elapsedSeconds > 0) {
+                const totalDailyRate = getTotalDailyRate();
+                const perSecondRate = totalDailyRate / 86400;
+                state.unclaimed += elapsedSeconds * perSecondRate;
+            }
+            state.lastTick = now;
+            saveState();
+        }
+
+        function saveState() {
+            state.lastTick = Date.now();
+            localStorage.setItem('solaris_miner_save_v2', JSON.stringify(state));
+        }
+
+        function getTotalDailyRate() {
+            return initialProperties
+                .filter(p => state.ownedIds.includes(p.id))
+                .reduce((sum, p) => sum + p.daily, 0);
+        }
 
         function renderProperties() {
             const container = document.getElementById('properties-list');
+            const myContainer = document.getElementById('my-miners-list');
             container.innerHTML = '';
+            myContainer.innerHTML = '';
 
-            propertiesData.forEach(item => {
+            initialProperties.forEach(item => {
+                const isOwned = state.ownedIds.includes(item.id);
+                
+                // لیست اصلی
                 const html = `
-                    <div class="property-card">
-                        <div class="property-badge">${item.owned ? '✅ فعال' : '#' + item.id}</div>
+                    <div class="property-card ${isOwned ? 'active-miner' : ''}">
+                        <div class="property-badge" style="${isOwned ? 'background:#1b3d22; color:#28a745;' : ''}">${isOwned ? '⚡ فعال در حال ماین' : '#' + item.id}</div>
                         <div class="property-title">${item.name}</div>
                         <div class="property-desc">${item.desc}</div>
                         
@@ -403,62 +493,91 @@
 
                         <div class="property-footer">
                             <div class="property-price">${item.price === 0 ? 'رایگان' : item.price + ' TON'}</div>
-                            <button class="btn-buy" onclick="buyProperty(${item.id})">${item.owned ? 'فعال‌شده' : 'خرید و فعال‌سازی'}</button>
+                            <button class="btn-buy" style="${isOwned ? 'background:#1f293d; color:#8da0bf; cursor:default;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'خریداری شده' : 'خرید و فعال‌سازی'}</button>
                         </div>
                     </div>
                 `;
                 container.insertAdjacentHTML('beforeend', html);
+
+                // لیست دارایی من
+                if (isOwned) {
+                    const myHtml = `
+                        <div class="property-card active-miner" style="text-align:right;">
+                            <div class="property-title" style="color:#00f0ff;">⚡ ${item.name}</div>
+                            <div class="property-desc">سرعت استخراج: +${item.daily.toFixed(2)} TON در روز</div>
+                        </div>
+                    `;
+                    myContainer.insertAdjacentHTML('beforeend', myHtml);
+                }
             });
+
+            updateUI();
         }
 
         function buyProperty(id) {
-            const prop = propertiesData.find(p => p.id === id);
-            if (prop.owned) {
-                alert("این ماینر از قبل فعال شده است.");
+            if (state.ownedIds.includes(id)) {
                 return;
             }
 
-            let userBal = parseFloat(localStorage.getItem('solaris_balance') || '0.00');
-            if (userBal < prop.price) {
-                alert("موجودی شما کافی نیست. لطفاً از طریق بخش کیف پول، حساب خود را با TON یا تتر (شبکه تون) شارژ کنید.");
+            const prop = initialProperties.find(p => p.id === id);
+            if (state.balance < prop.price) {
+                alert("موجودی شما کافی نیست. لطفاً از طریق بخش کیف پول حساب خود را شارژ کنید.");
                 switchTab('wallet');
                 return;
             }
 
-            userBal -= prop.price;
-            prop.owned = true;
-            localStorage.setItem('solaris_balance', userBal.toFixed(2));
-            
-            document.getElementById('user-balance').innerText = userBal.toFixed(2) + ' TON';
-            document.getElementById('wallet-balance-display').innerText = userBal.toFixed(2) + ' TON';
-            
-            updateStats();
+            state.balance -= prop.price;
+            state.ownedIds.push(id);
+            saveState();
             renderProperties();
-            alert(`🎉 ماینر ${prop.name} با موفقیت فعال شد و به لیست دارایی‌های شما اضافه گردید!`);
+            alert(`🎉 ماینر ${prop.name} با موفقیت خریداری شد و فوراً شروع به استخراج کرد!`);
         }
 
-        function updateStats() {
-            let ownedCount = propertiesData.filter(p => p.owned).length;
-            let totalDaily = propertiesData.filter(p => p.owned).reduce((sum, p) => sum + p.daily, 0);
+        function claimEarnings() {
+            if (state.unclaimed <= 0) {
+                alert("هنوز سودی برای برداشت جمع نشده است.");
+                return;
+            }
 
-            document.getElementById('owned-count').innerText = ownedCount + " / 12 فعال";
-            document.getElementById('total-daily').innerText = "+" + totalDaily.toFixed(2) + " TON";
+            const claimedAmount = state.unclaimed;
+            state.balance += claimedAmount;
+            state.unclaimed = 0;
+            saveState();
+            updateUI();
+            alert(`✅ مقدار ${claimedAmount.toFixed(6)} TON با موفقیت به موجودی اصلی شما اضافه شد!`);
         }
+
+        function updateUI() {
+            document.getElementById('user-balance').innerText = state.balance.toFixed(6) + ' TON';
+            document.getElementById('wallet-balance-display').innerText = state.balance.toFixed(6) + ' TON';
+            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8) + ' TON';
+            
+            document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 فعال";
+            document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
+        }
+
+        // حلقه تایمر استخراج زنده ثانیه‌ای
+        setInterval(() => {
+            const totalDailyRate = getTotalDailyRate();
+            const perSecondRate = totalDailyRate / 86400; // محاسبه مقدار دقیق درآمد در هر ثانیه
+            state.unclaimed += perSecondRate;
+            
+            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8) + ' TON';
+            saveState();
+        }, 1000);
 
         function simulateDeposit() {
-            let userBal = parseFloat(localStorage.getItem('solaris_balance') || '0.00');
-            userBal += 10.00;
-            localStorage.setItem('solaris_balance', userBal.toFixed(2));
-            document.getElementById('user-balance').innerText = userBal.toFixed(2) + ' TON';
-            document.getElementById('wallet-balance-display').innerText = userBal.toFixed(2) + ' TON';
-            alert("✅ واریز شما تایید شد! ۱۰ تون به موجودی حساب اضافه گردید.");
+            state.balance += 5.00;
+            saveState();
+            updateUI();
+            alert("✅ مبلغ ۵ TON آزمایشی به موجودی شما اضافه شد.");
         }
 
         function copyWallet(elemId) {
             let input = document.getElementById(elemId);
             input.select();
             document.execCommand("copy");
-            alert("📋 آدرس کیف پول شبکه TON با موفقیت کپی شد!");
+            alert("📋 آدرس کیف پول کپی شد!");
         }
 
         function switchTab(tabName) {
@@ -471,18 +590,12 @@
 
         function copyRefLink() {
             navigator.clipboard.writeText("https://t.me/SolarisMiner_bot?start=ref_100928");
-            alert("🔗 لینک دعوت شما کپی شد!");
+            alert("🔗 لینک دعوت کپی شد!");
         }
 
         window.onload = function() {
-            let userBal = localStorage.getItem('solaris_balance');
-            if (!userBal) {
-                localStorage.setItem('solaris_balance', '0.00');
-                userBal = '0.00';
-            }
-            document.getElementById('user-balance').innerText = parseFloat(userBal).toFixed(2) + ' TON';
-            document.getElementById('wallet-balance-display').innerText = parseFloat(userBal).toFixed(2) + ' TON';
-
+            loadState();
+            
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
                     let u = window.Telegram.WebApp.initDataUnsafe.user;
@@ -492,7 +605,6 @@
             } catch(e) {}
 
             renderProperties();
-            updateStats();
         };
     </script>
 </body>
