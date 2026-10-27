@@ -96,23 +96,96 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        .mining-live-card {
-            background: linear-gradient(135deg, #0d3b33, #06231f);
-            border: 1px solid #145a4d;
-            border-radius: 18px;
-            padding: 18px;
+        /* بخش جدید دایره چرخان مشابه عکس دوم */
+        .mining-circle-container {
+            background: #ffffff;
+            border: 1px solid #e6e0d4;
+            border-radius: 20px;
+            padding: 20px;
             margin-bottom: 16px;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(13, 59, 51, 0.15);
-            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .unclaimed-amount {
-            font-size: 26px;
+        .spinning-circle-wrapper {
+            position: relative;
+            width: 170px;
+            height: 170px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .rotating-border {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid #f0f4f8;
+            border-top-color: #0098ea;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .inner-circle-content {
+            width: 145px;
+            height: 145px;
+            background: #f7f9fc;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .mined-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .mined-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #555555;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .mined-rate {
+            font-size: 10px;
+            color: #888888;
+            margin-top: 2px;
+        }
+
+        .btn-claim {
+            background: linear-gradient(135deg, #0098ea, #0077b5);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 14px;
             font-weight: bold;
-            color: #a3e4d7;
-            margin: 8px 0;
-            letter-spacing: 1px;
+            font-size: 13px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 250px;
+            margin-top: 5px;
+            box-shadow: 0 4px 12px rgba(0, 152, 234, 0.3);
+        }
+
+        .btn-claim:active {
+            transform: scale(0.97);
         }
 
         .property-card {
@@ -205,24 +278,6 @@
         .btn-buy:active {
             transform: scale(0.96);
             opacity: 0.8;
-        }
-
-        .btn-claim {
-            background: linear-gradient(135deg, #28a745, #1e7e34);
-            color: #ffffff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 14px;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-        }
-
-        .btn-claim:active {
-            transform: scale(0.97);
         }
 
         .nav-bar {
@@ -378,6 +433,7 @@
             border-radius: 14px;
             margin-bottom: 10px;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         .crypto-icon {
@@ -490,9 +546,17 @@
 
         <!-- TAB 1: PROPERTIES (Miners) -->
         <div id="tab-properties" class="tab-content active">
-            <div class="mining-live-card">
-                <div style="font-size: 11px; color: #a3e4d7;">⚡ Ready to claim earnings</div>
-                <div class="unclaimed-amount" id="live-unclaimed">0.00000000 TON</div>
+            <!-- کارت ماینینگ جدید مشابه تصویر دوم -->
+            <div class="mining-circle-container">
+                <div class="spinning-circle-wrapper">
+                    <div class="rotating-border"></div>
+                    <div class="inner-circle-content">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0098ea" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    </div>
+                </div>
+                <div class="mined-number" id="live-unclaimed">0.00000000</div>
+                <div class="mined-label">ENERGY mined</div>
+                <div class="mined-rate" id="mined-rate-sub">≈ 0.10 TON at current rate</div>
                 <button class="btn-claim" onclick="claimEarnings()">Claim Rewards</button>
             </div>
 
@@ -665,34 +729,24 @@
 
     </div>
 
-    <!-- MODAL: DEPOSIT (با کارت‌های گرافیکی ارزها مشابه تصویر) -->
+    <!-- MODAL: DEPOSIT -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #0d3b33; margin-bottom: 10px; text-align: center;">Account Deposit</div>
             <p style="font-size: 11px; color: #666666; margin-bottom: 12px; text-align: center;">Select currency and send to the address below:</p>
             
-            <!-- کارت ارز TON -->
-            <div class="crypto-option-card">
-                <div class="crypto-icon" style="background: #0098ea;">💎</div>
-                <div style="flex: 1;">
-                    <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">TON</div>
-                    <div style="font-size: 10px; color: #666666;">TON Main Network</div>
+            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                <div onclick="selectDepositCurrency('TON')" id="dep-curr-ton" class="crypto-option-card" style="flex: 1; margin-bottom: 0; border-color: #0d3b33; background: #f0f7f4;">
+                    <div class="crypto-icon" style="background: #0098ea; width: 28px; height: 28px; font-size: 12px;">💎</div>
+                    <div style="font-size: 12px; font-weight: bold;">TON</div>
+                </div>
+                <div onclick="selectDepositCurrency('USDT')" id="dep-curr-usdt" class="crypto-option-card" style="flex: 1; margin-bottom: 0;">
+                    <div class="crypto-icon" style="background: #26a69a; width: 28px; height: 28px; font-size: 12px;">₮</div>
+                    <div style="font-size: 12px; font-weight: bold;">USDT <span style="font-size: 8px; color: #666;">TON</span></div>
                 </div>
             </div>
 
-            <!-- کارت ارز USDT روی شبکه TON -->
-            <div class="crypto-option-card">
-                <div class="crypto-icon" style="background: #26a69a; position: relative;">
-                    ₮
-                    <div style="position: absolute; bottom: -2px; right: -2px; background: #0098ea; font-size: 8px; width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid #fff;">💎</div>
-                </div>
-                <div style="flex: 1;">
-                    <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">USDT <span style="font-size: 9px; background: #e0dcd0; padding: 2px 6px; border-radius: 6px; color: #333;">TON</span></div>
-                    <div style="font-size: 10px; color: #666666;">Tether on TON Network</div>
-                </div>
-            </div>
-
-            <label style="font-size: 10px; color: #666666; margin-top: 5px; display: block;">Wallet Address:</label>
+            <label style="font-size: 10px; color: #666666; margin-top: 5px; display: block;" id="dep-label-text">Wallet Address (TON Main Network):</label>
             <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="dep-addr">
             <button class="btn-buy" style="width: 100%; margin-top: 6px; font-size: 11px; padding: 8px;" onclick="copyWallet('dep-addr')">Copy Wallet Address</button>
 
@@ -700,7 +754,7 @@
         </div>
     </div>
 
-    <!-- MODAL: WITHDRAW (با کارت‌های گرافیکی ارزها در بخش برداشت) -->
+    <!-- MODAL: WITHDRAW -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #0d3b33; margin-bottom: 12px; text-align: center;">Withdrawal</div>
@@ -789,11 +843,12 @@
             friendDeposits: 0.0,
             totalDeposited: 0.0,
             totalWithdrawn: 0.0,
+            selectedDepositCurr: "TON",
             selectedWithdrawCurr: "TON"
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v12');
+            const saved = localStorage.getItem('solaris_miner_save_v15');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -809,7 +864,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v12', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v15', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -910,6 +965,23 @@
             alert("✅ Referral rewards collected!");
         }
 
+        function selectDepositCurrency(curr) {
+            state.selectedDepositCurr = curr;
+            if (curr === 'TON') {
+                document.getElementById('dep-curr-ton').style.borderColor = '#0d3b33';
+                document.getElementById('dep-curr-ton').style.background = '#f0f7f4';
+                document.getElementById('dep-curr-usdt').style.borderColor = '#e6e0d4';
+                document.getElementById('dep-curr-usdt').style.background = '#f7f4ed';
+                document.getElementById('dep-label-text').innerText = "Wallet Address (TON Main Network):";
+            } else {
+                document.getElementById('dep-curr-usdt').style.borderColor = '#0d3b33';
+                document.getElementById('dep-curr-usdt').style.background = '#f0f7f4';
+                document.getElementById('dep-curr-ton').style.borderColor = '#e6e0d4';
+                document.getElementById('dep-curr-ton').style.background = '#f7f4ed';
+                document.getElementById('dep-label-text').innerText = "Wallet Address (USDT - TON Network):";
+            }
+        }
+
         function selectWithdrawCurrency(curr) {
             state.selectedWithdrawCurr = curr;
             if (curr === 'TON') {
@@ -953,7 +1025,8 @@
         function updateUI() {
             document.getElementById('user-balance').innerText = state.balance.toFixed(8) + ' TON';
             document.getElementById('wallet-balance-display').innerText = state.balance.toFixed(8) + ' TON';
-            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8) + ' TON';
+            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8);
+            document.getElementById('mined-rate-sub').innerText = `≈ +${getTotalDailyRate().toFixed(2)} TON daily rate`;
             
             document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 Active";
             document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
@@ -975,7 +1048,7 @@
 
         setInterval(() => {
             state.unclaimed += getTotalDailyRate() / 86400;
-            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8) + ' TON';
+            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8);
             saveState();
         }, 1000);
 
