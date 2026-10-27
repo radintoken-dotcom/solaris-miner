@@ -57,7 +57,7 @@
         }
 
         .balance-amount {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             color: #ffd700;
         }
@@ -226,6 +226,28 @@
             stroke-width: 2;
             margin-bottom: 4px;
         }
+
+        .wallet-box-card {
+            background: #151a23;
+            border: 1px solid #1f293d;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 12px;
+            text-align: right;
+        }
+
+        .wallet-input {
+            width: 100%;
+            background: #0b0e14;
+            border: 1px solid #1f293d;
+            border-radius: 10px;
+            padding: 10px;
+            color: #00f0ff;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 6px;
+            outline: none;
+        }
     </style>
 </head>
 <body>
@@ -234,22 +256,25 @@
     <div class="header">
         <div class="brand-box">
             <h1>Solaris Miner</h1>
-            <p>انرژی پاک و استخراج هوشمند</p>
+            <p>شبکه اختصاصی TON</p>
         </div>
         <div class="balance-box">
-            <span class="balance-amount" id="user-balance">0.31 TON</span>
-            <button class="add-btn" onclick="addBalance()">+</button>
+            <div>
+                <div style="font-size: 9px; color: #8da0bf;">موجودی:</div>
+                <span class="balance-amount" id="user-balance">0.00 TON</span>
+            </div>
+            <button class="add-btn" onclick="switchTab('wallet')">+</button>
         </div>
     </div>
 
     <!-- CONTENT -->
     <div class="content">
 
-        <!-- TAB 1: PROPERTIES (ماینرها و تجهیزات) -->
+        <!-- TAB 1: PROPERTIES (ماینرها) -->
         <div id="tab-properties" class="tab-content active">
             <div class="stats-card">
                 <div>
-                    <div style="font-size: 11px; color: #8da0bf;">مجموعه فعال شما</div>
+                    <div style="font-size: 11px; color: #8da0bf;">تجهیزات فعال شما</div>
                     <div style="font-size: 16px; font-weight: bold; color: #fff; margin-top: 2px;" id="owned-count">1 / 12 فعال</div>
                 </div>
                 <div style="text-align: left;">
@@ -258,36 +283,49 @@
                 </div>
             </div>
 
-            <div id="properties-list">
-                <!-- لیست تجهیزات به صورت خودکار توسط جاوااسکریپت لود می شود -->
-            </div>
+            <div id="properties-list"></div>
         </div>
 
-        <!-- TAB 2: MY RESORT (تجهیزات من) -->
+        <!-- TAB 2: MY RESORT (دارایی من) -->
         <div id="tab-myresort" class="tab-content">
             <div style="text-align: center; padding: 40px 20px;">
                 <div style="font-size: 32px; margin-bottom: 10px;">⚡</div>
                 <h3 style="font-size: 16px; color: #fff; margin-bottom: 6px;">مایترهای فعال شما</h3>
-                <p style="font-size: 12px; color: #8da0bf; line-height: 1.6;">تجهیزاتی که خریداری کرده‌اید به‌صورت خودکار هر روز برای شما سود استخراج می‌کنند.</p>
+                <p style="font-size: 12px; color: #8da0bf; line-height: 1.6;">تمامی تجهیزات خریداری شده به شبکه تون متصل بوده و سود خود را به صورت لحظه‌ای واریز می‌کنند.</p>
             </div>
         </div>
 
         <!-- TAB 3: FRIENDS (دعوت دوستان) -->
         <div id="tab-friends" class="tab-content">
             <div class="stats-card" style="flex-direction: column; text-align: center; gap: 10px; padding: 25px;">
-                <div style="font-size: 14px; font-weight: bold; color: #00f0ff;">دعوت از دوستان و همکاران</div>
-                <p style="font-size: 11px; color: #8da0bf; line-height: 1.6;">با ارسال لینک اختصاصی خود به دوستانتان، کمیسیون پاداش لحظه‌ای دریافت کنید.</p>
+                <div style="font-size: 14px; font-weight: bold; color: #00f0ff;">دعوت از دوستان و دریافت پاداش TON</div>
+                <p style="font-size: 11px; color: #8da0bf; line-height: 1.6;">با ارسال لینک اختصاصی خود، در تراکنش‌های دوستانتان شریک شوید.</p>
                 <button class="btn-buy" style="width: 100%; margin-top: 10px;" onclick="copyRefLink()">🔗 کپی لینک دعوت</button>
             </div>
         </div>
 
-        <!-- TAB 4: WALLET (کیف پول) -->
+        <!-- TAB 4: WALLET (کیف پول - واریز تون و تتر شبکه تون) -->
         <div id="tab-wallet" class="tab-content">
-            <div class="stats-card" style="flex-direction: column; text-align: center; gap: 10px; padding: 25px;">
-                <div style="font-size: 12px; color: #8da0bf;">موجودی قابل برداشت</div>
-                <div style="font-size: 24px; font-weight: bold; color: #ffd700;" id="wallet-balance-display">0.31 TON</div>
-                <button class="btn-buy" style="width: 100%; margin-top: 10px; background: linear-gradient(135deg, #28a745, #1e7e34);" onclick="alert('سیستم برداشت در حال آماده‌سازی است.')">📥 برداشت به کیف پول</button>
+            <div class="stats-card" style="flex-direction: column; text-align: center; gap: 6px; padding: 20px; margin-bottom: 15px;">
+                <div style="font-size: 11px; color: #8da0bf;">موجودی حساب شما</div>
+                <div style="font-size: 22px; font-weight: bold; color: #ffd700;" id="wallet-balance-display">0.00 TON</div>
             </div>
+
+            <div class="wallet-box-card">
+                <div style="font-size: 13px; font-weight: bold; color: #00f0ff; margin-bottom: 4px;">💎 واریز ارز TON</div>
+                <div style="font-size: 10px; color: #8da0bf; line-height: 1.5;">فقط ارز TON را به آدرس زیر واریز کنید تا حساب شما شارژ شود:</div>
+                <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="ton-wallet-addr">
+                <button class="btn-buy" style="width: 100%; margin-top: 8px; font-size: 11px; padding: 8px;" onclick="copyWallet('ton-wallet-addr')">📋 کپی آدرس ولت TON</button>
+            </div>
+
+            <div class="wallet-box-card">
+                <div style="font-size: 13px; font-weight: bold; color: #28a745; margin-bottom: 4px;">💵 واریز تتر (USDT روی شبکه TON)</div>
+                <div style="font-size: 10px; color: #8da0bf; line-height: 1.5;">حتماً از شبکه <b>TON (Jetton)</b> برای واریز تتر استفاده کنید:</div>
+                <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="usdt-wallet-addr">
+                <button class="btn-buy" style="width: 100%; margin-top: 8px; font-size: 11px; padding: 8px; background: linear-gradient(135deg, #28a745, #1e7e34); color:#fff;" onclick="copyWallet('usdt-wallet-addr')">📋 کپی آدرس تتر (شبکه TON)</button>
+            </div>
+
+            <button class="btn-buy" style="width: 100%; background: #1f293d; color: #00f0ff; margin-top: 5px;" onclick="simulateDeposit()">⚡ تایید واریز و افزایش موجودی تستی</button>
         </div>
 
         <!-- TAB 5: PROFILE (پروفایل) -->
@@ -326,7 +364,6 @@
     </div>
 
     <script>
-        // اطلاعات ۱۲ ماینر و اقامتگاه سولاریس
         const propertiesData = [
             { id: 1, name: "Beach Bungalow", desc: "ماینر خورشیدی پایه ساحلی", daily: 0.10, monthly: 3.00, price: 0.00, owned: true },
             { id: 2, name: "Seaside Café", desc: "نیروگاه کوچک ساحلی", daily: 0.66, monthly: 19.80, price: 3.00, owned: false },
@@ -381,9 +418,10 @@
                 return;
             }
 
-            let userBal = parseFloat(localStorage.getItem('solaris_balance') || '0.31');
+            let userBal = parseFloat(localStorage.getItem('solaris_balance') || '0.00');
             if (userBal < prop.price) {
-                alert("موجودی شما کافی نیست. لطفاً حساب خود را شارژ کنید.");
+                alert("موجودی شما کافی نیست. لطفاً از طریق بخش کیف پول، حساب خود را با TON یا تتر (شبکه تون) شارژ کنید.");
+                switchTab('wallet');
                 return;
             }
 
@@ -407,13 +445,20 @@
             document.getElementById('total-daily').innerText = "+" + totalDaily.toFixed(2) + " TON";
         }
 
-        function addBalance() {
-            let userBal = parseFloat(localStorage.getItem('solaris_balance') || '0.31');
+        function simulateDeposit() {
+            let userBal = parseFloat(localStorage.getItem('solaris_balance') || '0.00');
             userBal += 10.00;
             localStorage.setItem('solaris_balance', userBal.toFixed(2));
             document.getElementById('user-balance').innerText = userBal.toFixed(2) + ' TON';
             document.getElementById('wallet-balance-display').innerText = userBal.toFixed(2) + ' TON';
-            alert("💰 ۱۰ تون به‌صورت تستی به حساب شما اضافه شد!");
+            alert("✅ واریز شما تایید شد! ۱۰ تون به موجودی حساب اضافه گردید.");
+        }
+
+        function copyWallet(elemId) {
+            let input = document.getElementById(elemId);
+            input.select();
+            document.execCommand("copy");
+            alert("📋 آدرس کیف پول شبکه TON با موفقیت کپی شد!");
         }
 
         function switchTab(tabName) {
@@ -432,8 +477,8 @@
         window.onload = function() {
             let userBal = localStorage.getItem('solaris_balance');
             if (!userBal) {
-                localStorage.setItem('solaris_balance', '0.31');
-                userBal = '0.31';
+                localStorage.setItem('solaris_balance', '0.00');
+                userBal = '0.00';
             }
             document.getElementById('user-balance').innerText = parseFloat(userBal).toFixed(2) + ' TON';
             document.getElementById('wallet-balance-display').innerText = parseFloat(userBal).toFixed(2) + ' TON';
