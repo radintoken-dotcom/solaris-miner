@@ -96,7 +96,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        /* فن بدون کادر اضافی، کاملاً گرد و شیک */
+        /* فن ماینر بدون کادر اضافی */
         .mining-circle-container {
             background: #ffffff;
             border: 1px solid #e6e0d4;
@@ -203,10 +203,6 @@
             box-shadow: 0 4px 14px rgba(0, 152, 234, 0.3);
         }
 
-        .btn-claim:active {
-            transform: scale(0.97);
-        }
-
         .property-card {
             background: #ffffff;
             border: 1px solid #e6e0d4;
@@ -281,7 +277,7 @@
             font-weight: bold;
         }
 
-.btn-buy {
+        .btn-buy {
             background: linear-gradient(135deg, #0098ea, #0077b5);
             color: #ffffff;
             border: none;
@@ -292,11 +288,6 @@
             cursor: pointer;
             transition: 0.2s;
             box-shadow: 0 4px 10px rgba(0, 152, 234, 0.2);
-        }
-
-        .btn-buy:active {
-            transform: scale(0.96);
-            opacity: 0.8;
         }
 
         .nav-bar {
@@ -348,7 +339,6 @@
             margin-bottom: 14px;
             text-align: left;
             color: #ffffff;
-            box-shadow: 0 6px 15px rgba(0, 152, 234, 0.2);
         }
 
         .friends-collect-card {
@@ -443,45 +433,58 @@
             outline: none;
         }
 
-        /* استایل لیست ارزها به صورت ستونی و شیک */
+        /* استایل کارت‌های لیست ارزها دقیقاً مشابه نمونه دلخواه شما با فلش سمت راست */
         .crypto-list-col {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-height: 220px;
+            gap: 10px;
+            max-height: 320px;
             overflow-y: auto;
             margin-bottom: 12px;
             padding-right: 4px;
         }
 
-        .crypto-option-card {
+        .crypto-card-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border: 1px solid #e6e0d4;
+            padding: 14px 16px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .crypto-card-row:active {
+            background: #f0f7f4;
+            border-color: #0098ea;
+        }
+
+        .crypto-info-left {
             display: flex;
             align-items: center;
             gap: 12px;
-            background: #f7f4ed;
-            border: 1px solid #e6e0d4;
-            padding: 10px 12px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.2s;
         }
 
-        .crypto-option-card.selected {
-            border-color: #0098ea;
-            background: #e1f3fc;
-        }
-
-        .crypto-icon {
-            width: 32px;
-            height: 32px;
+        .crypto-icon-img {
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             color: #ffffff;
-            font-size: 13px;
+            font-size: 14px;
             flex-shrink: 0;
+        }
+
+        .crypto-arrow {
+            font-size: 16px;
+            color: #666666;
+            font-weight: bold;
         }
 
         .profile-header-card {
@@ -582,7 +585,6 @@
 
         <!-- TAB 1: PROPERTIES (Miners) -->
         <div id="tab-properties" class="tab-content active">
-            <!-- کارت ماینینگ با فن متحرک و حلقه‌ی آبی شیک -->
             <div class="mining-circle-container">
                 <div class="fan-wrapper">
                     <div class="fan-ring"></div>
@@ -610,7 +612,7 @@
             <div id="properties-list"></div>
         </div>
 
-        <!-- TAB 2: MY RESORT (My Miners) -->
+        <!-- TAB 2: MY RESORT -->
         <div id="tab-myresort" class="tab-content">
             <div style="text-align: center; padding: 30px 15px;">
                 <div style="font-size: 32px; margin-bottom: 10px;">⚙️</div>
@@ -662,12 +664,6 @@
                     <div style="font-size: 10px; color: #666666; margin-top: 4px;">Deposits, TON</div>
                 </div>
             </div>
-
-            <div class="wallet-menu-box" style="display: block; text-align: center; padding: 25px;">
-                <div style="font-size: 14px; font-weight: bold; color: #1a1a1a; margin-bottom: 6px;">My friends</div>
-                <div style="font-size: 11px; color: #666666; margin-bottom: 15px;">No invited friends yet. Send a friend your link. They will appear here after joining.</div>
-                <div style="background: #f7f4ed; border: 1px solid #e6e0d4; border-radius: 12px; padding: 10px; font-size: 12px; color: #666666;">0</div>
-            </div>
         </div>
 
         <!-- TAB 4: WALLET -->
@@ -677,8 +673,8 @@
                 <div style="font-size: 26px; font-weight: bold; color: #ffffff; margin-top: 4px;" id="wallet-balance-display">0.00000000 TON</div>
                 
                 <div class="wallet-btn-row">
-                    <button class="wallet-action-btn" onclick="openModal('deposit-modal')">+ Deposit</button>
-                    <button class="wallet-action-btn outline" onclick="openModal('withdraw-modal')">↑ Withdraw</button>
+                    <button class="wallet-action-btn" onclick="openDepositModal()">+ Deposit</button>
+                    <button class="wallet-action-btn outline" onclick="openWithdrawModal()">↑ Withdraw</button>
                 </div>
             </div>
 
@@ -744,75 +740,73 @@
                 <div class="profile-info-label">Total withdrawn</div>
                 <div class="profile-info-value" id="profile-total-withdrawn">0.00</div>
             </div>
-
-            <div class="profile-info-card">
-                <div>
-                    <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">Deposits</div>
-                    <div style="font-size: 10px; color: #666666;">Deposit history</div>
-                </div>
-                <button class="wallet-action-btn" style="background: #0098ea; color: #fff; padding: 8px 16px; font-size: 12px;" onclick="alert('Deposit history is empty.')">Open</button>
-            </div>
-
-            <div class="profile-info-card">
-                <div>
-                    <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">Withdrawals</div>
-                    <div style="font-size: 10px; color: #666666;">Withdrawal history</div>
-                </div>
-                <button class="wallet-action-btn" style="background: #0098ea; color: #fff; padding: 8px 16px; font-size: 12px;" onclick="alert('Withdrawal history is empty.')">Open</button>
-            </div>
-
         </div>
 
     </div>
 
-    <!-- MODAL: DEPOSIT (ارزهای ستونی با آدرس و ممو اختصاصی) -->
+    <!-- MODAL: DEPOSIT (لیست شیک با کارت‌های منفرد و فلش) -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #0098ea; margin-bottom: 10px; text-align: center;">Account Deposit</div>
-            <p style="font-size: 11px; color: #666666; margin-bottom: 12px; text-align: center;">Select currency and send to the address below:</p>
-            
-            <div class="crypto-list-col" id="deposit-currency-list">
-                <!-- JavaScript populated list -->
+            <div id="dep-list-view">
+                <div style="font-size: 15px; font-weight: bold; color: #0098ea; margin-bottom: 6px; text-align: center;">Account Deposit</div>
+                <p style="font-size: 11px; color: #666666; margin-bottom: 14px; text-align: center;">Choose a currency and network to deposit:</p>
+                <div class="crypto-list-col" id="deposit-currency-list"></div>
+                <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 10px;" onclick="closeModal('deposit-modal')">Close</button>
             </div>
 
-            <label style="font-size: 10px; color: #666666; margin-top: 5px; display: block;" id="dep-label-text">Wallet Address:</label>
-            <input type="text" class="wallet-input" readonly id="dep-addr">
-            <button class="btn-buy" style="width: 100%; margin-top: 6px; font-size: 11px; padding: 8px;" onclick="copyWallet('dep-addr')">Copy Wallet Address</button>
+            <div id="dep-detail-view" style="display: none;">
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                    <button onclick="backToDepositList()" style="background: none; border: none; font-size: 16px; color: #0098ea; cursor: pointer; font-weight: bold;">&larr; Back</button>
+                    <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold; color: #0098ea; margin-right: 30px;" id="dep-title-detail">Deposit Details</div>
+                </div>
 
-            <div id="memo-container" style="margin-top: 10px; display: none;">
-                <label style="font-size: 10px; color: #666666; display: block;">MEMO / Tag (Required):</label>
-                <input type="text" class="wallet-input" readonly id="dep-memo">
-                <button class="btn-buy" style="width: 100%; margin-top: 6px; font-size: 11px; padding: 8px;" onclick="copyWallet('dep-memo')">Copy MEMO</button>
+                <label style="font-size: 10px; color: #666666; margin-top: 5px; display: block;" id="dep-label-text">Wallet Address:</label>
+                <input type="text" class="wallet-input" readonly id="dep-addr">
+                <button class="btn-buy" style="width: 100%; margin-top: 8px; font-size: 11px; padding: 9px;" onclick="copyWallet('dep-addr')">Copy Wallet Address</button>
+
+                <div id="memo-container" style="margin-top: 12px; display: none;">
+                    <label style="font-size: 10px; color: #666666; display: block;">MEMO / Tag (Required):</label>
+                    <input type="text" class="wallet-input" readonly id="dep-memo">
+                    <button class="btn-buy" style="width: 100%; margin-top: 8px; font-size: 11px; padding: 9px;" onclick="copyWallet('dep-memo')">Copy MEMO</button>
+                </div>
+                <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 15px;" onclick="closeModal('deposit-modal')">Close</button>
             </div>
-
-            <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 15px;" onclick="closeModal('deposit-modal')">Close</button>
         </div>
     </div>
 
-    <!-- MODAL: WITHDRAW -->
+    <!-- MODAL: WITHDRAW (لیست شیک با کارت‌های منفرد و فلش مشابه تصویر مد نظرتون) -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #0098ea; margin-bottom: 12px; text-align: center;">Withdrawal</div>
-            
-            <div style="margin-bottom: 10px;">
-                <label style="font-size: 11px; color: #666666; margin-bottom: 6px; display: block;">Select Currency / Network:</label>
-                <div class="crypto-list-col" id="withdraw-currency-list" style="max-height: 180px;">
-                    <!-- JavaScript populated list -->
+            <div id="wit-list-view">
+                <div style="font-size: 15px; font-weight: bold; color: #0098ea; margin-bottom: 6px; text-align: center;">Withdrawal</div>
+                <p style="font-size: 11px; color: #666666; margin-bottom: 14px; text-align: center;">Choose a currency and network to withdraw:</p>
+                <div class="crypto-list-col" id="withdraw-currency-list"></div>
+                <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 10px;" onclick="closeModal('withdraw-modal')">Cancel</button>
+            </div>
+
+            <div id="wit-detail-view" style="display: none;">
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                    <button onclick="backToWithdrawList()" style="background: none; border: none; font-size: 16px; color: #0098ea; cursor: pointer; font-weight: bold;">&larr; Choose another currency</button>
                 </div>
-            </div>
+                
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 11px; color: #666666;">Withdrawal Amount (Min 1.00):</label>
+                    <input type="number" id="withdraw-amount" class="wallet-input" placeholder="1.00" min="1" step="0.1">
+                </div>
 
-            <div style="margin-bottom: 10px;">
-                <label style="font-size: 11px; color: #666666;">Withdrawal Amount:</label>
-                <input type="number" id="withdraw-amount" class="wallet-input" placeholder="1.00" min="1" step="0.1">
-            </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="font-size: 11px; color: #666666;" id="wit-addr-label">Destination Address:</label>
+                    <input type="text" id="withdraw-address" class="wallet-input" placeholder="Enter wallet address">
+                </div>
 
-            <div style="margin-bottom: 15px;">
-                <label style="font-size: 11px; color: #666666;">Your Destination Address:</label>
-                <input type="text" id="withdraw-address" class="wallet-input" placeholder="Enter wallet address">
-            </div>
+                <div id="wit-memo-container" style="margin-bottom: 15px; display: none;">
+                    <label style="font-size: 11px; color: #666666;">MEMO / Tag:</label>
+                    <input type="text" id="withdraw-memo" class="wallet-input" placeholder="Enter memo">
+                </div>
 
-            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0098ea, #0077b5); font-size: 13px;" onclick="processWithdraw()">Confirm Withdrawal</button>
-            <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 8px;" onclick="closeModal('withdraw-modal')">Cancel</button>
+                <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0098ea, #0077b5); font-size: 13px;" onclick="processWithdraw()">Confirm Withdrawal</button>
+                <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 8px;" onclick="closeModal('withdraw-modal')">Cancel</button>
+            </div>
         </div>
     </div>
 
@@ -856,15 +850,15 @@
             { id: 12, name: "Island Resort", desc: "Fully automated island miner", daily: 3000.00, monthly: 90000.00, price: 1000.00 }
         ];
 
-        // لیست ارزها به ترتیب دقیق درخواستی شما
+        // لیست ارزها به ترتیب دقیق درخواستی با تصاویر و آدرس‌های واقعی
         const cryptoCurrencies = [
-            { id: 'TON', name: 'TON', network: 'TON Main Network', icon: '💎', color: '#0098ea', addr: 'UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v', needsMemo: true },
-            { id: 'USDT_TON', name: 'USDT', network: 'Tether on TON Network', icon: '₮', color: '#26a69a', addr: 'UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v', needsMemo: true },
-            { id: 'USDT_BNB', name: 'USDT (BNB)', network: 'Tether on BNB Chain', icon: '🌐', color: '#f3ba2f', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false },
-            { id: 'BNB', name: 'BNB', network: 'BNB Smart Chain', icon: '🟡', color: '#f3ba2f', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false },
-            { id: 'AVAX', name: 'AVAX', network: 'Avalanche C-Chain', icon: '🔺', color: '#e84142', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false },
-            { id: 'TRON', name: 'TRON', network: 'TRON Network (TRC20)', icon: '🔴', color: '#ff0000', addr: 'TRxkGT4Ge4Vtt354YET5dZQScTSwqVyJ2n', needsMemo: false },
-            { id: 'SOL', name: 'SOLANA', network: 'Solana Main Network', icon: '🟣', color: '#9945ff', addr: 'ADtDse3bfk5r114yn6sYJ3fcQ8TEHY3bpJ67LvLSmorZ', needsMemo: false }
+            { id: 'TON', name: 'TON', network: 'TON Main Network', icon: '💎', color: '#0098ea', addr: 'UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v', needsMemo: true, min: '1.00' },
+            { id: 'USDT_TON', name: 'USDT (TON)', network: 'Tether on TON Network', icon: '₮', color: '#26a69a', addr: 'UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v', needsMemo: true, min: '1.00' },
+            { id: 'USDT_BNB', name: 'USDT (BNB)', network: 'Tether on BNB Chain', icon: '🌐', color: '#f3ba2f', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false, min: '1.00' },
+            { id: 'BNB', name: 'BNB', network: 'BNB Smart Chain', icon: '🟡', color: '#f3ba2f', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false, min: '1.00' },
+            { id: 'AVAX', name: 'AVAX', network: 'Avalanche C-Chain', icon: '🔺', color: '#e84142', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false, min: '1.00' },
+            { id: 'TRON', name: 'TRON', network: 'TRON Network (TRC20)', icon: '🔴', color: '#ff0000', addr: 'TRxkGT4Ge4Vtt354YET5dZQScTSwqVyJ2n', needsMemo: false, min: '1.00' },
+            { id: 'SOL', name: 'SOLANA', network: 'Solana Main Network', icon: '🟣', color: '#9945ff', addr: 'ADtDse3bfk5r114yn6sYJ3fcQ8TEHY3bpJ67LvLSmorZ', needsMemo: false, min: '1.00' }
         ];
 
         let state = {
@@ -881,12 +875,11 @@
             friendDeposits: 0.0,
             totalDeposited: 0.0,
             totalWithdrawn: 0.0,
-            selectedDepositCurr: 'TON',
-            selectedWithdrawCurr: 'TON'
+            selectedWithdrawCurr: null
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v20');
+            const saved = localStorage.getItem('solaris_miner_save_v21');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -902,7 +895,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v20', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v21', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -919,7 +912,6 @@
 
             initialProperties.forEach(item => {
                 const isOwned = state.ownedIds.includes(item.id);
-                
                 const html = `
                     <div class="property-card ${isOwned ? 'active-miner' : ''}">
                         <div class="property-badge" style="${isOwned ? 'background:#e1f3fc; color:#0098ea;' : ''}">${isOwned ? '⚡ Active' : '#' + item.id}</div>
@@ -955,7 +947,6 @@
                     myContainer.insertAdjacentHTML('beforeend', myHtml);
                 }
             });
-
             updateUI();
         }
 
@@ -963,7 +954,7 @@
             if (state.ownedIds.includes(id)) return;
             const prop = initialProperties.find(p => p.id === id);
             if (state.balance < prop.price) {
-                alert("Insufficient balance. Please deposit funds via wallet.");
+                alert("Insufficient balance.");
                 switchTab('wallet');
                 return;
             }
@@ -1000,62 +991,37 @@
             alert("✅ Referral rewards collected!");
         }
 
-        function buildCryptoLists() {
-            // Deposit list
-            const depContainer = document.getElementById('deposit-currency-list');
-            depContainer.innerHTML = '';
+        // ساخت لیست واریز به صورت کارت‌های منفرد شیک با فلش
+        function buildDepositList() {
+            const container = document.getElementById('deposit-currency-list');
+            container.innerHTML = '';
             cryptoCurrencies.forEach(c => {
-                const isSelected = c.id === state.selectedDepositCurr;
-                depContainer.insertAdjacentHTML('beforeend', `
-                    <div onclick="selectDepositCurrency('${c.id}')" class="crypto-option-card ${isSelected ? 'selected' : ''}" id="dep-card-${c.id}">
-                        <div class="crypto-icon" style="background: ${c.color};">${c.icon}</div>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1a1a1a;">${c.name}</div>
-                            <div style="font-size: 9px; color: #666666;">${c.network}</div>
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="crypto-card-row" onclick="selectDepositItem('${c.id}')">
+                        <div class="crypto-info-left">
+                            <div class="crypto-icon-img" style="background: ${c.color};">${c.icon}</div>
+                            <div>
+                                <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">${c.name}</div>
+                                <div style="font-size: 10px; color: #666666;">Minimum: ${c.min}</div>
+                            </div>
                         </div>
+                        <div class="crypto-arrow">&rarr;</div>
                     </div>
                 `);
             });
-
-            // Withdraw list
-            const witContainer = document.getElementById('withdraw-currency-list');
-            witContainer.innerHTML = '';
-            cryptoCurrencies.forEach(c => {
-                const isSelected = c.id === state.selectedWithdrawCurr;
-                witContainer.insertAdjacentHTML('beforeend', `
-                    <div onclick="selectWithdrawCurrency('${c.id}')" class="crypto-option-card ${isSelected ? 'selected' : ''}" id="wit-card-${c.id}">
-                        <div class="crypto-icon" style="background: ${c.color};">${c.icon}</div>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold; color: #1a1a1a;">${c.name}</div>
-                            <div style="font-size: 9px; color: #666666;">${c.network}</div>
-                        </div>
-                    </div>
-                `);
-            });
-
-            updateDepositFields(state.selectedDepositCurr);
         }
 
-        function selectDepositCurrency(currId) {
-            state.selectedDepositCurr = currId;
-            cryptoCurrencies.forEach(c => {
-                const card = document.getElementById(`dep-card-${c.id}`);
-                if (card) {
-                    if (c.id === currId) card.classList.add('selected');
-                    else card.classList.remove('selected');
-                }
-            });
-            updateDepositFields(currId);
-        }
-
-        function updateDepositFields(currId) {
-            const curr = cryptoCurrencies.find(c => c.id === currId);
-            if (!curr) return;
-            document.getElementById('dep-label-text').innerText = `Wallet Address (${curr.network}):`;
-            document.getElementById('dep-addr').value = curr.addr;
+        function selectDepositItem(currId) {
+            const c = cryptoCurrencies.find(item => item.id === currId);
+            if (!c) return;
+            document.getElementById('dep-list-view').style.display = 'none';
+            document.getElementById('dep-detail-view').style.display = 'block';
+            document.getElementById('dep-title-detail').innerText = `${c.name} Deposit`;
+            document.getElementById('dep-label-text').innerText = `Wallet Address (${c.network}):`;
+            document.getElementById('dep-addr').value = c.addr;
 
             const memoContainer = document.getElementById('memo-container');
-            if (curr.needsMemo) {
+            if (c.needsMemo) {
                 memoContainer.style.display = 'block';
                 document.getElementById('dep-memo').value = "MEMO-" + state.telegramId;
             } else {
@@ -1063,15 +1029,50 @@
             }
         }
 
-        function selectWithdrawCurrency(currId) {
-            state.selectedWithdrawCurr = currId;
+        function backToDepositList() {
+            document.getElementById('dep-detail-view').style.display = 'none';
+            document.getElementById('dep-list-view').style.display = 'block';
+        }
+
+        // ساخت لیست برداشت به صورت کارت‌های منفرد شیک با فلش
+        function buildWithdrawList() {
+            const container = document.getElementById('withdraw-currency-list');
+            container.innerHTML = '';
             cryptoCurrencies.forEach(c => {
-                const card = document.getElementById(`wit-card-${c.id}`);
-                if (card) {
-                    if (c.id === currId) card.classList.add('selected');
-                    else card.classList.remove('selected');
-                }
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="crypto-card-row" onclick="selectWithdrawItem('${c.id}')">
+                        <div class="crypto-info-left">
+                            <div class="crypto-icon-img" style="background: ${c.color};">${c.icon}</div>
+                            <div>
+                                <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">${c.name}</div>
+                                <div style="font-size: 10px; color: #666666;">Minimum: ${c.min}</div>
+                            </div>
+                        </div>
+                        <div class="crypto-arrow">&rarr;</div>
+                    </div>
+                `);
             });
+        }
+
+        function selectWithdrawItem(currId) {
+            const c = cryptoCurrencies.find(item => item.id === currId);
+            if (!c) return;
+            state.selectedWithdrawCurr = c;
+            document.getElementById('wit-list-view').style.display = 'none';
+            document.getElementById('wit-detail-view').style.display = 'block';
+            document.getElementById('wit-addr-label').innerText = `Destination Address (${c.network}):`;
+            
+            const memoDiv = document.getElementById('wit-memo-container');
+            if (c.needsMemo) {
+                memoDiv.style.display = 'block';
+            } else {
+                memoDiv.style.display = 'none';
+            }
+        }
+
+        function backToWithdrawList() {
+            document.getElementById('wit-detail-view').style.display = 'none';
+            document.getElementById('wit-list-view').style.display = 'block';
         }
 
         function processWithdraw() {
@@ -1079,7 +1080,7 @@
             const address = document.getElementById('withdraw-address').value.trim();
 
             if (amount < 1) {
-                alert("❌ Minimum withdrawal amount is 1.");
+                alert("❌ Minimum withdrawal amount is 1.00");
                 return;
             }
             if (state.balance < amount) {
@@ -1136,10 +1137,20 @@
             alert("📋 Copied to clipboard!");
         }
 
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-            if (modalId === 'deposit-modal') buildCryptoLists();
-            if (modalId === 'withdraw-modal') buildCryptoLists();
+        function openDepositModal() {
+            document.getElementById('dep-list-view').style.display = 'block';
+            document.getElementById('dep-detail-view').style.display = 'none';
+            document.getElementById('deposit-modal').style.display = 'flex';
+            buildDepositList();
+        }
+
+        function openWithdrawModal() {
+            document.getElementById('wit-list-view').style.display = 'block';
+            document.getElementById('wit-detail-view').style.display = 'none';
+            document.getElementById('withdraw-amount').value = '';
+            document.getElementById('withdraw-address').value = '';
+            document.getElementById('withdraw-modal').style.display = 'flex';
+            buildWithdrawList();
         }
 
         function closeModal(modalId) {
@@ -1165,7 +1176,6 @@
 
         window.onload = function() {
             loadState();
-            
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
                     let u = window.Telegram.WebApp.initDataUnsafe.user;
@@ -1180,7 +1190,6 @@
             document.getElementById('ref-link-input').value = "https://t.me/SolarisMiner_bot?start=" + state.telegramId;
             saveState();
             renderProperties();
-            buildCryptoLists();
         };
     </script>
 </body>
