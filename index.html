@@ -59,7 +59,7 @@
         }
 
         .add-btn {
-            background: #0d3b33;
+            background: #0098ea;
             color: #ffffff;
             border: none;
             width: 22px;
@@ -96,7 +96,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        /* دایره ماینینگ جدید، شیک با نورپردازی و خط چرخشی نرم */
+        /* بخش ماینینگ با دایره سفید و خط چرخان آبی تک‌رنگ و رعد بزرگ وسط */
         .mining-circle-container {
             background: #ffffff;
             border: 1px solid #e6e0d4;
@@ -112,15 +112,14 @@
 
         .spinning-circle-wrapper {
             position: relative;
-            width: 175px;
-            height: 175px;
+            width: 180px;
+            height: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
-            background: radial-gradient(circle, rgba(243, 198, 35, 0.15) 0%, rgba(0, 152, 234, 0.05) 70%, transparent 100%);
+            background: radial-gradient(circle, rgba(0, 152, 234, 0.12) 0%, transparent 70%);
             border-radius: 50%;
-            box-shadow: 0 0 20px rgba(243, 198, 35, 0.2), inset 0 0 15px rgba(0, 152, 234, 0.15);
         }
 
         .rotating-border {
@@ -128,9 +127,8 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 5px solid transparent;
+            border: 4px solid transparent;
             border-top-color: #0098ea;
-            border-right-color: rgba(0, 152, 234, 0.3);
             animation: spin 2.5s linear infinite;
         }
 
@@ -140,16 +138,16 @@
         }
 
         .inner-circle-content {
-            width: 142px;
-            height: 142px;
-            background: linear-gradient(135deg, #ffffff, #f4eee1);
-            border: 2px solid #e0d5be;
+            width: 146px;
+            height: 146px;
+            background: #ffffff;
+            border: 2px solid #e6e0d4;
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 3px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05), inset 0 2px 5px rgba(0,0,0,0.02);
         }
 
         .mined-number {
@@ -163,7 +161,7 @@
         .mined-label {
             font-size: 11px;
             font-weight: 700;
-            color: #b7950b;
+            color: #0098ea;
             letter-spacing: 0.8px;
             text-transform: uppercase;
         }
@@ -175,7 +173,7 @@
         }
 
         .btn-claim {
-            background: linear-gradient(135deg, #0d3b33, #145a4d);
+            background: linear-gradient(135deg, #0098ea, #0077b5);
             color: #ffffff;
             border: none;
             padding: 12px 24px;
@@ -186,7 +184,7 @@
             width: 100%;
             max-width: 260px;
             margin-top: 5px;
-            box-shadow: 0 4px 14px rgba(13, 59, 51, 0.25);
+            box-shadow: 0 4px 14px rgba(0, 152, 234, 0.3);
         }
 
         .btn-claim:active {
@@ -204,16 +202,16 @@
         }
 
         .property-card.active-miner {
-            border-color: #28a745;
-            background: #fdfefe;
+            border-color: #0098ea;
+            background: #f7fbfe;
         }
 
         .property-badge {
             position: absolute;
             top: 14px;
             right: 14px;
-            background: #f0ece1;
-            color: #0d3b33;
+            background: #e1f3fc;
+            color: #0098ea;
             font-size: 10px;
             padding: 4px 10px;
             border-radius: 10px;
@@ -268,7 +266,7 @@
         }
 
         .btn-buy {
-            background: linear-gradient(135deg, #0d3b33, #114b40);
+            background: linear-gradient(135deg, #0098ea, #0077b5);
             color: #ffffff;
             border: none;
             padding: 10px 18px;
@@ -277,7 +275,7 @@
             font-size: 12px;
             cursor: pointer;
             transition: 0.2s;
-            box-shadow: 0 4px 10px rgba(13, 59, 51, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 152, 234, 0.2);
         }
 
         .btn-buy:active {
@@ -313,7 +311,7 @@
         }
 
         .nav-item.active {
-            color: #0d3b33;
+            color: #0098ea;
             font-weight: bold;
         }
 
@@ -327,13 +325,14 @@
         }
 
         .friends-top-card {
-            background: linear-gradient(135deg, #0d3b33, #06231f);
-            border: 1px solid #145a4d;
+            background: linear-gradient(135deg, #0098ea, #005c8a);
+            border: 1px solid #0077b5;
             border-radius: 20px;
             padding: 18px;
             margin-bottom: 14px;
             text-align: left;
             color: #ffffff;
+            box-shadow: 0 6px 15px rgba(0, 152, 234, 0.2);
         }
 
         .friends-collect-card {
@@ -365,12 +364,12 @@
         }
 
         .wallet-main-card {
-            background: linear-gradient(135deg, #0d3b33, #06231f);
-            border: 1px solid #145a4d;
+            background: linear-gradient(135deg, #0098ea, #005c8a);
+            border: 1px solid #0077b5;
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 8px 20px rgba(13, 59, 51, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 152, 234, 0.25);
             color: #ffffff;
         }
 
@@ -383,7 +382,7 @@
         .wallet-action-btn {
             flex: 1;
             background: #ffffff;
-            color: #0d3b33;
+            color: #0098ea;
             border: none;
             padding: 12px;
             border-radius: 14px;
@@ -466,8 +465,8 @@
             height: 68px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #0d3b33;
-            box-shadow: 0 4px 12px rgba(13, 59, 51, 0.2);
+            border: 2px solid #0098ea;
+            box-shadow: 0 4px 12px rgba(0, 152, 234, 0.3);
         }
 
         .profile-title-name {
@@ -502,7 +501,7 @@
         .profile-info-value {
             font-size: 18px;
             font-weight: bold;
-            color: #0d3b33;
+            color: #0098ea;
         }
 
         .modal-overlay {
@@ -551,12 +550,15 @@
 
         <!-- TAB 1: PROPERTIES (Miners) -->
         <div id="tab-properties" class="tab-content active">
-            <!-- کارت ماینینگ جدید با دایره نورانی و چرخش نرم -->
+            <!-- کارت ماینینگ با دایره سفید، رعد بزرگ وسط و خط چرخان آبی -->
             <div class="mining-circle-container">
                 <div class="spinning-circle-wrapper">
                     <div class="rotating-border"></div>
                     <div class="inner-circle-content">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0d3b33" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <!-- آیکون رعد بزرگ و آبی -->
+                        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#0098ea" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
                     </div>
                 </div>
                 <div class="mined-number" id="live-unclaimed">0.00000000</div>
@@ -572,7 +574,7 @@
                 </div>
                 <div style="text-align: right;">
                     <div style="font-size: 11px; color: #666666;">Daily Income</div>
-                    <div style="font-size: 14px; font-weight: bold; color: #0d3b33; margin-top: 2px;" id="total-daily">+0.10 TON</div>
+                    <div style="font-size: 14px; font-weight: bold; color: #0098ea; margin-top: 2px;" id="total-daily">+0.10 TON</div>
                 </div>
             </div>
 
@@ -596,7 +598,7 @@
 
             <div class="friends-top-card">
                 <div style="font-size: 20px; font-weight: bold; color: #a3e4d7; margin-bottom: 8px;">15% <span style="font-size: 12px; color: #ffffff; font-weight: normal;">of friends' deposits</span></div>
-                <div style="display: inline-block; background: #06231f; border: 1px solid #145a4d; color: #a3e4d7; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">
+                <div style="display: inline-block; background: #005c8a; border: 1px solid #0077b5; color: #a3e4d7; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">
                     +0.01 TON <span style="color: #ffffff; font-weight: normal;">for every friend</span>
                 </div>
             </div>
@@ -604,9 +606,9 @@
             <div class="friends-collect-card">
                 <div>
                     <div style="font-size: 11px; color: #666666;">Ready to collect</div>
-                    <div style="font-size: 20px; font-weight: bold; color: #1a1a1a; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #b7950b;">TON</span></div>
+                    <div style="font-size: 20px; font-weight: bold; color: #1a1a1a; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #0098ea;">TON</span></div>
                 </div>
-                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; padding: 10px 20px;" onclick="collectFriendReward()">Collect</button>
+                <button class="wallet-action-btn" style="background: #0098ea; color: #fff; padding: 10px 20px;" onclick="collectFriendReward()">Collect</button>
             </div>
 
             <div class="wallet-menu-box" style="flex-direction: column; align-items: flex-start; gap: 8px;">
@@ -623,11 +625,11 @@
                     <div style="font-size: 10px; color: #666666; margin-top: 4px;">Friends</div>
                 </div>
                 <div class="friends-stat-box">
-                    <div style="font-size: 16px; font-weight: bold; color: #b7950b;" id="friend-earned">0.00</div>
+                    <div style="font-size: 16px; font-weight: bold; color: #0098ea;" id="friend-earned">0.00</div>
                     <div style="font-size: 10px; color: #666666; margin-top: 4px;">Earned, TON</div>
                 </div>
                 <div class="friends-stat-box">
-                    <div style="font-size: 16px; font-weight: bold; color: #0d3b33;" id="friend-deposits">0.00</div>
+                    <div style="font-size: 16px; font-weight: bold; color: #0098ea;" id="friend-deposits">0.00</div>
                     <div style="font-size: 10px; color: #666666; margin-top: 4px;">Deposits, TON</div>
                 </div>
             </div>
@@ -659,7 +661,7 @@
                         <div style="font-size: 10px; color: #666666;">Deposit history</div>
                     </div>
                 </div>
-                <span style="color: #0d3b33; font-weight: bold;">View</span>
+                <span style="color: #0098ea; font-weight: bold;">View</span>
             </div>
 
             <div class="wallet-menu-box" onclick="alert('Withdrawal history is empty.')">
@@ -670,14 +672,14 @@
                         <div style="font-size: 10px; color: #666666;">Withdrawal history</div>
                     </div>
                 </div>
-                <span style="color: #0d3b33; font-weight: bold;">View</span>
+                <span style="color: #0098ea; font-weight: bold;">View</span>
             </div>
         </div>
 
         <!-- TAB 5: PROFILE -->
         <div id="tab-profile" class="tab-content">
             <div style="font-size: 11px; color: #666666; margin-bottom: 2px;">YOUR ACCOUNT</div>
-            <div style="font-size: 22px; font-weight: bold; color: #0d3b33; margin-bottom: 4px;">Profile</div>
+            <div style="font-size: 22px; font-weight: bold; color: #0098ea; margin-bottom: 4px;">Profile</div>
             <div style="font-size: 11px; color: #666666; margin-bottom: 18px;">Your account, statistics and useful links.</div>
 
             <div class="profile-header-card">
@@ -688,15 +690,15 @@
                 </div>
             </div>
 
-            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: #f0f7f4; border-color: #145a4d;">
+            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: #e1f3fc; border-color: #0098ea;">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">🎁</span>
                     <div>
-                        <div style="font-size: 13px; color: #0d3b33; font-weight: bold;">Invite friends</div>
+                        <div style="font-size: 13px; color: #0098ea; font-weight: bold;">Invite friends</div>
                         <div style="font-size: 10px; color: #666666;">Referral program and rewards</div>
                     </div>
                 </div>
-                <span style="color: #0d3b33; font-weight: bold; font-size: 16px;">&rarr;</span>
+                <span style="color: #0098ea; font-weight: bold; font-size: 16px;">&rarr;</span>
             </div>
 
             <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
@@ -719,7 +721,7 @@
                     <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">Deposits</div>
                     <div style="font-size: 10px; color: #666666;">Deposit history</div>
                 </div>
-                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; padding: 8px 16px; font-size: 12px;" onclick="alert('Deposit history is empty.')">Open</button>
+                <button class="wallet-action-btn" style="background: #0098ea; color: #fff; padding: 8px 16px; font-size: 12px;" onclick="alert('Deposit history is empty.')">Open</button>
             </div>
 
             <div class="profile-info-card">
@@ -727,7 +729,7 @@
                     <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">Withdrawals</div>
                     <div style="font-size: 10px; color: #666666;">Withdrawal history</div>
                 </div>
-                <button class="wallet-action-btn" style="background: #0d3b33; color: #fff; padding: 8px 16px; font-size: 12px;" onclick="alert('Withdrawal history is empty.')">Open</button>
+                <button class="wallet-action-btn" style="background: #0098ea; color: #fff; padding: 8px 16px; font-size: 12px;" onclick="alert('Withdrawal history is empty.')">Open</button>
             </div>
 
         </div>
@@ -737,11 +739,11 @@
     <!-- MODAL: DEPOSIT -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #0d3b33; margin-bottom: 10px; text-align: center;">Account Deposit</div>
+            <div style="font-size: 15px; font-weight: bold; color: #0098ea; margin-bottom: 10px; text-align: center;">Account Deposit</div>
             <p style="font-size: 11px; color: #666666; margin-bottom: 12px; text-align: center;">Select currency and send to the address below:</p>
             
             <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-                <div onclick="selectDepositCurrency('TON')" id="dep-curr-ton" class="crypto-option-card" style="flex: 1; margin-bottom: 0; border-color: #0d3b33; background: #f0f7f4;">
+                <div onclick="selectDepositCurrency('TON')" id="dep-curr-ton" class="crypto-option-card" style="flex: 1; margin-bottom: 0; border-color: #0098ea; background: #e1f3fc;">
                     <div class="crypto-icon" style="background: #0098ea; width: 28px; height: 28px; font-size: 12px;">💎</div>
                     <div style="font-size: 12px; font-weight: bold;">TON</div>
                 </div>
@@ -762,13 +764,13 @@
     <!-- MODAL: WITHDRAW -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #0d3b33; margin-bottom: 12px; text-align: center;">Withdrawal</div>
+            <div style="font-size: 15px; font-weight: bold; color: #0098ea; margin-bottom: 12px; text-align: center;">Withdrawal</div>
             
             <div style="margin-bottom: 10px;">
                 <label style="font-size: 11px; color: #666666; margin-bottom: 6px; display: block;">Select Currency / Network:</label>
                 
                 <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-                    <div onclick="selectWithdrawCurrency('TON')" id="curr-ton" class="crypto-option-card" style="flex: 1; margin-bottom: 0; border-color: #0d3b33; background: #f0f7f4;">
+                    <div onclick="selectWithdrawCurrency('TON')" id="curr-ton" class="crypto-option-card" style="flex: 1; margin-bottom: 0; border-color: #0098ea; background: #e1f3fc;">
                         <div class="crypto-icon" style="background: #0098ea; width: 28px; height: 28px; font-size: 12px;">💎</div>
                         <div style="font-size: 12px; font-weight: bold;">TON</div>
                     </div>
@@ -789,7 +791,7 @@
                 <input type="text" id="withdraw-address" class="wallet-input" placeholder="UQ... wallet address">
             </div>
 
-            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); font-size: 13px;" onclick="processWithdraw()">Confirm Withdrawal</button>
+            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0098ea, #0077b5); font-size: 13px;" onclick="processWithdraw()">Confirm Withdrawal</button>
             <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 8px;" onclick="closeModal('withdraw-modal')">Cancel</button>
         </div>
     </div>
@@ -853,7 +855,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v16');
+            const saved = localStorage.getItem('solaris_miner_save_v18');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -869,7 +871,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v16', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v18', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -889,7 +891,7 @@
                 
                 const html = `
                     <div class="property-card ${isOwned ? 'active-miner' : ''}">
-                        <div class="property-badge" style="${isOwned ? 'background:#d4edda; color:#155724;' : ''}">${isOwned ? '⚡ Active' : '#' + item.id}</div>
+                        <div class="property-badge" style="${isOwned ? 'background:#e1f3fc; color:#0098ea;' : ''}">${isOwned ? '⚡ Active' : '#' + item.id}</div>
                         <div class="property-title">${item.name}</div>
                         <div class="property-desc">${item.desc}</div>
                         
@@ -915,7 +917,7 @@
                 if (isOwned) {
                     const myHtml = `
                         <div class="property-card active-miner" style="text-align:left;">
-                            <div class="property-title" style="color:#0d3b33;">⚡ ${item.name}</div>
+                            <div class="property-title" style="color:#0098ea;">⚡ ${item.name}</div>
                             <div class="property-desc">Mining Speed: +${item.daily.toFixed(2)} TON / day</div>
                         </div>
                     `;
@@ -973,14 +975,14 @@
         function selectDepositCurrency(curr) {
             state.selectedDepositCurr = curr;
             if (curr === 'TON') {
-                document.getElementById('dep-curr-ton').style.borderColor = '#0d3b33';
-                document.getElementById('dep-curr-ton').style.background = '#f0f7f4';
+                document.getElementById('dep-curr-ton').style.borderColor = '#0098ea';
+                document.getElementById('dep-curr-ton').style.background = '#e1f3fc';
                 document.getElementById('dep-curr-usdt').style.borderColor = '#e6e0d4';
                 document.getElementById('dep-curr-usdt').style.background = '#f7f4ed';
                 document.getElementById('dep-label-text').innerText = "Wallet Address (TON Main Network):";
             } else {
-                document.getElementById('dep-curr-usdt').style.borderColor = '#0d3b33';
-                document.getElementById('dep-curr-usdt').style.background = '#f0f7f4';
+                document.getElementById('dep-curr-usdt').style.borderColor = '#0098ea';
+                document.getElementById('dep-curr-usdt').style.background = '#e1f3fc';
                 document.getElementById('dep-curr-ton').style.borderColor = '#e6e0d4';
                 document.getElementById('dep-curr-ton').style.background = '#f7f4ed';
                 document.getElementById('dep-label-text').innerText = "Wallet Address (USDT - TON Network):";
@@ -990,13 +992,13 @@
         function selectWithdrawCurrency(curr) {
             state.selectedWithdrawCurr = curr;
             if (curr === 'TON') {
-                document.getElementById('curr-ton').style.borderColor = '#0d3b33';
-                document.getElementById('curr-ton').style.background = '#f0f7f4';
+                document.getElementById('curr-ton').style.borderColor = '#0098ea';
+                document.getElementById('curr-ton').style.background = '#e1f3fc';
                 document.getElementById('curr-usdt').style.borderColor = '#e6e0d4';
                 document.getElementById('curr-usdt').style.background = '#f7f4ed';
             } else {
-                document.getElementById('curr-usdt').style.borderColor = '#0d3b33';
-                document.getElementById('curr-usdt').style.background = '#f0f7f4';
+                document.getElementById('curr-usdt').style.borderColor = '#0098ea';
+                document.getElementById('curr-usdt').style.background = '#e1f3fc';
                 document.getElementById('curr-ton').style.borderColor = '#e6e0d4';
                 document.getElementById('curr-ton').style.background = '#f7f4ed';
             }
