@@ -368,6 +368,30 @@
             outline: none;
         }
 
+        .crypto-option-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f7f4ed;
+            border: 1px solid #e6e0d4;
+            padding: 12px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .crypto-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
         .profile-header-card {
             display: flex;
             align-items: center;
@@ -641,13 +665,34 @@
 
     </div>
 
-    <!-- MODAL: DEPOSIT (بدون بخش ممو) -->
+    <!-- MODAL: DEPOSIT (با کارت‌های گرافیکی ارزها مشابه تصویر) -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #0d3b33; margin-bottom: 10px; text-align: center;">Account Deposit</div>
-            <p style="font-size: 11px; color: #666666; margin-bottom: 10px; text-align: center;">Send TON or USDT (TON Network) to the address below:</p>
+            <p style="font-size: 11px; color: #666666; margin-bottom: 12px; text-align: center;">Select currency and send to the address below:</p>
             
-            <label style="font-size: 10px; color: #666666;">Wallet Address:</label>
+            <!-- کارت ارز TON -->
+            <div class="crypto-option-card">
+                <div class="crypto-icon" style="background: #0098ea;">💎</div>
+                <div style="flex: 1;">
+                    <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">TON</div>
+                    <div style="font-size: 10px; color: #666666;">TON Main Network</div>
+                </div>
+            </div>
+
+            <!-- کارت ارز USDT روی شبکه TON -->
+            <div class="crypto-option-card">
+                <div class="crypto-icon" style="background: #26a69a; position: relative;">
+                    ₮
+                    <div style="position: absolute; bottom: -2px; right: -2px; background: #0098ea; font-size: 8px; width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid #fff;">💎</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">USDT <span style="font-size: 9px; background: #e0dcd0; padding: 2px 6px; border-radius: 6px; color: #333;">TON</span></div>
+                    <div style="font-size: 10px; color: #666666;">Tether on TON Network</div>
+                </div>
+            </div>
+
+            <label style="font-size: 10px; color: #666666; margin-top: 5px; display: block;">Wallet Address:</label>
             <input type="text" class="wallet-input" value="UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v" readonly id="dep-addr">
             <button class="btn-buy" style="width: 100%; margin-top: 6px; font-size: 11px; padding: 8px;" onclick="copyWallet('dep-addr')">Copy Wallet Address</button>
 
@@ -655,17 +700,24 @@
         </div>
     </div>
 
-    <!-- MODAL: WITHDRAW -->
+    <!-- MODAL: WITHDRAW (با کارت‌های گرافیکی ارزها در بخش برداشت) -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #0d3b33; margin-bottom: 12px; text-align: center;">Withdrawal</div>
             
             <div style="margin-bottom: 10px;">
-                <label style="font-size: 11px; color: #666666;">Select Currency / Network:</label>
-                <select id="withdraw-currency" class="wallet-input" style="cursor: pointer;">
-                    <option value="TON">TON (TON Network)</option>
-                    <option value="USDT">USDT (TON Network)</option>
-                </select>
+                <label style="font-size: 11px; color: #666666; margin-bottom: 6px; display: block;">Select Currency / Network:</label>
+                
+                <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                    <div onclick="selectWithdrawCurrency('TON')" id="curr-ton" class="crypto-option-card" style="flex: 1; margin-bottom: 0; border-color: #0d3b33; background: #f0f7f4;">
+                        <div class="crypto-icon" style="background: #0098ea; width: 28px; height: 28px; font-size: 12px;">💎</div>
+                        <div style="font-size: 12px; font-weight: bold;">TON</div>
+                    </div>
+                    <div onclick="selectWithdrawCurrency('USDT')" id="curr-usdt" class="crypto-option-card" style="flex: 1; margin-bottom: 0;">
+                        <div class="crypto-icon" style="background: #26a69a; width: 28px; height: 28px; font-size: 12px;">₮</div>
+                        <div style="font-size: 12px; font-weight: bold;">USDT <span style="font-size: 8px; color: #666;">TON</span></div>
+                    </div>
+                </div>
             </div>
 
             <div style="margin-bottom: 10px;">
@@ -736,11 +788,12 @@
             friendEarned: 0.0,
             friendDeposits: 0.0,
             totalDeposited: 0.0,
-            totalWithdrawn: 0.0
+            totalWithdrawn: 0.0,
+            selectedWithdrawCurr: "TON"
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v11');
+            const saved = localStorage.getItem('solaris_miner_save_v12');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -756,7 +809,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v11', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v12', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -857,8 +910,22 @@
             alert("✅ Referral rewards collected!");
         }
 
+        function selectWithdrawCurrency(curr) {
+            state.selectedWithdrawCurr = curr;
+            if (curr === 'TON') {
+                document.getElementById('curr-ton').style.borderColor = '#0d3b33';
+                document.getElementById('curr-ton').style.background = '#f0f7f4';
+                document.getElementById('curr-usdt').style.borderColor = '#e6e0d4';
+                document.getElementById('curr-usdt').style.background = '#f7f4ed';
+            } else {
+                document.getElementById('curr-usdt').style.borderColor = '#0d3b33';
+                document.getElementById('curr-usdt').style.background = '#f0f7f4';
+                document.getElementById('curr-ton').style.borderColor = '#e6e0d4';
+                document.getElementById('curr-ton').style.background = '#f7f4ed';
+            }
+        }
+
         function processWithdraw() {
-            const currency = document.getElementById('withdraw-currency').value;
             const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
             const address = document.getElementById('withdraw-address').value.trim();
 
@@ -880,7 +947,7 @@
             saveState();
             updateUI();
             closeModal('withdraw-modal');
-            alert(`✅ Withdrawal request of ${amount} ${currency} submitted successfully.`);
+            alert(`✅ Withdrawal request of ${amount} ${state.selectedWithdrawCurr} submitted successfully.`);
         }
 
         function updateUI() {
