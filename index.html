@@ -96,15 +96,15 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        /* بخش جدید دایره چرخان مشابه عکس دوم */
+        /* دایره ماینینگ جدید، شیک با نورپردازی و خط چرخشی نرم */
         .mining-circle-container {
             background: #ffffff;
             border: 1px solid #e6e0d4;
             border-radius: 20px;
-            padding: 20px;
+            padding: 22px;
             margin-bottom: 16px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.04);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -112,12 +112,15 @@
 
         .spinning-circle-wrapper {
             position: relative;
-            width: 170px;
-            height: 170px;
+            width: 175px;
+            height: 175px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
+            background: radial-gradient(circle, rgba(243, 198, 35, 0.15) 0%, rgba(0, 152, 234, 0.05) 70%, transparent 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(243, 198, 35, 0.2), inset 0 0 15px rgba(0, 152, 234, 0.15);
         }
 
         .rotating-border {
@@ -125,9 +128,10 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 4px solid #f0f4f8;
+            border: 5px solid transparent;
             border-top-color: #0098ea;
-            animation: spin 3s linear infinite;
+            border-right-color: rgba(0, 152, 234, 0.3);
+            animation: spin 2.5s linear infinite;
         }
 
         @keyframes spin {
@@ -136,15 +140,16 @@
         }
 
         .inner-circle-content {
-            width: 145px;
-            height: 145px;
-            background: #f7f9fc;
+            width: 142px;
+            height: 142px;
+            background: linear-gradient(135deg, #ffffff, #f4eee1);
+            border: 2px solid #e0d5be;
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: inset 0 3px 10px rgba(0,0,0,0.08);
         }
 
         .mined-number {
@@ -157,20 +162,20 @@
 
         .mined-label {
             font-size: 11px;
-            font-weight: 600;
-            color: #555555;
-            letter-spacing: 0.5px;
+            font-weight: 700;
+            color: #b7950b;
+            letter-spacing: 0.8px;
             text-transform: uppercase;
         }
 
         .mined-rate {
             font-size: 10px;
-            color: #888888;
-            margin-top: 2px;
+            color: #666666;
+            margin-top: 3px;
         }
 
         .btn-claim {
-            background: linear-gradient(135deg, #0098ea, #0077b5);
+            background: linear-gradient(135deg, #0d3b33, #145a4d);
             color: #ffffff;
             border: none;
             padding: 12px 24px;
@@ -179,9 +184,9 @@
             font-size: 13px;
             cursor: pointer;
             width: 100%;
-            max-width: 250px;
+            max-width: 260px;
             margin-top: 5px;
-            box-shadow: 0 4px 12px rgba(0, 152, 234, 0.3);
+            box-shadow: 0 4px 14px rgba(13, 59, 51, 0.25);
         }
 
         .btn-claim:active {
@@ -546,17 +551,17 @@
 
         <!-- TAB 1: PROPERTIES (Miners) -->
         <div id="tab-properties" class="tab-content active">
-            <!-- کارت ماینینگ جدید مشابه تصویر دوم -->
+            <!-- کارت ماینینگ جدید با دایره نورانی و چرخش نرم -->
             <div class="mining-circle-container">
                 <div class="spinning-circle-wrapper">
                     <div class="rotating-border"></div>
                     <div class="inner-circle-content">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0098ea" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0d3b33" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                     </div>
                 </div>
                 <div class="mined-number" id="live-unclaimed">0.00000000</div>
-                <div class="mined-label">ENERGY mined</div>
-                <div class="mined-rate" id="mined-rate-sub">≈ 0.10 TON at current rate</div>
+                <div class="mined-label">ENERGY MINED</div>
+                <div class="mined-rate" id="mined-rate-sub">≈ +0.10 TON daily rate</div>
                 <button class="btn-claim" onclick="claimEarnings()">Claim Rewards</button>
             </div>
 
@@ -848,7 +853,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v15');
+            const saved = localStorage.getItem('solaris_miner_save_v16');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -864,7 +869,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v15', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v16', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
