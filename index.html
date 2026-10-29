@@ -709,11 +709,12 @@
     </div>
 
     <script>
-        // راه‌اندازی TonConnect UI (آدرس ولت شما به عنوان گیرنده تراکنش‌ها)
+        // آدرس ولت شما به عنوان گیرنده تراکنش‌ها
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         
+        // راه‌اندازی TonConnect UI با آدرس دقیق مانیفست اختصاصی پروژه‌تان در گیت‌هاب
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://raw.githubusercontent.com/ton-connect/docs/main/public/tonconnect-manifest.json',
+            manifestUrl: 'https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json',
             uiPreferences: {
                 borderRadius: 'm'
             }
