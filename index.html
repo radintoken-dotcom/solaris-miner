@@ -96,7 +96,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        /* موشک متحرک مرکزی با افکت آتش حین ماینینگ */
+        /* موشک واقعیِ عمودی و متحرک مرکزی */
         .mining-circle-container {
             background: #ffffff;
             border: 1px solid #e6e0d4;
@@ -121,6 +121,7 @@
             justify-content: center;
             margin-bottom: 15px;
             background: radial-gradient(circle, rgba(0, 152, 234, 0.2) 0%, transparent 70%);
+            overflow: hidden;
         }
 
         .rocket-ring {
@@ -134,19 +135,20 @@
             z-index: 2;
         }
 
-        .rocket-icon-box {
-            font-size: 52px;
+        .real-rocket-img {
+            width: 55px;
+            height: 100px;
+            object-fit: contain;
             animation: rocketFloat 2s ease-in-out infinite;
             z-index: 3;
-            filter: drop-shadow(0 5px 10px rgba(0, 152, 234, 0.4));
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
         }
 
-        /* افکت آتش زیر موشک */
         .rocket-fire {
             position: absolute;
-            bottom: 25px;
-            width: 30px;
-            height: 45px;
+            bottom: 20px;
+            width: 24px;
+            height: 35px;
             background: linear-gradient(to top, #ff4500, #ff8c00, #ffd700, transparent);
             border-radius: 50% 50% 20% 20%;
             animation: firePulse 0.4s ease-in-out infinite alternate;
@@ -155,8 +157,8 @@
         }
 
         @keyframes rocketFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-6px) rotate(1deg); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
         }
 
         @keyframes firePulse {
@@ -594,12 +596,12 @@
 
         <!-- TAB 1: PROPERTIES (Launchers) -->
         <div id="tab-properties" class="tab-content active">
-            <!-- موشک متحرک با شعله آتش حین ماینینگ -->
+            <!-- موشک واقعیِ عمودی و متحرک داخل دایره -->
             <div class="mining-circle-container">
                 <div class="rocket-anim-wrapper">
                     <div class="rocket-ring"></div>
                     <div class="rocket-fire"></div>
-                    <div class="rocket-icon-box">🚀</div>
+                    <img src="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=300&q=80" class="real-rocket-img" alt="Rocket">
                 </div>
                 <div class="mined-number" id="live-unclaimed">0.00000000</div>
                 <div class="mined-label">ENERGY MINED</div>
@@ -610,11 +612,11 @@
             <div class="stats-card" style="display: flex; justify-content: space-between; align-items: center; padding: 14px;">
                 <div>
                     <div style="font-size: 11px; color: #666666;">Active Launchers</div>
-                    <div style="font-size: 14px; font-weight: bold; color: #1a1a1a; margin-top: 2px;" id="owned-count">1 / 12 Active</div>
+                    <div style="font-size: 14px; font-weight: bold; color: #1a1a1a; margin-top: 2px;" id="owned-count">0 / 12 Active</div>
                 </div>
                 <div style="text-align: right;">
                     <div style="font-size: 11px; color: #666666;">Daily Income</div>
-                    <div style="font-size: 14px; font-weight: bold; color: #0098ea; margin-top: 2px;" id="total-daily">+0.10 TON</div>
+                    <div style="font-size: 14px; font-weight: bold; color: #0098ea; margin-top: 2px;" id="total-daily">+0.00 TON</div>
                 </div>
             </div>
 
@@ -844,20 +846,20 @@
     </div>
 
     <script>
-        // قیمت موشک اول 0.1 TON تعیین شد و کلمه Free برداشته شد
+        // ۱۲ موشک جنگی با برچسب حروف انگلیسی (One تا Twelve) بدون علامت #
         const initialProperties = [
-            { id: 1, name: "Light Guided Missile", desc: "Base tactical missile launcher", daily: 0.10, monthly: 3.00, price: 0.10, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 2, name: "Tactical Mid-Range", desc: "Short range strike unit", daily: 0.66, monthly: 19.80, price: 3.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
-            { id: 3, name: "Anti-Air Cruise", desc: "Advanced defense & strike missile", daily: 1.20, monthly: 36.00, price: 5.00, img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80" },
-            { id: 4, name: "ICBM Basic", desc: "Heavy long-range tactical warhead", daily: 2.60, monthly: 78.00, price: 10.00, img: "https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?auto=format&fit=crop&w=600&q=80" },
-            { id: 5, name: "Hypersonic Missile", desc: "Ultra-fast strategic projectile", daily: 7.00, monthly: 210.00, price: 25.00, img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" },
-            { id: 6, name: "Strategic Silo Cluster", desc: "Multi-launch underground silo", daily: 15.00, monthly: 450.00, price: 50.00, img: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=600&q=80" },
-            { id: 7, name: "Heavy Missile Battery", desc: "Massive firepower deployment", daily: 35.00, monthly: 1050.00, price: 100.00, img: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?auto=format&fit=crop&w=600&q=80" },
-            { id: 8, name: "Nuclear ICBM", desc: "Strategic thermonuclear warhead", daily: 100.00, monthly: 3000.00, price: 250.00, img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=80" },
-            { id: 9, name: "Interstellar Plasma", desc: "Advanced energy strike system", daily: 175.00, monthly: 5250.00, price: 350.00, img: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=600&q=80" },
-            { id: 10, name: "Satellite Orbital Rocket", desc: "Space-based kinetic bombardment", daily: 500.00, monthly: 15000.00, price: 500.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
-            { id: 11, name: "Multi-Layer Defense", desc: "Automated planetary shield network", daily: 1600.00, monthly: 48000.00, price: 800.00, img: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=600&q=80" },
-            { id: 12, name: "Doomsday Titan", desc: "Ultimate planetary destruction rocket", daily: 3000.00, monthly: 90000.00, price: 1000.00, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" }
+            { id: 1, label: "One", name: "Light Guided Missile", desc: "Base tactical missile launcher", daily: 0.10, monthly: 3.00, price: 0.10, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 2, label: "Two", name: "Tactical Mid-Range", desc: "Short range strike unit", daily: 0.66, monthly: 19.80, price: 3.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
+            { id: 3, label: "Three", name: "Anti-Air Cruise", desc: "Advanced defense & strike missile", daily: 1.20, monthly: 36.00, price: 5.00, img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80" },
+            { id: 4, label: "Four", name: "ICBM Basic", desc: "Heavy long-range tactical warhead", daily: 2.60, monthly: 78.00, price: 10.00, img: "https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?auto=format&fit=crop&w=600&q=80" },
+            { id: 5, label: "Five", name: "Hypersonic Missile", desc: "Ultra-fast strategic projectile", daily: 7.00, monthly: 210.00, price: 25.00, img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" },
+            { id: 6, label: "Six", name: "Strategic Silo Cluster", desc: "Multi-launch underground silo", daily: 15.00, monthly: 450.00, price: 50.00, img: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=600&q=80" },
+            { id: 7, label: "Seven", name: "Heavy Missile Battery", desc: "Massive firepower deployment", daily: 35.00, monthly: 1050.00, price: 100.00, img: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?auto=format&fit=crop&w=600&q=80" },
+            { id: 8, label: "Eight", name: "Nuclear ICBM", desc: "Strategic thermonuclear warhead", daily: 100.00, monthly: 3000.00, price: 250.00, img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=80" },
+            { id: 9, label: "Nine", name: "Interstellar Plasma", desc: "Advanced energy strike system", daily: 175.00, monthly: 5250.00, price: 350.00, img: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=600&q=80" },
+            { id: 10, label: "Ten", name: "Satellite Orbital Rocket", desc: "Space-based kinetic bombardment", daily: 500.00, monthly: 15000.00, price: 500.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
+            { id: 11, label: "Eleven", name: "Multi-Layer Defense", desc: "Automated planetary shield network", daily: 1600.00, monthly: 48000.00, price: 800.00, img: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=600&q=80" },
+            { id: 12, label: "Twelve", name: "Doomsday Titan", desc: "Ultimate planetary destruction rocket", daily: 3000.00, monthly: 90000.00, price: 1000.00, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" }
         ];
 
         const cryptoCurrencies = [
@@ -883,7 +885,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v25');
+            const saved = localStorage.getItem('solaris_miner_save_v27');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -899,7 +901,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v25', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v27', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -918,7 +920,7 @@
                 const isOwned = state.ownedIds.includes(item.id);
                 const html = `
                     <div class="property-card ${isOwned ? 'active-miner' : ''}">
-                        <div class="property-badge" style="${isOwned ? 'background:#e1f3fc; color:#0098ea;' : ''}">${isOwned ? '⚡ Active' : '#' + item.id}</div>
+                        <div class="property-badge" style="${isOwned ? 'background:#e1f3fc; color:#0098ea;' : ''}">${isOwned ? '⚡ Active' : item.label}</div>
                         <img src="${item.img}" class="missile-img" alt="${item.name}">
                         <div class="property-title">🚀 ${item.name}</div>
                         <div class="property-desc">${item.desc}</div>
