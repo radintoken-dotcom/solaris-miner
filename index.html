@@ -16,8 +16,8 @@
         }
 
         body {
-            background-color: #f7f4ed;
-            color: #1a1a1a;
+            background-color: #0b0f19;
+            color: #ffffff;
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -26,36 +26,37 @@
         }
 
         .header {
-            background: linear-gradient(180deg, #ffffff, #f7f4ed);
+            background: rgba(15, 23, 42, 0.9);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 20px;
-            border-bottom: 1px solid #e6e0d4;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
         }
 
         .brand-box h1 {
             font-size: 17px;
-            color: #0d3b33;
+            color: #ffffff;
             font-weight: bold;
             letter-spacing: 0.5px;
         }
 
         .balance-box {
-            background: #ffffff;
-            border: 1px solid #dcd5c6;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 8px 14px;
             border-radius: 20px;
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .balance-amount {
             font-size: 13px;
             font-weight: bold;
-            color: #0d3b33;
+            color: #38bdf8;
         }
 
         .add-btn {
@@ -88,119 +89,110 @@
         }
 
         .stats-card {
-            background: #ffffff;
-            border: 1px solid #e6e0d4;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        /* موشک بزرگ و سه‌بعدیِ بدون کادر عکس با آتش متحرک */
-        .mining-circle-container {
-            background: #ffffff;
-            border: 1px solid #e6e0d4;
-            border-radius: 20px;
-            padding: 22px;
+        /* کارت بزرگ فضایی با عکس کهکشان و ستاره‌های چشمک‌زن */
+        .space-mining-card {
+            position: relative;
+            background: linear-gradient(rgba(11, 15, 25, 0.65), rgba(11, 15, 25, 0.85)), url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 22px;
+            padding: 35px 20px;
             margin-bottom: 16px;
             text-align: center;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.04);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 152, 234, 0.2);
+            overflow: hidden;
         }
 
-        .rocket-anim-wrapper {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .rocket-emoji-3d {
-            font-size: 75px;
-            animation: rocketFloat 2s ease-in-out infinite;
-            z-index: 3;
-            filter: drop-shadow(0 6px 12px rgba(0, 152, 234, 0.4));
-        }
-
-        .rocket-fire {
+        /* افکت ستاره‌های چشمک‌زن روی پس‌زمینه */
+        .space-mining-card::before {
+            content: "";
             position: absolute;
-            bottom: 10px;
-            width: 32px;
-            height: 48px;
-            background: linear-gradient(to top, #ff3300, #ff9900, #ffff00, transparent);
-            border-radius: 50% 50% 20% 20%;
-            animation: firePulse 0.35s ease-in-out infinite alternate;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(rgba(56,189,248,0.8) 1.5px, transparent 1.5px);
+            background-size: 40px 40px, 60px 60px;
+            background-position: 0 0, 20px 20px;
+            animation: starsTwinkle 4s ease-in-out infinite alternate;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        @keyframes starsTwinkle {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(1.02); }
+        }
+
+        .space-content-wrapper {
+            position: relative;
             z-index: 2;
-            filter: blur(2px);
-        }
-
-        @keyframes rocketFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(1deg); }
-        }
-
-        @keyframes firePulse {
-            0% { transform: scaleY(0.8); opacity: 0.7; }
-            100% { transform: scaleY(1.25); opacity: 1; filter: blur(3px); }
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .mined-number {
-            font-size: 24px;
-            font-weight: 800;
-            color: #1a1a1a;
+            font-size: 30px;
+            font-weight: 900;
+            color: #ffffff;
             letter-spacing: -0.5px;
             margin-bottom: 4px;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
         }
 
         .mined-label {
             font-size: 11px;
             font-weight: 700;
-            color: #0098ea;
-            letter-spacing: 0.8px;
+            color: #38bdf8;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
+            margin-bottom: 4px;
         }
 
         .mined-rate {
-            font-size: 10px;
-            color: #666666;
-            margin-top: 3px;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-bottom: 20px;
         }
 
         .btn-claim {
-            background: linear-gradient(135deg, #0098ea, #0077b5);
+            background: linear-gradient(135deg, #0098ea, #005c8a);
             color: #ffffff;
             border: none;
-            padding: 12px 24px;
+            padding: 13px 28px;
             border-radius: 14px;
             font-weight: bold;
             font-size: 13px;
             cursor: pointer;
             width: 100%;
             max-width: 260px;
-            margin-top: 10px;
-            box-shadow: 0 4px 14px rgba(0, 152, 234, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 152, 234, 0.4);
+            transition: 0.2s;
+        }
+
+        .btn-claim:active {
+            transform: scale(0.96);
         }
 
         .property-card {
-            background: #ffffff;
-            border: 1px solid #e6e0d4;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 18px;
             padding: 16px;
             margin-bottom: 16px;
             position: relative;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             overflow: hidden;
         }
 
         .property-card.active-miner {
             border-color: #0098ea;
-            background: #f7fbfe;
+            background: rgba(15, 23, 42, 0.85);
         }
 
         .missile-img {
@@ -209,55 +201,55 @@
             object-fit: cover;
             border-radius: 12px;
             margin-bottom: 12px;
-            border: 1px solid #e6e0d4;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .property-badge {
             position: absolute;
             top: 24px;
             right: 24px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #0098ea;
+            background: rgba(15, 23, 42, 0.85);
+            color: #38bdf8;
             font-size: 10px;
             padding: 4px 10px;
             border-radius: 10px;
             font-weight: bold;
             backdrop-filter: blur(4px);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
         }
 
         .property-title {
             font-size: 15px;
             font-weight: bold;
-            color: #1a1a1a;
+            color: #ffffff;
             margin-bottom: 4px;
         }
 
         .property-desc {
             font-size: 11px;
-            color: #666666;
+            color: #94a3b8;
             margin-bottom: 12px;
         }
 
         .property-grid {
             display: flex;
             justify-content: space-between;
-            background: #f7f4ed;
+            background: rgba(15, 23, 42, 0.6);
             padding: 10px 14px;
             border-radius: 12px;
             margin-bottom: 12px;
-            border: 1px solid #e6e0d4;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .property-stat-item div:first-child {
             font-size: 10px;
-            color: #666666;
+            color: #94a3b8;
         }
 
         .property-stat-item div:last-child {
             font-size: 13px;
             font-weight: bold;
-            color: #0d3b33;
+            color: #34d399;
             margin-top: 2px;
         }
 
@@ -269,7 +261,7 @@
 
         .property-price {
             font-size: 14px;
-            color: #b7950b;
+            color: #fbbf24;
             font-weight: bold;
         }
 
@@ -283,7 +275,7 @@
             font-size: 12px;
             cursor: pointer;
             transition: 0.2s;
-            box-shadow: 0 4px 10px rgba(0, 152, 234, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 152, 234, 0.3);
         }
 
         .nav-bar {
@@ -292,13 +284,13 @@
             left: 0;
             right: 0;
             height: 65px;
-            background: #ffffff;
+            background: rgba(15, 23, 42, 0.95);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            border-top: 1px solid #e6e0d4;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.03);
+            backdrop-filter: blur(10px);
         }
 
         .nav-item {
@@ -306,7 +298,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #888888;
+            color: #64748b;
             font-size: 10px;
             cursor: pointer;
             flex: 1;
@@ -314,7 +306,7 @@
         }
 
         .nav-item.active {
-            color: #0098ea;
+            color: #38bdf8;
             font-weight: bold;
         }
 
@@ -329,7 +321,7 @@
 
         .friends-top-card {
             background: linear-gradient(135deg, #0098ea, #005c8a);
-            border: 1px solid #0077b5;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 20px;
             padding: 18px;
             margin-bottom: 14px;
@@ -338,15 +330,15 @@
         }
 
         .friends-collect-card {
-            background: #ffffff;
-            border: 1px solid #e6e0d4;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 18px;
             padding: 16px;
             margin-bottom: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .friends-stats-row {
@@ -357,17 +349,17 @@
 
         .friends-stat-box {
             flex: 1;
-            background: #ffffff;
-            border: 1px solid #e6e0d4;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 14px 10px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .wallet-main-card {
             background: linear-gradient(135deg, #0098ea, #005c8a);
-            border: 1px solid #0077b5;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 15px;
@@ -395,7 +387,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .wallet-action-btn.outline {
@@ -405,24 +397,24 @@
         }
 
         .wallet-menu-box {
-            background: #ffffff;
-            border: 1px solid #e6e0d4;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 14px 18px;
             margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .wallet-input {
             width: 100%;
-            background: #f7f4ed;
-            border: 1px solid #e6e0d4;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             padding: 12px;
-            color: #0098ea;
+            color: #38bdf8;
             font-size: 12px;
             text-align: left;
             margin-top: 6px;
@@ -443,17 +435,17 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #ffffff;
-            border: 1px solid #e6e0d4;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 14px 16px;
             border-radius: 16px;
             cursor: pointer;
             transition: 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .crypto-card-row:active {
-            background: #f0f7f4;
+            background: rgba(15, 23, 42, 0.9);
             border-color: #0098ea;
         }
 
@@ -478,7 +470,7 @@
 
         .crypto-arrow {
             font-size: 16px;
-            color: #666666;
+            color: #94a3b8;
             font-weight: bold;
         }
 
@@ -502,60 +494,61 @@
         .profile-title-name {
             font-size: 20px;
             font-weight: bold;
-            color: #0d3b33;
+            color: #ffffff;
         }
 
         .profile-subtext {
             font-size: 12px;
-            color: #666666;
+            color: #94a3b8;
             margin-top: 2px;
         }
 
         .profile-info-card {
-            background: #ffffff;
-            border: 1px solid #e6e0d4;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .profile-info-label {
             font-size: 13px;
-            color: #666666;
+            color: #94a3b8;
         }
 
         .profile-info-value {
             font-size: 18px;
             font-weight: bold;
-            color: #0098ea;
+            color: #38bdf8;
         }
 
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
             z-index: 2000;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(5px);
         }
 
         .modal-card {
-            background: #ffffff;
-            border: 1px solid #e6e0d4;
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 20px;
             padding: 20px;
             width: 100%;
             max-width: 400px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            color: #ffffff;
         }
     </style>
 </head>
@@ -568,7 +561,7 @@
         </div>
         <div class="balance-box">
             <div>
-                <div style="font-size: 9px; color: #666666;">Balance:</div>
+                <div style="font-size: 9px; color: #94a3b8;">Balance:</div>
                 <span class="balance-amount" id="user-balance">0.00000000 TON</span>
             </div>
             <button class="add-btn" onclick="switchTab('wallet')">+</button>
@@ -580,26 +573,24 @@
 
         <!-- TAB 1: PROPERTIES (Launchers) -->
         <div id="tab-properties" class="tab-content active">
-            <!-- موشک بزرگ و سه‌بعدی با شعله آتش متحرک -->
-            <div class="mining-circle-container">
-                <div class="rocket-anim-wrapper">
-                    <div class="rocket-fire"></div>
-                    <div class="rocket-emoji-3d">🚀</div>
+            <!-- کارت فضایی و کهکشانی با ستاره‌های چشمک‌زن و دکمه و اعداد وسط آن -->
+            <div class="space-mining-card">
+                <div class="space-content-wrapper">
+                    <div class="mined-number" id="live-unclaimed">0.00000000</div>
+                    <div class="mined-label">ENERGY MINED</div>
+                    <div class="mined-rate" id="mined-rate-sub">≈ +0.00 TON daily rate</div>
+                    <button class="btn-claim" onclick="claimEarnings()">Claim Rewards</button>
                 </div>
-                <div class="mined-number" id="live-unclaimed">0.00000000</div>
-                <div class="mined-label">ENERGY MINED</div>
-                <div class="mined-rate" id="mined-rate-sub">≈ +0.10 TON daily rate</div>
-                <button class="btn-claim" onclick="claimEarnings()">Claim Rewards</button>
             </div>
 
             <div class="stats-card" style="display: flex; justify-content: space-between; align-items: center; padding: 14px;">
                 <div>
-                    <div style="font-size: 11px; color: #666666;">Active Launchers</div>
-                    <div style="font-size: 14px; font-weight: bold; color: #1a1a1a; margin-top: 2px;" id="owned-count">0 / 12 Active</div>
+                    <div style="font-size: 11px; color: #94a3b8;">Active Launchers</div>
+                    <div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-top: 2px;" id="owned-count">0 / 12 Active</div>
                 </div>
                 <div style="text-align: right;">
-                    <div style="font-size: 11px; color: #666666;">Daily Income</div>
-                    <div style="font-size: 14px; font-weight: bold; color: #0098ea; margin-top: 2px;" id="total-daily">+0.00 TON</div>
+                    <div style="font-size: 11px; color: #94a3b8;">Daily Income</div>
+                    <div style="font-size: 14px; font-weight: bold; color: #34d399; margin-top: 2px;" id="total-daily">+0.00 TON</div>
                 </div>
             </div>
 
@@ -610,52 +601,52 @@
         <div id="tab-myresort" class="tab-content">
             <div style="text-align: center; padding: 30px 15px;">
                 <div style="font-size: 32px; margin-bottom: 10px;">🚀</div>
-                <h3 style="font-size: 16px; color: #1a1a1a; margin-bottom: 8px;">Active Rocket Silos</h3>
-                <p style="font-size: 11px; color: #666666; line-height: 1.6; margin-bottom: 15px;">All purchased missile systems are currently generating energy and mining rewards.</p>
+                <h3 style="font-size: 16px; color: #ffffff; margin-bottom: 8px;">Active Rocket Silos</h3>
+                <p style="font-size: 11px; color: #94a3b8; line-height: 1.6; margin-bottom: 15px;">All purchased missile systems are currently generating energy and mining rewards.</p>
                 <div id="my-miners-list"></div>
             </div>
         </div>
 
         <!-- TAB 3: FRIENDS -->
         <div id="tab-friends" class="tab-content">
-            <div style="font-size: 18px; font-weight: bold; color: #1a1a1a; margin-bottom: 4px;">Friends</div>
-            <div style="font-size: 11px; color: #666666; margin-bottom: 14px;">YOUR CIRCLE OF FRIENDS</div>
+            <div style="font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 4px;">Friends</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 14px;">YOUR CIRCLE OF FRIENDS</div>
 
             <div class="friends-top-card">
-                <div style="font-size: 20px; font-weight: bold; color: #a3e4d7; margin-bottom: 8px;">15% <span style="font-size: 12px; color: #ffffff; font-weight: normal;">of friends' deposits</span></div>
-                <div style="display: inline-block; background: #005c8a; border: 1px solid #0077b5; color: #a3e4d7; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">
+                <div style="font-size: 20px; font-weight: bold; color: #34d399; margin-bottom: 8px;">15% <span style="font-size: 12px; color: #ffffff; font-weight: normal;">of friends' deposits</span></div>
+                <div style="display: inline-block; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.2); color: #38bdf8; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">
                     +0.01 TON <span style="color: #ffffff; font-weight: normal;">for every friend</span>
                 </div>
             </div>
 
             <div class="friends-collect-card">
                 <div>
-                    <div style="font-size: 11px; color: #666666;">Ready to collect</div>
-                    <div style="font-size: 20px; font-weight: bold; color: #1a1a1a; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #0098ea;">TON</span></div>
+                    <div style="font-size: 11px; color: #94a3b8;">Ready to collect</div>
+                    <div style="font-size: 20px; font-weight: bold; color: #ffffff; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #38bdf8;">TON</span></div>
                 </div>
                 <button class="wallet-action-btn" style="background: #0098ea; color: #fff; padding: 10px 20px;" onclick="collectFriendReward()">Collect</button>
             </div>
 
             <div class="wallet-menu-box" style="flex-direction: column; align-items: flex-start; gap: 8px;">
-                <div style="font-size: 11px; color: #666666;">Your invitation link</div>
+                <div style="font-size: 11px; color: #94a3b8;">Your invitation link</div>
                 <div style="display: flex; width: 100%; gap: 8px;">
                     <input type="text" class="wallet-input" id="ref-link-input" readonly style="margin-top: 0; flex: 1;">
-                    <button class="wallet-action-btn" style="background: #e6e0d4; color: #0098ea; padding: 0 16px; font-size: 12px;" onclick="shareRefLink()">Share Direct</button>
+                    <button class="wallet-action-btn" style="background: rgba(30,41,59,0.9); color: #38bdf8; padding: 0 16px; font-size: 12px;" onclick="shareRefLink()">Share Direct</button>
                 </div>
             </div>
 
             <div class="friends-stats-row">
                 <div class="friends-stat-box">
-                    <div style="font-size: 16px; font-weight: bold; color: #1a1a1a;" id="friend-count">0</div>
-                    <div style="font-size: 10px; color: #666666; margin-top: 4px;">Friends</div>
+                    <div style="font-size: 16px; font-weight: bold; color: #ffffff;" id="friend-count">0</div>
+                    <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Friends</div>
                 </div>
                 <div class="friends-stat-box">
-                    <div style="font-size: 16px; font-weight: bold; color: #0098ea;" id="friend-earned">0.00</div>
-                    <div style="font-size: 10px; color: #666666; margin-top: 4px;">Earned, TON</div>
+                    <div style="font-size: 16px; font-weight: bold; color: #38bdf8;" id="friend-earned">0.00</div>
+                    <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Earned, TON</div>
                 </div>
                 <div class="friends-stat-box">
-                    <div style="font-size: 16px; font-weight: bold; color: #0098ea;" id="friend-deposits">0.00</div>
-                    <div style="font-size: 10px; color: #666666; margin-top: 4px;">Deposits, TON</div>
+                    <div style="font-size: 16px; font-weight: bold; color: #38bdf8;" id="friend-deposits">0.00</div>
+                    <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Deposits, TON</div>
                 </div>
             </div>
         </div>
@@ -663,7 +654,7 @@
         <!-- TAB 4: WALLET -->
         <div id="tab-wallet" class="tab-content">
             <div class="wallet-main-card">
-                <div style="font-size: 11px; color: #a3b8b2;">Available balance</div>
+                <div style="font-size: 11px; color: #e2e8f0;">Available balance</div>
                 <div style="font-size: 26px; font-weight: bold; color: #ffffff; margin-top: 4px;" id="wallet-balance-display">0.00000000 TON</div>
                 
                 <div class="wallet-btn-row">
@@ -676,30 +667,30 @@
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">📥</span>
                     <div>
-                        <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">Deposits</div>
-                        <div style="font-size: 10px; color: #666666;">Deposit history</div>
+                        <div style="font-size: 13px; font-weight: bold; color: #ffffff;">Deposits</div>
+                        <div style="font-size: 10px; color: #94a3b8;">Deposit history</div>
                     </div>
                 </div>
-                <span style="color: #0098ea; font-weight: bold;">View</span>
+                <span style="color: #38bdf8; font-weight: bold;">View</span>
             </div>
 
             <div class="wallet-menu-box" onclick="alert('Withdrawal history is empty.')">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">📤</span>
                     <div>
-                        <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">Withdrawals</div>
-                        <div style="font-size: 10px; color: #666666;">Withdrawal history</div>
+                        <div style="font-size: 13px; font-weight: bold; color: #ffffff;">Withdrawals</div>
+                        <div style="font-size: 10px; color: #94a3b8;">Withdrawal history</div>
                     </div>
                 </div>
-                <span style="color: #0098ea; font-weight: bold;">View</span>
+                <span style="color: #38bdf8; font-weight: bold;">View</span>
             </div>
         </div>
 
         <!-- TAB 5: PROFILE -->
         <div id="tab-profile" class="tab-content">
-            <div style="font-size: 11px; color: #666666; margin-bottom: 2px;">YOUR ACCOUNT</div>
-            <div style="font-size: 22px; font-weight: bold; color: #0098ea; margin-bottom: 4px;">Profile</div>
-            <div style="font-size: 11px; color: #666666; margin-bottom: 18px;">Your account, statistics and useful links.</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 2px;">YOUR ACCOUNT</div>
+            <div style="font-size: 22px; font-weight: bold; color: #38bdf8; margin-bottom: 4px;">Profile</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 18px;">Your account, statistics and useful links.</div>
 
             <div class="profile-header-card">
                 <img id="profile-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-avatar" alt="User Avatar">
@@ -709,15 +700,15 @@
                 </div>
             </div>
 
-            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: #e1f3fc; border-color: #0098ea;">
+            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: rgba(0, 152, 234, 0.15); border-color: rgba(56, 189, 248, 0.4);">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">🎁</span>
                     <div>
-                        <div style="font-size: 13px; color: #0098ea; font-weight: bold;">Invite friends</div>
-                        <div style="font-size: 10px; color: #666666;">Referral program and rewards</div>
+                        <div style="font-size: 13px; color: #38bdf8; font-weight: bold;">Invite friends</div>
+                        <div style="font-size: 10px; color: #94a3b8;">Referral program and rewards</div>
                     </div>
                 </div>
-                <span style="color: #0098ea; font-weight: bold; font-size: 16px;">&rarr;</span>
+                <span style="color: #38bdf8; font-weight: bold; font-size: 16px;">&rarr;</span>
             </div>
 
             <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
@@ -742,28 +733,28 @@
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
             <div id="dep-list-view">
-                <div style="font-size: 15px; font-weight: bold; color: #0098ea; margin-bottom: 6px; text-align: center;">Account Deposit</div>
-                <p style="font-size: 11px; color: #666666; margin-bottom: 14px; text-align: center;">Choose a currency and network to deposit:</p>
+                <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Account Deposit</div>
+                <p style="font-size: 11px; color: #94a3b8; margin-bottom: 14px; text-align: center;">Choose a currency and network to deposit:</p>
                 <div class="crypto-list-col" id="deposit-currency-list"></div>
-                <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 10px;" onclick="closeModal('deposit-modal')">Close</button>
+                <button class="btn-buy" style="width: 100%; background: rgba(30,41,59,0.9); color: #ffffff; margin-top: 10px;" onclick="closeModal('deposit-modal')">Close</button>
             </div>
 
             <div id="dep-detail-view" style="display: none;">
                 <div style="display: flex; align-items: center; margin-bottom: 12px;">
-                    <button onclick="backToDepositList()" style="background: none; border: none; font-size: 16px; color: #0098ea; cursor: pointer; font-weight: bold;">&larr; Back</button>
-                    <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold; color: #0098ea; margin-right: 30px;" id="dep-title-detail">Deposit Details</div>
+                    <button onclick="backToDepositList()" style="background: none; border: none; font-size: 16px; color: #38bdf8; cursor: pointer; font-weight: bold;">&larr; Back</button>
+                    <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold; color: #38bdf8; margin-right: 30px;" id="dep-title-detail">Deposit Details</div>
                 </div>
 
-                <label style="font-size: 10px; color: #666666; margin-top: 5px; display: block;" id="dep-label-text">Wallet Address:</label>
+                <label style="font-size: 10px; color: #94a3b8; margin-top: 5px; display: block;" id="dep-label-text">Wallet Address:</label>
                 <input type="text" class="wallet-input" readonly id="dep-addr">
                 <button class="btn-buy" style="width: 100%; margin-top: 8px; font-size: 11px; padding: 9px;" onclick="copyWallet('dep-addr')">Copy Wallet Address</button>
 
                 <div id="memo-container" style="margin-top: 12px; display: none;">
-                    <label style="font-size: 10px; color: #666666; display: block;">MEMO / Tag (Required):</label>
+                    <label style="font-size: 10px; color: #94a3b8; display: block;">MEMO / Tag (Required):</label>
                     <input type="text" class="wallet-input" readonly id="dep-memo">
                     <button class="btn-buy" style="width: 100%; margin-top: 8px; font-size: 11px; padding: 9px;" onclick="copyWallet('dep-memo')">Copy MEMO</button>
                 </div>
-                <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 15px;" onclick="closeModal('deposit-modal')">Close</button>
+                <button class="btn-buy" style="width: 100%; background: rgba(30,41,59,0.9); color: #ffffff; margin-top: 15px;" onclick="closeModal('deposit-modal')">Close</button>
             </div>
         </div>
     </div>
@@ -772,34 +763,34 @@
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
             <div id="wit-list-view">
-                <div style="font-size: 15px; font-weight: bold; color: #0098ea; margin-bottom: 6px; text-align: center;">Withdrawal</div>
-                <p style="font-size: 11px; color: #666666; margin-bottom: 14px; text-align: center;">Choose a currency and network to withdraw:</p>
+                <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Withdrawal</div>
+                <p style="font-size: 11px; color: #94a3b8; margin-bottom: 14px; text-align: center;">Choose a currency and network to withdraw:</p>
                 <div class="crypto-list-col" id="withdraw-currency-list"></div>
-                <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 10px;" onclick="closeModal('withdraw-modal')">Cancel</button>
+                <button class="btn-buy" style="width: 100%; background: rgba(30,41,59,0.9); color: #ffffff; margin-top: 10px;" onclick="closeModal('withdraw-modal')">Cancel</button>
             </div>
 
             <div id="wit-detail-view" style="display: none;">
                 <div style="display: flex; align-items: center; margin-bottom: 12px;">
-                    <button onclick="backToWithdrawList()" style="background: none; border: none; font-size: 16px; color: #0098ea; cursor: pointer; font-weight: bold;">&larr; Choose another currency</button>
+                    <button onclick="backToWithdrawList()" style="background: none; border: none; font-size: 16px; color: #38bdf8; cursor: pointer; font-weight: bold;">&larr; Choose another currency</button>
                 </div>
                 
                 <div style="margin-bottom: 10px;">
-                    <label style="font-size: 11px; color: #666666;">Withdrawal Amount (Min 1.00):</label>
+                    <label style="font-size: 11px; color: #94a3b8;">Withdrawal Amount (Min 1.00):</label>
                     <input type="number" id="withdraw-amount" class="wallet-input" placeholder="1.00" min="1" step="0.1">
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label style="font-size: 11px; color: #666666;" id="wit-addr-label">Destination Address:</label>
+                    <label style="font-size: 11px; color: #94a3b8;" id="wit-addr-label">Destination Address:</label>
                     <input type="text" id="withdraw-address" class="wallet-input" placeholder="Enter wallet address">
                 </div>
 
                 <div id="wit-memo-container" style="margin-bottom: 15px; display: none;">
-                    <label style="font-size: 11px; color: #666666;">MEMO / Tag:</label>
+                    <label style="font-size: 11px; color: #94a3b8;">MEMO / Tag:</label>
                     <input type="text" id="withdraw-memo" class="wallet-input" placeholder="Enter memo">
                 </div>
 
                 <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0098ea, #0077b5); font-size: 13px;" onclick="processWithdraw()">Confirm Withdrawal</button>
-                <button class="btn-buy" style="width: 100%; background: #e6e0d4; color: #1a1a1a; margin-top: 8px;" onclick="closeModal('withdraw-modal')">Cancel</button>
+                <button class="btn-buy" style="width: 100%; background: rgba(30,41,59,0.9); color: #ffffff; margin-top: 8px;" onclick="closeModal('withdraw-modal')">Cancel</button>
             </div>
         </div>
     </div>
@@ -867,7 +858,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v29');
+            const saved = localStorage.getItem('solaris_miner_save_v30');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -883,7 +874,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v29', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v30', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -902,7 +893,7 @@
                 const isOwned = state.ownedIds.includes(item.id);
                 const html = `
                     <div class="property-card ${isOwned ? 'active-miner' : ''}">
-                        <div class="property-badge" style="${isOwned ? 'background:#e1f3fc; color:#0098ea;' : ''}">${isOwned ? '⚡ Active' : item.label}</div>
+                        <div class="property-badge" style="${isOwned ? 'background:rgba(0,152,234,0.2); color:#38bdf8;' : ''}">${isOwned ? '⚡ Active' : item.label}</div>
                         <img src="${item.img}" class="missile-img" alt="${item.name}">
                         <div class="property-title">🚀 ${item.name}</div>
                         <div class="property-desc">${item.desc}</div>
@@ -920,7 +911,7 @@
 
                         <div class="property-footer">
                             <div class="property-price">${item.price + ' TON'}</div>
-                            <button class="btn-buy" style="${isOwned ? 'background:#e6e0d4; color:#666666; cursor:default; box-shadow:none;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Launch Silo'}</button>
+                            <button class="btn-buy" style="${isOwned ? 'background:rgba(30,41,59,0.8); color:#94a3b8; cursor:default; box-shadow:none;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Launch Silo'}</button>
                         </div>
                     </div>
                 `;
@@ -930,7 +921,7 @@
                     const myHtml = `
                         <div class="property-card active-miner" style="text-align:left;">
                             <img src="${item.img}" class="missile-img" style="height:110px;" alt="${item.name}">
-                            <div class="property-title" style="color:#0098ea;">🚀 ${item.name}</div>
+                            <div class="property-title" style="color:#38bdf8;">🚀 ${item.name}</div>
                             <div class="property-desc">Mining Speed: +${item.daily.toFixed(2)} TON / day</div>
                         </div>
                     `;
@@ -990,8 +981,8 @@
                         <div class="crypto-info-left">
                             <div class="crypto-icon-img" style="background: ${c.color};">${c.icon}</div>
                             <div>
-                                <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">${c.name}</div>
-                                <div style="font-size: 10px; color: #666666;">Minimum: ${c.min}</div>
+                                <div style="font-size: 13px; font-weight: bold; color: #ffffff;">${c.name}</div>
+                                <div style="font-size: 10px; color: #94a3b8;">Minimum: ${c.min}</div>
                             </div>
                         </div>
                         <div class="crypto-arrow">&rarr;</div>
@@ -1032,8 +1023,8 @@
                         <div class="crypto-info-left">
                             <div class="crypto-icon-img" style="background: ${c.color};">${c.icon}</div>
                             <div>
-                                <div style="font-size: 13px; font-weight: bold; color: #1a1a1a;">${c.name}</div>
-                                <div style="font-size: 10px; color: #666666;">Minimum: ${c.min}</div>
+                                <div style="font-size: 13px; font-weight: bold; color: #ffffff;">${c.name}</div>
+                                <div style="font-size: 10px; color: #94a3b8;">Minimum: ${c.min}</div>
                             </div>
                         </div>
                         <div class="crypto-arrow">&rarr;</div>
