@@ -433,7 +433,7 @@
             outline: none;
         }
 
-        /* استایل کارت‌های لیست ارزها دقیقاً مشابه نمونه دلخواه شما با فلش سمت راست */
+        /* کارت‌های شیک لیست ارزها با فلش */
         .crypto-list-col {
             display: flex;
             flex-direction: column;
@@ -744,7 +744,7 @@
 
     </div>
 
-    <!-- MODAL: DEPOSIT (لیست شیک با کارت‌های منفرد و فلش) -->
+    <!-- MODAL: DEPOSIT (فقط TON و USDT روی شبکه TON) -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
             <div id="dep-list-view">
@@ -774,7 +774,7 @@
         </div>
     </div>
 
-    <!-- MODAL: WITHDRAW (لیست شیک با کارت‌های منفرد و فلش مشابه تصویر مد نظرتون) -->
+    <!-- MODAL: WITHDRAW (فقط TON و USDT روی شبکه TON) -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
             <div id="wit-list-view">
@@ -850,15 +850,10 @@
             { id: 12, name: "Island Resort", desc: "Fully automated island miner", daily: 3000.00, monthly: 90000.00, price: 1000.00 }
         ];
 
-        // لیست ارزها به ترتیب دقیق درخواستی با تصاویر و آدرس‌های واقعی
+        // فقط TON و USDT روی شبکه TON
         const cryptoCurrencies = [
             { id: 'TON', name: 'TON', network: 'TON Main Network', icon: '💎', color: '#0098ea', addr: 'UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v', needsMemo: true, min: '1.00' },
-            { id: 'USDT_TON', name: 'USDT (TON)', network: 'Tether on TON Network', icon: '₮', color: '#26a69a', addr: 'UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v', needsMemo: true, min: '1.00' },
-            { id: 'USDT_BNB', name: 'USDT (BNB)', network: 'Tether on BNB Chain', icon: '🌐', color: '#f3ba2f', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false, min: '1.00' },
-            { id: 'BNB', name: 'BNB', network: 'BNB Smart Chain', icon: '🟡', color: '#f3ba2f', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false, min: '1.00' },
-            { id: 'AVAX', name: 'AVAX', network: 'Avalanche C-Chain', icon: '🔺', color: '#e84142', addr: '0x1CF72e3Afed5c8c1BcDAa25509F69A88FD8c0a0F', needsMemo: false, min: '1.00' },
-            { id: 'TRON', name: 'TRON', network: 'TRON Network (TRC20)', icon: '🔴', color: '#ff0000', addr: 'TRxkGT4Ge4Vtt354YET5dZQScTSwqVyJ2n', needsMemo: false, min: '1.00' },
-            { id: 'SOL', name: 'SOLANA', network: 'Solana Main Network', icon: '🟣', color: '#9945ff', addr: 'ADtDse3bfk5r114yn6sYJ3fcQ8TEHY3bpJ67LvLSmorZ', needsMemo: false, min: '1.00' }
+            { id: 'USDT_TON', name: 'USDT (TON)', network: 'Tether on TON Network', icon: '₮', color: '#26a69a', addr: 'UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v', needsMemo: true, min: '1.00' }
         ];
 
         let state = {
@@ -879,7 +874,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v21');
+            const saved = localStorage.getItem('solaris_miner_save_v22');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -895,7 +890,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v21', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v22', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -991,7 +986,6 @@
             alert("✅ Referral rewards collected!");
         }
 
-        // ساخت لیست واریز به صورت کارت‌های منفرد شیک با فلش
         function buildDepositList() {
             const container = document.getElementById('deposit-currency-list');
             container.innerHTML = '';
@@ -1034,7 +1028,6 @@
             document.getElementById('dep-list-view').style.display = 'block';
         }
 
-        // ساخت لیست برداشت به صورت کارت‌های منفرد شیک با فلش
         function buildWithdrawList() {
             const container = document.getElementById('withdraw-currency-list');
             container.innerHTML = '';
