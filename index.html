@@ -96,7 +96,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        /* بخش فن مرکزی */
+        /* موشک متحرک مرکزی با افکت آتش حین ماینینگ */
         .mining-circle-container {
             background: #ffffff;
             border: 1px solid #e6e0d4;
@@ -110,19 +110,20 @@
             align-items: center;
         }
 
-        .fan-wrapper {
+        .rocket-anim-wrapper {
             position: relative;
             width: 170px;
             height: 170px;
             border-radius: 50%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
-            background: radial-gradient(circle, rgba(0, 152, 234, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 152, 234, 0.2) 0%, transparent 70%);
         }
 
-        .fan-ring {
+        .rocket-ring {
             position: absolute;
             width: 160px;
             height: 160px;
@@ -133,37 +134,34 @@
             z-index: 2;
         }
 
-        .fan-blades {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background: conic-gradient(
-                from 0deg,
-                #111 0deg, #333 45deg, #111 90deg,
-                #333 135deg, #111 180deg, #333 225deg,
-                #111 270deg, #333 315deg, #111 360deg
-            );
-            animation: fanSpin 2s linear infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 12px rgba(0,0,0,0.8);
-            position: relative;
-            z-index: 1;
+        .rocket-icon-box {
+            font-size: 52px;
+            animation: rocketFloat 2s ease-in-out infinite;
+            z-index: 3;
+            filter: drop-shadow(0 5px 10px rgba(0, 152, 234, 0.4));
         }
 
-        @keyframes fanSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .fan-center-cap {
-            width: 45px;
+        /* افکت آتش زیر موشک */
+        .rocket-fire {
+            position: absolute;
+            bottom: 25px;
+            width: 30px;
             height: 45px;
-            background: linear-gradient(135deg, #ffffff, #cbd5e1);
-            border: 2px solid #94a3b8;
-            border-radius: 50%;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            background: linear-gradient(to top, #ff4500, #ff8c00, #ffd700, transparent);
+            border-radius: 50% 50% 20% 20%;
+            animation: firePulse 0.4s ease-in-out infinite alternate;
+            z-index: 2;
+            filter: blur(2px);
+        }
+
+        @keyframes rocketFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(1deg); }
+        }
+
+        @keyframes firePulse {
+            0% { transform: scaleY(0.8); opacity: 0.7; }
+            100% { transform: scaleY(1.2); opacity: 1; filter: blur(3px); }
         }
 
         .mined-number {
@@ -203,7 +201,6 @@
             box-shadow: 0 4px 14px rgba(0, 152, 234, 0.3);
         }
 
-        /* کارت‌های موشک‌ها با تصویر واقعی */
         .property-card {
             background: #ffffff;
             border: 1px solid #e6e0d4;
@@ -595,14 +592,14 @@
     <!-- CONTENT -->
     <div class="content">
 
-        <!-- TAB 1: PROPERTIES (Miners / Missiles) -->
+        <!-- TAB 1: PROPERTIES (Launchers) -->
         <div id="tab-properties" class="tab-content active">
+            <!-- موشک متحرک با شعله آتش حین ماینینگ -->
             <div class="mining-circle-container">
-                <div class="fan-wrapper">
-                    <div class="fan-ring"></div>
-                    <div class="fan-blades">
-                        <div class="fan-center-cap"></div>
-                    </div>
+                <div class="rocket-anim-wrapper">
+                    <div class="rocket-ring"></div>
+                    <div class="rocket-fire"></div>
+                    <div class="rocket-icon-box">🚀</div>
                 </div>
                 <div class="mined-number" id="live-unclaimed">0.00000000</div>
                 <div class="mined-label">ENERGY MINED</div>
@@ -624,7 +621,7 @@
             <div id="properties-list"></div>
         </div>
 
-        <!-- TAB 2: MY RESORT -->
+        <!-- TAB 2: MY SILOS -->
         <div id="tab-myresort" class="tab-content">
             <div style="text-align: center; padding: 30px 15px;">
                 <div style="font-size: 32px; margin-bottom: 10px;">🚀</div>
@@ -847,9 +844,9 @@
     </div>
 
     <script>
-        // ۱۲ موشک جنگی به همراه عکس واقعی و کیفیت بالای هر موشک
+        // قیمت موشک اول 0.1 TON تعیین شد و کلمه Free برداشته شد
         const initialProperties = [
-            { id: 1, name: "Light Guided Missile", desc: "Base tactical missile launcher", daily: 0.10, monthly: 3.00, price: 0.00, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 1, name: "Light Guided Missile", desc: "Base tactical missile launcher", daily: 0.10, monthly: 3.00, price: 0.10, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
             { id: 2, name: "Tactical Mid-Range", desc: "Short range strike unit", daily: 0.66, monthly: 19.80, price: 3.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
             { id: 3, name: "Anti-Air Cruise", desc: "Advanced defense & strike missile", daily: 1.20, monthly: 36.00, price: 5.00, img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80" },
             { id: 4, name: "ICBM Basic", desc: "Heavy long-range tactical warhead", daily: 2.60, monthly: 78.00, price: 10.00, img: "https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?auto=format&fit=crop&w=600&q=80" },
@@ -870,7 +867,7 @@
 
         let state = {
             balance: 0.0,
-            ownedIds: [1],
+            ownedIds: [],
             unclaimed: 0.0,
             lastTick: Date.now(),
             telegramId: "85354",
@@ -886,7 +883,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v24');
+            const saved = localStorage.getItem('solaris_miner_save_v25');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -902,7 +899,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v24', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v25', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -938,7 +935,7 @@
                         </div>
 
                         <div class="property-footer">
-                            <div class="property-price">${item.price === 0 ? 'Free' : item.price + ' TON'}</div>
+                            <div class="property-price">${item.price + ' TON'}</div>
                             <button class="btn-buy" style="${isOwned ? 'background:#e6e0d4; color:#666666; cursor:default; box-shadow:none;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Launch Silo'}</button>
                         </div>
                     </div>
@@ -963,7 +960,7 @@
             if (state.ownedIds.includes(id)) return;
             const prop = initialProperties.find(p => p.id === id);
             if (state.balance < prop.price) {
-                alert("Insufficient balance.");
+                alert("Insufficient balance. Minimum 0.1 TON required to start/purchase.");
                 switchTab('wallet');
                 return;
             }
