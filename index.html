@@ -96,7 +96,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        /* موشک 3بعدی و خفن بدون دایره و حاشیه اضافی با آتش متحرک */
+        /* موشک بزرگ و سه‌بعدیِ بدون کادر عکس با آتش متحرک */
         .mining-circle-container {
             background: #ffffff;
             border: 1px solid #e6e0d4;
@@ -112,29 +112,27 @@
 
         .rocket-anim-wrapper {
             position: relative;
-            width: 140px;
-            height: 160px;
+            width: 150px;
+            height: 150px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
-        .real-3d-rocket {
-            width: 75px;
-            height: 130px;
-            object-fit: contain;
-            animation: rocketFloat 2.5s ease-in-out infinite;
+        .rocket-emoji-3d {
+            font-size: 75px;
+            animation: rocketFloat 2s ease-in-out infinite;
             z-index: 3;
-            filter: drop-shadow(0 8px 16px rgba(0, 152, 234, 0.35));
+            filter: drop-shadow(0 6px 12px rgba(0, 152, 234, 0.4));
         }
 
         .rocket-fire {
             position: absolute;
-            bottom: 2px;
-            width: 28px;
-            height: 40px;
+            bottom: 10px;
+            width: 32px;
+            height: 48px;
             background: linear-gradient(to top, #ff3300, #ff9900, #ffff00, transparent);
             border-radius: 50% 50% 20% 20%;
             animation: firePulse 0.35s ease-in-out infinite alternate;
@@ -143,12 +141,12 @@
         }
 
         @keyframes rocketFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
         }
 
         @keyframes firePulse {
-            0% { transform: scaleY(0.85); opacity: 0.75; }
+            0% { transform: scaleY(0.8); opacity: 0.7; }
             100% { transform: scaleY(1.25); opacity: 1; filter: blur(3px); }
         }
 
@@ -582,11 +580,11 @@
 
         <!-- TAB 1: PROPERTIES (Launchers) -->
         <div id="tab-properties" class="tab-content active">
-            <!-- موشک 3بعدیِ واقعی با آتش متحرک و بدون حاشیه اضافی -->
+            <!-- موشک بزرگ و سه‌بعدی با شعله آتش متحرک -->
             <div class="mining-circle-container">
                 <div class="rocket-anim-wrapper">
                     <div class="rocket-fire"></div>
-                    <img src="https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=400&q=80" class="real-3d-rocket" alt="3D Rocket">
+                    <div class="rocket-emoji-3d">🚀</div>
                 </div>
                 <div class="mined-number" id="live-unclaimed">0.00000000</div>
                 <div class="mined-label">ENERGY MINED</div>
@@ -869,7 +867,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v28');
+            const saved = localStorage.getItem('solaris_miner_save_v29');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -885,7 +883,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v28', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v29', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
