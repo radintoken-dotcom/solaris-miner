@@ -96,7 +96,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        /* موشک واقعیِ عمودی و متحرک مرکزی */
+        /* موشک 3بعدی و خفن بدون دایره و حاشیه اضافی با آتش متحرک */
         .mining-circle-container {
             background: #ffffff;
             border: 1px solid #e6e0d4;
@@ -112,58 +112,44 @@
 
         .rocket-anim-wrapper {
             position: relative;
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
+            width: 140px;
+            height: 160px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px;
-            background: radial-gradient(circle, rgba(0, 152, 234, 0.2) 0%, transparent 70%);
-            overflow: hidden;
+            margin-bottom: 12px;
         }
 
-        .rocket-ring {
-            position: absolute;
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            border: 4px solid #0098ea;
-            box-shadow: 0 0 15px rgba(0, 152, 234, 0.6), inset 0 0 10px rgba(0, 152, 234, 0.4);
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .real-rocket-img {
-            width: 55px;
-            height: 100px;
+        .real-3d-rocket {
+            width: 75px;
+            height: 130px;
             object-fit: contain;
-            animation: rocketFloat 2s ease-in-out infinite;
+            animation: rocketFloat 2.5s ease-in-out infinite;
             z-index: 3;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 8px 16px rgba(0, 152, 234, 0.35));
         }
 
         .rocket-fire {
             position: absolute;
-            bottom: 20px;
-            width: 24px;
-            height: 35px;
-            background: linear-gradient(to top, #ff4500, #ff8c00, #ffd700, transparent);
+            bottom: 2px;
+            width: 28px;
+            height: 40px;
+            background: linear-gradient(to top, #ff3300, #ff9900, #ffff00, transparent);
             border-radius: 50% 50% 20% 20%;
-            animation: firePulse 0.4s ease-in-out infinite alternate;
+            animation: firePulse 0.35s ease-in-out infinite alternate;
             z-index: 2;
             filter: blur(2px);
         }
 
         @keyframes rocketFloat {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-6px); }
         }
 
         @keyframes firePulse {
-            0% { transform: scaleY(0.8); opacity: 0.7; }
-            100% { transform: scaleY(1.2); opacity: 1; filter: blur(3px); }
+            0% { transform: scaleY(0.85); opacity: 0.75; }
+            100% { transform: scaleY(1.25); opacity: 1; filter: blur(3px); }
         }
 
         .mined-number {
@@ -199,7 +185,7 @@
             cursor: pointer;
             width: 100%;
             max-width: 260px;
-            margin-top: 5px;
+            margin-top: 10px;
             box-shadow: 0 4px 14px rgba(0, 152, 234, 0.3);
         }
 
@@ -596,12 +582,11 @@
 
         <!-- TAB 1: PROPERTIES (Launchers) -->
         <div id="tab-properties" class="tab-content active">
-            <!-- موشک واقعیِ عمودی و متحرک داخل دایره -->
+            <!-- موشک 3بعدیِ واقعی با آتش متحرک و بدون حاشیه اضافی -->
             <div class="mining-circle-container">
                 <div class="rocket-anim-wrapper">
-                    <div class="rocket-ring"></div>
                     <div class="rocket-fire"></div>
-                    <img src="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=300&q=80" class="real-rocket-img" alt="Rocket">
+                    <img src="https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=400&q=80" class="real-3d-rocket" alt="3D Rocket">
                 </div>
                 <div class="mined-number" id="live-unclaimed">0.00000000</div>
                 <div class="mined-label">ENERGY MINED</div>
@@ -846,7 +831,6 @@
     </div>
 
     <script>
-        // ۱۲ موشک جنگی با برچسب حروف انگلیسی (One تا Twelve) بدون علامت #
         const initialProperties = [
             { id: 1, label: "One", name: "Light Guided Missile", desc: "Base tactical missile launcher", daily: 0.10, monthly: 3.00, price: 0.10, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
             { id: 2, label: "Two", name: "Tactical Mid-Range", desc: "Short range strike unit", daily: 0.66, monthly: 19.80, price: 3.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
@@ -885,7 +869,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v27');
+            const saved = localStorage.getItem('solaris_miner_save_v28');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -901,7 +885,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v27', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v28', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
