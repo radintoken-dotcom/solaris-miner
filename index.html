@@ -639,6 +639,14 @@
                     <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Deposits, TON</div>
                 </div>
             </div>
+
+            <!-- لیست دوستان دعوت شده -->
+            <div style="margin-top: 15px;">
+                <div style="font-size: 13px; font-weight: bold; color: #38bdf8; margin-bottom: 8px;">Referred Friends List</div>
+                <div id="referred-friends-list" style="max-height: 200px; overflow-y: auto;">
+                    <div style="text-align:center; color:#94a3b8; font-size:11px; padding:15px; background:rgba(30, 41, 59, 0.5); border-radius:12px;">No friends invited yet. Share your link!</div>
+                </div>
+            </div>
         </div>
 
         <!-- TAB 4: WALLET -->
@@ -803,6 +811,7 @@
     <script>
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const supportTelegramId = "Dollar_Matrix";
+        const botUsername = "SolarisMinerBot"; // یوزرنیم ربات تلگرام خودت رو اینجا بزار
         
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json',
@@ -818,7 +827,6 @@
             initTelegramUser();
             loadState();
 
-            // مخفی کردن صفحه لودینگ بعد از ۱.۵ ثانیه
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
                 if (splash) {
@@ -846,6 +854,60 @@
                     }
                 }
             }
+            // تنظیم لینک دعوت اختصاصی کاربر
+            const refLink = `https://t.me/${botUsername}?start=ref_${state.telegramId}`;
+            document.getElementById('ref-link-input').value = refLink;
+
+            // تست شبیه‌سازی ورود از طریق لینک دعوت (اگر کسی ارجاع داده شده باشد)
+            checkUrlReferral();
+        }
+
+        // بررسی پارامتر رفرال در صورت ورود کاربر جدید
+        function checkUrlReferral() {
+            const urlParams = new URLSearchParams(window.location.search);
+            // یا بررسی هَش تلگرام
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.start_param) {
+                const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
+                if (startParam.startsWith('ref_') && !localStorage.getItem('solar_ref_claimed')) {
+                    // پاداش فیک 0.01 برای دعوت موفق
+                    state.friendCount += 1;
+                    state.friendReward += 0.01;
+                    state.friendEarned += 0.01;
+                    state.referredList.unshift({
+                        name: "New Cadet #" + Math.floor(Math.random() * 8999 + 1000),
+                        reward: 0.01,
+                        date: new Date().toLocaleDateString()
+                    });
+                    localStorage.setItem('solar_ref_claimed', 'true');
+                    saveState();
+                }
+            }
+        }
+
+        // دکمه اشتراک‌گذاری مستقیم
+        function shareRefLink() {
+            const refLink = document.getElementById('ref-link-input').value;
+            const text = encodeURIComponent("🚀 Join Solaris Miner and start mining TON cloud rewards with me!\n\n" + refLink);
+            
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
+                window.Telegram.WebApp.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${text}`);
+            } else {
+                navigator.clipboard.writeText(refLink);
+                alert("✅ Referral link copied to clipboard!");
+            }
+        }
+
+        // کلکت کردن پاداش دوستان
+        function collectFriendReward() {
+            if (state.friendReward <= 0) {
+                alert("❌ No reward available to collect yet.");
+                return;
+            }
+            state.balance += state.friendReward;
+            state.friendReward = 0;
+            saveState();
+            updateUI();
+            alert("✅ Friend rewards collected successfully into your balance!");
         }
 
         async function verifyWalletWith005Ton() {
@@ -907,6 +969,7 @@
             friendCount: 0,
             friendEarned: 0.0,
             friendDeposits: 0.0,
+            referredList: [],
             totalDeposited: 0.0,
             totalWithdrawn: 0.0,
             depositsHistory: [],
@@ -915,7 +978,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v40');
+            const saved = localStorage.getItem('solaris_miner_save_v41');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -940,11 +1003,12 @@
             }
             state.lastTick = now;
             renderProperties();
+            renderFriends();
         }
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v40', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v41', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -998,6 +1062,31 @@
                 }
             });
             updateUI();
+        }
+
+        function renderFriends() {
+            document.getElementById('friend-count').innerText = state.friendCount;
+            document.getElementById('friend-earned').innerText = state.friendEarned.toFixed(2);
+            document.getElementById('friend-deposits').innerText = state.friendDeposits.toFixed(2);
+            document.getElementById('friend-reward-display').innerHTML = state.friendReward.toFixed(2) + ' <span style="font-size: 11px; color: #38bdf8;">TON</span>';
+
+            const listContainer = document.getElementById('referred-friends-list');
+            if (state.referredList.length === 0) {
+                listContainer.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:11px; padding:15px; background:rgba(30, 41, 59, 0.5); border-radius:12px;">No friends invited yet. Share your link!</div>';
+            } else {
+                listContainer.innerHTML = '';
+                state.referredList.forEach(ref => {
+                    listContainer.insertAdjacentHTML('beforeend', `
+                        <div class="history-item">
+                            <div>
+                                <div style="font-weight:bold; color:#ffffff;">👤 ${ref.name}</div>
+                                <div style="font-size:10px; color:#38bdf8; margin-top:2px;">Bonus: +${ref.reward} TON</div>
+                            </div>
+                            <div style="font-size:10px; color:#64748b;">${ref.date}</div>
+                        </div>
+                    `);
+                });
+            }
         }
 
         function buyProperty(id) {
@@ -1084,6 +1173,7 @@
             document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
             document.getElementById('profile-total-deposited').innerText = state.totalDeposited.toFixed(2) + ' TON';
             document.getElementById('profile-total-withdrawn').innerText = state.totalWithdrawn.toFixed(2) + ' TON';
+            renderFriends();
         }
 
         setInterval(() => {
