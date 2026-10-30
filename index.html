@@ -373,6 +373,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
         }
 
         .wallet-input {
@@ -507,6 +508,18 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             color: #ffffff;
         }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 10px 14px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
     </style>
 </head>
 <body>
@@ -583,7 +596,7 @@
                 <button class="wallet-action-btn" style="background: #0098ea; color: #fff; padding: 10px 20px; flex: unset;" onclick="collectFriendReward()">Collect</button>
             </div>
 
-            <div class="wallet-menu-box" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+            <div class="wallet-menu-box" style="flex-direction: column; align-items: flex-start; gap: 8px; cursor: default;">
                 <div style="font-size: 11px; color: #94a3b8;">Your invitation link</div>
                 <div style="display: flex; width: 100%; gap: 8px;">
                     <input type="text" class="wallet-input" id="ref-link-input" readonly style="margin-top: 0; flex: 1;">
@@ -627,7 +640,7 @@
                 <button class="support-btn" onclick="openSupportChat()">Contact Support</button>
             </div>
 
-            <div class="wallet-menu-box" onclick="alert('Deposit history is empty.')">
+            <div class="wallet-menu-box" onclick="openHistoryModal('deposits')">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">📥</span>
                     <div>
@@ -638,7 +651,7 @@
                 <span style="color: #38bdf8; font-weight: bold;">View</span>
             </div>
 
-            <div class="wallet-menu-box" onclick="alert('Withdrawal history is empty.')">
+            <div class="wallet-menu-box" onclick="openHistoryModal('withdrawals')">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">📤</span>
                     <div>
@@ -729,6 +742,17 @@
         </div>
     </div>
 
+    <!-- MODAL: HISTORY -->
+    <div id="history-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 12px; text-align: center;" id="history-title">History</div>
+            <div id="history-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;">
+                <!-- سوابق اینجا درج می‌شوند -->
+            </div>
+            <button class="btn-buy" style="width: 100%; background: rgba(30,41,59,0.9); color: #ffffff;" onclick="closeModal('history-modal')">Close</button>
+        </div>
+    </div>
+
     <!-- NAVIGATION BAR -->
     <div class="nav-bar">
         <div class="nav-item active" id="nav-properties" onclick="switchTab('properties')">
@@ -807,11 +831,13 @@
             friendEarned: 0.0,
             friendDeposits: 0.0,
             totalDeposited: 0.0,
-            totalWithdrawn: 0.0
+            totalWithdrawn: 0.0,
+            depositsHistory: [],
+            withdrawalsHistory: []
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v31');
+            const saved = localStorage.getItem('solaris_miner_save_v32');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -827,7 +853,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v31', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v32', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -943,10 +969,16 @@
                 
                 state.balance += amountInput;
                 state.totalDeposited += amountInput;
+                
+                // ثبت در تاریخچه واریزها
+                const dateStr = new Date().toLocaleString();
+                if(!state.depositsHistory) state.depositsHistory = [];
+                state.depositsHistory.unshift({ amount: amountInput, date: dateStr });
+
                 saveState();
                 updateUI();
                 closeModal('deposit-modal');
-                alert(`✅ Deposit of ${amountInput} TON successful! Your balance has been updated.`);
+                alert(`✅ Deposit of ${amountInput} TON successful! Added to history and balance.`);
             } catch (e) {
                 console.error(e);
                 alert("❌ Transaction cancelled or failed.");
@@ -985,10 +1017,61 @@
 
             state.balance -= amount;
             state.totalWithdrawn += amount;
+
+            // ثبت در تاریخچه برداشت‌ها
+            const dateStr = new Date().toLocaleString();
+            if(!state.withdrawalsHistory) state.withdrawalsHistory = [];
+            state.withdrawalsHistory.unshift({ amount: amount, address: address, date: dateStr });
+
             saveState();
             updateUI();
             closeModal('withdraw-modal');
-            alert(`✅ Withdrawal request submitted successfully!`);
+            alert(`✅ Withdrawal request submitted successfully! Recorded in history.`);
+        }
+
+        function openHistoryModal(type) {
+            const modal = document.getElementById('history-modal');
+            const titleEl = document.getElementById('history-title');
+            const listEl = document.getElementById('history-list');
+            listEl.innerHTML = '';
+
+            if (type === 'deposits') {
+                titleEl.innerText = 'Deposit History';
+                if (!state.depositsHistory || state.depositsHistory.length === 0) {
+                    listEl.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No deposit history found.</div>';
+                } else {
+                    state.depositsHistory.forEach(item => {
+                        listEl.insertAdjacentHTML('beforeend', `
+                            <div class="history-item">
+                                <div>
+                                    <div style="font-weight:bold; color:#34d399;">+${item.amount} TON</div>
+                                    <div style="font-size:10px; color:#94a3b8;">${item.date}</div>
+                                </div>
+                                <span style="color:#38bdf8; font-weight:bold;">Success</span>
+                            </div>
+                        `);
+                    });
+                }
+            } else {
+                titleEl.innerText = 'Withdrawal History';
+                if (!state.withdrawalsHistory || state.withdrawalsHistory.length === 0) {
+                    listEl.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No withdrawal history found.</div>';
+                } else {
+                    state.withdrawalsHistory.forEach(item => {
+                        listEl.insertAdjacentHTML('beforeend', `
+                            <div class="history-item">
+                                <div>
+                                    <div style="font-weight:bold; color:#fbbf24;">-${item.amount} TON</div>
+                                    <div style="font-size:10px; color:#94a3b8; word-break:break-all;">To: ${item.address.substring(0,6)}...${item.address.slice(-4)}</div>
+                                    <div style="font-size:9px; color:#64748b;">${item.date}</div>
+                                </div>
+                                <span style="color:#38bdf8; font-weight:bold;">Processed</span>
+                            </div>
+                        `);
+                    });
+                }
+            }
+            modal.style.display = 'flex';
         }
 
         function updateUI() {
@@ -1040,7 +1123,7 @@
 
         function openDepositModal() {
             if (!tonConnectUI.connected) {
-                alert("⚠️ Please connect your Tonkeeper wallet first using the Connect Wallet button!");
+                alert("⚠️ Please connect your wallet first using the Connect Wallet button!");
                 return;
             }
             const modal = document.getElementById('deposit-modal');
