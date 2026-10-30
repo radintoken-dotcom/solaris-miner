@@ -258,7 +258,6 @@
             align-items: center;
         }
 
-        /* تغییر رنگ قیمت به سفید یکدست */
         .property-price {
             font-size: 14px;
             color: #ffffff;
@@ -389,7 +388,6 @@
             outline: none;
         }
 
-        /* استایل بخش پشتیبانی با متن انگلیسی و حرفه‌ای */
         .support-card {
             background: rgba(30, 41, 59, 0.7);
             border: 1px solid rgba(56, 189, 248, 0.2);
@@ -621,10 +619,8 @@
                 </div>
             </div>
 
-            <!-- دکمه رسمی اتصال کیف پول TonConnect -->
             <div id="ton-connect-button-container"></div>
 
-            <!-- بخش پشتیبانی با متن انگلیسی و حرفه‌ای -->
             <div class="support-card">
                 <div class="support-title">🛡️ Secure & Instant Support</div>
                 <div class="support-desc">Deposit and invest with complete peace of mind! Transactions are fully secure. If you have any questions or encounter any issues with your deposit, our support team is available 24/7 to assist you.</div>
@@ -697,7 +693,7 @@
 
     </div>
 
-    <!-- MODAL: DEPOSIT -->
+    <!-- MODAL: DEPOSIT (بدون مقدار پیش‌فرض ۱) -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Instant Deposit via TonConnect</div>
@@ -705,7 +701,7 @@
             
             <div style="margin-bottom: 12px;">
                 <label style="font-size: 11px; color: #94a3b8;">Amount (TON):</label>
-                <input type="number" id="deposit-amount-input" class="wallet-input" placeholder="1.00" step="0.01" value="1.00">
+                <input type="number" id="deposit-amount-input" class="wallet-input" placeholder="Enter amount (e.g. 0.5)" step="0.01">
             </div>
 
             <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0098ea, #005c8a); font-size: 13px; margin-bottom: 8px;" onclick="sendTonConnectTransaction()">Pay via TonConnect</button>
@@ -713,14 +709,14 @@
         </div>
     </div>
 
-    <!-- MODAL: WITHDRAW -->
+    <!-- MODAL: WITHDRAW (بدون مقدار پیش‌فرض ۱) -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Withdrawal</div>
             
             <div style="margin-bottom: 10px;">
                 <label style="font-size: 11px; color: #94a3b8;">Withdrawal Amount:</label>
-                <input type="number" id="withdraw-amount" class="wallet-input" placeholder="1.00" step="0.01">
+                <input type="number" id="withdraw-amount" class="wallet-input" placeholder="Enter amount (e.g. 0.5)" step="0.01">
             </div>
 
             <div style="margin-bottom: 15px;">
@@ -923,7 +919,12 @@
                 return;
             }
 
-            const amountInput = parseFloat(document.getElementById('deposit-amount-input').value) || 1.0;
+            const amountInput = parseFloat(document.getElementById('deposit-amount-input').value);
+            if (!amountInput || amountInput <= 0) {
+                alert("❌ Please enter a valid deposit amount.");
+                return;
+            }
+
             const nanoTon = Math.floor(amountInput * 1000000000).toString();
 
             const transaction = {
@@ -1043,6 +1044,8 @@
                 return;
             }
             const modal = document.getElementById('deposit-modal');
+            const depositInput = document.getElementById('deposit-amount-input');
+            if (depositInput) depositInput.value = '';
             if (modal) modal.style.display = 'flex';
         }
 
