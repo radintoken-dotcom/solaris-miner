@@ -258,9 +258,10 @@
             align-items: center;
         }
 
+        /* تغییر رنگ قیمت به سفید یکدست */
         .property-price {
             font-size: 14px;
-            color: #fbbf24;
+            color: #ffffff;
             font-weight: bold;
         }
 
@@ -388,7 +389,7 @@
             outline: none;
         }
 
-        /* استایل بخش پشتیبانی جدید در صفحه ولت */
+        /* استایل بخش پشتیبانی با متن انگلیسی و حرفه‌ای */
         .support-card {
             background: rgba(30, 41, 59, 0.7);
             border: 1px solid rgba(56, 189, 248, 0.2);
@@ -623,11 +624,11 @@
             <!-- دکمه رسمی اتصال کیف پول TonConnect -->
             <div id="ton-connect-button-container"></div>
 
-            <!-- بخش پشتیبانی جدید (جایگزین فضای خالی تصویر اول) -->
+            <!-- بخش پشتیبانی با متن انگلیسی و حرفه‌ای -->
             <div class="support-card">
                 <div class="support-title">🛡️ Secure & Instant Support</div>
-                <div class="support-desc">با خیال راحت واریز و سرمایه‌گذاری کنید! تراکنش‌ها کاملاً امن انجام می‌شن. اگر هر سوالی دارید یا در واریز به مشکل خوردید، پشتیبانی آنلاین ما ۲۴ ساعته در خدمت شماست.</div>
-                <button class="support-btn" onclick="openSupportChat()">ارتباط با پشتیبانی</button>
+                <div class="support-desc">Deposit and invest with complete peace of mind! Transactions are fully secure. If you have any questions or encounter any issues with your deposit, our support team is available 24/7 to assist you.</div>
+                <button class="support-btn" onclick="openSupportChat()">Contact Support</button>
             </div>
 
             <div class="wallet-menu-box" onclick="alert('Deposit history is empty.')">
@@ -696,7 +697,7 @@
 
     </div>
 
-    <!-- MODAL: DEPOSIT (بدون محدودیت حداقل واریز) -->
+    <!-- MODAL: DEPOSIT -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Instant Deposit via TonConnect</div>
@@ -712,7 +713,7 @@
         </div>
     </div>
 
-    <!-- MODAL: WITHDRAW (بدون محدودیت حداقل برداشت) -->
+    <!-- MODAL: WITHDRAW -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Withdrawal</div>
@@ -773,7 +774,6 @@
             };
         });
 
-        // تابع اتصال مستقیم به پشتیبانی بدون نمایش آیدی روی دکمه
         function openSupportChat() {
             let supportUrl = "https://t.me/" + supportTelegramId;
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
