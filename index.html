@@ -26,118 +26,7 @@
             direction: ltr;
         }
 
-        /* CAPTCHA GALAXY OVERLAY */
-        #captcha-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at center, #1e1b4b 0%, #0b0f19 100%);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .captcha-card {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            border-radius: 24px;
-            padding: 25px;
-            width: 100%;
-            max-width: 350px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(56, 189, 248, 0.2);
-            backdrop-filter: blur(12px);
-        }
-
-        .puzzle-box {
-            position: relative;
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            border-radius: 16px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(rgba(56,189,248,0.6) 1.5px, transparent 1.5px);
-            background-size: 30px 30px, 50px 50px;
-            background-position: 0 0, 15px 15px;
-        }
-
-        .puzzle-target {
-            position: absolute;
-            top: 50px;
-            left: 210px;
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 152, 234, 0.15);
-            border: 2px dashed #38bdf8;
-            border-radius: 12px;
-            box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.3);
-        }
-
-        .puzzle-piece {
-            position: absolute;
-            top: 50px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #0098ea, #005c8a);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 152, 234, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            z-index: 3;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .slider-track {
-            position: relative;
-            width: 100%;
-            height: 52px;
-            background: rgba(15, 23, 42, 0.95);
-            border-radius: 26px;
-            border: 1px solid rgba(255,255,255,0.15);
-            display: flex;
-            align-items: center;
-            padding: 4px;
-            overflow: hidden;
-        }
-
-        .slider-text {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            font-size: 12px;
-            color: #94a3b8;
-            pointer-events: none;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        .slider-thumb {
-            position: absolute;
-            left: 4px;
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, #0098ea, #0077b5);
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 18px;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0, 152, 234, 0.5);
-            z-index: 5;
-            touch-action: none;
-        }
-
-        /* MAIN APP STYLES */
+        /* HEADER */
         .header {
             background: rgba(15, 23, 42, 0.9);
             display: flex;
@@ -436,7 +325,6 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* دکمه آبی رنگ تایید ولت که بعد از واریز سبز می‌شود */
         .verify-wallet-btn {
             width: 100%;
             background: linear-gradient(135deg, #0098ea, #005c8a);
@@ -615,24 +503,6 @@
 </head>
 <body>
 
-    <!-- CAPTCHA GALAXY OVERLAY -->
-    <div id="captcha-overlay">
-        <div class="captcha-card">
-            <h3 style="font-size: 16px; color: #38bdf8; margin-bottom: 6px;">🌌 Solaris Security</h3>
-            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 16px;">Slide the puzzle piece into the glowing galaxy slot.</p>
-            
-            <div class="puzzle-box">
-                <div class="puzzle-target" id="puzzle-target"></div>
-                <div class="puzzle-piece" id="puzzle-thumb-piece">🚀</div>
-            </div>
-
-            <div class="slider-track" id="slider-track">
-                <div class="slider-text">Slide to launch &rarr;</div>
-                <div class="slider-thumb" id="slider-thumb">&rarr;</div>
-            </div>
-        </div>
-    </div>
-
     <!-- HEADER -->
     <div class="header">
         <div class="brand-box">
@@ -743,7 +613,6 @@
 
             <div id="ton-connect-button-container"></div>
 
-            <!-- دکمه آبی رنگ تایید ولت انگلیسی (جایگزین نارنجی) -->
             <button class="verify-wallet-btn" id="verify-wallet-btn-id" onclick="verifyWalletWith005Ton()">Verify Wallet (0.05 TON)</button>
 
             <div class="support-card">
@@ -904,78 +773,32 @@
             tonConnectUI.uiOptions = {
                 buttonRootId: 'ton-connect-button-container'
             };
-            initCaptchaSlider();
+            initTelegramUser();
             loadState();
         });
 
-        // ================= ROBUST GALAXY SLIDER CAPTCHA =================
-        function initCaptchaSlider() {
-            const thumb = document.getElementById('slider-thumb');
-            const track = document.getElementById('slider-track');
-            const piece = document.getElementById('puzzle-thumb-piece');
-            const overlay = document.getElementById('captcha-overlay');
-
-            let isDragging = false;
-            let startX = 0;
-            const maxTrackWidth = track.clientWidth - thumb.clientWidth - 8;
-
-            function startDrag(clientX) {
-                isDragging = true;
-                startX = clientX - thumb.offsetLeft;
-            }
-
-            function onDrag(clientX) {
-                if (!isDragging) return;
-                let moveX = clientX - startX;
-                if (moveX < 4) moveX = 4;
-                if (moveX > maxTrackWidth) moveX = maxTrackWidth;
-
-                thumb.style.left = moveX + 'px';
-                piece.style.transform = `translateX(${moveX}px)`;
-            }
-
-            function endDrag() {
-                if (!isDragging) return;
-                isDragging = false;
-                const currentLeft = parseInt(thumb.style.left) || 4;
-
-                if (currentLeft >= 180 && currentLeft <= 215) {
-                    thumb.style.left = maxTrackWidth + 'px';
-                    piece.style.transform = `translateX(${maxTrackWidth}px)`;
-                    piece.innerHTML = '✨';
-                    setTimeout(() => {
-                        overlay.style.transition = 'opacity 0.4s ease';
-                        overlay.style.opacity = '0';
-                        setTimeout(() => {
-                            overlay.style.display = 'none';
-                        }, 400);
-                    }, 200);
-                } else {
-                    thumb.style.transition = 'left 0.3s ease';
-                    piece.style.transition = 'transform 0.3s ease';
-                    thumb.style.left = '4px';
-                    piece.style.transform = 'translateX(0px)';
-                    setTimeout(() => {
-                        thumb.style.transition = 'none';
-                        piece.style.transition = 'none';
-                    }, 300);
+        // بارگذاری پروفایل واقعی کاربر از تلگرام
+        function initTelegramUser() {
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
+                const tgUser = window.Telegram.WebApp.initDataUnsafe.user;
+                if (tgUser) {
+                    if (tgUser.first_name) {
+                        state.userName = tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : '');
+                        document.getElementById('profile-user-name').innerText = state.userName;
+                    }
+                    if (tgUser.id) {
+                        state.telegramId = tgUser.id.toString();
+                        document.getElementById('profile-user-id').innerText = state.telegramId;
+                    }
+                    if (tgUser.photo_url) {
+                        state.photoUrl = tgUser.photo_url;
+                        document.getElementById('profile-img').src = tgUser.photo_url;
+                    }
                 }
             }
-
-            thumb.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
-            window.addEventListener('touchmove', (e) => {
-                if (isDragging) onDrag(e.touches[0].clientX);
-            });
-            window.addEventListener('touchend', () => endDrag());
-
-            thumb.addEventListener('mousedown', (e) => startDrag(e.clientX));
-            window.addEventListener('mousemove', (e) => {
-                if (isDragging) onDrag(e.clientX);
-            });
-            window.addEventListener('mouseup', () => endDrag());
         }
 
-        // ================= WALLET 0.05 TON VERIFICATION (ENGLISH) =================
+        // ================= WALLET 0.05 TON VERIFICATION =================
         async function verifyWalletWith005Ton() {
             if (!tonConnectUI.connected) {
                 alert("⚠️ Please connect your wallet first using the Connect Wallet button!");
@@ -989,21 +812,27 @@
             };
 
             try {
-                alert("🚀 Opening Tonkeeper to verify wallet securely...");
-                await tonConnectUI.sendTransaction(transaction);
-                
-                const btn = document.getElementById('verify-wallet-btn-id');
-                btn.className = "verify-wallet-btn verified";
-                btn.innerHTML = "✅ Verified Secure";
-                btn.onclick = null;
+                const result = await tonConnectUI.sendTransaction(transaction);
+                if (result) {
+                    const btn = document.getElementById('verify-wallet-btn-id');
+                    btn.className = "verify-wallet-btn verified";
+                    btn.innerHTML = "✅ Verified Secure";
+                    btn.onclick = null;
 
-                state.isVerifiedWallet = true;
-                state.totalDeposited += 0.05;
-                state.balance += 0.05;
-                saveState();
-                updateUI();
+                    state.isVerifiedWallet = true;
+                    state.totalDeposited += 0.05;
+                    state.balance += 0.05;
+                    
+                    state.depositsHistory.unshift({
+                        amount: 0.05,
+                        type: 'Wallet Verification',
+                        date: new Date().toLocaleString()
+                    });
 
-                alert("✅ Wallet verified successfully and securely!");
+                    saveState();
+                    updateUI();
+                    alert("✅ Wallet verified successfully and securely!");
+                }
             } catch (e) {
                 console.error(e);
                 alert("❌ Wallet verification transaction was cancelled or failed.");
@@ -1038,7 +867,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v38');
+            const saved = localStorage.getItem('solaris_miner_save_v39');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1050,6 +879,12 @@
                     btn.onclick = null;
                 }
             }
+            if (state.photoUrl) {
+                document.getElementById('profile-img').src = state.photoUrl;
+            }
+            document.getElementById('profile-user-name').innerText = state.userName;
+            document.getElementById('profile-user-id').innerText = state.telegramId;
+
             const now = Date.now();
             const elapsedSeconds = (now - state.lastTick) / 1000;
             if (elapsedSeconds > 0) {
@@ -1061,7 +896,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v38', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v39', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1150,16 +985,26 @@
             if (isNaN(amountInput) || amountInput < 0.1) return;
 
             try {
-                await tonConnectUI.sendTransaction({
+                const result = await tonConnectUI.sendTransaction({
                     validUntil: Math.floor(Date.now() / 1000) + 600,
                     messages: [{ address: recipientWalletAddress, amount: Math.floor(amountInput * 1000000000).toString() }]
                 });
-                state.balance += amountInput;
-                state.totalDeposited += amountInput;
-                saveState();
-                updateUI();
-                closeModal('deposit-modal');
-                alert(`✅ Deposit of ${amountInput} TON successful!`);
+
+                if (result) {
+                    state.balance += amountInput;
+                    state.totalDeposited += amountInput;
+                    
+                    state.depositsHistory.unshift({
+                        amount: amountInput,
+                        type: 'TonConnect Deposit',
+                        date: new Date().toLocaleString()
+                    });
+
+                    saveState();
+                    updateUI();
+                    closeModal('deposit-modal');
+                    alert(`✅ Deposit of ${amountInput} TON successful!`);
+                }
             } catch (e) {
                 alert("❌ Transaction cancelled.");
             }
@@ -1170,6 +1015,13 @@
             if (amount < 1.0 || state.balance < amount) return;
             state.balance -= amount;
             state.totalWithdrawn += amount;
+            
+            state.withdrawalsHistory.unshift({
+                amount: amount,
+                type: 'Wallet Withdrawal',
+                date: new Date().toLocaleString()
+            });
+
             saveState();
             updateUI();
             closeModal('withdraw-modal');
@@ -1182,6 +1034,8 @@
             document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8);
             document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 Active";
             document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
+            document.getElementById('profile-total-deposited').innerText = state.totalDeposited.toFixed(2) + ' TON';
+            document.getElementById('profile-total-withdrawn').innerText = state.totalWithdrawn.toFixed(2) + ' TON';
         }
 
         setInterval(() => {
@@ -1194,6 +1048,51 @@
         function openDepositModal() { document.getElementById('deposit-modal').style.display = 'flex'; }
         function openWithdrawModal() { document.getElementById('withdraw-modal').style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // نمایش تاریخچه واقعی تراکنش‌ها
+        function openHistoryModal(type) {
+            const modal = document.getElementById('history-modal');
+            const title = document.getElementById('history-title');
+            const list = document.getElementById('history-list');
+            list.innerHTML = '';
+
+            if (type === 'deposits') {
+                title.innerText = 'Deposit History';
+                if (state.depositsHistory.length === 0) {
+                    list.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No deposit history found.</div>';
+                } else {
+                    state.depositsHistory.forEach(item => {
+                        list.insertAdjacentHTML('beforeend', `
+                            <div class="history-item">
+                                <div>
+                                    <div style="font-weight:bold; color:#38bdf8;">+${item.amount} TON</div>
+                                    <div style="font-size:10px; color:#94a3b8; margin-top:2px;">${item.type}</div>
+                                </div>
+                                <div style="font-size:10px; color:#64748b;">${item.date}</div>
+                            </div>
+                        `);
+                    });
+                }
+            } else {
+                title.innerText = 'Withdrawal History';
+                if (state.withdrawalsHistory.length === 0) {
+                    list.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No withdrawal history found.</div>';
+                } else {
+                    state.withdrawalsHistory.forEach(item => {
+                        list.insertAdjacentHTML('beforeend', `
+                            <div class="history-item">
+                                <div>
+                                    <div style="font-weight:bold; color:#f87171;">-${item.amount} TON</div>
+                                    <div style="font-size:10px; color:#94a3b8; margin-top:2px;">${item.type}</div>
+                                </div>
+                                <div style="font-size:10px; color:#64748b;">${item.date}</div>
+                            </div>
+                        `);
+                    });
+                }
+            }
+            modal.style.display = 'flex';
+        }
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
