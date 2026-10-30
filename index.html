@@ -388,6 +388,50 @@
             outline: none;
         }
 
+        /* استایل بخش پشتیبانی جدید در صفحه ولت */
+        .support-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .support-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 6px;
+        }
+
+        .support-desc {
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .support-btn {
+            background: linear-gradient(135deg, #38bdf8, #0098ea);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+            transition: 0.2s;
+        }
+
+        .support-btn:active {
+            transform: scale(0.96);
+        }
+
         .profile-header-card {
             display: flex;
             align-items: center;
@@ -576,7 +620,15 @@
                 </div>
             </div>
 
+            <!-- دکمه رسمی اتصال کیف پول TonConnect -->
             <div id="ton-connect-button-container"></div>
+
+            <!-- بخش پشتیبانی جدید (جایگزین فضای خالی تصویر اول) -->
+            <div class="support-card">
+                <div class="support-title">🛡️ Secure & Instant Support</div>
+                <div class="support-desc">با خیال راحت واریز و سرمایه‌گذاری کنید! تراکنش‌ها کاملاً امن انجام می‌شن. اگر هر سوالی دارید یا در واریز به مشکل خوردید، پشتیبانی آنلاین ما ۲۴ ساعته در خدمت شماست.</div>
+                <button class="support-btn" onclick="openSupportChat()">ارتباط با پشتیبانی</button>
+            </div>
 
             <div class="wallet-menu-box" onclick="alert('Deposit history is empty.')">
                 <div style="display: flex; align-items: center; gap: 10px;">
@@ -644,7 +696,7 @@
 
     </div>
 
-    <!-- MODAL: DEPOSIT -->
+    <!-- MODAL: DEPOSIT (بدون محدودیت حداقل واریز) -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Instant Deposit via TonConnect</div>
@@ -652,7 +704,7 @@
             
             <div style="margin-bottom: 12px;">
                 <label style="font-size: 11px; color: #94a3b8;">Amount (TON):</label>
-                <input type="number" id="deposit-amount-input" class="wallet-input" placeholder="1.00" min="0.1" step="0.1" value="1.00">
+                <input type="number" id="deposit-amount-input" class="wallet-input" placeholder="1.00" step="0.01" value="1.00">
             </div>
 
             <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0098ea, #005c8a); font-size: 13px; margin-bottom: 8px;" onclick="sendTonConnectTransaction()">Pay via TonConnect</button>
@@ -660,14 +712,14 @@
         </div>
     </div>
 
-    <!-- MODAL: WITHDRAW -->
+    <!-- MODAL: WITHDRAW (بدون محدودیت حداقل برداشت) -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Withdrawal</div>
             
             <div style="margin-bottom: 10px;">
-                <label style="font-size: 11px; color: #94a3b8;">Withdrawal Amount (Min 1.00):</label>
-                <input type="number" id="withdraw-amount" class="wallet-input" placeholder="1.00" min="1" step="0.1">
+                <label style="font-size: 11px; color: #94a3b8;">Withdrawal Amount:</label>
+                <input type="number" id="withdraw-amount" class="wallet-input" placeholder="1.00" step="0.01">
             </div>
 
             <div style="margin-bottom: 15px;">
@@ -706,6 +758,7 @@
 
     <script>
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
+        const supportTelegramId = "Dollar_Matrix";
         
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json',
@@ -719,6 +772,16 @@
                 buttonRootId: 'ton-connect-button-container'
             };
         });
+
+        // تابع اتصال مستقیم به پشتیبانی بدون نمایش آیدی روی دکمه
+        function openSupportChat() {
+            let supportUrl = "https://t.me/" + supportTelegramId;
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
+                window.Telegram.WebApp.openTelegramLink(supportUrl);
+            } else {
+                window.open(supportUrl, "_blank");
+            }
+        }
 
         const initialProperties = [
             { id: 1, label: "One", name: "Light Guided Missile", desc: "Base tactical missile launcher", daily: 0.10, monthly: 3.00, price: 0.10, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
@@ -906,8 +969,8 @@
             const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
             const address = document.getElementById('withdraw-address').value.trim();
 
-            if (amount < 1) {
-                alert("❌ Minimum withdrawal amount is 1.00 TON");
+            if (amount <= 0) {
+                alert("❌ Please enter a valid withdrawal amount.");
                 return;
             }
             if (state.balance < amount) {
