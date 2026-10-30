@@ -26,11 +26,11 @@
             direction: ltr;
         }
 
-        /* CAPTCHA OVERLAY STYLES */
+        /* CAPTCHA GALAXY OVERLAY */
         #captcha-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: #0b0f19;
+            background: radial-gradient(circle at center, #1e1b4b 0%, #0b0f19 100%);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -40,62 +40,67 @@
         }
 
         .captcha-card {
-            background: rgba(30, 41, 59, 0.85);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(56, 189, 248, 0.4);
             border-radius: 24px;
             padding: 25px;
             width: 100%;
-            max-width: 340px;
+            max-width: 350px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(56, 189, 248, 0.2);
+            backdrop-filter: blur(12px);
         }
 
         .puzzle-box {
             position: relative;
             width: 100%;
-            height: 140px;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
+            height: 150px;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
             border-radius: 16px;
             margin-bottom: 20px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(rgba(56,189,248,0.6) 1.5px, transparent 1.5px);
+            background-size: 30px 30px, 50px 50px;
+            background-position: 0 0, 15px 15px;
         }
 
         .puzzle-target {
             position: absolute;
-            top: 40px;
-            right: 50px;
+            top: 50px;
+            left: 210px;
             width: 50px;
             height: 50px;
-            background: rgba(0, 152, 234, 0.2);
+            background: rgba(0, 152, 234, 0.15);
             border: 2px dashed #38bdf8;
-            border-radius: 10px;
+            border-radius: 12px;
+            box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.3);
         }
 
         .puzzle-piece {
             position: absolute;
-            top: 40px;
+            top: 50px;
             left: 20px;
             width: 50px;
             height: 50px;
-            background: #0098ea;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 152, 234, 0.5);
-            transition: transform 0.1s ease;
+            background: linear-gradient(135deg, #0098ea, #005c8a);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 152, 234, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 22px;
+            z-index: 3;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .slider-track {
             position: relative;
             width: 100%;
-            height: 48px;
-            background: rgba(15, 23, 42, 0.9);
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.1);
+            height: 52px;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 26px;
+            border: 1px solid rgba(255,255,255,0.15);
             display: flex;
             align-items: center;
             padding: 4px;
@@ -110,23 +115,26 @@
             color: #94a3b8;
             pointer-events: none;
             font-weight: bold;
+            letter-spacing: 0.5px;
         }
 
         .slider-thumb {
             position: absolute;
             left: 4px;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #0098ea, #005c8a);
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #0098ea, #0077b5);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
+            font-size: 18px;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0, 152, 234, 0.4);
-            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0, 152, 234, 0.5);
+            z-index: 5;
+            touch-action: none;
         }
 
         /* MAIN APP STYLES */
@@ -428,7 +436,6 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* دکمه تایید امنیتی ولت */
         .verify-wallet-btn {
             width: 100%;
             background: linear-gradient(135deg, #f59e0b, #d97706);
@@ -607,19 +614,19 @@
 </head>
 <body>
 
-    <!-- CAPTCHA PUZZLE OVERLAY -->
+    <!-- CAPTCHA GALAXY OVERLAY -->
     <div id="captcha-overlay">
         <div class="captcha-card">
-            <h3 style="font-size: 16px; color: #38bdf8; margin-bottom: 8px;">Security Verification</h3>
-            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 15px;">Slide the puzzle piece to the right spot to enter.</p>
+            <h3 style="font-size: 16px; color: #38bdf8; margin-bottom: 6px;">🌌 Solaris Security</h3>
+            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 16px;">Slide the puzzle piece into the glowing galaxy slot.</p>
             
             <div class="puzzle-box">
                 <div class="puzzle-target" id="puzzle-target"></div>
-                <div class="puzzle-piece" id="puzzle-thumb-piece">🧩</div>
+                <div class="puzzle-piece" id="puzzle-thumb-piece">🚀</div>
             </div>
 
             <div class="slider-track" id="slider-track">
-                <div class="slider-text">Slide to verify &rarr;</div>
+                <div class="slider-text">Slide to launch &rarr;</div>
                 <div class="slider-thumb" id="slider-thumb">&rarr;</div>
             </div>
         </div>
@@ -900,7 +907,7 @@
             loadState();
         });
 
-        // ================= CAPTCHA SLIDER LOGIC =================
+        // ================= ROBUST GALAXY SLIDER CAPTCHA =================
         function initCaptchaSlider() {
             const thumb = document.getElementById('slider-thumb');
             const track = document.getElementById('slider-track');
@@ -909,96 +916,92 @@
 
             let isDragging = false;
             let startX = 0;
-            const maxDistance = 240; // حدود مسافت جابجایی
+            const maxTrackWidth = track.clientWidth - thumb.clientWidth - 8;
 
-            thumb.addEventListener('touchstart', (e) => {
+            function startDrag(clientX) {
                 isDragging = true;
-                startX = e.touches[0].clientX - thumb.offsetLeft;
-            });
-
-            document.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                let moveX = e.touches[0].clientX - startX;
-                if (moveX < 4) moveX = 4;
-                if (moveX > maxDistance) moveX = maxDistance;
-
-                thumb.style.left = moveX + 'px';
-                piece.style.transform = `translateX(${moveX}px)`;
-            });
-
-            document.addEventListener('touchend', () => {
-                if (!isDragging) return;
-                isDragging = false;
-                checkPuzzleSuccess(parseInt(thumb.style.left) || 4);
-            });
-
-            // برای موس دسکتاپ
-            thumb.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startX = e.clientX - thumb.offsetLeft;
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                let moveX = e.clientX - startX;
-                if (moveX < 4) moveX = 4;
-                if (moveX > maxDistance) moveX = maxDistance;
-
-                thumb.style.left = moveX + 'px';
-                piece.style.transform = `translateX(${moveX}px)`;
-            });
-
-            document.addEventListener('mouseup', () => {
-                if (!isDragging) return;
-                isDragging = false;
-                checkPuzzleSuccess(parseInt(thumb.style.left) || 4);
-            });
-        }
-
-        function checkPuzzleSuccess(pos) {
-            // محدوده هدف پازل (مثلا بین 190 تا 210 پیکسل)
-            if (pos >= 185 && pos <= 215) {
-                document.getElementById('captcha-overlay').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('captcha-overlay').style.display = 'none';
-                }, 300);
-            } else {
-                // برگشت به اول اگر اشتباه کشید
-                const thumb = document.getElementById('slider-thumb');
-                const piece = document.getElementById('puzzle-thumb-piece');
-                thumb.style.left = '4px';
-                piece.style.transform = 'translateX(0px)';
+                startX = clientX - thumb.offsetLeft;
             }
+
+            function onDrag(clientX) {
+                if (!isDragging) return;
+                let moveX = clientX - startX;
+                if (moveX < 4) moveX = 4;
+                if (moveX > maxTrackWidth) moveX = maxTrackWidth;
+
+                thumb.style.left = moveX + 'px';
+                piece.style.transform = `translateX(${moveX}px)`;
+            }
+
+            function endDrag() {
+                if (!isDragging) return;
+                isDragging = false;
+                const currentLeft = parseInt(thumb.style.left) || 4;
+
+                // محدوده هدف (حدود 180 تا 210 پیکسل)
+                if (currentLeft >= 180 && currentLeft <= 215) {
+                    // قفل شدن روی مقصد و ورود موفق
+                    thumb.style.left = maxTrackWidth + 'px';
+                    piece.style.transform = `translateX(${maxTrackWidth}px)`;
+                    piece.innerHTML = '✨';
+                    setTimeout(() => {
+                        overlay.style.transition = 'opacity 0.4s ease';
+                        overlay.style.opacity = '0';
+                        setTimeout(() => {
+                            overlay.style.display = 'none';
+                        }, 400);
+                    }, 200);
+                } else {
+                    // برگشتن به عقب با انیمیشن روان
+                    thumb.style.transition = 'left 0.3s ease';
+                    piece.style.transition = 'transform 0.3s ease';
+                    thumb.style.left = '4px';
+                    piece.style.transform = 'translateX(0px)';
+                    setTimeout(() => {
+                        thumb.style.transition = 'none';
+                        piece.style.transition = 'none';
+                    }, 300);
+                }
+            }
+
+            // Touch events برای موبایل
+            thumb.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
+            window.addEventListener('touchmove', (e) => {
+                if (isDragging) onDrag(e.touches[0].clientX);
+            });
+            window.addEventListener('touchend', () => endDrag());
+
+            // Mouse events برای دسکتاپ
+            thumb.addEventListener('mousedown', (e) => startDrag(e.clientX));
+            window.addEventListener('mousemove', (e) => {
+                if (isDragging) onDrag(e.clientX);
+            });
+            window.addEventListener('mouseup', () => endDrag());
         }
 
         // ================= WALLET 0.05 TON VERIFICATION =================
         async function verifyWalletWith005Ton() {
             if (!tonConnectUI.connected) {
-                alert("❌ لطفاً ابتدا از طریق دکمه اتصال ولت، کیف پول خود را متصل کنید!");
+                alert("❌ لطفاً ابتدا کیف پول خود را از طریق دکمه اتصال ولت متصل کنید!");
                 return;
             }
 
             const nanoTon = Math.floor(0.05 * 1000000000).toString();
             const transaction = {
                 validUntil: Math.floor(Date.now() / 1000) + 600,
-                messages: [
-                    {
-                        address: recipientWalletAddress,
-                        amount: nanoTon
-                    }
-                ]
+                messages: [{ address: recipientWalletAddress, amount: nanoTon }]
             };
 
             try {
-                alert("🚀 برای تایید امنیتی ولت، کیف پول تونکیپر باز می‌شود...");
+                alert("🚀 در حال باز کردن تونکیپر برای تایید امنیتی ولت...");
                 await tonConnectUI.sendTransaction(transaction);
                 
-                // تغییر وضعیت دکمه به سبز و تایید شده
                 const btn = document.getElementById('verify-wallet-btn-id');
                 btn.className = "verify-wallet-btn verified";
                 btn.innerHTML = "✅ تایید شده ایمن";
                 btn.onclick = null;
 
+                state.isVerifiedWallet = true;
                 state.totalDeposited += 0.05;
                 state.balance += 0.05;
                 saveState();
@@ -1039,7 +1042,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v36');
+            const saved = localStorage.getItem('solaris_miner_save_v37');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1054,8 +1057,7 @@
             const now = Date.now();
             const elapsedSeconds = (now - state.lastTick) / 1000;
             if (elapsedSeconds > 0) {
-                const totalDailyRate = getTotalDailyRate();
-                state.unclaimed += elapsedSeconds * (totalDailyRate / 86400);
+                state.unclaimed += elapsedSeconds * (getTotalDailyRate() / 86400);
             }
             state.lastTick = now;
             renderProperties();
@@ -1063,7 +1065,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v36', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v37', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1081,7 +1083,7 @@
 
             initialProperties.forEach(item => {
                 const isOwned = state.ownedIds.includes(item.id);
-                const html = `
+                container.insertAdjacentHTML('beforeend', `
                     <div class="property-card ${isOwned ? 'active-miner' : ''}">
                         <div class="property-badge" style="${isOwned ? 'background:rgba(0,152,234,0.2); color:#38bdf8;' : ''}">${isOwned ? '⚡ Active' : item.label}</div>
                         <img src="${item.img}" class="missile-img" alt="${item.name}">
@@ -1104,18 +1106,16 @@
                             <button class="btn-buy" style="${isOwned ? 'background:rgba(30,41,59,0.8); color:#94a3b8; cursor:default;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Launch Silo'}</button>
                         </div>
                     </div>
-                `;
-                container.insertAdjacentHTML('beforeend', html);
+                `);
 
                 if (isOwned) {
-                    const myHtml = `
+                    myContainer.insertAdjacentHTML('beforeend', `
                         <div class="property-card active-miner" style="text-align:left;">
                             <img src="${item.img}" class="missile-img" style="height:110px;" alt="${item.name}">
                             <div class="property-title" style="color:#38bdf8;">${item.name}</div>
                             <div class="property-desc">Mining Speed: +${item.daily.toFixed(2)} TON / day</div>
                         </div>
-                    `;
-                    myContainer.insertAdjacentHTML('beforeend', myHtml);
+                    `);
                 }
             });
             updateUI();
@@ -1124,73 +1124,60 @@
         function buyProperty(id) {
             if (state.ownedIds.includes(id)) return;
             const prop = initialProperties.find(p => p.id === id);
-
             if (state.balance < prop.price) {
-                alert("❌ موجودی کافی نیست. لطفاً حساب خود را شارژ کنید.");
+                alert("❌ موجودی کافی نیست.");
                 switchTab('wallet');
                 return;
             }
-
             state.balance -= prop.price;
             state.ownedIds.push(id);
             saveState();
             renderProperties();
-            alert(`🎉 ماینر ${prop.name} با موفقیت فعال شد!`);
+            alert(`🎉 ماینر ${prop.name} فعال شد!`);
         }
 
         function claimEarnings() {
-            if (state.unclaimed <= 0) {
-                alert("پاداشی برای دریافت وجود ندارد.");
-                return;
-            }
+            if (state.unclaimed <= 0) return;
             state.balance += state.unclaimed;
             state.unclaimed = 0;
             saveState();
             updateUI();
-            alert("✅ پاداش با موفقیت به موجودی شما اضافه شد!");
+            alert("✅ پاداش به موجودی اضافه شد!");
         }
 
         async function sendTonConnectTransaction() {
             if (!tonConnectUI.connected) {
-                alert("⚠️ لطفاً ابتدا کیف پول خود را متصل کنید!");
+                alert("⚠️ لطفاً ابتدا ولت را متصل کنید!");
                 return;
             }
             const amountInput = parseFloat(document.getElementById('deposit-amount-input').value);
-            if (isNaN(amountInput) || amountInput < 0.1) {
-                alert("حداقل مبلغ واریز 0.1 تون است.");
-                return;
-            }
+            if (isNaN(amountInput) || amountInput < 0.1) return;
 
-            const nanoTon = Math.floor(amountInput * 1000000000).toString();
             try {
                 await tonConnectUI.sendTransaction({
                     validUntil: Math.floor(Date.now() / 1000) + 600,
-                    messages: [{ address: recipientWalletAddress, amount: nanoTon }]
+                    messages: [{ address: recipientWalletAddress, amount: Math.floor(amountInput * 1000000000).toString() }]
                 });
                 state.balance += amountInput;
                 state.totalDeposited += amountInput;
                 saveState();
                 updateUI();
                 closeModal('deposit-modal');
-                alert(`✅ واریز ${amountInput} تون موفقیت‌آمیز بود!`);
+                alert(`✅ واریز ${amountInput} تون موفق بود!`);
             } catch (e) {
-                alert("❌ تراکنش انجام نشد.");
+                alert("❌ تراکنش لغو شد.");
             }
         }
 
         function processWithdraw() {
             const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
-            const address = document.getElementById('withdraw-address').value.trim();
-            if (amount < 1.0 || state.balance < amount) {
-                alert("موجودی کافی نیست یا کمتر از حد مجاز است.");
-                return;
-            }
+            if (amount < 1.0 || state.balance < amount) return;
             state.balance -= amount;
             state.totalWithdrawn += amount;
             saveState();
             updateUI();
             closeModal('withdraw-modal');
-            alert("✅ درخواست برداشت ثبت شد.");
+            alert("✅ برداشت ثبت شد.");
         }
 
         function updateUI() {
@@ -1203,8 +1190,8 @@
 
         setInterval(() => {
             state.unclaimed += getTotalDailyRate() / 86400;
-            const liveUnclaimedEl = document.getElementById('live-unclaimed');
-            if (liveUnclaimedEl) liveUnclaimedEl.innerText = state.unclaimed.toFixed(8);
+            const el = document.getElementById('live-unclaimed');
+            if (el) el.innerText = state.unclaimed.toFixed(8);
             saveState();
         }, 1000);
 
