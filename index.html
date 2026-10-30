@@ -26,6 +26,42 @@
             direction: ltr;
         }
 
+        /* LOADING SPLASH SCREEN */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #0b0f19;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(56, 189, 248, 0.2);
+            border-top: 4px solid #38bdf8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .splash-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
         /* HEADER */
         .header {
             background: rgba(15, 23, 42, 0.9);
@@ -503,6 +539,12 @@
 </head>
 <body>
 
+    <!-- LOADING SPLASH SCREEN -->
+    <div id="splash-screen">
+        <div class="spinner"></div>
+        <div class="splash-text">LOADING SOLARIS MINER BOT...</div>
+    </div>
+
     <!-- HEADER -->
     <div class="header">
         <div class="brand-box">
@@ -775,9 +817,17 @@
             };
             initTelegramUser();
             loadState();
+
+            // مخفی کردن صفحه لودینگ بعد از ۱.۵ ثانیه
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                if (splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.style.display = 'none', 500);
+                }
+            }, 1500);
         });
 
-        // بارگذاری پروفایل واقعی کاربر از تلگرام
         function initTelegramUser() {
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
                 const tgUser = window.Telegram.WebApp.initDataUnsafe.user;
@@ -798,7 +848,6 @@
             }
         }
 
-        // ================= WALLET 0.05 TON VERIFICATION =================
         async function verifyWalletWith005Ton() {
             if (!tonConnectUI.connected) {
                 alert("⚠️ Please connect your wallet first using the Connect Wallet button!");
@@ -839,7 +888,6 @@
             }
         }
 
-        // ================= APP LOGIC =================
         const initialProperties = [
             { id: 1, label: "One", name: "Light Guided Missile", desc: "Base tactical missile launcher", daily: 0.10, monthly: 3.00, price: 0.10, img: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80" },
             { id: 2, label: "Two", name: "Tactical Mid-Range", desc: "Short range strike unit", daily: 0.66, monthly: 19.80, price: 3.00, img: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" },
@@ -867,7 +915,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v39');
+            const saved = localStorage.getItem('solaris_miner_save_v40');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -896,7 +944,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v39', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v40', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1049,7 +1097,6 @@
         function openWithdrawModal() { document.getElementById('withdraw-modal').style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // نمایش تاریخچه واقعی تراکنش‌ها
         function openHistoryModal(type) {
             const modal = document.getElementById('history-modal');
             const title = document.getElementById('history-title');
