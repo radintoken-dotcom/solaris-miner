@@ -710,11 +710,12 @@
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Instant Deposit via TonConnect</div>
-            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 15px; text-align: center;">Connect your Tonkeeper wallet and deposit TON instantly to your account:</p>
+            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 12px; text-align: center;">Connect your Tonkeeper wallet and deposit TON instantly to your account:</p>
+            <div style="font-size: 10px; color: #38bdf8; text-align: center; margin-bottom: 15px; font-weight: bold;">Min: 0.1 TON | Max: 1000 TON</div>
             
             <div style="margin-bottom: 12px;">
                 <label style="font-size: 11px; color: #94a3b8;">Amount (TON):</label>
-                <input type="number" id="deposit-amount-input" class="wallet-input" placeholder="Enter amount" step="0.01">
+                <input type="number" id="deposit-amount-input" class="wallet-input" placeholder="Enter amount (0.1 - 1000)" step="0.01">
             </div>
 
             <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0098ea, #005c8a); font-size: 13px; margin-bottom: 8px;" onclick="sendTonConnectTransaction()">Pay via TonConnect</button>
@@ -726,10 +727,11 @@
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Withdrawal</div>
+            <div style="font-size: 10px; color: #38bdf8; text-align: center; margin-bottom: 15px; font-weight: bold;">Min: 1.0 TON | Max: 1000 TON</div>
             
             <div style="margin-bottom: 10px;">
                 <label style="font-size: 11px; color: #94a3b8;">Withdrawal Amount:</label>
-                <input type="number" id="withdraw-amount" class="wallet-input" placeholder="Enter amount" step="0.01">
+                <input type="number" id="withdraw-amount" class="wallet-input" placeholder="Enter amount (1 - 1000)" step="0.01">
             </div>
 
             <div style="margin-bottom: 15px;">
@@ -746,9 +748,7 @@
     <div id="history-modal" class="modal-overlay">
         <div class="modal-card">
             <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 12px; text-align: center;" id="history-title">History</div>
-            <div id="history-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;">
-                <!-- سوابق اینجا درج می‌شوند -->
-            </div>
+            <div id="history-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;"></div>
             <button class="btn-buy" style="width: 100%; background: rgba(30,41,59,0.9); color: #ffffff;" onclick="closeModal('history-modal')">Close</button>
         </div>
     </div>
@@ -837,7 +837,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v32');
+            const saved = localStorage.getItem('solaris_miner_save_v33');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -853,7 +853,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v32', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v33', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -946,8 +946,14 @@
             }
 
             const amountInput = parseFloat(document.getElementById('deposit-amount-input').value);
-            if (!amountInput || amountInput <= 0) {
-                alert("❌ Please enter a valid deposit amount.");
+            
+            // چک کردن حداقل و حداکثر واریز
+            if (isNaN(amountInput) || amountInput < 0.1) {
+                alert("❌ Minimum deposit amount is 0.1 TON.");
+                return;
+            }
+            if (amountInput > 1000) {
+                alert("❌ Maximum deposit amount is 1000 TON.");
                 return;
             }
 
@@ -970,7 +976,6 @@
                 state.balance += amountInput;
                 state.totalDeposited += amountInput;
                 
-                // ثبت در تاریخچه واریزها
                 const dateStr = new Date().toLocaleString();
                 if(!state.depositsHistory) state.depositsHistory = [];
                 state.depositsHistory.unshift({ amount: amountInput, date: dateStr });
@@ -1002,8 +1007,13 @@
             const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
             const address = document.getElementById('withdraw-address').value.trim();
 
-            if (amount <= 0) {
-                alert("❌ Please enter a valid withdrawal amount.");
+            // چک کردن حداقل و حداکثر برداشت
+            if (isNaN(amount) || amount < 1.0) {
+                alert("❌ Minimum withdrawal amount is 1.0 TON.");
+                return;
+            }
+            if (amount > 1000) {
+                alert("❌ Maximum withdrawal amount is 1000 TON.");
                 return;
             }
             if (state.balance < amount) {
@@ -1018,7 +1028,6 @@
             state.balance -= amount;
             state.totalWithdrawn += amount;
 
-            // ثبت در تاریخچه برداشت‌ها
             const dateStr = new Date().toLocaleString();
             if(!state.withdrawalsHistory) state.withdrawalsHistory = [];
             state.withdrawalsHistory.unshift({ amount: amount, address: address, date: dateStr });
