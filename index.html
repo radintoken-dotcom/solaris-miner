@@ -912,7 +912,7 @@
         </div>
     </div>
 
-    <!-- NAVIGATION BAR (جابه‌جایی تب Launchers به وسط و My Silos به اول) -->
+    <!-- NAVIGATION BAR -->
     <div class="nav-bar">
         <div class="nav-item" id="nav-myresort" onclick="switchTab('myresort')">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -939,7 +939,7 @@
     <script>
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const supportTelegramId = "Dollar_Matrix";
-        const botUsername = "SolarisMinerBot";
+        const botUsername = "SolarisMiner_bot"; // اصلاح شده بر اساس آیدی صحیح ربات
         
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json',
@@ -985,7 +985,8 @@
                     }
                 }
             }
-            const refLink = `https://t.me/${botUsername}?start=ref_${state.telegramId}`;
+            // ساخت لینک دعوت درست با آیدی SolarisMiner_bot و پارامتر start
+            const refLink = `https://t.me/${botUsername}?start=${state.telegramId}`;
             document.getElementById('ref-link-input').value = refLink;
             checkUrlReferral();
         }
@@ -993,7 +994,7 @@
         function checkUrlReferral() {
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.start_param) {
                 const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
-                if (startParam.startsWith('ref_') && !localStorage.getItem('solaris_ref_claimed')) {
+                if (startParam && !localStorage.getItem('solaris_ref_claimed')) {
                     state.friendCount += 1;
                     state.friendReward += 0.01;
                     state.friendEarned += 0.01;
@@ -1110,7 +1111,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v62');
+            const saved = localStorage.getItem('solaris_miner_save_v64');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1140,7 +1141,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v62', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v64', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
