@@ -553,7 +553,15 @@
             font-size: 11px;
             color: #fed7aa;
             line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .support-note {
+            font-size: 10px;
+            color: #fb923c;
+            font-weight: bold;
             margin-bottom: 12px;
+            line-height: 1.4;
         }
 
         .support-btn {
@@ -787,6 +795,7 @@
             <div class="support-card">
                 <div class="support-title">🎧 Secure & Instant Support</div>
                 <div class="support-desc">Deposit and invest with complete peace of mind! Transactions are fully secure.</div>
+                <div class="support-note">After depositing, please send the receipt to support for review.</div>
                 <button class="support-btn" onclick="openSupportChat()">Contact Support</button>
             </div>
 
@@ -903,23 +912,23 @@
         </div>
     </div>
 
-    <!-- NAVIGATION BAR -->
+    <!-- NAVIGATION BAR (جابه‌جایی تب Launchers به وسط و My Silos به اول) -->
     <div class="nav-bar">
-        <div class="nav-item active" id="nav-properties" onclick="switchTab('properties')">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            <span>Launchers</span>
-        </div>
         <div class="nav-item" id="nav-myresort" onclick="switchTab('myresort')">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             <span>My Silos</span>
         </div>
-        <div class="nav-item" id="nav-friends" onclick="switchTab('friends')">
-            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            <span>Friends</span>
-        </div>
         <div class="nav-item" id="nav-wallet" onclick="switchTab('wallet')">
             <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
             <span>Wallet</span>
+        </div>
+        <div class="nav-item active" id="nav-properties" onclick="switchTab('properties')">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Launchers</span>
+        </div>
+        <div class="nav-item" id="nav-friends" onclick="switchTab('friends')">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Friends</span>
         </div>
         <div class="nav-item" id="nav-profile" onclick="switchTab('profile')">
             <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -1045,7 +1054,7 @@
 
                     state.isVerifiedWallet = true;
                     state.totalDeposited += 0.05;
-                    state.lastDepositAmount = 0.05; // ثبت مقدار واریزی
+                    state.lastDepositAmount = 0.05;
                     state.balance += 0.05;
                     
                     state.depositsHistory.unshift({
@@ -1093,7 +1102,7 @@
             friendDeposits: 0.0,
             referredList: [],
             totalDeposited: 0.0,
-            lastDepositAmount: 0.0, // ذخیره مقدار آخرین واریزی کاربر
+            lastDepositAmount: 0.0,
             totalWithdrawn: 0.0,
             depositsHistory: [],
             withdrawalsHistory: [],
@@ -1101,7 +1110,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v60');
+            const saved = localStorage.getItem('solaris_miner_save_v62');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1131,7 +1140,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v60', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v62', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1281,7 +1290,7 @@
                 if (result) {
                     state.balance += amountInput;
                     state.totalDeposited += amountInput;
-                    state.lastDepositAmount = amountInput; // ذخیره دقیق مقدار همین واریزی برای پشتیبانی
+                    state.lastDepositAmount = amountInput;
                     
                     state.depositsHistory.unshift({
                         amount: amountInput,
@@ -1300,7 +1309,6 @@
         }
 
         function processWithdraw() {
-            // 🛑 پیام هشدار انگلیسی کاملاً استاندارد
             if (!state.isVerifiedWallet) {
                 alert("⚠️ Please verify your wallet first by tapping 'Verify Wallet (0.05 TON)' to enable withdrawal!");
                 closeModal('withdraw-modal');
@@ -1411,7 +1419,6 @@
             document.getElementById('nav-' + tabName).classList.add('active');
         }
 
-        // 📩 ارسال کاملاً انگلیسی مشخصات آخرین واریزی کاربر به پشتیبانی
         function openSupportChat() {
             const supportUsername = "Dollar_Matrix";
             
