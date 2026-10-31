@@ -272,37 +272,32 @@
             text-shadow: 0 0 8px rgba(52, 211, 153, 0.8);
         }
 
-        .monitor-visualizer {
-            flex: 1;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 4px;
-            padding: 5px 0;
+        /* انیمیشن خفن باتری و پالس انرژی داخل مانیتور */
+        .energy-flow-container {
+            width: 100%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            overflow: hidden;
+            position: relative;
+            margin: auto 0;
         }
 
-        .v-bar {
-            width: 6px;
-            height: 10px;
-            background: #374151;
-            border-radius: 2px;
-            transition: 0.3s;
+        .energy-flow-bar {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399, #f97316, #34d399, #10b981);
+            background-size: 200% 100%;
+            animation: energyFlowAnim 3s infinite linear;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #34d399;
         }
 
-        .hollyland-monitor-box.active .v-bar {
-            background: #fb923c;
-            animation: waveAnim 1.2s infinite ease-in-out alternate;
-        }
-
-        .hollyland-monitor-box.active .v-bar:nth-child(2) { animation-delay: 0.2s; }
-        .hollyland-monitor-box.active .v-bar:nth-child(3) { animation-delay: 0.4s; }
-        .hollyland-monitor-box.active .v-bar:nth-child(4) { animation-delay: 0.1s; }
-        .hollyland-monitor-box.active .v-bar:nth-child(5) { animation-delay: 0.5s; }
-        .hollyland-monitor-box.active .v-bar:nth-child(6) { animation-delay: 0.3s; }
-
-        @keyframes waveAnim {
-            0% { height: 8px; }
-            100% { height: 38px; box-shadow: 0 0 8px #fb923c; }
+        @keyframes energyFlowAnim {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0%); }
+            100% { transform: translateX(100%); }
         }
 
         .monitor-bottom-info {
@@ -690,7 +685,94 @@
     <!-- CONTENT -->
     <div class="content">
 
-        <!-- TAB 1: PROPERTIES (Launchers) -->
+        <!-- TAB 1: PROFILE -->
+        <div id="tab-profile" class="tab-content">
+            <div style="font-size: 11px; color: #fed7aa; margin-bottom: 2px;">YOUR ACCOUNT</div>
+            <div style="font-size: 22px; font-weight: bold; color: #fb923c; margin-bottom: 4px;">Profile</div>
+            <div style="font-size: 11px; color: #fed7aa; margin-bottom: 18px;">Your account, statistics and useful links.</div>
+
+            <div class="profile-header-card">
+                <img id="profile-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-avatar" alt="User Avatar">
+                <div>
+                    <div class="profile-title-name" id="profile-user-name">User</div>
+                    <div class="profile-subtext">Mining Operations</div>
+                </div>
+            </div>
+
+            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: rgba(249, 115, 22, 0.15);">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 18px;">🎁</span>
+                    <div>
+                        <div style="font-size: 13px; color: #fb923c; font-weight: bold;">Invite friends</div>
+                        <div style="font-size: 10px; color: #fed7aa;">Referral program and rewards</div>
+                    </div>
+                </div>
+                <span style="color: #fb923c; font-weight: bold; font-size: 16px;">&rarr;</span>
+            </div>
+
+            <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
+                <div class="profile-info-label">User ID</div>
+                <div class="profile-info-value" id="profile-user-id">85354</div>
+            </div>
+
+            <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
+                <div class="profile-info-label">Total deposited</div>
+                <div class="profile-info-value" id="profile-total-deposited">0.00</div>
+            </div>
+
+            <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
+                <div class="profile-info-label">Total withdrawn</div>
+                <div class="profile-info-value" id="profile-total-withdrawn">0.00</div>
+            </div>
+        </div>
+
+        <!-- TAB 2: WALLET -->
+        <div id="tab-wallet" class="tab-content">
+            <div class="wallet-main-card">
+                <div style="font-size: 11px; color: #fed7aa;">Available balance</div>
+                <div style="font-size: 26px; font-weight: bold; color: #ffffff; margin-top: 4px;" id="wallet-balance-display">0.00000000 TON</div>
+                
+                <div class="wallet-btn-row">
+                    <button class="wallet-action-btn" onclick="openDepositModal()">+ Deposit via App</button>
+                    <button class="wallet-action-btn outline" onclick="openWithdrawModal()">↑ Withdraw</button>
+                </div>
+            </div>
+
+            <div id="ton-connect-button-container"></div>
+
+            <button class="verify-wallet-btn" id="verify-wallet-btn-id" onclick="verifyWalletWith01Ton()">Verify Wallet (0.1 TON)</button>
+
+            <div class="support-card">
+                <div class="support-title">🎧 Secure & Instant Support</div>
+                <div class="support-desc">Deposit and invest with complete peace of mind! Transactions are fully secure.</div>
+                <div class="support-note">After depositing, please send the receipt to support for review.</div>
+                <button class="support-btn" onclick="openSupportChat()">Contact Support</button>
+            </div>
+
+            <div class="wallet-menu-box" onclick="openHistoryModal('deposits')">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 18px;">📥</span>
+                    <div>
+                        <div style="font-size: 13px; font-weight: bold; color: #ffffff;">Deposits</div>
+                        <div style="font-size: 10px; color: #fed7aa;">Deposit history</div>
+                    </div>
+                </div>
+                <span style="color: #fb923c; font-weight: bold;">View</span>
+            </div>
+
+            <div class="wallet-menu-box" onclick="openHistoryModal('withdrawals')">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 18px;">📤</span>
+                    <div>
+                        <div style="font-size: 13px; font-weight: bold; color: #ffffff;">Withdrawals</div>
+                        <div style="font-size: 10px; color: #fed7aa;">Withdrawal history</div>
+                    </div>
+                </div>
+                <span style="color: #fb923c; font-weight: bold;">View</span>
+            </div>
+        </div>
+
+        <!-- TAB 3: LAUNCHERS (Center) -->
         <div id="tab-properties" class="tab-content active">
             <div class="space-mining-card">
                 <div class="space-content-wrapper">
@@ -715,7 +797,7 @@
             <div id="properties-list"></div>
         </div>
 
-        <!-- TAB 2: MY SILOS -->
+        <!-- TAB 4: MY SILOS -->
         <div id="tab-myresort" class="tab-content">
             <div style="text-align: center; padding: 30px 15px;">
                 <div style="font-size: 32px; margin-bottom: 10px;">⚡</div>
@@ -725,7 +807,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: FRIENDS -->
+        <!-- TAB 5: FRIENDS -->
         <div id="tab-friends" class="tab-content">
             <div style="font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 4px;">Friends</div>
             <div style="font-size: 11px; color: #fed7aa; margin-bottom: 14px;">YOUR CIRCLE OF FRIENDS</div>
@@ -773,94 +855,6 @@
                 <div id="referred-friends-list" style="max-height: 200px; overflow-y: auto;">
                     <div style="text-align:center; color:#fed7aa; font-size:11px; padding:15px; background:rgba(45, 18, 0, 0.5); border-radius:12px; border:1px solid rgba(249,115,22,0.15);">No friends invited yet. Share your link!</div>
                 </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: WALLET -->
-        <div id="tab-wallet" class="tab-content">
-            <div class="wallet-main-card">
-                <div style="font-size: 11px; color: #fed7aa;">Available balance</div>
-                <div style="font-size: 26px; font-weight: bold; color: #ffffff; margin-top: 4px;" id="wallet-balance-display">0.00000000 TON</div>
-                
-                <div class="wallet-btn-row">
-                    <button class="wallet-action-btn" onclick="openDepositModal()">+ Deposit via App</button>
-                    <button class="wallet-action-btn outline" onclick="openWithdrawModal()">↑ Withdraw</button>
-                </div>
-            </div>
-
-            <div id="ton-connect-button-container"></div>
-
-            <!-- دکمه وریفای جدید با مبلغ 0.1 TON -->
-            <button class="verify-wallet-btn" id="verify-wallet-btn-id" onclick="verifyWalletWith01Ton()">Verify Wallet (0.1 TON)</button>
-
-            <div class="support-card">
-                <div class="support-title">🎧 Secure & Instant Support</div>
-                <div class="support-desc">Deposit and invest with complete peace of mind! Transactions are fully secure.</div>
-                <div class="support-note">After depositing, please send the receipt to support for review.</div>
-                <button class="support-btn" onclick="openSupportChat()">Contact Support</button>
-            </div>
-
-            <div class="wallet-menu-box" onclick="openHistoryModal('deposits')">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span style="font-size: 18px;">📥</span>
-                    <div>
-                        <div style="font-size: 13px; font-weight: bold; color: #ffffff;">Deposits</div>
-                        <div style="font-size: 10px; color: #fed7aa;">Deposit history</div>
-                    </div>
-                </div>
-                <span style="color: #fb923c; font-weight: bold;">View</span>
-            </div>
-
-            <div class="wallet-menu-box" onclick="openHistoryModal('withdrawals')">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span style="font-size: 18px;">📤</span>
-                    <div>
-                        <div style="font-size: 13px; font-weight: bold; color: #ffffff;">Withdrawals</div>
-                        <div style="font-size: 10px; color: #fed7aa;">Withdrawal history</div>
-                    </div>
-                </div>
-                <span style="color: #fb923c; font-weight: bold;">View</span>
-            </div>
-        </div>
-
-        <!-- TAB 5: PROFILE -->
-        <div id="tab-profile" class="tab-content">
-            <div style="font-size: 11px; color: #fed7aa; margin-bottom: 2px;">YOUR ACCOUNT</div>
-            <div style="font-size: 22px; font-weight: bold; color: #fb923c; margin-bottom: 4px;">Profile</div>
-            <div style="font-size: 11px; color: #fed7aa; margin-bottom: 18px;">Your account, statistics and useful links.</div>
-
-            <div class="profile-header-card">
-                <img id="profile-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-avatar" alt="User Avatar">
-                <div>
-                    <div class="profile-title-name" id="profile-user-name">User</div>
-                    <div class="profile-subtext">Mining Operations</div>
-                </div>
-            </div>
-
-            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: rgba(249, 115, 22, 0.15);">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span style="font-size: 18px;">🎁</span>
-                    <div>
-                        <div style="font-size: 13px; color: #fb923c; font-weight: bold;">Invite friends</div>
-                        <div style="font-size: 10px; color: #fed7aa;">Referral program and rewards</div>
-                    </div>
-                </div>
-                <span style="color: #fb923c; font-weight: bold; font-size: 16px;">&rarr;</span>
-            </div>
-
-            <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
-                <div class="profile-info-label">User ID</div>
-                <div class="profile-info-value" id="profile-user-id">85354</div>
-            </div>
-
-            <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
-                <div class="profile-info-label">Total deposited</div>
-                <div class="profile-info-value" id="profile-total-deposited">0.00</div>
-            </div>
-
-            <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
-                <div class="profile-info-label">Total withdrawn</div>
-                <div class="profile-info-value" id="profile-total-withdrawn">0.00</div>
             </div>
         </div>
 
@@ -913,11 +907,11 @@
         </div>
     </div>
 
-    <!-- NAVIGATION BAR -->
+    <!-- NAVIGATION BAR (ترتیب جدید تب‌ها) -->
     <div class="nav-bar">
-        <div class="nav-item" id="nav-myresort" onclick="switchTab('myresort')">
-            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span>My Silos</span>
+        <div class="nav-item" id="nav-profile" onclick="switchTab('profile')">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>Profile</span>
         </div>
         <div class="nav-item" id="nav-wallet" onclick="switchTab('wallet')">
             <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
@@ -927,13 +921,13 @@
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             <span>Launchers</span>
         </div>
+        <div class="nav-item" id="nav-myresort" onclick="switchTab('myresort')">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>My Silos</span>
+        </div>
         <div class="nav-item" id="nav-friends" onclick="switchTab('friends')">
             <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             <span>Friends</span>
-        </div>
-        <div class="nav-item" id="nav-profile" onclick="switchTab('profile')">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <span>Profile</span>
         </div>
     </div>
 
@@ -1036,7 +1030,6 @@
             alert("✅ Friend rewards collected successfully into your balance!");
         }
 
-        // تابع تایید ولت با مبلغ 0.1 TON
         async function verifyWalletWith01Ton() {
             if (!tonConnectUI.connected) {
                 alert("⚠️ Please connect your wallet first using the Connect Wallet button!");
@@ -1078,7 +1071,6 @@
             }
         }
 
-        // فهرست ماینرها - تغییر قیمت ماینر اول به رایگان (Free / 0 TON)
         const initialProperties = [
             { id: 1, name: "Solaris Alpha", desc: "Compact entry-level mining unit", daily: 0.10, monthly: 3.00, price: 0 },
             { id: 2, name: "Solaris Quantum", desc: "Single-board residential setup", daily: 0.66, monthly: 19.80, price: 3.00 },
@@ -1116,7 +1108,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v66');
+            const saved = localStorage.getItem('solaris_miner_save_v67');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1146,7 +1138,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v66', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v67', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1166,6 +1158,7 @@
                 const isOwned = state.ownedIds.includes(item.id);
                 const displayPrice = item.price === 0 ? "Free" : item.price + " TON";
                 
+                // استفاده از افکت انیمیشن خفن انرژی/باطری داخل تلویزیون مانیتور هنگام روشن بودن
                 const monitorHTML = `
                     <div class="hollyland-monitor-box ${isOwned ? 'active' : ''}">
                         <div class="monitor-antenna-left"></div>
@@ -1175,16 +1168,17 @@
                                 <span class="monitor-status-text">${isOwned ? 'ONLINE / MINING' : 'STANDBY / LOCKED'}</span>
                                 <span style="color: ${isOwned ? '#34d399' : '#ef4444'};">${isOwned ? '● REC' : '■ OFF'}</span>
                             </div>
-                            <div class="monitor-visualizer">
-                                <div class="v-bar"></div>
-                                <div class="v-bar"></div>
-                                <div class="v-bar"></div>
-                                <div class="v-bar"></div>
-                                <div class="v-bar"></div>
-                                <div class="v-bar"></div>
-                            </div>
+                            ${isOwned ? `
+                                <div class="energy-flow-container">
+                                    <div class="energy-flow-bar"></div>
+                                </div>
+                            ` : `
+                                <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #64748b; font-size: 11px; font-weight: bold;">
+                                    SYSTEM LOCKED
+                                </div>
+                            `}
                             <div class="monitor-bottom-info">
-                                <span>${isOwned ? '+' + item.daily.toFixed(1) + ' TON/d' : 'SYSTEM LOCKED'}</span>
+                                <span>${isOwned ? '+' + item.daily.toFixed(1) + ' TON/d' : 'LOCKED'}</span>
                                 <span>${isOwned ? 'HASH OK' : 'NO SIGNAL'}</span>
                             </div>
                         </div>
@@ -1315,7 +1309,6 @@
             }
         }
 
-        // بررسی شرط جدید 0.1 TON برای برداشت
         function processWithdraw() {
             if (!state.isVerifiedWallet) {
                 alert("⚠️ Please verify your wallet first by tapping 'Verify Wallet (0.1 TON)' to enable withdrawal!");
