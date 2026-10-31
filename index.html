@@ -745,11 +745,12 @@
                 <button class="wallet-action-btn" style="background: #f97316; color: #fff; padding: 10px 20px; flex: unset;" onclick="collectFriendReward()">Collect</button>
             </div>
 
+            <!-- کادر دعوت همراه با دکمه ارسال مستقیم لینک -->
             <div class="wallet-menu-box" style="flex-direction: column; align-items: flex-start; gap: 8px; cursor: default;">
                 <div style="font-size: 11px; color: #fed7aa;">Your invitation link</div>
                 <div style="display: flex; width: 100%; gap: 8px;">
                     <input type="text" class="wallet-input" id="ref-link-input" readonly style="margin-top: 0; flex: 1;">
-                    <button class="wallet-action-btn" style="background: rgba(45,18,0,0.8); color: #fb923c; padding: 0 16px; font-size: 12px; flex: unset;" onclick="shareRefLink()">Share Direct</button>
+                    <button class="wallet-action-btn" style="background: linear-gradient(135deg, #f97316, #c2410c); color: #ffffff; padding: 0 16px; font-size: 12px; flex: unset; border-radius: 10px; border: 1px solid rgba(255,255,255,0.3);" onclick="shareRefLink()">📤 Share</button>
                 </div>
             </div>
 
@@ -939,7 +940,7 @@
     <script>
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const supportTelegramId = "Dollar_Matrix";
-        const botUsername = "SolarisMiner_bot"; // اصلاح شده بر اساس آیدی صحیح ربات
+        const botUsername = "SolarisMiner_bot"; // آیدی صحیح ربات شما
         
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json',
@@ -965,6 +966,7 @@
         });
 
         function initTelegramUser() {
+            let currentUserId = "1007321991"; // پیش‌فرض برای تست خارج از تلگرام
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
                 const tgUser = window.Telegram.WebApp.initDataUnsafe.user;
                 if (tgUser) {
@@ -976,8 +978,9 @@
                         document.getElementById('profile-user-name').innerText = state.userName;
                     }
                     if (tgUser.id) {
-                        state.telegramId = tgUser.id.toString();
-                        document.getElementById('profile-user-id').innerText = state.telegramId;
+                        currentUserId = tgUser.id.toString();
+                        state.telegramId = currentUserId;
+                        document.getElementById('profile-user-id').innerText = currentUserId;
                     }
                     if (tgUser.photo_url) {
                         state.photoUrl = tgUser.photo_url;
@@ -985,8 +988,9 @@
                     }
                 }
             }
-            // ساخت لینک دعوت درست با آیدی SolarisMiner_bot و پارامتر start
-            const refLink = `https://t.me/${botUsername}?start=${state.telegramId}`;
+            
+            // تولید لینک اختصاصی رفرال بر اساس آیدی عددی منحصر به فرد هر کاربر
+            const refLink = `https://t.me/${botUsername}?start=${currentUserId}`;
             document.getElementById('ref-link-input').value = refLink;
             checkUrlReferral();
         }
@@ -1111,7 +1115,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v64');
+            const saved = localStorage.getItem('solaris_miner_save_v65');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1141,7 +1145,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v64', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v65', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
