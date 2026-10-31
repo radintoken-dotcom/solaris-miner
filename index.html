@@ -17,7 +17,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1c0a00 0%, #3d1500 50%, #1a0800 100%);
+            background: linear-gradient(135deg, #090d16 0%, #050b14 50%, #02050b 100%);
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -29,7 +29,7 @@
         #splash-screen {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: #1c0a00;
+            background: #050b14;
             z-index: 99999;
             display: flex;
             flex-direction: column;
@@ -41,8 +41,8 @@
         .spinner {
             width: 50px;
             height: 50px;
-            border: 4px solid rgba(249, 115, 22, 0.2);
-            border-top: 4px solid #f97316;
+            border: 4px solid rgba(56, 189, 248, 0.2);
+            border-top: 4px solid #38bdf8;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
@@ -56,34 +56,34 @@
         .splash-text {
             font-size: 13px;
             font-weight: bold;
-            color: #fb923c;
+            color: #38bdf8;
             letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
         .header {
-            background: rgba(28, 10, 0, 0.85);
+            background: rgba(5, 11, 20, 0.85);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 20px;
-            border-bottom: 1px solid rgba(249, 115, 22, 0.2);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
         .brand-box h1 {
             font-size: 17px;
-            color: #ffedd5;
+            color: #e0f2fe;
             font-weight: bold;
             letter-spacing: 0.5px;
         }
 
         .balance-box {
-            background: rgba(45, 18, 0, 0.85);
-            border: 1px solid rgba(249, 115, 22, 0.4);
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(56, 189, 248, 0.4);
             padding: 8px 14px;
-            border-radius: 20px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -93,15 +93,15 @@
         .balance-amount {
             font-size: 13px;
             font-weight: bold;
-            color: #fb923c;
+            color: #38bdf8;
         }
 
         .add-btn {
-            background: linear-gradient(135deg, #f97316, #c2410c);
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
             border: none;
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             font-weight: bold;
             cursor: pointer;
@@ -126,24 +126,25 @@
         }
 
         .stats-card {
-            background: rgba(45, 18, 0, 0.6);
-            border: 1px solid rgba(249, 115, 22, 0.2);
-            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 20px;
             padding: 16px;
             margin-bottom: 16px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             backdrop-filter: blur(6px);
         }
 
+        /* تصویر پس زمینه مدار قرمز نئونی برای کارت ماینینگ */
         .space-mining-card {
             position: relative;
-            background: linear-gradient(rgba(28, 10, 0, 0.75), rgba(45, 18, 0, 0.85)), url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
-            border: 1px solid rgba(249, 115, 22, 0.4);
-            border-radius: 22px;
+            background: linear-gradient(rgba(10, 0, 0, 0.75), rgba(30, 5, 5, 0.85)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            border-radius: 24px;
             padding: 35px 20px;
             margin-bottom: 16px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.25);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.25);
             overflow: hidden;
             color: #ffffff;
         }
@@ -154,13 +155,13 @@
             color: #ffffff;
             letter-spacing: -0.5px;
             margin-bottom: 4px;
-            text-shadow: 0 0 15px rgba(249, 115, 22, 0.8);
+            text-shadow: 0 0 15px rgba(239, 68, 68, 0.8);
         }
 
         .mined-label {
             font-size: 11px;
             font-weight: 700;
-            color: #fdba74;
+            color: #fca5a5;
             letter-spacing: 1.2px;
             text-transform: uppercase;
             margin-bottom: 4px;
@@ -168,28 +169,29 @@
 
         .mined-rate {
             font-size: 11px;
-            color: #fed7aa;
+            color: #fecdd3;
             margin-bottom: 20px;
         }
 
+        /* دکمه دایره‌ای Claim */
         .btn-claim {
-            background: linear-gradient(135deg, #f97316, #c2410c);
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
             color: #ffffff;
             border: none;
-            padding: 13px 28px;
-            border-radius: 14px;
+            padding: 14px 28px;
+            border-radius: 30px;
             font-weight: bold;
             font-size: 13px;
             cursor: pointer;
             width: 100%;
             max-width: 260px;
-            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
         }
 
         .property-card {
-            background: rgba(45, 18, 0, 0.6);
-            border: 1px solid rgba(249, 115, 22, 0.2);
-            border-radius: 18px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 20px;
             padding: 16px;
             margin-bottom: 16px;
             position: relative;
@@ -199,7 +201,7 @@
 
         .property-card.active-miner {
             border-color: #10b981;
-            background: rgba(20, 45, 30, 0.7);
+            background: rgba(6, 78, 59, 0.4);
             box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
         }
 
@@ -208,7 +210,7 @@
             width: 100%;
             height: 175px;
             background: #0f172a;
-            border-radius: 14px;
+            border-radius: 16px;
             border: 3px solid #334155;
             display: flex;
             flex-direction: column;
@@ -236,7 +238,7 @@
             height: 115px;
             background: #030712;
             border: 2px solid #ef4444;
-            border-radius: 8px;
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -272,12 +274,11 @@
             text-shadow: 0 0 8px rgba(52, 211, 153, 0.8);
         }
 
-        /* انیمیشن خفن باتری و پالس انرژی داخل مانیتور */
         .energy-flow-container {
             width: 100%;
             height: 20px;
             background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
+            border-radius: 20px;
             border: 1px solid rgba(52, 211, 153, 0.3);
             overflow: hidden;
             position: relative;
@@ -287,10 +288,10 @@
         .energy-flow-bar {
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, #10b981, #34d399, #f97316, #34d399, #10b981);
+            background: linear-gradient(90deg, #10b981, #34d399, #38bdf8, #34d399, #10b981);
             background-size: 200% 100%;
             animation: energyFlowAnim 3s infinite linear;
-            border-radius: 8px;
+            border-radius: 20px;
             box-shadow: 0 0 10px #34d399;
         }
 
@@ -309,20 +310,20 @@
         }
 
         .hollyland-monitor-box.active .monitor-bottom-info {
-            color: #fb923c;
+            color: #38bdf8;
         }
 
         .property-badge {
             position: absolute;
             top: 24px;
             right: 24px;
-            background: rgba(45, 18, 0, 0.8);
-            color: #fb923c;
+            background: rgba(15, 23, 42, 0.8);
+            color: #38bdf8;
             font-size: 10px;
-            padding: 4px 10px;
-            border-radius: 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
             font-weight: bold;
-            border: 1px solid rgba(249, 115, 22, 0.3);
+            border: 1px solid rgba(56, 189, 248, 0.3);
             z-index: 10;
         }
 
@@ -341,23 +342,23 @@
 
         .property-desc {
             font-size: 11px;
-            color: #fed7aa;
+            color: #94a3b8;
             margin-bottom: 12px;
         }
 
         .property-grid {
             display: flex;
             justify-content: space-between;
-            background: rgba(28, 10, 0, 0.6);
+            background: rgba(5, 11, 20, 0.6);
             padding: 10px 14px;
-            border-radius: 12px;
+            border-radius: 14px;
             margin-bottom: 12px;
-            border: 1px solid rgba(249, 115, 22, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.15);
         }
 
         .property-stat-item div:first-child {
             font-size: 10px;
-            color: #fed7aa;
+            color: #94a3b8;
         }
 
         .property-stat-item div:last-child {
@@ -379,16 +380,17 @@
             font-weight: bold;
         }
 
+        /* دکمه دایره‌ای خرید ماینر */
         .btn-buy {
-            background: linear-gradient(135deg, #f97316, #c2410c);
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
             border: none;
-            padding: 10px 18px;
-            border-radius: 12px;
+            padding: 10px 22px;
+            border-radius: 30px;
             font-weight: bold;
             font-size: 12px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(249, 115, 22, 0.3);
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
         }
 
         .nav-bar {
@@ -397,11 +399,11 @@
             left: 0;
             right: 0;
             height: 65px;
-            background: rgba(28, 10, 0, 0.95);
+            background: rgba(5, 11, 20, 0.95);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            border-top: 1px solid rgba(249, 115, 22, 0.2);
+            border-top: 1px solid rgba(56, 189, 248, 0.2);
             z-index: 1000;
             backdrop-filter: blur(10px);
             box-shadow: 0 -4px 15px rgba(0,0,0,0.5);
@@ -412,7 +414,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #fed7aa;
+            color: #64748b;
             font-size: 10px;
             cursor: pointer;
             flex: 1;
@@ -420,7 +422,7 @@
         }
 
         .nav-item.active {
-            color: #fb923c;
+            color: #38bdf8;
             font-weight: bold;
         }
 
@@ -433,13 +435,14 @@
             margin-bottom: 4px;
         }
 
+        /* پس زمینه کره نئونی و فیبر نوری برای کیف پول */
         .wallet-main-card {
-            background: linear-gradient(135deg, #f97316, #c2410c);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 20px;
+            background: linear-gradient(rgba(5, 11, 20, 0.7), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            border-radius: 24px;
+            padding: 22px;
             margin-bottom: 15px;
-            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.25);
             color: #ffffff;
         }
 
@@ -449,13 +452,14 @@
             margin-top: 15px;
         }
 
+        /* دکمه‌های دایره‌ای کیف پول */
         .wallet-action-btn {
             flex: 1;
-            background: #ffffff;
-            color: #c2410c;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            color: #ffffff;
             border: none;
             padding: 12px;
-            border-radius: 14px;
+            border-radius: 30px;
             font-weight: bold;
             font-size: 13px;
             cursor: pointer;
@@ -463,27 +467,28 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
 
         .wallet-action-btn.outline {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.1);
             color: #ffffff;
             border: 1px solid rgba(255,255,255,0.3);
         }
 
+        /* دکمه وریفای کیف پول دایره‌ای */
         .verify-wallet-btn {
             width: 100%;
-            background: linear-gradient(135deg, #f97316, #c2410c);
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
             border: none;
             padding: 14px;
-            border-radius: 14px;
+            border-radius: 30px;
             font-weight: bold;
             font-size: 13px;
             cursor: pointer;
             margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
             transition: 0.3s;
         }
 
@@ -501,9 +506,9 @@
         }
 
         .wallet-menu-box {
-            background: rgba(45, 18, 0, 0.6);
-            border: 1px solid rgba(249, 115, 22, 0.2);
-            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 20px;
             padding: 14px 18px;
             margin-bottom: 12px;
             display: flex;
@@ -515,11 +520,11 @@
 
         .wallet-input {
             width: 100%;
-            background: rgba(28, 10, 0, 0.8);
-            border: 1px solid rgba(249, 115, 22, 0.3);
-            border-radius: 12px;
-            padding: 12px;
-            color: #fb923c;
+            background: rgba(5, 11, 20, 0.8);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            padding: 12px 16px;
+            color: #38bdf8;
             font-size: 12px;
             text-align: left;
             margin-top: 6px;
@@ -527,9 +532,9 @@
         }
 
         .support-card {
-            background: rgba(45, 18, 0, 0.6);
-            border: 1px solid rgba(249, 115, 22, 0.3);
-            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
             padding: 16px;
             margin-top: 15px;
             margin-bottom: 15px;
@@ -540,31 +545,32 @@
         .support-title {
             font-size: 14px;
             font-weight: bold;
-            color: #fb923c;
+            color: #38bdf8;
             margin-bottom: 6px;
         }
 
         .support-desc {
             font-size: 11px;
-            color: #fed7aa;
+            color: #94a3b8;
             line-height: 1.5;
             margin-bottom: 8px;
         }
 
         .support-note {
             font-size: 10px;
-            color: #fb923c;
+            color: #38bdf8;
             font-weight: bold;
             margin-bottom: 12px;
             line-height: 1.4;
         }
 
+        /* دکمه دایره‌ای پشتیبانی */
         .support-btn {
-            background: linear-gradient(135deg, #f97316, #c2410c);
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
             border: none;
-            padding: 10px 20px;
-            border-radius: 12px;
+            padding: 11px 20px;
+            border-radius: 30px;
             font-weight: bold;
             font-size: 12px;
             cursor: pointer;
@@ -584,7 +590,7 @@
             height: 68px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #f97316;
+            border: 2px solid #38bdf8;
         }
 
         .profile-title-name {
@@ -595,14 +601,14 @@
 
         .profile-subtext {
             font-size: 12px;
-            color: #fed7aa;
+            color: #94a3b8;
             margin-top: 2px;
         }
 
         .profile-info-card {
-            background: rgba(45, 18, 0, 0.6);
-            border: 1px solid rgba(249, 115, 22, 0.2);
-            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 20px;
             padding: 16px;
             margin-bottom: 12px;
             display: flex;
@@ -613,13 +619,13 @@
 
         .profile-info-label {
             font-size: 13px;
-            color: #fed7aa;
+            color: #94a3b8;
         }
 
         .profile-info-value {
             font-size: 18px;
             font-weight: bold;
-            color: #fb923c;
+            color: #38bdf8;
         }
 
         .modal-overlay {
@@ -635,9 +641,9 @@
         }
 
         .modal-card {
-            background: #1c0a00;
-            border: 1px solid rgba(249, 115, 22, 0.4);
-            border-radius: 20px;
+            background: #050b14;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            border-radius: 24px;
             padding: 20px;
             width: 100%;
             max-width: 400px;
@@ -651,12 +657,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(45, 18, 0, 0.6);
+            background: rgba(15, 23, 42, 0.6);
             padding: 10px 14px;
-            border-radius: 10px;
+            border-radius: 14px;
             margin-bottom: 8px;
             font-size: 12px;
-            border: 1px solid rgba(249, 115, 22, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.15);
         }
     </style>
 </head>
@@ -675,7 +681,7 @@
         </div>
         <div class="balance-box">
             <div>
-                <div style="font-size: 9px; color: #fed7aa;">Balance:</div>
+                <div style="font-size: 9px; color: #94a3b8;">Balance:</div>
                 <span class="balance-amount" id="user-balance">0.00000000 TON</span>
             </div>
             <button class="add-btn" onclick="switchTab('wallet')">+</button>
@@ -687,9 +693,9 @@
 
         <!-- TAB 1: PROFILE -->
         <div id="tab-profile" class="tab-content">
-            <div style="font-size: 11px; color: #fed7aa; margin-bottom: 2px;">YOUR ACCOUNT</div>
-            <div style="font-size: 22px; font-weight: bold; color: #fb923c; margin-bottom: 4px;">Profile</div>
-            <div style="font-size: 11px; color: #fed7aa; margin-bottom: 18px;">Your account, statistics and useful links.</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 2px;">YOUR ACCOUNT</div>
+            <div style="font-size: 22px; font-weight: bold; color: #38bdf8; margin-bottom: 4px;">Profile</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 18px;">Your account, statistics and useful links.</div>
 
             <div class="profile-header-card">
                 <img id="profile-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-avatar" alt="User Avatar">
@@ -699,15 +705,15 @@
                 </div>
             </div>
 
-            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: rgba(249, 115, 22, 0.15);">
+            <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: rgba(56, 189, 248, 0.15);">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 18px;">🎁</span>
                     <div>
-                        <div style="font-size: 13px; color: #fb923c; font-weight: bold;">Invite friends</div>
-                        <div style="font-size: 10px; color: #fed7aa;">Referral program and rewards</div>
+                        <div style="font-size: 13px; color: #38bdf8; font-weight: bold;">Invite friends</div>
+                        <div style="font-size: 10px; color: #94a3b8;">Referral program and rewards</div>
                     </div>
                 </div>
-                <span style="color: #fb923c; font-weight: bold; font-size: 16px;">&rarr;</span>
+                <span style="color: #38bdf8; font-weight: bold; font-size: 16px;">&rarr;</span>
             </div>
 
             <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
@@ -729,7 +735,7 @@
         <!-- TAB 2: WALLET -->
         <div id="tab-wallet" class="tab-content">
             <div class="wallet-main-card">
-                <div style="font-size: 11px; color: #fed7aa;">Available balance</div>
+                <div style="font-size: 11px; color: #94a3b8;">Available balance</div>
                 <div style="font-size: 26px; font-weight: bold; color: #ffffff; margin-top: 4px;" id="wallet-balance-display">0.00000000 TON</div>
                 
                 <div class="wallet-btn-row">
@@ -754,10 +760,10 @@
                     <span style="font-size: 18px;">📥</span>
                     <div>
                         <div style="font-size: 13px; font-weight: bold; color: #ffffff;">Deposits</div>
-                        <div style="font-size: 10px; color: #fed7aa;">Deposit history</div>
+                        <div style="font-size: 10px; color: #94a3b8;">Deposit history</div>
                     </div>
                 </div>
-                <span style="color: #fb923c; font-weight: bold;">View</span>
+                <span style="color: #38bdf8; font-weight: bold;">View</span>
             </div>
 
             <div class="wallet-menu-box" onclick="openHistoryModal('withdrawals')">
@@ -765,10 +771,10 @@
                     <span style="font-size: 18px;">📤</span>
                     <div>
                         <div style="font-size: 13px; font-weight: bold; color: #ffffff;">Withdrawals</div>
-                        <div style="font-size: 10px; color: #fed7aa;">Withdrawal history</div>
+                        <div style="font-size: 10px; color: #94a3b8;">Withdrawal history</div>
                     </div>
                 </div>
-                <span style="color: #fb923c; font-weight: bold;">View</span>
+                <span style="color: #38bdf8; font-weight: bold;">View</span>
             </div>
         </div>
 
@@ -785,11 +791,11 @@
 
             <div class="stats-card" style="display: flex; justify-content: space-between; align-items: center; padding: 14px;">
                 <div>
-                    <div style="font-size: 11px; color: #fed7aa;">Active Miners</div>
+                    <div style="font-size: 11px; color: #94a3b8;">Active Miners</div>
                     <div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-top: 2px;" id="owned-count">0 / 12 Active</div>
                 </div>
                 <div style="text-align: right;">
-                    <div style="font-size: 11px; color: #fed7aa;">Daily Income</div>
+                    <div style="font-size: 11px; color: #94a3b8;">Daily Income</div>
                     <div style="font-size: 14px; font-weight: bold; color: #34d399; margin-top: 2px;" id="total-daily">+0.00 TON</div>
                 </div>
             </div>
@@ -802,7 +808,7 @@
             <div style="text-align: center; padding: 30px 15px;">
                 <div style="font-size: 32px; margin-bottom: 10px;">⚡</div>
                 <h3 style="font-size: 16px; color: #ffffff; margin-bottom: 8px;">Active Mining Rigs</h3>
-                <p style="font-size: 11px; color: #fed7aa; line-height: 1.6; margin-bottom: 15px;">All purchased mining hardware units are currently active and generating rewards.</p>
+                <p style="font-size: 11px; color: #94a3b8; line-height: 1.6; margin-bottom: 15px;">All purchased mining hardware units are currently active and generating rewards.</p>
                 <div id="my-miners-list"></div>
             </div>
         </div>
@@ -810,50 +816,50 @@
         <!-- TAB 5: FRIENDS -->
         <div id="tab-friends" class="tab-content">
             <div style="font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 4px;">Friends</div>
-            <div style="font-size: 11px; color: #fed7aa; margin-bottom: 14px;">YOUR CIRCLE OF FRIENDS</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 14px;">YOUR CIRCLE OF FRIENDS</div>
 
-            <div class="friends-top-card" style="background: linear-gradient(135deg, #f97316, #c2410c); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 18px; margin-bottom: 14px; text-align: left; color: #ffffff;">
-                <div style="font-size: 20px; font-weight: bold; color: #ffffff; margin-bottom: 8px;">15% <span style="font-size: 12px; color: #fed7aa; font-weight: normal;">of friends' deposits</span></div>
-                <div style="display: inline-block; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,0.2); color: #fed7aa; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">
+            <div class="friends-top-card" style="background: linear-gradient(135deg, #0284c7, #0369a1); border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; padding: 18px; margin-bottom: 14px; text-align: left; color: #ffffff;">
+                <div style="font-size: 20px; font-weight: bold; color: #ffffff; margin-bottom: 8px;">15% <span style="font-size: 12px; color: #e0f2fe; font-weight: normal;">of friends' deposits</span></div>
+                <div style="display: inline-block; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,0.2); color: #e0f2fe; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: bold;">
                     +0.01 TON <span style="color: #ffffff; font-weight: normal;">for every friend</span>
                 </div>
             </div>
 
-            <div class="friends-collect-card" style="display: flex; justify-content: space-between; align-items: center; background: rgba(45, 18, 0, 0.6); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <div class="friends-collect-card" style="display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                 <div>
-                    <div style="font-size: 11px; color: #fed7aa;">Ready to collect</div>
-                    <div style="font-size: 20px; font-weight: bold; color: #ffffff; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #fb923c;">TON</span></div>
+                    <div style="font-size: 11px; color: #94a3b8;">Ready to collect</div>
+                    <div style="font-size: 20px; font-weight: bold; color: #ffffff; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #38bdf8;">TON</span></div>
                 </div>
-                <button class="wallet-action-btn" style="background: #f97316; color: #fff; padding: 10px 20px; flex: unset;" onclick="collectFriendReward()">Collect</button>
+                <button class="wallet-action-btn" style="background: #0284c7; color: #fff; padding: 10px 22px; flex: unset;" onclick="collectFriendReward()">Collect</button>
             </div>
 
             <div class="wallet-menu-box" style="flex-direction: column; align-items: flex-start; gap: 8px; cursor: default;">
-                <div style="font-size: 11px; color: #fed7aa;">Your invitation link</div>
+                <div style="font-size: 11px; color: #94a3b8;">Your invitation link</div>
                 <div style="display: flex; width: 100%; gap: 8px;">
                     <input type="text" class="wallet-input" id="ref-link-input" readonly style="margin-top: 0; flex: 1;">
-                    <button class="wallet-action-btn" style="background: linear-gradient(135deg, #f97316, #c2410c); color: #ffffff; padding: 0 16px; font-size: 12px; flex: unset; border-radius: 10px; border: 1px solid rgba(255,255,255,0.3);" onclick="shareRefLink()">📤 Share</button>
+                    <button class="wallet-action-btn" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #ffffff; padding: 0 20px; font-size: 12px; flex: unset; border-radius: 30px; border: 1px solid rgba(255,255,255,0.3);" onclick="shareRefLink()">📤 Share</button>
                 </div>
             </div>
 
             <div class="friends-stats-row" style="display: flex; gap: 8px; margin-bottom: 14px;">
-                <div class="friends-stat-box" style="flex: 1; background: rgba(45, 18, 0, 0.6); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 16px; padding: 14px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <div class="friends-stat-box" style="flex: 1; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 14px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                     <div style="font-size: 16px; font-weight: bold; color: #ffffff;" id="friend-count">0</div>
-                    <div style="font-size: 10px; color: #fed7aa; margin-top: 4px;">Friends</div>
+                    <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Friends</div>
                 </div>
-                <div class="friends-stat-box" style="flex: 1; background: rgba(45, 18, 0, 0.6); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 16px; padding: 14px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                    <div style="font-size: 16px; font-weight: bold; color: #fb923c;" id="friend-earned">0.00</div>
-                    <div style="font-size: 10px; color: #fed7aa; margin-top: 4px;">Earned, TON</div>
+                <div class="friends-stat-box" style="flex: 1; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 14px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                    <div style="font-size: 16px; font-weight: bold; color: #38bdf8;" id="friend-earned">0.00</div>
+                    <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Earned, TON</div>
                 </div>
-                <div class="friends-stat-box" style="flex: 1; background: rgba(45, 18, 0, 0.6); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 16px; padding: 14px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                    <div style="font-size: 16px; font-weight: bold; color: #fb923c;" id="friend-deposits">0.00</div>
-                    <div style="font-size: 10px; color: #fed7aa; margin-top: 4px;">Deposits, TON</div>
+                <div class="friends-stat-box" style="flex: 1; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 14px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                    <div style="font-size: 16px; font-weight: bold; color: #38bdf8;" id="friend-deposits">0.00</div>
+                    <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Deposits, TON</div>
                 </div>
             </div>
 
             <div style="margin-top: 15px;">
-                <div style="font-size: 13px; font-weight: bold; color: #fb923c; margin-bottom: 8px;">Referred Friends List</div>
+                <div style="font-size: 13px; font-weight: bold; color: #38bdf8; margin-bottom: 8px;">Referred Friends List</div>
                 <div id="referred-friends-list" style="max-height: 200px; overflow-y: auto;">
-                    <div style="text-align:center; color:#fed7aa; font-size:11px; padding:15px; background:rgba(45, 18, 0, 0.5); border-radius:12px; border:1px solid rgba(249,115,22,0.15);">No friends invited yet. Share your link!</div>
+                    <div style="text-align:center; color:#94a3b8; font-size:11px; padding:15px; background:rgba(15, 23, 42, 0.5); border-radius:16px; border:1px solid rgba(56,189,248,0.15);">No friends invited yet. Share your link!</div>
                 </div>
             </div>
         </div>
@@ -863,51 +869,51 @@
     <!-- MODAL: DEPOSIT -->
     <div id="deposit-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #fb923c; margin-bottom: 6px; text-align: center;">Instant Deposit via TonConnect</div>
-            <p style="font-size: 11px; color: #fed7aa; margin-bottom: 12px; text-align: center;">Connect your Tonkeeper wallet and deposit TON instantly:</p>
-            <div style="font-size: 10px; color: #fb923c; text-align: center; margin-bottom: 15px; font-weight: bold;">Min: 0.1 TON | Max: 1000 TON</div>
+            <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Instant Deposit via TonConnect</div>
+            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 12px; text-align: center;">Connect your Tonkeeper wallet and deposit TON instantly:</p>
+            <div style="font-size: 10px; color: #38bdf8; text-align: center; margin-bottom: 15px; font-weight: bold;">Min: 0.1 TON | Max: 1000 TON</div>
             
             <div style="margin-bottom: 12px;">
-                <label style="font-size: 11px; color: #fed7aa;">Amount (TON):</label>
+                <label style="font-size: 11px; color: #94a3b8;">Amount (TON):</label>
                 <input type="number" id="deposit-amount-input" class="wallet-input" placeholder="Enter amount (0.1 - 1000)" step="0.01">
             </div>
 
-            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #f97316, #c2410c); font-size: 13px; margin-bottom: 8px;" onclick="sendTonConnectTransaction()">Pay via TonConnect</button>
-            <button class="btn-buy" style="width: 100%; background: rgba(45,18,0,0.8); color: #ffffff;" onclick="closeModal('deposit-modal')">Close</button>
+            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); font-size: 13px; margin-bottom: 8px;" onclick="sendTonConnectTransaction()">Pay via TonConnect</button>
+            <button class="btn-buy" style="width: 100%; background: rgba(15,23,42,0.8); color: #ffffff;" onclick="closeModal('deposit-modal')">Close</button>
         </div>
     </div>
 
     <!-- MODAL: WITHDRAW -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #fb923c; margin-bottom: 6px; text-align: center;">Withdrawal</div>
-            <div style="font-size: 10px; color: #fb923c; text-align: center; margin-bottom: 15px; font-weight: bold;">Min: 1.0 TON | Max: 1000 TON</div>
+            <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Withdrawal</div>
+            <div style="font-size: 10px; color: #38bdf8; text-align: center; margin-bottom: 15px; font-weight: bold;">Min: 1.0 TON | Max: 1000 TON</div>
             
             <div style="margin-bottom: 10px;">
-                <label style="font-size: 11px; color: #fed7aa;">Withdrawal Amount:</label>
+                <label style="font-size: 11px; color: #94a3b8;">Withdrawal Amount:</label>
                 <input type="number" id="withdraw-amount" class="wallet-input" placeholder="Enter amount (1 - 1000)" step="0.01">
             </div>
 
             <div style="margin-bottom: 15px;">
-                <label style="font-size: 11px; color: #fed7aa;">Destination Address:</label>
+                <label style="font-size: 11px; color: #94a3b8;">Destination Address:</label>
                 <input type="text" id="withdraw-address" class="wallet-input" placeholder="Enter TON wallet address">
             </div>
 
-            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #f97316, #c2410c); font-size: 13px;" onclick="processWithdraw()">Confirm Withdrawal</button>
-            <button class="btn-buy" style="width: 100%; background: rgba(45,18,0,0.8); color: #ffffff; margin-top: 8px;" onclick="closeModal('withdraw-modal')">Cancel</button>
+            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); font-size: 13px;" onclick="processWithdraw()">Confirm Withdrawal</button>
+            <button class="btn-buy" style="width: 100%; background: rgba(15,23,42,0.8); color: #ffffff; margin-top: 8px;" onclick="closeModal('withdraw-modal')">Cancel</button>
         </div>
     </div>
 
     <!-- MODAL: HISTORY -->
     <div id="history-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #fb923c; margin-bottom: 12px; text-align: center;" id="history-title">History</div>
+            <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 12px; text-align: center;" id="history-title">History</div>
             <div id="history-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;"></div>
-            <button class="btn-buy" style="width: 100%; background: rgba(45,18,0,0.8); color: #ffffff;" onclick="closeModal('history-modal')">Close</button>
+            <button class="btn-buy" style="width: 100%; background: rgba(15,23,42,0.8); color: #ffffff;" onclick="closeModal('history-modal')">Close</button>
         </div>
     </div>
 
-    <!-- NAVIGATION BAR (ترتیب جدید تب‌ها) -->
+    <!-- NAVIGATION BAR -->
     <div class="nav-bar">
         <div class="nav-item" id="nav-profile" onclick="switchTab('profile')">
             <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -1108,7 +1114,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v67');
+            const saved = localStorage.getItem('solaris_miner_save_v68');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1138,7 +1144,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v67', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v68', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1158,7 +1164,6 @@
                 const isOwned = state.ownedIds.includes(item.id);
                 const displayPrice = item.price === 0 ? "Free" : item.price + " TON";
                 
-                // استفاده از افکت انیمیشن خفن انرژی/باطری داخل تلویزیون مانیتور هنگام روشن بودن
                 const monitorHTML = `
                     <div class="hollyland-monitor-box ${isOwned ? 'active' : ''}">
                         <div class="monitor-antenna-left"></div>
@@ -1207,7 +1212,7 @@
 
                         <div class="property-footer">
                             <div class="property-price" style="${item.price === 0 ? 'color:#34d399;' : ''}">${displayPrice}</div>
-                            <button class="btn-buy" style="${isOwned ? 'background:rgba(45,18,0,0.8); color:#fed7aa; cursor:default;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Start Mining'}</button>
+                            <button class="btn-buy" style="${isOwned ? 'background:rgba(15,23,42,0.8); color:#94a3b8; cursor:default;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Start Mining'}</button>
                         </div>
                     </div>
                 `);
@@ -1229,11 +1234,11 @@
             document.getElementById('friend-count').innerText = state.friendCount;
             document.getElementById('friend-earned').innerText = state.friendEarned.toFixed(2);
             document.getElementById('friend-deposits').innerText = state.friendDeposits.toFixed(2);
-            document.getElementById('friend-reward-display').innerHTML = state.friendReward.toFixed(2) + ' <span style="font-size: 11px; color: #fb923c;">TON</span>';
+            document.getElementById('friend-reward-display').innerHTML = state.friendReward.toFixed(2) + ' <span style="font-size: 11px; color: #38bdf8;">TON</span>';
 
             const listContainer = document.getElementById('referred-friends-list');
             if (state.referredList.length === 0) {
-                listContainer.innerHTML = '<div style="text-align:center; color:#fed7aa; font-size:11px; padding:15px; background:rgba(45, 18, 0, 0.5); border-radius:12px; border:1px solid rgba(249,115,22,0.15);">No friends invited yet. Share your link!</div>';
+                listContainer.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:11px; padding:15px; background:rgba(15, 23, 42, 0.5); border-radius:16px; border:1px solid rgba(56,189,248,0.15);">No friends invited yet. Share your link!</div>';
             } else {
                 listContainer.innerHTML = '';
                 state.referredList.forEach(ref => {
@@ -1241,9 +1246,9 @@
                         <div class="history-item">
                             <div>
                                 <div style="font-weight:bold; color:#ffffff;">👤 ${ref.name}</div>
-                                <div style="font-size:10px; color:#fb923c; margin-top:2px;">Bonus: +${ref.reward} TON</div>
+                                <div style="font-size:10px; color:#38bdf8; margin-top:2px;">Bonus: +${ref.reward} TON</div>
                             </div>
-                            <div style="font-size:10px; color:#fed7aa;">${ref.date}</div>
+                            <div style="font-size:10px; color:#94a3b8;">${ref.date}</div>
                         </div>
                     `);
                 });
@@ -1378,16 +1383,16 @@
             if (type === 'deposits') {
                 title.innerText = 'Deposit History';
                 if (state.depositsHistory.length === 0) {
-                    list.innerHTML = '<div style="text-align:center; color:#fed7aa; font-size:12px; padding:20px;">No deposit history found.</div>';
+                    list.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No deposit history found.</div>';
                 } else {
                     state.depositsHistory.forEach(item => {
                         list.insertAdjacentHTML('beforeend', `
                             <div class="history-item">
                                 <div>
-                                    <div style="font-weight:bold; color:#fb923c;">+${item.amount} TON</div>
-                                    <div style="font-size:10px; color:#fed7aa; margin-top:2px;">${item.type}</div>
+                                    <div style="font-weight:bold; color:#38bdf8;">+${item.amount} TON</div>
+                                    <div style="font-size:10px; color:#94a3b8; margin-top:2px;">${item.type}</div>
                                 </div>
-                                <div style="font-size:10px; color:#fed7aa;">${item.date}</div>
+                                <div style="font-size:10px; color:#94a3b8;">${item.date}</div>
                             </div>
                         `);
                     });
@@ -1395,16 +1400,16 @@
             } else {
                 title.innerText = 'Withdrawal History';
                 if (state.withdrawalsHistory.length === 0) {
-                    list.innerHTML = '<div style="text-align:center; color:#fed7aa; font-size:12px; padding:20px;">No withdrawal history found.</div>';
+                    list.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No withdrawal history found.</div>';
                 } else {
                     state.withdrawalsHistory.forEach(item => {
                         list.insertAdjacentHTML('beforeend', `
                             <div class="history-item">
                                 <div>
                                     <div style="font-weight:bold; color:#ef4444;">-${item.amount} TON</div>
-                                    <div style="font-size:10px; color:#fed7aa; margin-top:2px;">${item.type}</div>
+                                    <div style="font-size:10px; color:#94a3b8; margin-top:2px;">${item.type}</div>
                                 </div>
-                                <div style="font-size:10px; color:#fed7aa;">${item.date}</div>
+                                <div style="font-size:10px; color:#94a3b8;">${item.date}</div>
                             </div>
                         `);
                     });
