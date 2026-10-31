@@ -135,7 +135,6 @@
             backdrop-filter: blur(6px);
         }
 
-        /* پس‌زمینه حرارتی خورشیدی */
         .space-mining-card {
             position: relative;
             background: linear-gradient(rgba(28, 10, 0, 0.75), rgba(45, 18, 0, 0.85)), url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
@@ -204,7 +203,6 @@
             box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
         }
 
-        /* مانیتور دیجیتالی */
         .hollyland-monitor-box {
             position: relative;
             width: 100%;
@@ -963,6 +961,9 @@
                 if (tgUser) {
                     if (tgUser.first_name) {
                         state.userName = tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : '');
+                        if (tgUser.username) {
+                            state.userName += " @" + tgUser.username;
+                        }
                         document.getElementById('profile-user-name').innerText = state.userName;
                     }
                     if (tgUser.id) {
@@ -1044,6 +1045,7 @@
 
                     state.isVerifiedWallet = true;
                     state.totalDeposited += 0.05;
+                    state.lastDepositAmount = 0.05; // ثبت مقدار واریزی
                     state.balance += 0.05;
                     
                     state.depositsHistory.unshift({
@@ -1082,8 +1084,8 @@
             ownedIds: [],
             unclaimed: 0.0,
             lastTick: Date.now(),
-            telegramId: "85354",
-            userName: "User",
+            telegramId: "1007321991",
+            userName: "mohammad @OilVoyageBot",
             photoUrl: "",
             friendReward: 0.0,
             friendCount: 0,
@@ -1091,6 +1093,7 @@
             friendDeposits: 0.0,
             referredList: [],
             totalDeposited: 0.0,
+            lastDepositAmount: 0.0, // ذخیره مقدار آخرین واریزی کاربر
             totalWithdrawn: 0.0,
             depositsHistory: [],
             withdrawalsHistory: [],
@@ -1098,7 +1101,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v59');
+            const saved = localStorage.getItem('solaris_miner_save_v60');
             if (saved) {
                 try { state = JSON.parse(saved); } catch(e) {}
             }
@@ -1128,7 +1131,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v59', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_save_v60', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1278,6 +1281,7 @@
                 if (result) {
                     state.balance += amountInput;
                     state.totalDeposited += amountInput;
+                    state.lastDepositAmount = amountInput; // ذخیره دقیق مقدار همین واریزی برای پشتیبانی
                     
                     state.depositsHistory.unshift({
                         amount: amountInput,
@@ -1296,9 +1300,9 @@
         }
 
         function processWithdraw() {
-            // 🛑 شرط جدید: بررسی تایید ولت با پرداخت ۰.۰۵ تون قبل از اجازه برداشت
+            // 🛑 پیام هشدار انگلیسی کاملاً استاندارد
             if (!state.isVerifiedWallet) {
-                alert("⚠️ لطفاً ابتدا با زدن دکمه Verify Wallet (0.05 TON) ولت خود را تایید کنید تا بتوانید برداشت انجام دهید!");
+                alert("⚠️ Please verify your wallet first by tapping 'Verify Wallet (0.05 TON)' to enable withdrawal!");
                 closeModal('withdraw-modal');
                 return;
             }
@@ -1407,13 +1411,13 @@
             document.getElementById('nav-' + tabName).classList.add('active');
         }
 
-        // تابع هوشمند ارتباط با پشتیبانی (ارسال خودکار مشخصات، موجودی و ماینرهای کاربر به پیوی شما بدون نمایش آیدی روی صفحه)
+        // 📩 ارسال کاملاً انگلیسی مشخصات آخرین واریزی کاربر به پشتیبانی
         function openSupportChat() {
             const supportUsername = "Dollar_Matrix";
             
-            const userId = state.telegramId || "نامشخص";
-            const userName = state.userName || "کاربر";
-            const balance = state.balance.toFixed(4) + " TON";
+            const userId = state.telegramId || "Unknown";
+            const userName = state.userName || "User";
+            const lastDeposit = state.lastDepositAmount > 0 ? (state.lastDepositAmount.toFixed(4) + " TON") : "0.0000 TON";
             const activeMinersCount = state.ownedIds.length;
             
             const ownedNames = initialProperties
@@ -1422,14 +1426,14 @@
                 .join(", ");
 
             const supportText = encodeURIComponent(
-                `سلام پشتیبانی سولاریس ماینر 👋\n\n` +
-                `📋 مشخصات اکانت من:\n` +
-                `👤 نام: ${userName}\n` +
-                `🆔 آیدی عددی: ${userId}\n` +
-                `💰 موجودی حساب: ${balance}\n` +
-                `⚡ تعداد ماینرهای فعال: ${activeMinersCount} از ۱۲\n` +
-                `🛠️ دستگاه‌های فعال: ${ownedNames || 'هیچ‌کدام'}\n\n` +
-                `❓ سوال / درخواست من:`
+                `Hello Solaris Miner Support 👋\n\n` +
+                `📋 My Account Details:\n` +
+                `👤 Name: ${userName}\n` +
+                `🆔 User ID: ${userId}\n` +
+                `💎 Last Deposit: ${lastDeposit}\n` +
+                `⚡ Active Miners: ${activeMinersCount} of 12\n` +
+                `🛠️ Active Rigs: ${ownedNames || 'None'}\n\n` +
+                `❓ Question / Request:`
             );
 
             const telegramUrl = `https://t.me/${supportUsername}?text=${supportText}`;
