@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Solaris Miner - Cloud Mining</title>
+    <title>Solaris Miner - SLRC Mining</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <style>
@@ -79,6 +79,12 @@
             letter-spacing: 0.5px;
         }
 
+        .brand-sub {
+            font-size: 10px;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
         .balance-box {
             background: rgba(15, 23, 42, 0.85);
             border: 1px solid rgba(56, 189, 248, 0.4);
@@ -91,7 +97,7 @@
         }
 
         .balance-amount {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             color: #38bdf8;
         }
@@ -135,13 +141,12 @@
             backdrop-filter: blur(6px);
         }
 
-        /* تصویر پس زمینه مدار قرمز نئونی برای کارت ماینینگ */
         .space-mining-card {
             position: relative;
             background: linear-gradient(rgba(10, 0, 0, 0.75), rgba(30, 5, 5, 0.85)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
             border: 1px solid rgba(239, 68, 68, 0.5);
             border-radius: 24px;
-            padding: 35px 20px;
+            padding: 32px 20px;
             margin-bottom: 16px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(239, 68, 68, 0.25);
@@ -150,7 +155,7 @@
         }
 
         .mined-number {
-            font-size: 30px;
+            font-size: 28px;
             font-weight: 900;
             color: #ffffff;
             letter-spacing: -0.5px;
@@ -170,10 +175,9 @@
         .mined-rate {
             font-size: 11px;
             color: #fecdd3;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
-        /* دکمه دایره‌ای Claim */
         .btn-claim {
             background: linear-gradient(135deg, #ef4444, #b91c1c);
             color: #ffffff;
@@ -208,7 +212,7 @@
         .hollyland-monitor-box {
             position: relative;
             width: 100%;
-            height: 175px;
+            height: 165px;
             background: #0f172a;
             border-radius: 16px;
             border: 3px solid #334155;
@@ -235,7 +239,7 @@
 
         .monitor-screen-panel {
             width: 90%;
-            height: 115px;
+            height: 110px;
             background: #030712;
             border: 2px solid #ef4444;
             border-radius: 12px;
@@ -276,7 +280,7 @@
 
         .energy-flow-container {
             width: 100%;
-            height: 20px;
+            height: 18px;
             background: rgba(0, 0, 0, 0.5);
             border-radius: 20px;
             border: 1px solid rgba(52, 211, 153, 0.3);
@@ -380,7 +384,6 @@
             font-weight: bold;
         }
 
-        /* دکمه دایره‌ای خرید ماینر */
         .btn-buy {
             background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
@@ -427,20 +430,19 @@
         }
 
         .nav-item svg {
-            width: 20px;
-            height: 20px;
+            width: 19px;
+            height: 19px;
             fill: none;
             stroke: currentColor;
             stroke-width: 2;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
-        /* پس زمینه کره نئونی و فیبر نوری برای کیف پول */
         .wallet-main-card {
-            background: linear-gradient(rgba(5, 11, 20, 0.7), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+            background: linear-gradient(rgba(5, 11, 20, 0.72), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
             border: 1px solid rgba(56, 189, 248, 0.4);
             border-radius: 24px;
-            padding: 22px;
+            padding: 20px;
             margin-bottom: 15px;
             box-shadow: 0 8px 25px rgba(56, 189, 248, 0.25);
             color: #ffffff;
@@ -449,10 +451,9 @@
         .wallet-btn-row {
             display: flex;
             gap: 10px;
-            margin-top: 15px;
+            margin-top: 14px;
         }
 
-        /* دکمه‌های دایره‌ای کیف پول */
         .wallet-action-btn {
             flex: 1;
             background: linear-gradient(135deg, #38bdf8, #0284c7);
@@ -461,7 +462,7 @@
             padding: 12px;
             border-radius: 30px;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -476,7 +477,6 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* دکمه وریفای کیف پول دایره‌ای */
         .verify-wallet-btn {
             width: 100%;
             background: linear-gradient(135deg, #0284c7, #0369a1);
@@ -564,7 +564,6 @@
             line-height: 1.4;
         }
 
-        /* دکمه دایره‌ای پشتیبانی */
         .support-btn {
             background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
@@ -575,6 +574,76 @@
             font-size: 12px;
             cursor: pointer;
             width: 100%;
+        }
+
+        /* Task Cards & Bottom Summary Box */
+        .task-card {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            border-radius: 18px;
+            padding: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-reward-pill {
+            display: inline-block;
+            background: rgba(52, 211, 153, 0.14);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.35);
+            font-size: 10px;
+            font-weight: bold;
+            padding: 3px 9px;
+            border-radius: 20px;
+            margin-top: 6px;
+        }
+
+        .task-btn {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #ffffff;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .task-btn.done {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            cursor: default;
+        }
+
+        .earn-bottom-summary {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(8, 47, 73, 0.75));
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            border-radius: 22px;
+            padding: 16px;
+            margin-top: 18px;
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.2);
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 6px;
+            margin-bottom: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #38bdf8, #34d399);
+            width: 0%;
+            transition: width 0.35s ease;
         }
 
         .profile-header-card {
@@ -623,7 +692,7 @@
         }
 
         .profile-info-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #38bdf8;
         }
@@ -671,20 +740,21 @@
     <!-- LOADING SPLASH SCREEN -->
     <div id="splash-screen">
         <div class="spinner"></div>
-        <div class="splash-text">LOADING SOLARIS MINER...</div>
+        <div class="splash-text">LOADING SOLARIS (SLRC) MINER...</div>
     </div>
 
     <!-- HEADER -->
     <div class="header">
         <div class="brand-box">
             <h1>Solaris Miner</h1>
+            <div class="brand-sub">Token: SLRC • Min Hold: 2,500 • Min Withdraw: 10,000</div>
         </div>
         <div class="balance-box">
             <div>
-                <div style="font-size: 9px; color: #94a3b8;">Balance:</div>
-                <span class="balance-amount" id="user-balance">0.00000000 TON</span>
+                <div style="font-size: 9px; color: #94a3b8;">In-App Balance:</div>
+                <span class="balance-amount" id="user-balance">0.00 SLRC</span>
             </div>
-            <button class="add-btn" onclick="switchTab('wallet')">+</button>
+            <button class="add-btn" onclick="openBuySlrcRoute()">+</button>
         </div>
     </div>
 
@@ -695,14 +765,25 @@
         <div id="tab-profile" class="tab-content">
             <div style="font-size: 11px; color: #94a3b8; margin-bottom: 2px;">YOUR ACCOUNT</div>
             <div style="font-size: 22px; font-weight: bold; color: #38bdf8; margin-bottom: 4px;">Profile</div>
-            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 18px;">Your account, statistics and useful links.</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 18px;">Solaris (SLRC) account stats, hold status and links.</div>
 
             <div class="profile-header-card">
                 <img id="profile-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-avatar" alt="User Avatar">
                 <div>
                     <div class="profile-title-name" id="profile-user-name">User</div>
-                    <div class="profile-subtext">Mining Operations</div>
+                    <div class="profile-subtext">SLRC Mining Operations</div>
                 </div>
+            </div>
+
+            <div class="profile-info-card" onclick="openBuySlrcRoute()" style="cursor: pointer; background: rgba(52, 211, 153, 0.12); border-color: rgba(52, 211, 153, 0.35);">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 18px;">🛒</span>
+                    <div>
+                        <div style="font-size: 13px; color: #34d399; font-weight: bold;">Buy SLRC (STON.fi Route)</div>
+                        <div style="font-size: 10px; color: #94a3b8;">Hold at least 2,500 SLRC in wallet for withdrawal</div>
+                    </div>
+                </div>
+                <span style="color: #34d399; font-weight: bold; font-size: 16px;">&rarr;</span>
             </div>
 
             <div class="profile-info-card" onclick="switchTab('friends')" style="cursor: pointer; background: rgba(56, 189, 248, 0.15);">
@@ -710,7 +791,7 @@
                     <span style="font-size: 18px;">🎁</span>
                     <div>
                         <div style="font-size: 13px; color: #38bdf8; font-weight: bold;">Invite friends</div>
-                        <div style="font-size: 10px; color: #94a3b8;">Referral program and rewards</div>
+                        <div style="font-size: 10px; color: #94a3b8;">Referral program and SLRC rewards</div>
                     </div>
                 </div>
                 <span style="color: #38bdf8; font-weight: bold; font-size: 16px;">&rarr;</span>
@@ -718,52 +799,58 @@
 
             <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
                 <div class="profile-info-label">User ID</div>
-                <div class="profile-info-value" id="profile-user-id">85354</div>
+                <div class="profile-info-value" id="profile-user-id">1007321991</div>
             </div>
 
             <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
-                <div class="profile-info-label">Total deposited</div>
-                <div class="profile-info-value" id="profile-total-deposited">0.00</div>
+                <div class="profile-info-label">Wallet SLRC Hold (Min Required: 2,500 SLRC)</div>
+                <div class="profile-info-value" id="profile-wallet-hold">0 SLRC</div>
             </div>
 
             <div class="profile-info-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
-                <div class="profile-info-label">Total withdrawn</div>
-                <div class="profile-info-value" id="profile-total-withdrawn">0.00</div>
+                <div class="profile-info-label">Total SLRC Withdrawn (Min: 10,000 SLRC)</div>
+                <div class="profile-info-value" id="profile-total-withdrawn">0.00 SLRC</div>
             </div>
         </div>
 
         <!-- TAB 2: WALLET -->
         <div id="tab-wallet" class="tab-content">
             <div class="wallet-main-card">
-                <div style="font-size: 11px; color: #94a3b8;">Available balance</div>
-                <div style="font-size: 26px; font-weight: bold; color: #ffffff; margin-top: 4px;" id="wallet-balance-display">0.00000000 TON</div>
-                
+                <div style="font-size: 11px; color: #94a3b8;">In-App Mined SLRC Balance</div>
+                <div style="font-size: 25px; font-weight: bold; color: #ffffff; margin-top: 4px;" id="wallet-balance-display">0.00 SLRC</div>
+                <div style="font-size: 11px; color: #38bdf8; margin-top: 6px;" id="wallet-hold-status-text">
+                    Connected Wallet SLRC Hold: 0 / 2,500 SLRC (Locked)
+                </div>
+
                 <div class="wallet-btn-row">
-                    <button class="wallet-action-btn" onclick="openDepositModal()">+ Deposit via App</button>
-                    <button class="wallet-action-btn outline" onclick="openWithdrawModal()">↑ Withdraw</button>
+                    <button class="wallet-action-btn" onclick="openBuySlrcRoute()">🛒 Buy SLRC</button>
+                    <button class="wallet-action-btn outline" onclick="openWithdrawModal()">↑ Withdraw (10k+)</button>
                 </div>
             </div>
 
+            <!-- TonConnect Button Container (Preserved) -->
             <div id="ton-connect-button-container"></div>
 
+            <!-- Wallet SLRC Hold Sync Box -->
+            <div class="stats-card" style="margin-bottom: 12px;">
+                <div style="font-size: 12px; font-weight: bold; color: #38bdf8; margin-bottom: 6px;">SLRC Wallet Hold Check (Min: 2,500 SLRC)</div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 8px; line-height: 1.4;">
+                    Hold at least <b>2,500 SLRC</b> in your connected TON wallet and reach <b>10,000 SLRC</b> in-app balance to unlock withdrawal.
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <input type="number" id="wallet-hold-input" class="wallet-input" placeholder="Enter wallet SLRC hold (e.g. 2500)" style="margin-top: 0; flex: 1;">
+                    <button class="btn-buy" onclick="updateWalletHoldBalance()">Sync Hold</button>
+                </div>
+            </div>
+
+            <!-- Verify Wallet 0.1 TON (Preserved) -->
             <button class="verify-wallet-btn" id="verify-wallet-btn-id" onclick="verifyWalletWith01Ton()">Verify Wallet (0.1 TON)</button>
 
             <div class="support-card">
                 <div class="support-title">🎧 Secure & Instant Support</div>
-                <div class="support-desc">Deposit and invest with complete peace of mind! Transactions are fully secure.</div>
-                <div class="support-note">After depositing, please send the receipt to support for review.</div>
+                <div class="support-desc">Min withdrawal: 10,000 SLRC • Min wallet hold: 2,500 SLRC • Wallet verification: 0.1 TON.</div>
+                <div class="support-note">Need SLRC to meet the 2,500 hold requirement? Use the Buy SLRC button to open the STON.fi route.</div>
                 <button class="support-btn" onclick="openSupportChat()">Contact Support</button>
-            </div>
-
-            <div class="wallet-menu-box" onclick="openHistoryModal('deposits')">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span style="font-size: 18px;">📥</span>
-                    <div>
-                        <div style="font-size: 13px; font-weight: bold; color: #ffffff;">Deposits</div>
-                        <div style="font-size: 10px; color: #94a3b8;">Deposit history</div>
-                    </div>
-                </div>
-                <span style="color: #38bdf8; font-weight: bold;">View</span>
             </div>
 
             <div class="wallet-menu-box" onclick="openHistoryModal('withdrawals')">
@@ -771,21 +858,21 @@
                     <span style="font-size: 18px;">📤</span>
                     <div>
                         <div style="font-size: 13px; font-weight: bold; color: #ffffff;">Withdrawals</div>
-                        <div style="font-size: 10px; color: #94a3b8;">Withdrawal history</div>
+                        <div style="font-size: 10px; color: #94a3b8;">SLRC withdrawal history (Min 10,000 SLRC)</div>
                     </div>
                 </div>
                 <span style="color: #38bdf8; font-weight: bold;">View</span>
             </div>
         </div>
 
-        <!-- TAB 3: LAUNCHERS (Center) -->
+        <!-- TAB 3: LAUNCHERS (Center Mining) -->
         <div id="tab-properties" class="tab-content active">
             <div class="space-mining-card">
                 <div class="space-content-wrapper">
-                    <div class="mined-number" id="live-unclaimed">0.00000000</div>
-                    <div class="mined-label">ENERGY MINED</div>
-                    <div class="mined-rate" id="mined-rate-sub">≈ +0.00 TON daily rate</div>
-                    <button class="btn-claim" onclick="claimEarnings()">Claim Rewards</button>
+                    <div class="mined-number" id="live-unclaimed">0.0000</div>
+                    <div class="mined-label">SLRC ENERGY MINED</div>
+                    <div class="mined-rate" id="mined-rate-sub">≈ +0.00 SLRC daily rate</div>
+                    <button class="btn-claim" onclick="claimEarnings()">Claim SLRC Rewards</button>
                 </div>
             </div>
 
@@ -795,40 +882,81 @@
                     <div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-top: 2px;" id="owned-count">0 / 12 Active</div>
                 </div>
                 <div style="text-align: right;">
-                    <div style="font-size: 11px; color: #94a3b8;">Daily Income</div>
-                    <div style="font-size: 14px; font-weight: bold; color: #34d399; margin-top: 2px;" id="total-daily">+0.00 TON</div>
+                    <div style="font-size: 11px; color: #94a3b8;">Daily SLRC Rate</div>
+                    <div style="font-size: 14px; font-weight: bold; color: #34d399; margin-top: 2px;" id="total-daily">+0.00 SLRC</div>
                 </div>
             </div>
 
             <div id="properties-list"></div>
         </div>
 
-        <!-- TAB 4: MY SILOS -->
+        <!-- TAB 4: EARN (Tasks + Bottom Summary Box) -->
+        <div id="tab-earn" class="tab-content">
+            <div style="font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 4px;">Earn SLRC Tasks</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 14px;">Complete tasks to boost your SLRC balance toward the 10,000 SLRC withdrawal target.</div>
+
+            <div id="tasks-list"></div>
+
+            <!-- BOTTOM BOX OF TASKS TAB -->
+            <div class="earn-bottom-summary">
+                <div style="font-size: 14px; font-weight: bold; color: #38bdf8; margin-bottom: 6px;">
+                    📊 SLRC Withdrawal & Hold Progress
+                </div>
+                <div style="font-size: 11px; color: #cbd5e1; line-height: 1.5; margin-bottom: 10px;">
+                    • <b>Minimum Withdrawal:</b> 10,000 SLRC in-app balance<br>
+                    • <b>Minimum Wallet Hold:</b> 2,500 SLRC in connected wallet<br>
+                    • <b>Wallet Verification:</b> 0.1 TON via Tonkeeper
+                </div>
+
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8;">
+                    <span>In-App Balance vs 10,000 SLRC</span>
+                    <span id="earn-withdraw-progress-label" style="color: #34d399; font-weight: bold;">0 / 10,000 SLRC</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="earn-withdraw-progress-bar"></div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8;">
+                    <span>Wallet Hold vs 2,500 SLRC</span>
+                    <span id="earn-hold-progress-label" style="color: #38bdf8; font-weight: bold;">0 / 2,500 SLRC</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="earn-hold-progress-bar"></div>
+                </div>
+
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+                    <button class="wallet-action-btn" onclick="openBuySlrcRoute()">🛒 Buy SLRC (STON.fi)</button>
+                    <button class="wallet-action-btn outline" onclick="switchTab('wallet')">💼 Go to Wallet</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: MY SILOS -->
         <div id="tab-myresort" class="tab-content">
             <div style="text-align: center; padding: 30px 15px;">
                 <div style="font-size: 32px; margin-bottom: 10px;">⚡</div>
-                <h3 style="font-size: 16px; color: #ffffff; margin-bottom: 8px;">Active Mining Rigs</h3>
-                <p style="font-size: 11px; color: #94a3b8; line-height: 1.6; margin-bottom: 15px;">All purchased mining hardware units are currently active and generating rewards.</p>
+                <h3 style="font-size: 16px; color: #ffffff; margin-bottom: 8px;">Active SLRC Mining Rigs</h3>
+                <p style="font-size: 11px; color: #94a3b8; line-height: 1.6; margin-bottom: 15px;">All activated Solaris mining units are generating SLRC rewards.</p>
                 <div id="my-miners-list"></div>
             </div>
         </div>
 
-        <!-- TAB 5: FRIENDS -->
+        <!-- TAB 6: FRIENDS -->
         <div id="tab-friends" class="tab-content">
             <div style="font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 4px;">Friends</div>
             <div style="font-size: 11px; color: #94a3b8; margin-bottom: 14px;">YOUR CIRCLE OF FRIENDS</div>
 
             <div class="friends-top-card" style="background: linear-gradient(135deg, #0284c7, #0369a1); border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; padding: 18px; margin-bottom: 14px; text-align: left; color: #ffffff;">
-                <div style="font-size: 20px; font-weight: bold; color: #ffffff; margin-bottom: 8px;">15% <span style="font-size: 12px; color: #e0f2fe; font-weight: normal;">of friends' deposits</span></div>
+                <div style="font-size: 20px; font-weight: bold; color: #ffffff; margin-bottom: 8px;">15% <span style="font-size: 12px; color: #e0f2fe; font-weight: normal;">of friends' SLRC mining</span></div>
                 <div style="display: inline-block; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,0.2); color: #e0f2fe; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: bold;">
-                    +0.01 TON <span style="color: #ffffff; font-weight: normal;">for every friend</span>
+                    +50 SLRC <span style="color: #ffffff; font-weight: normal;">for every invited friend</span>
                 </div>
             </div>
 
             <div class="friends-collect-card" style="display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                 <div>
                     <div style="font-size: 11px; color: #94a3b8;">Ready to collect</div>
-                    <div style="font-size: 20px; font-weight: bold; color: #ffffff; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #38bdf8;">TON</span></div>
+                    <div style="font-size: 20px; font-weight: bold; color: #ffffff; margin-top: 2px;" id="friend-reward-display">0.00 <span style="font-size: 11px; color: #38bdf8;">SLRC</span></div>
                 </div>
                 <button class="wallet-action-btn" style="background: #0284c7; color: #fff; padding: 10px 22px; flex: unset;" onclick="collectFriendReward()">Collect</button>
             </div>
@@ -848,11 +976,11 @@
                 </div>
                 <div class="friends-stat-box" style="flex: 1; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 14px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                     <div style="font-size: 16px; font-weight: bold; color: #38bdf8;" id="friend-earned">0.00</div>
-                    <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Earned, TON</div>
+                    <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Earned, SLRC</div>
                 </div>
                 <div class="friends-stat-box" style="flex: 1; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 14px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                     <div style="font-size: 16px; font-weight: bold; color: #38bdf8;" id="friend-deposits">0.00</div>
-                    <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Deposits, TON</div>
+                    <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">SLRC Volume</div>
                 </div>
             </div>
 
@@ -866,40 +994,25 @@
 
     </div>
 
-    <!-- MODAL: DEPOSIT -->
-    <div id="deposit-modal" class="modal-overlay">
-        <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Instant Deposit via TonConnect</div>
-            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 12px; text-align: center;">Connect your Tonkeeper wallet and deposit TON instantly:</p>
-            <div style="font-size: 10px; color: #38bdf8; text-align: center; margin-bottom: 15px; font-weight: bold;">Min: 0.1 TON | Max: 1000 TON</div>
-            
-            <div style="margin-bottom: 12px;">
-                <label style="font-size: 11px; color: #94a3b8;">Amount (TON):</label>
-                <input type="number" id="deposit-amount-input" class="wallet-input" placeholder="Enter amount (0.1 - 1000)" step="0.01">
-            </div>
-
-            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); font-size: 13px; margin-bottom: 8px;" onclick="sendTonConnectTransaction()">Pay via TonConnect</button>
-            <button class="btn-buy" style="width: 100%; background: rgba(15,23,42,0.8); color: #ffffff;" onclick="closeModal('deposit-modal')">Close</button>
-        </div>
-    </div>
-
-    <!-- MODAL: WITHDRAW -->
+    <!-- MODAL: WITHDRAW SLRC -->
     <div id="withdraw-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Withdrawal</div>
-            <div style="font-size: 10px; color: #38bdf8; text-align: center; margin-bottom: 15px; font-weight: bold;">Min: 1.0 TON | Max: 1000 TON</div>
-            
+            <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 6px; text-align: center;">Withdraw SLRC</div>
+            <div style="font-size: 10px; color: #34d399; text-align: center; margin-bottom: 12px; font-weight: bold; line-height: 1.5;">
+                Min Withdraw: 10,000 SLRC • Min Wallet Hold: 2,500 SLRC
+            </div>
+
             <div style="margin-bottom: 10px;">
-                <label style="font-size: 11px; color: #94a3b8;">Withdrawal Amount:</label>
-                <input type="number" id="withdraw-amount" class="wallet-input" placeholder="Enter amount (1 - 1000)" step="0.01">
+                <label style="font-size: 11px; color: #94a3b8;">Withdrawal Amount (SLRC):</label>
+                <input type="number" id="withdraw-amount" class="wallet-input" placeholder="Minimum 10,000 SLRC" step="1">
             </div>
 
             <div style="margin-bottom: 15px;">
-                <label style="font-size: 11px; color: #94a3b8;">Destination Address:</label>
+                <label style="font-size: 11px; color: #94a3b8;">Destination TON Wallet Address:</label>
                 <input type="text" id="withdraw-address" class="wallet-input" placeholder="Enter TON wallet address">
             </div>
 
-            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); font-size: 13px;" onclick="processWithdraw()">Confirm Withdrawal</button>
+            <button class="btn-buy" style="width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); font-size: 13px;" onclick="processWithdraw()">Confirm SLRC Withdrawal</button>
             <button class="btn-buy" style="width: 100%; background: rgba(15,23,42,0.8); color: #ffffff; margin-top: 8px;" onclick="closeModal('withdraw-modal')">Cancel</button>
         </div>
     </div>
@@ -907,7 +1020,7 @@
     <!-- MODAL: HISTORY -->
     <div id="history-modal" class="modal-overlay">
         <div class="modal-card">
-            <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 12px; text-align: center;" id="history-title">History</div>
+            <div style="font-size: 15px; font-weight: bold; color: #38bdf8; margin-bottom: 12px; text-align: center;" id="history-title">Withdrawal History</div>
             <div id="history-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;"></div>
             <button class="btn-buy" style="width: 100%; background: rgba(15,23,42,0.8); color: #ffffff;" onclick="closeModal('history-modal')">Close</button>
         </div>
@@ -925,7 +1038,11 @@
         </div>
         <div class="nav-item active" id="nav-properties" onclick="switchTab('properties')">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            <span>Launchers</span>
+            <span>Miners</span>
+        </div>
+        <div class="nav-item" id="nav-earn" onclick="switchTab('earn')">
+            <svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
+            <span>Earn</span>
         </div>
         <div class="nav-item" id="nav-myresort" onclick="switchTab('myresort')">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -938,16 +1055,64 @@
     </div>
 
     <script>
+        // Core SLRC & TonConnect Config (Preserved TonConnect manifest & recipient wallet)
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
+        const slrcJettonAddress = "EQDSXX...0JPV"; // Replace with full SLRC jetton master address if needed
+        const buySlrcRouteUrl = "https://t.me/KeepEyeBot"; // Replace with your exact STON.fi / KeepEye route bot link if needed
         const supportTelegramId = "Dollar_Matrix";
         const botUsername = "SolarisMiner_bot";
-        
+
+        const MIN_HOLD_SLRC = 2500;
+        const MIN_WITHDRAW_SLRC = 10000;
+
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json',
             uiPreferences: {
                 borderRadius: 'm'
             }
         });
+
+        const initialProperties = [
+            { id: 1, name: "Solaris Alpha", desc: "Free starter SLRC unit", daily: 120, monthly: 3600, price: 0 },
+            { id: 2, name: "Solaris Quantum", desc: "Boosted SLRC mining rig", daily: 450, monthly: 13500, price: 500 },
+            { id: 3, name: "Solaris Helios", desc: "Dual-core solar extractor", daily: 950, monthly: 28500, price: 1200 },
+            { id: 4, name: "Solaris Stellar", desc: "High-output reactor node", daily: 1800, monthly: 54000, price: 2500 },
+            { id: 5, name: "Solaris Photon", desc: "Fast-yield hashing array", daily: 3200, monthly: 96000, price: 4500 },
+            { id: 6, name: "Solaris Titan", desc: "Heavy SLRC mining station", daily: 5500, monthly: 165000, price: 8000 },
+            { id: 7, name: "Solaris Nova", desc: "Industrial energy cluster", daily: 9000, monthly: 270000, price: 12000 },
+            { id: 8, name: "Solaris Supernova", desc: "Enterprise solar grid", daily: 15000, monthly: 450000, price: 20000 },
+            { id: 9, name: "Solaris Cyber Matrix", desc: "Neural SLRC processor", daily: 24000, monthly: 720000, price: 32000 },
+            { id: 10, name: "Solaris Vault", desc: "High-capacity mining vault", daily: 38000, monthly: 1140000, price: 50000 },
+            { id: 11, name: "Solaris Zenith", desc: "Ultra-tier SLRC engine", daily: 60000, monthly: 1800000, price: 80000 },
+            { id: 12, name: "Solaris Sovereign", desc: "Flagship Solaris facility", daily: 100000, monthly: 3000000, price: 120000 }
+        ];
+
+        const earnTasks = [
+            { id: 'task_daily', title: 'Daily Solaris Check-In', desc: 'Claim your daily SLRC bonus', reward: 250, type: 'claim' },
+            { id: 'task_wallet_connect', title: 'Connect TON Wallet (Tonkeeper)', desc: 'Link your wallet in the Wallet tab', reward: 500, type: 'wallet' },
+            { id: 'task_buy_slrc', title: 'Buy / Hold 2,500+ SLRC', desc: 'Open STON.fi purchase route & hold at least 2,500 SLRC', reward: 1000, type: 'buy' },
+            { id: 'task_share_ref', title: 'Share Invitation Link', desc: 'Spread your Solaris Miner referral link', reward: 300, type: 'share' }
+        ];
+
+        let state = {
+            balance: 0.0,
+            walletSlrcHold: 0.0,
+            ownedIds: [1],
+            completedTasks: [],
+            unclaimed: 0.0,
+            lastTick: Date.now(),
+            telegramId: "1007321991",
+            userName: "mohammad @OilVoyageBot",
+            photoUrl: "",
+            friendReward: 0.0,
+            friendCount: 0,
+            friendEarned: 0.0,
+            friendDeposits: 0.0,
+            referredList: [],
+            totalWithdrawn: 0.0,
+            withdrawalsHistory: [],
+            isVerifiedWallet: false
+        };
 
         window.addEventListener('DOMContentLoaded', () => {
             tonConnectUI.uiOptions = {
@@ -962,11 +1127,11 @@
                     splash.style.opacity = '0';
                     setTimeout(() => splash.style.display = 'none', 500);
                 }
-            }, 1500);
+            }, 1200);
         });
 
         function initTelegramUser() {
-            let currentUserId = "1007321991";
+            let currentUserId = state.telegramId || "1007321991";
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
                 const tgUser = window.Telegram.WebApp.initDataUnsafe.user;
                 if (tgUser) {
@@ -988,7 +1153,7 @@
                     }
                 }
             }
-            
+
             const refLink = `https://t.me/${botUsername}?start=${currentUserId}`;
             document.getElementById('ref-link-input').value = refLink;
             checkUrlReferral();
@@ -997,25 +1162,33 @@
         function checkUrlReferral() {
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.start_param) {
                 const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
-                if (startParam && !localStorage.getItem('solaris_ref_claimed')) {
+                if (startParam && !localStorage.getItem('solaris_slrc_ref_claimed')) {
                     state.friendCount += 1;
-                    state.friendReward += 0.01;
-                    state.friendEarned += 0.01;
+                    state.friendReward += 50;
+                    state.friendEarned += 50;
                     state.referredList.unshift({
                         name: "Solaris Cadet #" + Math.floor(Math.random() * 8999 + 1000),
-                        reward: 0.01,
+                        reward: 50,
                         date: new Date().toLocaleDateString()
                     });
-                    localStorage.setItem('solaris_ref_claimed', 'true');
+                    localStorage.setItem('solaris_slrc_ref_claimed', 'true');
                     saveState();
                 }
             }
         }
 
+        function openBuySlrcRoute() {
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink && buySlrcRouteUrl.startsWith('https://t.me/')) {
+                window.Telegram.WebApp.openTelegramLink(buySlrcRouteUrl);
+            } else {
+                window.open(buySlrcRouteUrl, "_blank");
+            }
+        }
+
         function shareRefLink() {
             const refLink = document.getElementById('ref-link-input').value;
-            const text = encodeURIComponent("🚀 Join Solaris Miner and start mining TON rewards with me!\n\n" + refLink);
-            
+            const text = encodeURIComponent("☀️ Join Solaris Miner and mine SLRC tokens! Hold 2,500+ SLRC and reach 10,000 SLRC to withdraw:\n\n" + refLink);
+
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
                 window.Telegram.WebApp.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${text}`);
             } else {
@@ -1026,19 +1199,19 @@
 
         function collectFriendReward() {
             if (state.friendReward <= 0) {
-                alert("❌ No reward available to collect yet.");
+                alert("❌ No SLRC referral reward available yet.");
                 return;
             }
             state.balance += state.friendReward;
             state.friendReward = 0;
             saveState();
             updateUI();
-            alert("✅ Friend rewards collected successfully into your balance!");
+            alert("✅ Friend SLRC rewards added to your in-app balance!");
         }
 
         async function verifyWalletWith01Ton() {
             if (!tonConnectUI.connected) {
-                alert("⚠️ Please connect your wallet first using the Connect Wallet button!");
+                alert("⚠️ Please connect your wallet first using Connect Wallet!");
                 return;
             }
 
@@ -1051,25 +1224,10 @@
             try {
                 const result = await tonConnectUI.sendTransaction(transaction);
                 if (result) {
-                    const btn = document.getElementById('verify-wallet-btn-id');
-                    btn.className = "verify-wallet-btn verified";
-                    btn.innerHTML = "✅ Verified Secure";
-                    btn.onclick = null;
-
                     state.isVerifiedWallet = true;
-                    state.totalDeposited += 0.1;
-                    state.lastDepositAmount = 0.1;
-                    state.balance += 0.1;
-                    
-                    state.depositsHistory.unshift({
-                        amount: 0.1,
-                        type: 'Wallet Verification',
-                        date: new Date().toLocaleString()
-                    });
-
                     saveState();
                     updateUI();
-                    alert("✅ Wallet verified successfully and securely!");
+                    alert("✅ Wallet verified with 0.1 TON!");
                 }
             } catch (e) {
                 console.error(e);
@@ -1077,60 +1235,41 @@
             }
         }
 
-        const initialProperties = [
-            { id: 1, name: "Solaris Alpha", desc: "Compact entry-level mining unit", daily: 0.10, monthly: 3.00, price: 0 },
-            { id: 2, name: "Solaris Quantum", desc: "Single-board residential setup", daily: 0.66, monthly: 19.80, price: 3.00 },
-            { id: 3, name: "Solaris Helios", desc: "High-performance dual fan rig", daily: 1.20, monthly: 36.00, price: 5.00 },
-            { id: 4, name: "Solaris Stellar", desc: "Multi-tier cooling tower rig", daily: 2.60, monthly: 78.00, price: 10.00 },
-            { id: 5, name: "Solaris Photon", desc: "High-efficiency hashing module", daily: 5.50, monthly: 165.00, price: 20.00 },
-            { id: 6, name: "Solaris Titan", desc: "Full-rack server mining station", daily: 12.00, monthly: 360.00, price: 45.00 },
-            { id: 7, name: "Solaris Nova", desc: "Liquid cooled industrial unit", daily: 26.00, monthly: 780.00, price: 90.00 },
-            { id: 8, name: "Solaris Supernova", desc: "Large-scale enterprise array", daily: 60.00, monthly: 1800.00, price: 200.00 },
-            { id: 9, name: "Solaris Cyber Matrix", desc: "Advanced neural mining cluster", daily: 140.00, monthly: 4200.00, price: 450.00 },
-            { id: 10, name: "Solaris Vault", desc: "High-security enterprise vault", daily: 310.00, monthly: 9300.00, price: 950.00 },
-            { id: 11, name: "Solaris Zenith", desc: "Next-gen ultra high-yield processor", daily: 700.00, monthly: 21000.00, price: 2000.00 },
-            { id: 12, name: "Solaris Sovereign", desc: "The pinnacle sovereign facility", daily: 1500.00, monthly: 45000.00, price: 4000.00 }
-        ];
-
-        let state = {
-            balance: 0.0,
-            ownedIds: [],
-            unclaimed: 0.0,
-            lastTick: Date.now(),
-            telegramId: "1007321991",
-            userName: "mohammad @OilVoyageBot",
-            photoUrl: "",
-            friendReward: 0.0,
-            friendCount: 0,
-            friendEarned: 0.0,
-            friendDeposits: 0.0,
-            referredList: [],
-            totalDeposited: 0.0,
-            lastDepositAmount: 0.0,
-            totalWithdrawn: 0.0,
-            depositsHistory: [],
-            withdrawalsHistory: [],
-            isVerifiedWallet: false
-        };
+        function updateWalletHoldBalance() {
+            const val = parseFloat(document.getElementById('wallet-hold-input').value);
+            if (isNaN(val) || val < 0) {
+                alert("❌ Please enter a valid SLRC hold amount.");
+                return;
+            }
+            state.walletSlrcHold = val;
+            saveState();
+            updateUI();
+            if (val >= MIN_HOLD_SLRC) {
+                alert(`✅ Wallet SLRC hold updated (${val.toLocaleString()} SLRC). Minimum 2,500 SLRC hold requirement is met!`);
+            } else {
+                alert(`ℹ️ Wallet SLRC hold updated (${val.toLocaleString()} SLRC). You still need at least ${MIN_HOLD_SLRC.toLocaleString()} SLRC in your wallet.`);
+            }
+        }
 
         function loadState() {
-            const saved = localStorage.getItem('solaris_miner_save_v68');
+            const saved = localStorage.getItem('solaris_miner_slrc_v1');
             if (saved) {
-                try { state = JSON.parse(saved); } catch(e) {}
+                try {
+                    const parsed = JSON.parse(saved);
+                    state = { ...state, ...parsed };
+                } catch (e) {}
             }
-            if (state.isVerifiedWallet) {
-                const btn = document.getElementById('verify-wallet-btn-id');
-                if(btn) {
-                    btn.className = "verify-wallet-btn verified";
-                    btn.innerHTML = "✅ Verified Secure";
-                    btn.onclick = null;
-                }
-            }
+
+            document.getElementById('profile-user-name').innerText = state.userName;
+            document.getElementById('profile-user-id').innerText = state.telegramId;
             if (state.photoUrl) {
                 document.getElementById('profile-img').src = state.photoUrl;
             }
-            document.getElementById('profile-user-name').innerText = state.userName;
-            document.getElementById('profile-user-id').innerText = state.telegramId;
+
+            const holdInput = document.getElementById('wallet-hold-input');
+            if (holdInput && state.walletSlrcHold > 0) {
+                holdInput.value = state.walletSlrcHold;
+            }
 
             const now = Date.now();
             const elapsedSeconds = (now - state.lastTick) / 1000;
@@ -1139,12 +1278,14 @@
             }
             state.lastTick = now;
             renderProperties();
+            renderTasks();
             renderFriends();
+            updateUI();
         }
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem('solaris_miner_save_v68', JSON.stringify(state));
+            localStorage.setItem('solaris_miner_slrc_v1', JSON.stringify(state));
         }
 
         function getTotalDailyRate() {
@@ -1162,15 +1303,15 @@
 
             initialProperties.forEach(item => {
                 const isOwned = state.ownedIds.includes(item.id);
-                const displayPrice = item.price === 0 ? "Free" : item.price + " TON";
-                
+                const displayPrice = item.price === 0 ? "Free" : item.price.toLocaleString() + " SLRC";
+
                 const monitorHTML = `
                     <div class="hollyland-monitor-box ${isOwned ? 'active' : ''}">
                         <div class="monitor-antenna-left"></div>
                         <div class="monitor-antenna-right"></div>
                         <div class="monitor-screen-panel">
                             <div class="monitor-top-bar">
-                                <span class="monitor-status-text">${isOwned ? 'ONLINE / MINING' : 'STANDBY / LOCKED'}</span>
+                                <span class="monitor-status-text">${isOwned ? 'ONLINE / MINING SLRC' : 'STANDBY / LOCKED'}</span>
                                 <span style="color: ${isOwned ? '#34d399' : '#ef4444'};">${isOwned ? '● REC' : '■ OFF'}</span>
                             </div>
                             ${isOwned ? `
@@ -1183,8 +1324,8 @@
                                 </div>
                             `}
                             <div class="monitor-bottom-info">
-                                <span>${isOwned ? '+' + item.daily.toFixed(1) + ' TON/d' : 'LOCKED'}</span>
-                                <span>${isOwned ? 'HASH OK' : 'NO SIGNAL'}</span>
+                                <span>${isOwned ? '+' + item.daily.toLocaleString() + ' SLRC/d' : 'LOCKED'}</span>
+                                <span>${isOwned ? 'SLRC OK' : 'NO SIGNAL'}</span>
                             </div>
                         </div>
                     </div>
@@ -1193,26 +1334,22 @@
                 container.insertAdjacentHTML('beforeend', `
                     <div class="property-card ${isOwned ? 'active-miner' : ''}">
                         <div class="property-badge" style="${isOwned ? 'background:rgba(16,185,129,0.2); color:#34d399;' : ''}">${isOwned ? '⚡ Active' : 'Solaris Rig'}</div>
-                        
                         ${monitorHTML}
-
                         <div class="property-title">${item.name}</div>
                         <div class="property-desc">${item.desc}</div>
-                        
                         <div class="property-grid">
                             <div class="property-stat-item">
                                 <div>Daily Income</div>
-                                <div>+${item.daily.toFixed(2)} TON</div>
+                                <div>+${item.daily.toLocaleString()} SLRC</div>
                             </div>
                             <div class="property-stat-item" style="text-align: right;">
                                 <div>30 Days Return</div>
-                                <div>${item.monthly.toFixed(2)} TON</div>
+                                <div>${item.monthly.toLocaleString()} SLRC</div>
                             </div>
                         </div>
-
                         <div class="property-footer">
                             <div class="property-price" style="${item.price === 0 ? 'color:#34d399;' : ''}">${displayPrice}</div>
-                            <button class="btn-buy" style="${isOwned ? 'background:rgba(15,23,42,0.8); color:#94a3b8; cursor:default;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Purchased' : 'Start Mining'}</button>
+                            <button class="btn-buy" style="${isOwned ? 'background:rgba(15,23,42,0.8); color:#94a3b8; cursor:default;' : ''}" onclick="buyProperty(${item.id})">${isOwned ? 'Active' : 'Unlock Rig'}</button>
                         </div>
                     </div>
                 `);
@@ -1222,19 +1359,69 @@
                         <div class="property-card active-miner" style="text-align:left;">
                             ${monitorHTML}
                             <div class="property-title" style="color:#34d399;">${item.name}</div>
-                            <div class="property-desc">Mining Speed: +${item.daily.toFixed(2)} TON / day</div>
+                            <div class="property-desc">Mining Speed: +${item.daily.toLocaleString()} SLRC / day</div>
                         </div>
                     `);
                 }
             });
+        }
+
+        function renderTasks() {
+            const container = document.getElementById('tasks-list');
+            if (!container) return;
+            container.innerHTML = '';
+
+            earnTasks.forEach(task => {
+                const isDone = state.completedTasks.includes(task.id);
+                let btnText = isDone ? '✓ Claimed' : 'Complete';
+                if (!isDone && task.type === 'buy') btnText = 'Buy / Claim';
+                if (!isDone && task.type === 'wallet') btnText = 'Check Wallet';
+
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="task-card">
+                        <div>
+                            <div style="font-size: 13px; font-weight: bold; color: #ffffff;">${task.title}</div>
+                            <div style="font-size: 11px; color: #94a3b8; margin-top: 3px;">${task.desc}</div>
+                            <div class="task-reward-pill">+${task.reward.toLocaleString()} SLRC</div>
+                        </div>
+                        <button class="task-btn ${isDone ? 'done' : ''}" onclick="completeTask('${task.id}')">${btnText}</button>
+                    </div>
+                `);
+            });
+        }
+
+        function completeTask(taskId) {
+            if (state.completedTasks.includes(taskId)) return;
+            const task = earnTasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            if (task.type === 'wallet' && !tonConnectUI.connected) {
+                alert("⚠️ Connect your TON wallet in the Wallet tab first!");
+                switchTab('wallet');
+                return;
+            }
+
+            if (task.type === 'buy') {
+                openBuySlrcRoute();
+            }
+
+            if (task.type === 'share') {
+                shareRefLink();
+            }
+
+            state.completedTasks.push(taskId);
+            state.balance += task.reward;
+            saveState();
+            renderTasks();
             updateUI();
+            alert(`✅ Task completed! +${task.reward.toLocaleString()} SLRC added to your balance.`);
         }
 
         function renderFriends() {
             document.getElementById('friend-count').innerText = state.friendCount;
-            document.getElementById('friend-earned').innerText = state.friendEarned.toFixed(2);
-            document.getElementById('friend-deposits').innerText = state.friendDeposits.toFixed(2);
-            document.getElementById('friend-reward-display').innerHTML = state.friendReward.toFixed(2) + ' <span style="font-size: 11px; color: #38bdf8;">TON</span>';
+            document.getElementById('friend-earned').innerText = state.friendEarned.toFixed(0);
+            document.getElementById('friend-deposits').innerText = state.friendDeposits.toFixed(0);
+            document.getElementById('friend-reward-display').innerHTML = state.friendReward.toFixed(0) + ' <span style="font-size: 11px; color: #38bdf8;">SLRC</span>';
 
             const listContainer = document.getElementById('referred-friends-list');
             if (state.referredList.length === 0) {
@@ -1246,7 +1433,7 @@
                         <div class="history-item">
                             <div>
                                 <div style="font-weight:bold; color:#ffffff;">👤 ${ref.name}</div>
-                                <div style="font-size:10px; color:#38bdf8; margin-top:2px;">Bonus: +${ref.reward} TON</div>
+                                <div style="font-size:10px; color:#38bdf8; margin-top:2px;">Bonus: +${ref.reward} SLRC</div>
                             </div>
                             <div style="font-size:10px; color:#94a3b8;">${ref.date}</div>
                         </div>
@@ -1259,15 +1446,16 @@
             if (state.ownedIds.includes(id)) return;
             const prop = initialProperties.find(p => p.id === id);
             if (state.balance < prop.price) {
-                alert("❌ Insufficient balance.");
-                switchTab('wallet');
+                alert(`❌ Insufficient SLRC balance. Need ${prop.price.toLocaleString()} SLRC.`);
+                switchTab('earn');
                 return;
             }
             state.balance -= prop.price;
             state.ownedIds.push(id);
             saveState();
             renderProperties();
-            alert(`🎉 ${prop.name} activated successfully! Digital monitor is now online and mining.`);
+            updateUI();
+            alert(`🎉 ${prop.name} activated! Now mining +${prop.daily.toLocaleString()} SLRC/day.`);
         }
 
         function claimEarnings() {
@@ -1276,144 +1464,126 @@
             state.unclaimed = 0;
             saveState();
             updateUI();
-            alert("✅ Rewards added to your balance!");
-        }
-
-        async function sendTonConnectTransaction() {
-            if (!tonConnectUI.connected) {
-                alert("⚠️ Please connect your wallet first!");
-                return;
-            }
-            const amountInput = parseFloat(document.getElementById('deposit-amount-input').value);
-            if (isNaN(amountInput) || amountInput < 0.1) return;
-
-            try {
-                const result = await tonConnectUI.sendTransaction({
-                    validUntil: Math.floor(Date.now() / 1000) + 600,
-                    messages: [{ address: recipientWalletAddress, amount: Math.floor(amountInput * 1000000000).toString() }]
-                });
-
-                if (result) {
-                    state.balance += amountInput;
-                    state.totalDeposited += amountInput;
-                    state.lastDepositAmount = amountInput;
-                    
-                    state.depositsHistory.unshift({
-                        amount: amountInput,
-                        type: 'TonConnect Deposit',
-                        date: new Date().toLocaleString()
-                    });
-
-                    saveState();
-                    updateUI();
-                    closeModal('deposit-modal');
-                    alert(`✅ Deposit of ${amountInput} TON successful!`);
-                }
-            } catch (e) {
-                alert("❌ Transaction cancelled.");
-            }
+            alert("✅ Mined SLRC rewards claimed into your balance!");
         }
 
         function processWithdraw() {
-            if (!state.isVerifiedWallet) {
-                alert("⚠️ Please verify your wallet first by tapping 'Verify Wallet (0.1 TON)' to enable withdrawal!");
-                closeModal('withdraw-modal');
-                return;
-            }
-
             const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
-            const address = document.getElementById('withdraw-address').value;
+            const address = document.getElementById('withdraw-address').value.trim();
 
-            if (amount < 1.0) {
-                alert("❌ Minimum withdrawal amount is 1.0 TON.");
+            if (!tonConnectUI.connected) {
+                alert("⚠️ Please connect your TON wallet first!");
                 return;
             }
+
+            if (amount < MIN_WITHDRAW_SLRC) {
+                alert(`❌ Minimum withdrawal amount is ${MIN_WITHDRAW_SLRC.toLocaleString()} SLRC.`);
+                return;
+            }
+
+            if (state.balance < amount) {
+                alert(`❌ Insufficient in-app balance. You need at least ${MIN_WITHDRAW_SLRC.toLocaleString()} SLRC.`);
+                return;
+            }
+
+            if (state.walletSlrcHold < MIN_HOLD_SLRC) {
+                alert(`⚠️ You must hold at least ${MIN_HOLD_SLRC.toLocaleString()} SLRC in your connected wallet to withdraw! Current hold: ${state.walletSlrcHold.toLocaleString()} SLRC.`);
+                return;
+            }
+
             if (!address || address.length < 10) {
                 alert("❌ Please enter a valid TON wallet address.");
-                return;
-            }
-            if (state.balance < amount) {
-                alert("❌ Insufficient available balance.");
                 return;
             }
 
             state.balance -= amount;
             state.totalWithdrawn += amount;
-            
+
             state.withdrawalsHistory.unshift({
                 amount: amount,
-                type: 'Wallet Withdrawal',
+                address: address,
+                type: 'SLRC Withdrawal',
                 date: new Date().toLocaleString()
             });
 
             saveState();
             updateUI();
             closeModal('withdraw-modal');
-            alert("✅ Withdrawal request submitted successfully!");
+            alert(`✅ Withdrawal request for ${amount.toLocaleString()} SLRC submitted!`);
         }
 
         function updateUI() {
-            document.getElementById('user-balance').innerText = state.balance.toFixed(8) + ' TON';
-            document.getElementById('wallet-balance-display').innerText = state.balance.toFixed(8) + ' TON';
-            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(8);
+            const holdOk = state.walletSlrcHold >= MIN_HOLD_SLRC;
+
+            document.getElementById('user-balance').innerText = Math.floor(state.balance).toLocaleString() + ' SLRC';
+            document.getElementById('wallet-balance-display').innerText = Math.floor(state.balance).toLocaleString() + ' SLRC';
+            document.getElementById('live-unclaimed').innerText = state.unclaimed.toFixed(2) + ' SLRC';
             document.getElementById('owned-count').innerText = state.ownedIds.length + " / 12 Active";
-            document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toFixed(2) + " TON";
-            document.getElementById('profile-total-deposited').innerText = state.totalDeposited.toFixed(2) + ' TON';
-            document.getElementById('profile-total-withdrawn').innerText = state.totalWithdrawn.toFixed(2) + ' TON';
+            document.getElementById('total-daily').innerText = "+" + getTotalDailyRate().toLocaleString() + " SLRC";
+            document.getElementById('mined-rate-sub').innerText = `≈ +${getTotalDailyRate().toLocaleString()} SLRC daily rate • Min Withdraw: 10,000 SLRC`;
+
+            document.getElementById('wallet-hold-status-text').innerText =
+                `Connected Wallet SLRC Hold: ${state.walletSlrcHold.toLocaleString()} / ${MIN_HOLD_SLRC.toLocaleString()} SLRC (${holdOk ? 'Hold Requirement Met ✓' : 'Min 2,500 SLRC Required'})`;
+            document.getElementById('wallet-hold-status-text').style.color = holdOk ? '#34d399' : '#fca5a5';
+
+            document.getElementById('profile-wallet-hold').innerText =
+                `${state.walletSlrcHold.toLocaleString()} SLRC (${holdOk ? '✓ OK' : 'Need 2,500 SLRC'})`;
+            document.getElementById('profile-total-withdrawn').innerText = state.totalWithdrawn.toLocaleString() + ' SLRC';
+
+            // Bottom box progress bars inside Earn tab
+            const withdrawPct = Math.min(100, (state.balance / MIN_WITHDRAW_SLRC) * 100);
+            const holdPct = Math.min(100, (state.walletSlrcHold / MIN_HOLD_SLRC) * 100);
+
+            const wBar = document.getElementById('earn-withdraw-progress-bar');
+            const wLbl = document.getElementById('earn-withdraw-progress-label');
+            const hBar = document.getElementById('earn-hold-progress-bar');
+            const hLbl = document.getElementById('earn-hold-progress-label');
+
+            if (wBar) wBar.style.width = withdrawPct + '%';
+            if (wLbl) wLbl.innerText = `${Math.floor(state.balance).toLocaleString()} / 10,000 SLRC`;
+            if (hBar) hBar.style.width = holdPct + '%';
+            if (hLbl) hLbl.innerText = `${state.walletSlrcHold.toLocaleString()} / 2,500 SLRC`;
+
+            const verifyBtn = document.getElementById('verify-wallet-btn-id');
+            if (verifyBtn && state.isVerifiedWallet) {
+                verifyBtn.className = "verify-wallet-btn verified";
+                verifyBtn.innerHTML = "✅ Wallet Verified (0.1 TON)";
+            }
+
             renderFriends();
         }
 
         setInterval(() => {
             state.unclaimed += getTotalDailyRate() / 86400;
             const el = document.getElementById('live-unclaimed');
-            if (el) el.innerText = state.unclaimed.toFixed(8);
+            if (el) el.innerText = state.unclaimed.toFixed(2) + ' SLRC';
             saveState();
         }, 1000);
 
-        function openDepositModal() { document.getElementById('deposit-modal').style.display = 'flex'; }
         function openWithdrawModal() { document.getElementById('withdraw-modal').style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        function openHistoryModal(type) {
+        function openHistoryModal() {
             const modal = document.getElementById('history-modal');
             const title = document.getElementById('history-title');
             const list = document.getElementById('history-list');
             list.innerHTML = '';
+            title.innerText = 'SLRC Withdrawal History';
 
-            if (type === 'deposits') {
-                title.innerText = 'Deposit History';
-                if (state.depositsHistory.length === 0) {
-                    list.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No deposit history found.</div>';
-                } else {
-                    state.depositsHistory.forEach(item => {
-                        list.insertAdjacentHTML('beforeend', `
-                            <div class="history-item">
-                                <div>
-                                    <div style="font-weight:bold; color:#38bdf8;">+${item.amount} TON</div>
-                                    <div style="font-size:10px; color:#94a3b8; margin-top:2px;">${item.type}</div>
-                                </div>
-                                <div style="font-size:10px; color:#94a3b8;">${item.date}</div>
-                            </div>
-                        `);
-                    });
-                }
+            if (state.withdrawalsHistory.length === 0) {
+                list.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No SLRC withdrawal history found.</div>';
             } else {
-                title.innerText = 'Withdrawal History';
-                if (state.withdrawalsHistory.length === 0) {
-                    list.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;">No withdrawal history found.</div>';
-                } else {
-                    state.withdrawalsHistory.forEach(item => {
-                        list.insertAdjacentHTML('beforeend', `
-                            <div class="history-item">
-                                <div>
-                                    <div style="font-weight:bold; color:#ef4444;">-${item.amount} TON</div>
-                                    <div style="font-size:10px; color:#94a3b8; margin-top:2px;">${item.type}</div>
-                                </div>
-                                <div style="font-size:10px; color:#94a3b8;">${item.date}</div>
+                state.withdrawalsHistory.forEach(item => {
+                    list.insertAdjacentHTML('beforeend', `
+                        <div class="history-item">
+                            <div>
+                                <div style="font-weight:bold; color:#38bdf8;">-${item.amount.toLocaleString()} SLRC</div>
+                                <div style="font-size:10px; color:#94a3b8; margin-top:2px;">${item.address || item.type}</div>
                             </div>
-                        `);
-                    });
-                }
+                            <div style="font-size:10px; color:#94a3b8;">${item.date}</div>
+                        </div>
+                    `);
+                });
             }
             modal.style.display = 'flex';
         }
@@ -1426,31 +1596,22 @@
         }
 
         function openSupportChat() {
-            const supportUsername = "Dollar_Matrix";
-            
             const userId = state.telegramId || "Unknown";
             const userName = state.userName || "User";
-            const lastDeposit = state.lastDepositAmount > 0 ? (state.lastDepositAmount.toFixed(4) + " TON") : "0.0000 TON";
             const activeMinersCount = state.ownedIds.length;
-            
-            const ownedNames = initialProperties
-                .filter(p => state.ownedIds.includes(p.id))
-                .map(p => p.name)
-                .join(", ");
 
             const supportText = encodeURIComponent(
-                `Hello Solaris Miner Support 👋\n\n` +
-                `📋 My Account Details:\n` +
+                `Hello Solaris (SLRC) Support 👋\n\n` +
                 `👤 Name: ${userName}\n` +
                 `🆔 User ID: ${userId}\n` +
-                `💎 Last Deposit: ${lastDeposit}\n` +
-                `⚡ Active Miners: ${activeMinersCount} of 12\n` +
-                `🛠️ Active Rigs: ${ownedNames || 'None'}\n\n` +
+                `💰 In-App Balance: ${Math.floor(state.balance).toLocaleString()} SLRC\n` +
+                `💎 Wallet Hold: ${state.walletSlrcHold.toLocaleString()} SLRC\n` +
+                `⚡ Active Miners: ${activeMinersCount} of 12\n\n` +
                 `❓ Question / Request:`
             );
 
-            const telegramUrl = `https://t.me/${supportUsername}?text=${supportText}`;
-            
+            const telegramUrl = `https://t.me/${supportTelegramId}?text=${supportText}`;
+
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
                 window.Telegram.WebApp.openTelegramLink(telegramUrl);
             } else {
