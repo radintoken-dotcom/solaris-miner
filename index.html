@@ -802,6 +802,21 @@
             color: var(--green-dark);
         }
 
+        .live-chart-pill-btn {
+            border: 1px solid #d9f99d;
+            background: #f5f8f3;
+            color: var(--green-dark);
+            border-radius: 12px;
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
         .chart-canvas-wrap {
             background: linear-gradient(180deg, #f8faf5 0%, #ffffff 100%);
             border: 1px solid #e5e7eb;
@@ -1185,7 +1200,7 @@
             </div>
         </div>
 
-        <!-- NEW LIVE CHART TAB -->
+        <!-- LIVE CHART TAB -->
         <div id="view-chart" class="view-section">
             <div class="section-heading" id="chart-heading">SLRC Live Chart</div>
             <div class="section-sub" id="chart-sub">Real-time market & liquidity data for Solaris (SLRC)</div>
@@ -1228,14 +1243,16 @@
                         <button type="button" class="tf-btn" data-tf="30D" onclick="setChartTimeframe('30D')">30D</button>
                         <button type="button" class="tf-btn" data-tf="ALL" onclick="setChartTimeframe('ALL')">ALL</button>
                     </div>
-                    <span style="font-size:10.5px; font-weight:800; color:var(--green-dark);" id="chart-pair-badge">SLRC / TON</span>
+                    <button type="button" class="live-chart-pill-btn" id="live-chart-external-btn" onclick="openBestLiveChart()">
+                        <span id="live-chart-pill-text">Live Chart</span> ↗
+                    </button>
                 </div>
 
                 <div class="chart-canvas-wrap">
                     <svg id="slrc-price-svg" class="chart-svg" viewBox="0 0 380 175" preserveAspectRatio="none">
                         <defs>
                             <linearGradient id="slrcAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#84cc16" stop-opacity="0.35"/>
+                                <stop offset="0%" stop-color="#84cc16" stop-opacity="0.34"/>
                                 <stop offset="100%" stop-color="#84cc16" stop-opacity="0.0"/>
                             </linearGradient>
                         </defs>
@@ -1247,8 +1264,8 @@
                         <circle id="slrc-chart-dot" cx="370" cy="40" r="5" fill="#84cc16" stroke="#ffffff" stroke-width="2"/>
                     </svg>
                     <div class="chart-axis-labels">
-                        <span id="chart-axis-start">--:--</span>
-                        <span id="chart-axis-mid">--:--</span>
+                        <span id="chart-axis-start">00:00</span>
+                        <span id="chart-axis-mid">12:00</span>
                         <span id="chart-axis-end">Now</span>
                     </div>
                 </div>
@@ -1487,7 +1504,6 @@
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
         const stonfiSwapTokenUrl = `https://app.ston.fi/swap?ft=TON&tt=${slrcTokenAddress}`;
-        const dexScreenerTokenUrl = `https://dexscreener.com/ton/${slrcTokenAddress}`;
         const botUsername = "SolarisMiner_bot";
 
         const externalBotUrls = {
@@ -1534,11 +1550,12 @@
                 chartVol: "24h Volume",
                 chartLiq: "Liquidity",
                 chartDex: "Primary DEX",
+                liveChartPillText: "Live Chart",
                 chartTradeBtn: "↗ Trade on STON.fi",
                 chartDexBtn: "📈 View Chart (DexScreener)",
                 chartSyncing: "Syncing live SLRC pool data...",
                 chartSyncedPrefix: "Live pool feed • ",
-                chartFallbackNote: "Showing estimated curve from latest pool price (candle API unavailable or no swaps yet).",
+                chartNoPoolNote: "No indexed liquidity pool found yet on DEX aggregators; add/trade liquidity on STON.fi to populate live candles.",
                 earnHeading: "EARN",
                 earnSub: "Daily rewards, tasks, and 5,000 SLRC hold requirement",
                 dailyCardTitle: "Daily Reward SLRC",
@@ -1645,11 +1662,12 @@
                 chartVol: "حجم ۲۴ ساعته",
                 chartLiq: "نقدینگی استخر",
                 chartDex: "صرافی اصلی",
+                liveChartPillText: "Live Chart",
                 chartTradeBtn: "↗ معامله در STON.fi",
                 chartDexBtn: "📈 مشاهده چارت در DexScreener",
                 chartSyncing: "در حال دریافت اطلاعات زنده استخر SLRC...",
                 chartSyncedPrefix: "به‌روزرسانی زنده استخر • ",
-                chartFallbackNote: "نمودار بر اساس آخرین قیمت استخر رسم شده است (در صورت نبود کندل جدید یا محدودیت API).",
+                chartNoPoolNote: "هنوز استخر ایندکس‌شده‌ای در DexScreener/GeckoTerminal ثبت نشده؛ با خرید/نقدینگی در STON.fi داده‌های زنده فعال می‌شوند.",
                 earnHeading: "EARN",
                 earnSub: "پاداش‌های روزانه، تسک‌ها و شرط هولد 5,000 SLRC",
                 dailyCardTitle: "پاداش روزانه SLRC",
@@ -1756,11 +1774,12 @@
                 chartVol: "24h Volume",
                 chartLiq: "Liquidity",
                 chartDex: "Primary DEX",
+                liveChartPillText: "Live Chart",
                 chartTradeBtn: "↗ Trade on STON.fi",
                 chartDexBtn: "📈 View Chart (DexScreener)",
                 chartSyncing: "Syncing live SLRC pool data...",
                 chartSyncedPrefix: "Live pool feed • ",
-                chartFallbackNote: "Showing estimated curve from latest pool price.",
+                chartNoPoolNote: "No indexed pool found yet on DEX aggregators.",
                 earnHeading: "EARN",
                 earnSub: "Daily rewards, tasks, and 5,000 SLRC hold requirement",
                 dailyCardTitle: "Daily Reward SLRC",
@@ -1942,16 +1961,18 @@
         let marketState = {
             priceUsd: 0,
             priceTon: 0,
-            tonUsd: 0,
             change24h: 0,
             volume24h: 0,
             liquidityUsd: 0,
             dexName: "STON.fi",
             pairLabel: "SLRC / TON",
             poolAddress: "",
+            gtPoolUrl: "",
+            dsPairUrl: "",
             timeframe: "24H",
             points: [],
-            usingFallbackCurve: false,
+            hasLiveCandles: false,
+            hasIndexedPool: false,
             lastUpdated: 0
         };
 
@@ -2001,22 +2022,19 @@
             return "$" + num.toFixed(0);
         }
 
-        function buildFallbackSeries(currentPrice, changePct, tf) {
-            const base = currentPrice > 0 ? currentPrice : 0.000001;
-            const factorMap = { "1H": 0.25, "24H": 1, "7D": 2.2, "30D": 3.5, "ALL": 4.5 };
-            const mult = factorMap[tf] || 1;
-            const totalChange = ((Number(changePct) || 0) / 100) * mult;
-            const startPrice = base / Math.max(0.15, 1 + totalChange);
-            const count = 24;
+        function buildCleanTrendSeries(currentPrice, changePct, tf) {
+            const count = 20;
             const nowSec = Math.floor(Date.now() / 1000);
-            const stepSec = tf === "1H" ? 150 : tf === "24H" ? 3600 : tf === "7D" ? 21600 : 86400;
+            const stepSec = tf === "1H" ? 180 : tf === "24H" ? 4320 : tf === "7D" ? 30240 : 86400;
+            const base = currentPrice > 0 ? currentPrice : 1;
+            const dirSign = (Number(changePct) || 0) < 0 ? -1 : 1;
+            const span = Math.max(Math.abs((Number(changePct) || 0) / 100), 0.06) * base;
+            const start = dirSign > 0 ? Math.max(1e-12, base - span) : base + span;
             const arr = [];
             for (let i = 0; i < count; i++) {
-                const progress = i / (count - 1);
-                const wave = Math.sin(i * 0.85) * 0.04 * Math.abs(base - startPrice || base * 0.05);
-                const price = i === count - 1
-                    ? base
-                    : Math.max(1e-12, startPrice + (base - startPrice) * progress + wave);
+                const tRatio = i / (count - 1);
+                const ease = Math.pow(tRatio, 1.15);
+                const price = i === count - 1 ? base : start + (base - start) * ease;
                 arr.push({
                     ts: nowSec - (count - 1 - i) * stepSec,
                     price
@@ -2027,8 +2045,8 @@
 
         async function fetchCandlesForPool(poolAddress, tf, fallbackPrice, fallbackChange) {
             if (!poolAddress) {
-                marketState.usingFallbackCurve = true;
-                marketState.points = buildFallbackSeries(fallbackPrice, fallbackChange, tf);
+                marketState.hasLiveCandles = false;
+                marketState.points = buildCleanTrendSeries(fallbackPrice, fallbackChange, tf);
                 return;
             }
             const cfg = {
@@ -2055,15 +2073,15 @@
                         }))
                         .filter(p => p.price > 0);
                     if (parsed.length >= 2) {
-                        marketState.usingFallbackCurve = false;
+                        marketState.hasLiveCandles = true;
                         marketState.points = parsed;
                         return;
                     }
                 }
             } catch (e) {}
 
-            marketState.usingFallbackCurve = true;
-            marketState.points = buildFallbackSeries(fallbackPrice, fallbackChange, tf);
+            marketState.hasLiveCandles = false;
+            marketState.points = buildCleanTrendSeries(fallbackPrice, fallbackChange, tf);
         }
 
         async function fetchSlrcMarketData(silent = false) {
@@ -2083,12 +2101,16 @@
                 let poolAddress = "";
                 let pairLabel = "SLRC / TON";
                 let dexName = "STON.fi";
+                let gtPoolUrl = "";
+                let dsPairUrl = "";
+                let foundPool = false;
 
                 if (gtRes.status === "fulfilled" && gtRes.value.ok) {
                     const gtJson = await gtRes.value.json();
                     const pools = gtJson?.data || [];
                     const bestPool = pools.find(p => (p?.attributes?.name || "").toLowerCase().includes("ston")) || pools[0];
                     if (bestPool && bestPool.attributes) {
+                        foundPool = true;
                         const attr = bestPool.attributes;
                         priceUsd = Number(attr.base_token_price_usd) || 0;
                         priceTon = Number(attr.base_token_price_native_currency) || 0;
@@ -2097,14 +2119,18 @@
                         liquidityUsd = Number(attr.reserve_in_usd) || 0;
                         poolAddress = attr.address || "";
                         pairLabel = attr.name || "SLRC / TON";
+                        if (poolAddress) {
+                            gtPoolUrl = `https://www.geckoterminal.com/ton/pools/${poolAddress}`;
+                        }
                     }
                 }
 
-                if ((priceUsd === 0 || liquidityUsd === 0) && dsRes.status === "fulfilled" && dsRes.value.ok) {
+                if (dsRes.status === "fulfilled" && dsRes.value.ok) {
                     const dsJson = await dsRes.value.json();
                     const pairs = dsJson?.pairs || [];
                     const bestPair = pairs.find(p => p.dexId === "stonfi") || pairs[0];
                     if (bestPair) {
+                        foundPool = true;
                         priceUsd = priceUsd || Number(bestPair.priceUsd) || 0;
                         priceTon = priceTon || Number(bestPair.priceNative) || 0;
                         change24h = Number(bestPair.priceChange?.h24) ?? change24h;
@@ -2112,6 +2138,7 @@
                         liquidityUsd = liquidityUsd || Number(bestPair.liquidity?.usd) || 0;
                         poolAddress = poolAddress || bestPair.pairAddress || "";
                         dexName = bestPair.dexId === "stonfi" ? "STON.fi" : (bestPair.dexId || "STON.fi");
+                        dsPairUrl = bestPair.url || (poolAddress ? `https://dexscreener.com/ton/${poolAddress}` : "");
                         if (bestPair.baseToken?.symbol && bestPair.quoteToken?.symbol) {
                             pairLabel = `${bestPair.baseToken.symbol} / ${bestPair.quoteToken.symbol}`;
                         }
@@ -2138,14 +2165,17 @@
                 marketState.poolAddress = poolAddress;
                 marketState.pairLabel = pairLabel;
                 marketState.dexName = dexName;
+                marketState.gtPoolUrl = gtPoolUrl;
+                marketState.dsPairUrl = dsPairUrl;
+                marketState.hasIndexedPool = foundPool;
                 marketState.lastUpdated = Date.now();
 
                 await fetchCandlesForPool(poolAddress, marketState.timeframe, priceUsd, change24h);
                 renderChartView();
                 renderChartSvg();
             } catch (err) {
-                marketState.usingFallbackCurve = true;
-                marketState.points = buildFallbackSeries(marketState.priceUsd, marketState.change24h, marketState.timeframe);
+                marketState.hasLiveCandles = false;
+                marketState.points = buildCleanTrendSeries(marketState.priceUsd, marketState.change24h, marketState.timeframe);
                 renderChartView();
                 renderChartSvg();
                 if (!silent) {
@@ -2168,7 +2198,23 @@
         }
 
         function openDexScreenerChart() {
-            openExternalUrl(dexScreenerTokenUrl);
+            if (marketState.dsPairUrl) {
+                openExternalUrl(marketState.dsPairUrl);
+            } else if (marketState.poolAddress) {
+                openExternalUrl(`https://dexscreener.com/ton/${marketState.poolAddress}`);
+            } else {
+                openExternalUrl(`https://dexscreener.com/?q=${encodeURIComponent(slrcTokenAddress)}`);
+            }
+        }
+
+        function openBestLiveChart() {
+            if (marketState.gtPoolUrl) {
+                openExternalUrl(marketState.gtPoolUrl);
+            } else if (marketState.dsPairUrl) {
+                openExternalUrl(marketState.dsPairUrl);
+            } else {
+                openExternalUrl(`https://www.geckoterminal.com/ton/tokens/${slrcTokenAddress}`);
+            }
         }
 
         function renderChartView() {
@@ -2183,6 +2229,7 @@
             document.getElementById("lbl-chart-vol").innerText = t("chartVol");
             document.getElementById("lbl-chart-liq").innerText = t("chartLiq");
             document.getElementById("lbl-chart-dex").innerText = t("chartDex");
+            document.getElementById("live-chart-pill-text").innerText = t("liveChartPillText");
             document.getElementById("chart-trade-btn").innerText = t("chartTradeBtn");
             document.getElementById("chart-dexscreener-btn").innerText = t("chartDexBtn");
             document.getElementById("chart-pair-badge").innerText = marketState.pairLabel || "SLRC / TON";
@@ -2202,10 +2249,11 @@
             const statusNote = document.getElementById("chart-status-note");
             if (!marketState.lastUpdated) {
                 statusNote.innerText = t("chartSyncing");
+            } else if (!marketState.hasIndexedPool) {
+                statusNote.innerText = t("chartNoPoolNote");
             } else {
                 const timeStr = new Date(marketState.lastUpdated).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-                const extra = marketState.usingFallbackCurve ? ` (${t("chartFallbackNote")})` : "";
-                statusNote.innerText = `${t("chartSyncedPrefix")}${timeStr}${extra}`;
+                statusNote.innerText = `${t("chartSyncedPrefix")}${timeStr}`;
             }
         }
 
@@ -2217,12 +2265,12 @@
 
             const pts = marketState.points && marketState.points.length >= 2
                 ? marketState.points
-                : buildFallbackSeries(marketState.priceUsd, marketState.change24h, marketState.timeframe);
+                : buildCleanTrendSeries(marketState.priceUsd, marketState.change24h, marketState.timeframe);
 
             const width = 380;
             const height = 175;
             const padX = 8;
-            const padTop = 16;
+            const padTop = 18;
             const padBottom = 18;
 
             const prices = pts.map(p => Number(p.price) || 0);
@@ -2254,7 +2302,7 @@
             dotEl.setAttribute("fill", isPositive ? "#84cc16" : "#ef4444");
 
             const fmtLabel = (ts) => {
-                if (!ts) return "--:--";
+                if (!ts) return "00:00";
                 const d = new Date(ts * 1000);
                 if (marketState.timeframe === "7D" || marketState.timeframe === "30D" || marketState.timeframe === "ALL") {
                     return `${d.getMonth() + 1}/${d.getDate()}`;
