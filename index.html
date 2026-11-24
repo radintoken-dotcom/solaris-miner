@@ -674,7 +674,6 @@
             box-shadow: 0 6px 18px rgba(132, 204, 22, 0.14);
         }
 
-        /* Chart View Styles */
         .chart-price-header {
             display: flex;
             align-items: flex-start;
@@ -1194,7 +1193,6 @@
             </div>
         </div>
 
-        <!-- LIVE CHART TAB -->
         <div id="view-chart" class="view-section">
             <div class="section-heading" id="chart-heading">SLRC Live Chart</div>
             <div class="section-sub" id="chart-sub">Real-time STON.fi pool & price feed for Solaris (SLRC)</div>
@@ -1491,7 +1489,9 @@
         const externalBotUrls = {
             vortex_bot: "https://t.me/VRX_Vortex_bot?start=fB8OZoy",
             zombie_miner: "https://t.me/ZOMBIE_MINER_bot/app?startapp=ref_1007321991",
-            oron_space: "https://t.me/oron_miner_bot?start=ref_1007321991",
+            orx_miner: "https://t.me/OrxMinerBot/app?startapp=boSiVBPPuXF",
+            mmix: "https://hub.mmix.io/points?referral_code=3DZ5RW3D",
+            victors_company: "https://t.me/Victors_Company_bot/app?startapp=ref_542338CCB6",
             cherry_play: "https://t.me/CherryPlayBot/play?startapp=rdz1r2sxmd"
         };
 
@@ -1609,7 +1609,9 @@
                     invite_friends_task: { title: "Real Friend Invites", desc: "Unlocks only after a friend joins via your invite link", action: "Invite" },
                     vortex_bot: { title: "VORTEX BOT", desc: "Open bot via dedicated button and claim reward", action: "Open" },
                     zombie_miner: { title: "ZOMBIE MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
-                    oron_space: { title: "ORON SPACE", desc: "Open bot via dedicated button and claim reward", action: "Open" },
+                    orx_miner: { title: "ORX MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
+                    mmix: { title: "MMIX", desc: "Open project via dedicated button and claim reward", action: "Open" },
+                    victors_company: { title: "VICTORS COMPANY", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
                     cherry_play: { title: "CHERRY PLAY", desc: "Open game via dedicated button and claim reward", action: "Open" }
                 }
             },
@@ -1721,7 +1723,9 @@
                     invite_friends_task: { title: "دعوت واقعی از دوستان", desc: "فقط پس از ورود دوست با لینک دعوت شما فعال و قابل دریافت است", action: "دعوت" },
                     vortex_bot: { title: "VORTEX BOT", desc: "ورود به ربات از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
                     zombie_miner: { title: "ZOMBIE MINER", desc: "ورود به مینی‌اپ از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
-                    oron_space: { title: "ORON SPACE", desc: "ورود به ربات از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
+                    orx_miner: { title: "ORX MINER", desc: "ورود به مینی‌اپ از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
+                    mmix: { title: "MMIX", desc: "ورود به پروژه از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
+                    victors_company: { title: "VICTORS COMPANY", desc: "ورود به مینی‌اپ از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
                     cherry_play: { title: "CHERRY PLAY", desc: "ورود به بازی از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" }
                 }
             },
@@ -1833,7 +1837,9 @@
                     invite_friends_task: { title: "Real Friend Invites", desc: "Unlocks only after a friend joins via your invite link", action: "Invite" },
                     vortex_bot: { title: "VORTEX BOT", desc: "Open bot via dedicated button and claim reward", action: "Open" },
                     zombie_miner: { title: "ZOMBIE MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
-                    oron_space: { title: "ORON SPACE", desc: "Open bot via dedicated button and claim reward", action: "Open" },
+                    orx_miner: { title: "ORX MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
+                    mmix: { title: "MMIX", desc: "Open project via dedicated button and claim reward", action: "Open" },
+                    victors_company: { title: "VICTORS COMPANY", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
                     cherry_play: { title: "CHERRY PLAY", desc: "Open game via dedicated button and claim reward", action: "Open" }
                 }
             }
@@ -1883,7 +1889,9 @@
             { id: "invite_friends_task", reward: 300, requiresRef: true },
             { id: "vortex_bot", reward: 150, externalKey: "vortex_bot" },
             { id: "zombie_miner", reward: 150, externalKey: "zombie_miner" },
-            { id: "oron_space", reward: 150, externalKey: "oron_space" },
+            { id: "orx_miner", reward: 250, externalKey: "orx_miner" },
+            { id: "mmix", reward: 250, externalKey: "mmix" },
+            { id: "victors_company", reward: 250, externalKey: "victors_company" },
             { id: "cherry_play", reward: 150, externalKey: "cherry_play" }
         ];
 
@@ -2116,7 +2124,6 @@
                 let dsPairUrl = "";
                 let foundPool = false;
 
-                // 1. Direct STON.fi asset endpoint
                 if (stonAssetRes.status === "fulfilled" && stonAssetRes.value.ok) {
                     const assetJson = await stonAssetRes.value.json();
                     const asset = assetJson?.asset || assetJson;
@@ -2126,7 +2133,6 @@
                     }
                 }
 
-                // 2. Direct STON.fi pools endpoint (finds exact SLRC/TON pool reserves, liquidity & volume)
                 if (stonPoolsRes.status === "fulfilled" && stonPoolsRes.value.ok) {
                     const poolsJson = await stonPoolsRes.value.json();
                     const poolList = poolsJson?.pool_list || [];
@@ -2150,7 +2156,6 @@
                     }
                 }
 
-                // 3. TONAPI rates endpoint (fast & works reliably)
                 if (tonApiRatesRes.status === "fulfilled" && tonApiRatesRes.value.ok) {
                     const ratesJson = await tonApiRatesRes.value.json();
                     const rates = ratesJson?.rates || {};
@@ -2173,7 +2178,6 @@
                     }
                 }
 
-                // 4. DexScreener fallback if indexed
                 if (dsRes.status === "fulfilled" && dsRes.value.ok) {
                     const dsJson = await dsRes.value.json();
                     const pairs = dsJson?.pairs || [];
@@ -2190,7 +2194,6 @@
                     }
                 }
 
-                // Cross-calculate USD <-> TON if one of them is known
                 if (priceTon > 0 && priceUsd === 0 && tonUsd > 0) {
                     priceUsd = priceTon * tonUsd;
                 } else if (priceUsd > 0 && priceTon === 0 && tonUsd > 0) {
@@ -2317,7 +2320,6 @@
                 ? marketState.points
                 : buildCleanTrendSeries(marketState.priceUsd, marketState.change24h, marketState.timeframe);
 
-            // Dashed horizontal grid lines
             ctx.save();
             ctx.strokeStyle = "#e5e7eb";
             ctx.lineWidth = 1;
@@ -2353,7 +2355,6 @@
             const strokeColor = isPositive ? "#65a30d" : "#dc2626";
             const dotColor = isPositive ? "#84cc16" : "#ef4444";
 
-            // Gradient fill under line
             const grad = ctx.createLinearGradient(0, padTop, 0, cssH);
             if (isPositive) {
                 grad.addColorStop(0, "rgba(132, 204, 22, 0.34)");
@@ -2374,7 +2375,6 @@
             ctx.fillStyle = grad;
             ctx.fill();
 
-            // Main trend line
             ctx.beginPath();
             ctx.moveTo(coords[0].x, coords[0].y);
             for (let i = 1; i < coords.length; i++) {
@@ -2386,7 +2386,6 @@
             ctx.lineJoin = "round";
             ctx.stroke();
 
-            // Glowing live end dot
             const last = coords[coords.length - 1];
             ctx.beginPath();
             ctx.arc(last.x, last.y, 8, 0, Math.PI * 2);
