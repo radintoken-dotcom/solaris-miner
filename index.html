@@ -25,7 +25,6 @@
             --green-main: #84cc16;
             --green-bright: #a3e635;
             --green-dark: #4d7c0f;
-            --gold-accent: #eab308;
             --border-light: #e5e7eb;
         }
 
@@ -43,7 +42,6 @@
             padding: 12px 14px 24px;
         }
 
-        /* Top User & Balance Bar */
         .top-user-bar {
             background: var(--card-bg);
             border-radius: 26px;
@@ -145,7 +143,6 @@
             flex-shrink: 0;
         }
 
-        /* Views */
         .view-section {
             display: none;
         }
@@ -154,7 +151,6 @@
             display: block;
         }
 
-        /* Cards */
         .white-card {
             background: var(--card-bg);
             border-radius: 22px;
@@ -391,7 +387,6 @@
             color: #15803d;
         }
 
-        /* Earn Tab */
         .section-heading {
             font-size: 22px;
             font-weight: 900;
@@ -485,7 +480,6 @@
             box-shadow: 0 6px 18px rgba(132, 204, 22, 0.14);
         }
 
-        /* Profile Tab */
         .profile-center-head {
             text-align: center;
             padding: 10px 0 14px;
@@ -536,7 +530,6 @@
             box-shadow: 0 3px 10px rgba(17, 24, 39, 0.03);
         }
 
-        /* Wallet Panel inside Profile / Modal */
         .tier-fee-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -583,7 +576,6 @@
             outline: none;
         }
 
-        /* Floating Bottom Dock like sample */
         .floating-dock-wrap {
             position: fixed;
             bottom: 14px;
@@ -643,7 +635,6 @@
             color: var(--green-dark);
         }
 
-        /* Modal */
         .modal-backdrop {
             display: none;
             position: fixed;
@@ -668,7 +659,6 @@
 </head>
 <body>
     <div class="app-shell">
-        <!-- Top Bar -->
         <div class="top-user-bar">
             <div class="top-user-left">
                 <img id="top-avatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="top-avatar" alt="Avatar">
@@ -690,7 +680,6 @@
             </div>
         </div>
 
-        <!-- VIEW 1: UPGRADE / MINE (Main) -->
         <div id="view-upgrade" class="view-section active">
             <div class="mine-hero-card">
                 <div class="mine-banner">
@@ -763,7 +752,6 @@
             </div>
         </div>
 
-        <!-- VIEW 2: EARN (Tasks + ON-CHAIN Hold + Bottom Box) -->
         <div id="view-earn" class="view-section">
             <div class="section-heading">EARN</div>
             <div class="section-sub">پاداش‌های روزانه، تسک‌ها و شرط هولد 2,500 SLRC</div>
@@ -795,7 +783,6 @@
             <div class="section-sub">حداقل هولد 2,500 SLRC در کیف‌پول برای باز شدن برداشت 10,000 SLRC الزامی است.</div>
             <div id="onchain-hold-tiers"></div>
 
-            <!-- BOTTOM BOX OF TASKS TAB -->
             <div class="earn-bottom-box">
                 <div style="font-size:14px; font-weight:900; color:#3f6212; margin-bottom:6px;">
                     📌 وضعیت برداشت و هولد SLRC (پایین تب تسک‌ها)
@@ -810,13 +797,12 @@
                     <span>هولد ولت: <span id="bottom-box-hold">0</span> / 2,500 SLRC</span>
                 </div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
-                    <button class="lime-btn" style="padding:10px; font-size:12px;" onclick="openBuySlrcRoute()">🛒 خرید SLRC (STON.fi)</button>
+                    <button class="lime-btn" style="padding:10px; font-size:12px;" onclick="openBuySlrcRoute()">🛒 خرید SLRC (KeepEye)</button>
                     <button class="lime-btn secondary" style="padding:10px; font-size:12px;" onclick="openWalletModal()">💼 بخش WALLET</button>
                 </div>
             </div>
         </div>
 
-        <!-- VIEW 3: FRIENDS -->
         <div id="view-friends" class="view-section">
             <div class="white-card" style="text-align:center;">
                 <div style="font-size:18px; font-weight:900; margin-bottom:6px;">دوست‌هات رو دعوت کن و SLRC بگیر</div>
@@ -861,7 +847,6 @@
             </div>
         </div>
 
-        <!-- VIEW 4: PROFILE -->
         <div id="view-profile" class="view-section">
             <div class="profile-center-head">
                 <img id="profile-big-avatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-big-avatar" alt="Profile">
@@ -918,7 +903,6 @@
         </div>
     </div>
 
-    <!-- Floating Bottom Dock -->
     <div class="floating-dock-wrap">
         <button class="floating-mine-fab" onclick="switchView('upgrade')" title="Mining">⛏</button>
         <div class="floating-nav-pill">
@@ -929,7 +913,6 @@
         </div>
     </div>
 
-    <!-- MODAL: WALLET (TonConnect + 0.1 TON Verify + Hold 2500 + Withdraw 10000) -->
     <div id="wallet-modal" class="modal-backdrop">
         <div class="modal-box">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -941,10 +924,8 @@
                 اتصال کیف‌پول Tonkeeper، بررسی هولد 2,500 SLRC و برداشت حداقل 10,000 SLRC
             </div>
 
-            <!-- Preserved TonConnect Container -->
             <div id="ton-connect-button-container" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
 
-            <!-- Preserved 0.1 TON Verify Button -->
             <button id="verify-wallet-btn" class="lime-btn secondary" style="margin-bottom:12px;" onclick="verifyWalletWith01Ton()">
                 تایید ولت با 0.1 TON
             </button>
@@ -980,7 +961,6 @@
         </div>
     </div>
 
-    <!-- MODAL: INFO / HISTORY / RULES -->
     <div id="info-modal" class="modal-backdrop">
         <div class="modal-box">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -992,10 +972,9 @@
     </div>
 
     <script>
-        // Preserved TonConnect & Solaris Config
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
-        const buySlrcRouteUrl = "https://t.me/KeepEyeBot"; // لینک ربات خرید متصل به STON.fi / KeepEye
+        const buySlrcRouteUrl = "https://t.me/Keepeyeapp";
         const supportTelegramId = "Dollar_Matrix";
         const botUsername = "SolarisMiner_bot";
 
@@ -1018,7 +997,7 @@
         ];
 
         const communityTasks = [
-            { id: "buy_slrc", title: "خرید SLRC در مسیر STON.fi", desc: "ورود به ربات خرید و تکمیل هولد حداقل 2,500 SLRC", reward: 500, actionLabel: "خرید", isBuy: true },
+            { id: "buy_slrc", title: "خرید SLRC در KeepEye / STON.fi", desc: "ورود به ربات KeepEye و تکمیل هولد حداقل 2,500 SLRC", reward: 500, actionLabel: "خرید", isBuy: true },
             { id: "join_channel", title: "عضویت در کانال اطلاع‌رسانی Solaris", desc: "دنبال کردن اخبار و اطلاعیه‌های توکن SLRC", reward: 250, actionLabel: "انجام" },
             { id: "share_story", title: "معرفی SLRC به دوستان", desc: "اشتراک‌گذاری لینک دعوت Solaris Miner", reward: 300, actionLabel: "اشتراک" }
         ];
@@ -1124,8 +1103,15 @@
         }
 
         function openBuySlrcRoute() {
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink && buySlrcRouteUrl.startsWith("https://t.me/")) {
-                window.Telegram.WebApp.openTelegramLink(buySlrcRouteUrl);
+            if (!buySlrcRouteUrl) return;
+            if (buySlrcRouteUrl.includes("t.me/")) {
+                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
+                    window.Telegram.WebApp.openTelegramLink(buySlrcRouteUrl);
+                } else {
+                    window.open(buySlrcRouteUrl, "_blank");
+                }
+            } else if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openLink) {
+                window.Telegram.WebApp.openLink(buySlrcRouteUrl);
             } else {
                 window.open(buySlrcRouteUrl, "_blank");
             }
@@ -1338,7 +1324,7 @@
                 • حداقل موجودی برای برداشت: <b>10,000 SLRC</b><br>
                 • حداقل هولد در کیف‌پول متصل: <b>2,500 SLRC</b><br>
                 • تایید ولت از طریق Tonkeeper: <b>0.1 TON</b><br>
-                • مسیر تهیه SLRC: دکمه <b>خرید SLRC</b> متصل به ربات/مسیر STON.fi
+                • مسیر تهیه SLRC: دکمه <b>خرید SLRC</b> متصل به KeepEye / STON.fi
             `;
             document.getElementById("info-modal").style.display = "flex";
         }
