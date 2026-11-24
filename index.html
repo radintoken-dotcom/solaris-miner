@@ -791,7 +791,7 @@
         </div>
 
         <div class="top-guide-box">
-            <b>راهنمای خرید SLRC:</b> با زدن دکمه خرید، آدرس توکن کپی می‌شود و مستقیم وارد صفحه توکن در STON.fi می‌شوید تا SLRC را خریداری کنید. پس از اتصال ولت به Tonkeeper، موجودی کیف‌پول شما روی کارت و بخش هولد لحاظ می‌شود.
+            <b>راهنمای خرید SLRC:</b> با زدن دکمه خرید، آدرس توکن کپی می‌شود و مستقیم وارد صفحه سواپ توکن SLRC در STON.fi می‌شوید تا خرید را انجام دهید. پس از اتصال ولت به Tonkeeper، موجودی کیف‌پول شما روی کارت و بخش هولد لحاظ می‌شود.
         </div>
 
         <div id="view-upgrade" class="view-section active">
@@ -1106,7 +1106,7 @@
         const slrcTokenAddress = "EQDSXXDeVWcQaWCCDZAFM-wiln9gIOs1VxOl4L3TgSYN0JPV";
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
-        const stonfiTokenUrl = `https://app.ston.fi/tokens/${slrcTokenAddress}`;
+        const stonfiSwapTokenUrl = `https://app.ston.fi/swap?ft=TON&tt=${slrcTokenAddress}`;
         const botUsername = "SolarisMiner_bot";
 
         const MIN_HOLD_SLRC = 2500;
@@ -1129,7 +1129,7 @@
         ];
 
         const communityTasks = [
-            { id: "buy_slrc", title: "خرید SLRC در STON.fi", desc: "آدرس توکن کپی می‌شود و وارد صفحه توکن در STON.fi می‌شوید", reward: 500, actionLabel: "خرید", isBuy: true },
+            { id: "buy_slrc", title: "خرید SLRC در STON.fi", desc: "آدرس توکن کپی می‌شود و مستقیم وارد سواپ SLRC در STON.fi می‌شوید", reward: 500, actionLabel: "خرید", isBuy: true },
             { id: "join_channel", title: "عضویت در کانال اطلاع‌رسانی Solaris", desc: "دنبال کردن اخبار و اطلاعیه‌های توکن SLRC", reward: 250, actionLabel: "انجام" },
             { id: "share_story", title: "معرفی SLRC به دوستان", desc: "اشتراک‌گذاری لینک دعوت Solaris Miner", reward: 300, actionLabel: "اشتراک" }
         ];
@@ -1238,9 +1238,9 @@
                 navigator.clipboard.writeText(slrcTokenAddress).catch(() => {});
             }
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openLink) {
-                window.Telegram.WebApp.openLink(stonfiTokenUrl);
+                window.Telegram.WebApp.openLink(stonfiSwapTokenUrl);
             } else {
-                window.open(stonfiTokenUrl, "_blank");
+                window.open(stonfiSwapTokenUrl, "_blank");
             }
         }
 
