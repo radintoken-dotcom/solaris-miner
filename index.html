@@ -170,7 +170,6 @@
             margin-bottom: 12px;
         }
 
-        /* کارت بانکی طلایی */
         .solaris-bank-card {
             border-radius: 22px;
             padding: 18px 16px;
@@ -234,7 +233,6 @@
                 0 3px 8px rgba(120, 53, 15, 0.35);
         }
 
-        /* دکمه سفید زیر کارت */
         .card-bottom-buy-btn {
             width: 100%;
             border: 1px solid rgba(255, 255, 255, 0.9);
@@ -1142,7 +1140,7 @@
             </div>
 
             <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px;" id="wallet-modal-sub">
-                Connect Tonkeeper, sync held SLRC in wallet, and withdraw minimum 20,000 SLRC
+                Connect Tonkeeper, verify real on-chain SLRC hold, and withdraw minimum 20,000 SLRC
             </div>
 
             <div id="ton-connect-button-container" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
@@ -1152,18 +1150,23 @@
             </button>
 
             <div class="white-card" style="background:var(--card-soft); margin-bottom:10px;">
-                <div style="font-size:12px; font-weight:800; margin-bottom:4px;" id="wallet-sync-title">Held SLRC in Connected Wallet</div>
-                <div style="font-size:10px; color:var(--text-muted); margin-bottom:6px;" id="wallet-sync-desc">
-                    After buying SLRC in your wallet and connecting Tonkeeper, save your held amount to update your card and balance.
+                <div style="font-size:12px; font-weight:800; margin-bottom:4px;" id="wallet-sync-title">Real On-Chain SLRC Hold Verification</div>
+                <div style="font-size:10px; color:var(--text-muted); margin-bottom:8px;" id="wallet-sync-desc">
+                    Connect your wallet and check your real SLRC balance directly on the TON blockchain (Min 5,000 SLRC required).
                 </div>
-                <div style="display:flex; gap:8px;">
-                    <input type="number" id="wallet-hold-input" class="clean-input" placeholder="SLRC in wallet (e.g. 5000)" style="margin-top:0;">
-                    <button class="lime-btn" style="width:auto; padding:0 14px; font-size:12px;" id="wallet-save-btn" onclick="syncWalletHold()">Save</button>
+                <button class="lime-btn" style="padding:10px; font-size:12px;" id="check-onchain-btn" onclick="fetchRealOnchainSlrcHold()">
+                    🔍 Check Real SLRC Hold on Blockchain
+                </button>
+                <div style="margin-top:8px; font-size:10px; color:var(--text-muted);" id="lbl-tx-optional">Optional purchase TX hash proof:</div>
+                <div style="display:flex; gap:6px; margin-top:4px;">
+                    <input type="text" id="buy-tx-hash-input" class="clean-input" placeholder="TON Transaction Hash (optional)" style="margin-top:0; padding:8px 10px; font-size:11px;">
+                    <button class="task-action-pill" id="save-tx-btn" onclick="savePurchaseTxProof()">Record TX</button>
                 </div>
+                <div id="recorded-tx-note" style="font-size:10px; color:#4d7c0f; font-weight:700; margin-top:5px;"></div>
             </div>
 
             <div id="wallet-rule-alert" class="alert-hold-box">
-                To withdraw, you need at least <b>20,000 SLRC</b> in-app balance and at least <b>5,000 SLRC</b> held in your connected wallet.
+                To withdraw, you need at least <b>20,000 SLRC</b> in-app balance and at least <b>5,000 SLRC</b> verified on-chain in your connected wallet.
             </div>
 
             <div class="tier-fee-grid">
@@ -1275,13 +1278,16 @@
                 dockFriends: "Friends",
                 dockProfile: "Profile",
                 closeBtn: "Close ✕",
-                walletModalSub: "Connect Tonkeeper, sync held SLRC in wallet, and withdraw minimum 20,000 SLRC",
+                walletModalSub: "Connect Tonkeeper, verify real on-chain SLRC hold, and withdraw minimum 20,000 SLRC",
                 verify01Ton: "Verify Wallet with 0.1 TON",
                 verified01Ton: "✅ Wallet Verified (0.1 TON)",
-                walletSyncTitle: "Held SLRC in Connected Wallet",
-                walletSyncDesc: "After buying SLRC in your wallet and connecting Tonkeeper, save your held amount to update your card and balance.",
-                walletPlaceholder: "SLRC in wallet (e.g. 5000)",
-                saveBtn: "Save",
+                walletSyncTitle: "Real On-Chain SLRC Hold Verification",
+                walletSyncDesc: "Connect your wallet and check your real SLRC balance directly on the TON blockchain (Min 5,000 SLRC required).",
+                checkOnchainBtn: "🔍 Check Real SLRC Hold on Blockchain",
+                checkingOnchainBtn: "⏳ Checking blockchain...",
+                lblTxOptional: "Optional purchase TX hash proof:",
+                txPlaceholder: "TON Transaction Hash (optional)",
+                saveTxBtn: "Record TX",
                 lblWithdrawAmt: "Withdraw amount (Min 20,000 SLRC):",
                 withdrawAmtPlaceholder: "e.g. 20000",
                 lblWithdrawAddr: "Destination TON address:",
@@ -1303,7 +1309,7 @@
                     6: "Titan Node"
                 },
                 tasks: {
-                    buy_slrc: { title: "Buy SLRC on STON.fi", desc: "Open SLRC swap on STON.fi and confirm your purchase", action: "Buy" },
+                    buy_slrc: { title: "Buy SLRC on STON.fi", desc: "Buy SLRC on STON.fi and verify real on-chain hold (5,000+ SLRC)", action: "Buy" },
                     invite_friends_task: { title: "Real Friend Invites", desc: "Unlocks only after a friend joins via your invite link", action: "Invite" },
                     vortex_bot: { title: "VORTEX BOT", desc: "Open bot via dedicated button and claim reward", action: "Open" },
                     zombie_miner: { title: "ZOMBIE MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
@@ -1371,13 +1377,16 @@
                 dockFriends: "دوست‌ها",
                 dockProfile: "Profile",
                 closeBtn: "بستن ✕",
-                walletModalSub: "اتصال کیف‌پول Tonkeeper، ثبت موجودی SLRC خریداری‌شده در ولت و برداشت حداقل 20,000 SLRC",
+                walletModalSub: "اتصال Tonkeeper، استعلام واقعی هولد SLRC از بلاکچین و برداشت حداقل 20,000 SLRC",
                 verify01Ton: "تایید ولت با 0.1 TON",
                 verified01Ton: "✅ ولت تایید شد (0.1 TON)",
-                walletSyncTitle: "موجودی SLRC خریداری‌شده در ولت متصل",
-                walletSyncDesc: "پس از خرید SLRC در ولت و اتصال به Tonkeeper، موجودی ولت را ثبت کنید تا روی کارت و موجودی کل لحاظ شود.",
-                walletPlaceholder: "مقدار SLRC در ولت (مثلاً 5000)",
-                saveBtn: "ثبت",
+                walletSyncTitle: "استعلام واقعی موجودی SLRC در بلاکچین",
+                walletSyncDesc: "کیف‌پول را وصل کنید تا موجودی واقعی SLRC مستقیم از بلاکچین TON خوانده شود (ثبت دستیِ الکی حذف شده است).",
+                checkOnchainBtn: "🔍 استعلام واقعی هولد SLRC از بلاکچین",
+                checkingOnchainBtn: "⏳ در حال استعلام از بلاکچین...",
+                lblTxOptional: "ثبت هش تراکنش خرید (اختیاری):",
+                txPlaceholder: "هش تراکنش خرید در TON (اختیاری)",
+                saveTxBtn: "ثبت هش",
                 lblWithdrawAmt: "مقدار برداشت (حداقل 20,000 SLRC):",
                 withdrawAmtPlaceholder: "مثلاً 20000",
                 lblWithdrawAddr: "آدرس مقصد TON:",
@@ -1399,7 +1408,7 @@
                     6: "Titan Node"
                 },
                 tasks: {
-                    buy_slrc: { title: "خرید SLRC در STON.fi", desc: "وارد صفحه سواپ SLRC در STON.fi شوید و خرید را تایید کنید", action: "خرید" },
+                    buy_slrc: { title: "خرید SLRC در استون فای", desc: "خرید SLRC در استون فای و تایید هولد واقعی حداقل 5,000 تا در ولت", action: "خرید" },
                     invite_friends_task: { title: "دعوت واقعی از دوستان", desc: "فقط پس از ورود دوست با لینک دعوت شما فعال و قابل دریافت است", action: "دعوت" },
                     vortex_bot: { title: "VORTEX BOT", desc: "ورود به ربات از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
                     zombie_miner: { title: "ZOMBIE MINER", desc: "ورود به مینی‌اپ از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
@@ -1467,6 +1476,7 @@
             balance: 0,
             unclaimed: 0,
             walletHold: 0,
+            lastTxHash: "",
             ownedCrewIds: [1],
             completedTasks: [],
             pendingBuyVerify: false,
@@ -1484,15 +1494,26 @@
             withdrawHistory: []
         };
 
+        let isCheckingOnchain = false;
+
         window.addEventListener("DOMContentLoaded", () => {
             tonConnectUI.uiOptions = { buttonRootId: "ton-connect-button-container" };
-            tonConnectUI.onStatusChange(() => {
+            tonConnectUI.onStatusChange(async (wallet) => {
+                if (!wallet) {
+                    state.walletHold = 0;
+                    saveState();
+                } else {
+                    await fetchRealOnchainSlrcHold(true);
+                }
                 renderAll();
             });
             initTelegramData();
             loadState();
             applyLanguageDirection();
             renderAll();
+            if (tonConnectUI.connected) {
+                fetchRealOnchainSlrcHold(true);
+            }
         });
 
         function t(key) {
@@ -1536,7 +1557,7 @@
         }
 
         function loadState() {
-            const raw = localStorage.getItem("solaris_empire_slrc_state_v1");
+            const raw = localStorage.getItem("solaris_empire_slrc_state_v2");
             if (raw) {
                 try {
                     const parsed = JSON.parse(raw);
@@ -1545,7 +1566,7 @@
             }
             state.lang = state.lang === "fa" ? "fa" : "en";
             state.completedTasks = (state.completedTasks || []).filter(id => {
-                if (id === "buy_slrc") return false;
+                if (id === "buy_slrc" && state.walletHold < MIN_HOLD_SLRC) return false;
                 if ((id === "invite_friends_task" || id === "share_story") && state.refCount <= 0) return false;
                 return true;
             });
@@ -1553,12 +1574,14 @@
             const sec = Math.max(0, (now - state.lastTick) / 1000);
             state.unclaimed = Math.min(STORAGE_CAP_SLRC, state.unclaimed + sec * (getDailyRate() / 86400));
             state.lastTick = now;
-            document.getElementById("wallet-hold-input").value = state.walletHold || "";
+            if (state.lastTxHash) {
+                document.getElementById("buy-tx-hash-input").value = state.lastTxHash;
+            }
         }
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem("solaris_empire_slrc_state_v1", JSON.stringify(state));
+            localStorage.setItem("solaris_empire_slrc_state_v2", JSON.stringify(state));
         }
 
         function getDailyRate() {
@@ -1576,6 +1599,83 @@
                 return state.balance + state.walletHold;
             }
             return state.balance;
+        }
+
+        async function fetchRealOnchainSlrcHold(silent = false) {
+            if (!tonConnectUI.connected || !tonConnectUI.account?.address) {
+                if (!silent) {
+                    alert(state.lang === "fa" ? "⚠️ ابتدا کیف‌پول Tonkeeper خود را وصل کنید." : "⚠️ Please connect your Tonkeeper wallet first.");
+                }
+                return;
+            }
+            if (isCheckingOnchain) return;
+            isCheckingOnchain = true;
+            renderAll();
+
+            try {
+                const ownerAddress = encodeURIComponent(tonConnectUI.account.address);
+                const jettonMaster = encodeURIComponent(slrcTokenAddress);
+                const endpoint = `https://tonapi.io/v2/accounts/${ownerAddress}/jettons/${jettonMaster}`;
+                const resp = await fetch(endpoint);
+
+                if (!resp.ok) {
+                    throw new Error("HTTP " + resp.status);
+                }
+
+                const data = await resp.json();
+                const rawBalance = data?.balance ? String(data.balance) : "0";
+                const decimals = Number(data?.jetton?.decimals ?? 9);
+                const realTokens = Number(rawBalance) / Math.pow(10, decimals);
+                const safeTokens = Number.isFinite(realTokens) && realTokens > 0 ? Math.floor(realTokens) : 0;
+
+                state.walletHold = safeTokens;
+                if (safeTokens >= MIN_HOLD_SLRC && !state.completedTasks.includes("buy_slrc")) {
+                    state.completedTasks.push("buy_slrc");
+                    state.pendingBuyVerify = false;
+                    state.balance += 500;
+                }
+                saveState();
+                renderAll();
+
+                if (!silent) {
+                    if (safeTokens >= MIN_HOLD_SLRC) {
+                        alert(
+                            state.lang === "fa"
+                                ? `✅ هولد واقعی تایید شد: ${safeTokens.toLocaleString()} SLRC در کیف‌پول شما روی بلاکچین ثبت شده است.`
+                                : `✅ Verified on-chain hold: ${safeTokens.toLocaleString()} SLRC found in your connected wallet.`
+                        );
+                    } else {
+                        alert(
+                            state.lang === "fa"
+                                ? `⚠️ موجودی واقعی SLRC در ولت شما ${safeTokens.toLocaleString()} تا است؛ برای هولد تاییدشده حداقل ${MIN_HOLD_SLRC.toLocaleString()} SLRC در ولت لازم است.`
+                                : `⚠️ Your wallet currently holds ${safeTokens.toLocaleString()} SLRC on-chain. At least ${MIN_HOLD_SLRC.toLocaleString()} SLRC is required.`
+                        );
+                    }
+                }
+            } catch (err) {
+                if (!silent) {
+                    alert(
+                        state.lang === "fa"
+                            ? "❌ خطا در استعلام موجودی از بلاکچین. لطفاً چند لحظه بعد دوباره تلاش کنید."
+                            : "❌ Failed to query blockchain balance. Please try again shortly."
+                    );
+                }
+            } finally {
+                isCheckingOnchain = false;
+                renderAll();
+            }
+        }
+
+        function savePurchaseTxProof() {
+            const tx = document.getElementById("buy-tx-hash-input").value.trim();
+            if (!tx || tx.length < 16) {
+                alert(state.lang === "fa" ? "❌ لطفاً هش تراکنش معتبر وارد کنید." : "❌ Please enter a valid transaction hash.");
+                return;
+            }
+            state.lastTxHash = tx;
+            saveState();
+            renderAll();
+            fetchRealOnchainSlrcHold(false);
         }
 
         function openExternalUrl(url) {
@@ -1628,37 +1728,13 @@
                 if (res) {
                     state.isVerifiedWallet = true;
                     saveState();
+                    await fetchRealOnchainSlrcHold(true);
                     renderAll();
                     alert(state.lang === "fa" ? "✅ تایید ولت با 0.1 TON با موفقیت انجام شد." : "✅ Wallet verified with 0.1 TON.");
                 }
             } catch (err) {
                 alert(state.lang === "fa" ? "❌ تراکنش تایید ولت لغو یا ناموفق بود." : "❌ Wallet verification transaction cancelled or failed.");
             }
-        }
-
-        function syncWalletHold() {
-            const val = parseFloat(document.getElementById("wallet-hold-input").value);
-            if (isNaN(val) || val < 0) {
-                alert(state.lang === "fa" ? "❌ مقدار معتبر وارد کنید." : "❌ Please enter a valid amount.");
-                return;
-            }
-            if (!tonConnectUI.connected) {
-                alert(state.lang === "fa" ? "⚠️ ابتدا کیف‌پول خود را به Tonkeeper وصل کنید تا موجودی ولت روی کارت اضافه شود." : "⚠️ Please connect your wallet to Tonkeeper first.");
-                return;
-            }
-            state.walletHold = val;
-            if (val > 0 && state.pendingBuyVerify && !state.completedTasks.includes("buy_slrc")) {
-                state.completedTasks.push("buy_slrc");
-                state.pendingBuyVerify = false;
-                state.balance += 500;
-            }
-            saveState();
-            renderAll();
-            alert(
-                state.lang === "fa"
-                    ? `✅ موجودی ولت (${val.toLocaleString()} SLRC) ثبت شد و روی کارت و موجودی اصلی اعمال گردید.`
-                    : `✅ Wallet balance (${val.toLocaleString()} SLRC) synced to your card and balance.`
-            );
         }
 
         function claimMinedSlrc() {
@@ -1723,8 +1799,8 @@
                 copyAndGoBuyToken();
                 alert(
                     state.lang === "fa"
-                        ? "🛒 وارد استون فای شوید و پس از خرید، موجودی هولد را در WALLET ثبت کنید."
-                        : "🛒 Complete your purchase on STON.fi, then save your held amount in WALLET."
+                        ? "🛒 خرید را در استون فای انجام دهید و سپس در WALLET دکمه استعلام واقعی از بلاکچین را بزنید."
+                        : "🛒 Complete your purchase on STON.fi, then tap Check Real SLRC Hold on Blockchain in WALLET."
                 );
                 return;
             }
@@ -1763,8 +1839,8 @@
             if (state.walletHold < tier.target) {
                 alert(
                     state.lang === "fa"
-                        ? `⚠️ حداقل ${tier.target.toLocaleString()} SLRC هولد در ولت لازم است.`
-                        : `⚠️ Requires holding at least ${tier.target.toLocaleString()} SLRC in wallet.`
+                        ? `⚠️ موجودی تاییدشده بلاکچین شما کمتر از ${tier.target.toLocaleString()} SLRC است.`
+                        : `⚠️ Verified on-chain hold is below ${tier.target.toLocaleString()} SLRC.`
                 );
                 return;
             }
@@ -1834,8 +1910,8 @@
             if (state.walletHold < MIN_HOLD_SLRC) {
                 alert(
                     state.lang === "fa"
-                        ? `⚠️ برای برداشت باید حداقل ${MIN_HOLD_SLRC.toLocaleString()} SLRC در کیف‌پول هولد داشته باشید.`
-                        : `⚠️ You must hold at least ${MIN_HOLD_SLRC.toLocaleString()} SLRC in your wallet to withdraw.`
+                        ? `⚠️ برای برداشت باید حداقل ${MIN_HOLD_SLRC.toLocaleString()} SLRC واقعی در کیف‌پول متصل داشته باشید.`
+                        : `⚠️ You must hold at least ${MIN_HOLD_SLRC.toLocaleString()} SLRC verified on-chain to withdraw.`
                 );
                 return;
             }
@@ -1885,12 +1961,12 @@
             document.getElementById("info-modal-body").innerHTML = state.lang === "fa" ? `
                 • آدرس قرارداد توکن: <b style="font-family:monospace; font-size:10px;">${slrcTokenAddress}</b><br>
                 • حداقل موجودی برای برداشت: <b>20,000 SLRC</b><br>
-                • حداقل هولد در کیف‌پول متصل: <b>5,000 SLRC</b><br>
+                • حداقل هولد واقعی در کیف‌پول متصل: <b>5,000 SLRC</b><br>
                 • تایید ولت از طریق Tonkeeper: <b>0.1 TON</b>
             ` : `
                 • Token contract: <b style="font-family:monospace; font-size:10px;">${slrcTokenAddress}</b><br>
                 • Minimum withdrawal: <b>20,000 SLRC</b><br>
-                • Minimum connected wallet hold: <b>5,000 SLRC</b><br>
+                • Minimum verified connected wallet hold: <b>5,000 SLRC</b><br>
                 • Tonkeeper wallet verification: <b>0.1 TON</b>
             `;
             document.getElementById("info-modal").style.display = "flex";
@@ -2074,8 +2150,13 @@
             document.getElementById("wallet-modal-sub").innerText = t("walletModalSub");
             document.getElementById("wallet-sync-title").innerText = t("walletSyncTitle");
             document.getElementById("wallet-sync-desc").innerText = t("walletSyncDesc");
-            document.getElementById("wallet-hold-input").placeholder = t("walletPlaceholder");
-            document.getElementById("wallet-save-btn").innerText = t("saveBtn");
+            document.getElementById("check-onchain-btn").innerText = isCheckingOnchain ? t("checkingOnchainBtn") : t("checkOnchainBtn");
+            document.getElementById("lbl-tx-optional").innerText = t("lblTxOptional");
+            document.getElementById("buy-tx-hash-input").placeholder = t("txPlaceholder");
+            document.getElementById("save-tx-btn").innerText = t("saveTxBtn");
+            document.getElementById("recorded-tx-note").innerText = state.lastTxHash
+                ? (state.lang === "fa" ? `هش ثبت‌شده: ${state.lastTxHash.slice(0, 14)}...` : `Recorded TX: ${state.lastTxHash.slice(0, 14)}...`)
+                : "";
             document.getElementById("lbl-withdraw-amt").innerText = t("lblWithdrawAmt");
             document.getElementById("withdraw-slrc-amount").placeholder = t("withdrawAmtPlaceholder");
             document.getElementById("lbl-withdraw-addr").innerText = t("lblWithdrawAddr");
@@ -2086,13 +2167,13 @@
             if (holdMet && state.balance >= MIN_WITHDRAW_SLRC) {
                 alertBox.className = "alert-hold-box ok";
                 alertBox.innerHTML = state.lang === "fa"
-                    ? "✅ شرایط برداشت برقرار است (هولد ≥ 5,000 SLRC و موجودی ≥ 20,000 SLRC)."
-                    : "✅ Withdrawal requirements met (Hold ≥ 5,000 SLRC and Balance ≥ 20,000 SLRC).";
+                    ? "✅ شرایط برداشت برقرار است (هولد واقعی ≥ 5,000 SLRC و موجودی ≥ 20,000 SLRC)."
+                    : "✅ Withdrawal requirements met (Verified Hold ≥ 5,000 SLRC and Balance ≥ 20,000 SLRC).";
             } else {
                 alertBox.className = "alert-hold-box";
                 alertBox.innerHTML = state.lang === "fa"
-                    ? `موجودی فعلی: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLRC</b> • هولد ولت: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLRC</b>.`
-                    : `Current balance: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLRC</b> • Wallet hold: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLRC</b>.`;
+                    ? `موجودی فعلی: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLRC</b> • هولد واقعی ولت: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLRC</b>.`
+                    : `Current balance: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLRC</b> • Verified wallet hold: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLRC</b>.`;
             }
 
             const vBtn = document.getElementById("verify-wallet-btn");
