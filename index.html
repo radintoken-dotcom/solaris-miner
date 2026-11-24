@@ -170,7 +170,6 @@
             margin-bottom: 12px;
         }
 
-        /* کارت بانکی طلایی سه‌بعدی با متن حکاکی‌شده */
         .solaris-bank-card {
             border-radius: 22px;
             padding: 16px 16px;
@@ -1101,11 +1100,6 @@
                     <button class="lime-btn" style="width:auto; padding:10px 18px;" onclick="collectRefBonus()">Claim</button>
                 </div>
             </div>
-
-            <div class="white-card">
-                <div style="font-size:13px; font-weight:900; margin-bottom:8px;" id="how-it-works-title">How it works</div>
-                <div style="font-size:11px; color:var(--text-muted); line-height:1.7;" id="how-it-works-body"></div>
-            </div>
         </div>
 
         <div id="view-profile" class="view-section">
@@ -1269,7 +1263,7 @@
                 dir: "ltr",
                 cardBuyBtn: "🛒 Buy Token on STON.fi",
                 miningStatus: "Mining • SLRC Extraction",
-                miningPaused01Ton: "Mining Paused • Verify wallet with 0.1 TON to start",
+                miningPaused01Ton: "Mining Paused • Pay 0.1 TON verification to start mining",
                 perDay: "SLRC per day",
                 storageLabel: "Storage SLRC",
                 claimMined: "⛏ Claim SLRC",
@@ -1310,8 +1304,6 @@
                 friendsCount: "Friends",
                 friendsEarned: "Friends Earnings",
                 friendsReady: "Ready referral rewards",
-                howItWorksTitle: "How it works",
-                howItWorksBody: "1. Verify wallet with <b>0.1 TON</b> to activate mining.<br>2. Reach <b>20,000 SLRC</b> in-app balance and hold at least <b>5,000 SLRC</b> on-chain.<br>3. Withdrawals go to your connected Tonkeeper wallet within <b>1 to 24 hours</b>.",
                 langLabel: "Language",
                 withdrawBtn: "↓ Withdraw",
                 totalHolding: "Total HOLDING (Wallet)",
@@ -1325,7 +1317,7 @@
                 dockFriends: "Friends",
                 dockProfile: "Profile",
                 closeBtn: "Close ✕",
-                walletModalSub: "Connect Tonkeeper, pay 0.1 TON to activate mining, verify 5,000 SLRC hold, and withdraw 20,000+ SLRC",
+                walletModalSub: "Connect Tonkeeper, pay 0.1 TON to start mining, verify 5,000 SLRC hold, and withdraw 20,000+ SLRC",
                 verify01Ton: "Verify Wallet with 0.1 TON",
                 verified01Ton: "✅ Wallet Verified (0.1 TON)",
                 walletSyncTitle: "Real On-Chain SLRC Hold Verification",
@@ -1411,8 +1403,6 @@
                 friendsCount: "دوست‌ها",
                 friendsEarned: "درآمد از دوست‌ها",
                 friendsReady: "پاداش دوست‌ها آماده است",
-                howItWorksTitle: "چطور کار می‌کنه",
-                howItWorksBody: "۱. برای شروع استخراج، تایید ولت با <b>0.1 TON</b> را پرداخت کنید.<br>۲. پس از رسیدن به <b>20,000 SLRC</b> و هولد <b>5,000 SLRC</b> کادر برداشت باز می‌شود.<br>۳. واریزی‌ها <b>1 الی 24 ساعت</b> زمان می‌برد و به Tonkeeper متصل واریز می‌شود.",
                 langLabel: "Language",
                 withdrawBtn: "↓ Withdraw",
                 totalHolding: "HOLDING کل (کیف‌پول)",
@@ -1512,8 +1502,6 @@
                 friendsCount: "Friends",
                 friendsEarned: "Friends Earnings",
                 friendsReady: "Ready referral rewards",
-                howItWorksTitle: "How it works",
-                howItWorksBody: "1. Pay <b>0.1 TON</b> wallet verification to start mining.<br>2. Reach <b>20,000 SLRC</b> in-app balance and hold <b>5,000 SLRC</b> on-chain.<br>3. Payouts arrive in your connected Tonkeeper wallet within <b>1 to 24 hours</b>.",
                 langLabel: "Language",
                 withdrawBtn: "↓ Withdraw",
                 totalHolding: "Total HOLDING (Wallet)",
@@ -2297,8 +2285,6 @@
             document.getElementById("lbl-friends-count").innerText = t("friendsCount");
             document.getElementById("lbl-friends-earned").innerText = t("friendsEarned");
             document.getElementById("lbl-friends-ready").innerText = t("friendsReady");
-            document.getElementById("how-it-works-title").innerText = t("howItWorksTitle");
-            document.getElementById("how-it-works-body").innerHTML = t("howItWorksBody");
             document.getElementById("ref-count-val").innerText = state.refCount;
             document.getElementById("ref-earned-val").innerText = state.refEarned.toLocaleString() + " SLRC";
             document.getElementById("ref-pending-val").innerText = state.refPending.toLocaleString() + " SLRC";
