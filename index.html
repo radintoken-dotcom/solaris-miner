@@ -372,25 +372,24 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.14);
         }
 
         .feature-tile::before {
             content: "";
             position: absolute;
             inset: 0;
-            background-image: var(--dollar-bg);
-            background-size: cover;
-            background-position: center;
-            opacity: 0.34;
-            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='120' viewBox='0 0 220 120'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.28' stroke-width='1.4'%3E%3Crect x='8' y='8' width='204' height='104' rx='8'/%3E%3Crect x='15' y='15' width='190' height='90' rx='5'/%3E%3Cellipse cx='110' cy='60' rx='32' ry='22'/%3E%3Ccircle cx='110' cy='60' r='11'/%3E%3Ctext x='24' y='34' fill='%23ffffff' fill-opacity='0.34' font-size='16' font-weight='900' font-family='serif'%3E$100%3C/text%3E%3Ctext x='156' y='94' fill='%23ffffff' fill-opacity='0.34' font-size='16' font-weight='900' font-family='serif'%3EUSD%3C/text%3E%3C/g%3E%3C/svg%3E");
+            background-size: 170px auto;
+            background-repeat: repeat;
+            opacity: 0.72;
             pointer-events: none;
         }
 
         .feature-tile > * {
             position: relative;
             z-index: 1;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
         }
 
         .tile-1 { background: linear-gradient(135deg, #c2410c, #f59e0b); }
@@ -406,7 +405,7 @@
 
         .tile-sub {
             font-size: 10px;
-            opacity: 0.94;
+            opacity: 0.95;
             font-weight: 600;
         }
 
@@ -425,23 +424,32 @@
             text-align: center;
         }
 
-        .crew-gem-wrap {
-            width: 54px;
-            height: 54px;
+        .gem-badge {
+            width: 50px;
+            height: 50px;
             margin: 0 auto 6px;
-            border-radius: 14px;
-            overflow: hidden;
-            background: #18181b;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+            font-size: 26px;
+            position: relative;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16), inset 0 1px 2px rgba(255, 255, 255, 0.75);
         }
 
-        .crew-gem-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .gem-emerald {
+            background: radial-gradient(circle at 30% 25%, #a7f3d0 0%, #10b981 48%, #065f46 100%);
+            border: 1.5px solid #34d399;
+        }
+
+        .gem-ruby {
+            background: radial-gradient(circle at 30% 25%, #fecdd3 0%, #e11d48 48%, #881337 100%);
+            border: 1.5px solid #fb7185;
+        }
+
+        .gem-diamond {
+            background: radial-gradient(circle at 30% 25%, #ffffff 0%, #bae6fd 45%, #0284c7 100%);
+            border: 1.5px solid #e0f2fe;
         }
 
         .crew-name {
@@ -1090,13 +1098,6 @@
     </div>
 
     <script>
-        const ASSETS = {
-            emerald: "./emerald.jpg",
-            ruby: "./ruby.jpg",
-            diamond: "./diamond.jpg",
-            dollarBg: "./dollar-bills.jpg"
-        };
-
         const slrcTokenAddress = "EQDSXXDeVWcQaWCCDZAFM-wiln9gIOs1VxOl4L3TgSYN0JPV";
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
@@ -1120,14 +1121,14 @@
             uiPreferences: { borderRadius: "m" }
         });
 
-        // چیدمان از ارزان‌ترین تا گران‌ترین با سنگ‌های قیمتی واقعی (زمرد سبز، یاقوت سرخ، الماس درخشان)
+        // چیدمان از ارزان‌ترین تا گران‌ترین: زمرد سبز -> یاقوت سرخ -> الماس درخشان
         const crewUnits = [
-            { id: 1, name: "سرکارگر SLRC", gemSrc: ASSETS.emerald, gemAlt: "زمرد سبز", daily: 120, cost: 0 },
-            { id: 2, name: "Miner I", gemSrc: ASSETS.emerald, gemAlt: "زمرد سبز", daily: 350, cost: 600 },
-            { id: 3, name: "Miner II", gemSrc: ASSETS.ruby, gemAlt: "یاقوت سرخ", daily: 800, cost: 1800 },
-            { id: 4, name: "Solar Rig", gemSrc: ASSETS.ruby, gemAlt: "یاقوت سرخ", daily: 1600, cost: 3500 },
-            { id: 5, name: "Turbo Core", gemSrc: ASSETS.diamond, gemAlt: "الماس", daily: 3200, cost: 7000 },
-            { id: 6, name: "Titan Node", gemSrc: ASSETS.diamond, gemAlt: "الماس شفاف", daily: 6000, cost: 15000 }
+            { id: 1, name: "سرکارگر SLRC", gemClass: "gem-emerald", gemIcon: "❇️", daily: 120, cost: 0 },
+            { id: 2, name: "Miner I", gemClass: "gem-emerald", gemIcon: "✳️", daily: 350, cost: 600 },
+            { id: 3, name: "Miner II", gemClass: "gem-ruby", gemIcon: "♦️", daily: 800, cost: 1800 },
+            { id: 4, name: "Solar Rig", gemClass: "gem-ruby", gemIcon: "❤️‍🔥", daily: 1600, cost: 3500 },
+            { id: 5, name: "Turbo Core", gemClass: "gem-diamond", gemIcon: "💎", daily: 3200, cost: 7000 },
+            { id: 6, name: "Titan Node", gemClass: "gem-diamond", gemIcon: "💠", daily: 6000, cost: 15000 }
         ];
 
         const communityTasks = [
@@ -1167,7 +1168,6 @@
         };
 
         window.addEventListener("DOMContentLoaded", () => {
-            document.documentElement.style.setProperty("--dollar-bg", `url("${ASSETS.dollarBg}")`);
             tonConnectUI.uiOptions = { buttonRootId: "ton-connect-button-container" };
             tonConnectUI.onStatusChange(() => {
                 renderAll();
@@ -1548,9 +1548,7 @@
                 const owned = state.ownedCrewIds.includes(u.id);
                 return `
                     <div class="crew-card">
-                        <div class="crew-gem-wrap">
-                            <img src="${u.gemSrc}" alt="${u.gemAlt}" class="crew-gem-img">
-                        </div>
+                        <div class="gem-badge ${u.gemClass}">${u.gemIcon}</div>
                         <div class="crew-name">${u.name}</div>
                         <div class="crew-speed">+${u.daily.toLocaleString()}/d</div>
                         <button class="crew-buy-btn ${owned ? "owned" : ""}" onclick="buyCrewUnit(${u.id})">
