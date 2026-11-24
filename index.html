@@ -42,7 +42,6 @@
             padding: 12px 14px 24px;
         }
 
-        /* Top User & Guide Bar (No + button or balance on top left) */
         .top-user-bar {
             background: var(--card-bg);
             border-radius: 22px;
@@ -55,18 +54,19 @@
             position: sticky;
             top: 8px;
             z-index: 50;
+            gap: 8px;
         }
 
         .top-user-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             min-width: 0;
         }
 
         .top-avatar {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--green-bright);
@@ -74,27 +74,27 @@
         }
 
         .top-username {
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 800;
             color: var(--text-dark);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 150px;
+            max-width: 115px;
         }
 
         .top-level-row {
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-top: 3px;
+            gap: 5px;
+            margin-top: 2px;
             font-size: 10px;
             color: var(--text-muted);
             font-weight: 700;
         }
 
         .mini-lvl-bar {
-            width: 56px;
+            width: 48px;
             height: 5px;
             background: #e5e7eb;
             border-radius: 99px;
@@ -107,13 +107,41 @@
             background: var(--green-main);
         }
 
+        .top-right-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .top-main-bal {
+            background: #f5f8f3;
+            border: 1px solid #d9f99d;
+            border-radius: 14px;
+            padding: 4px 8px;
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .top-main-bal-num {
+            font-size: 11px;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+
+        .top-main-bal-sub {
+            font-size: 9.5px;
+            font-weight: 800;
+            color: var(--green-dark);
+        }
+
         .top-right-badge {
             background: #ecfccb;
             color: var(--green-dark);
             border: 1px solid #bef264;
             border-radius: 14px;
-            padding: 5px 10px;
-            font-size: 11px;
+            padding: 5px 8px;
+            font-size: 10px;
             font-weight: 900;
             white-space: nowrap;
         }
@@ -154,7 +182,6 @@
             margin-bottom: 12px;
         }
 
-        /* Bank Card Inspired by Image 2 inside Top Frame */
         .solaris-bank-card {
             border-radius: 20px;
             padding: 16px;
@@ -742,7 +769,6 @@
 </head>
 <body>
     <div class="app-shell">
-        <!-- Top User Bar (No + or balance on top-left) -->
         <div class="top-user-bar">
             <div class="top-user-left">
                 <img id="top-avatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="top-avatar" alt="Avatar">
@@ -755,24 +781,27 @@
                     </div>
                 </div>
             </div>
-            <div class="top-right-badge" id="top-tonkeeper-status">Tonkeeper: بررسی</div>
+            <div class="top-right-wrap">
+                <div class="top-main-bal">
+                    <div class="top-main-bal-num" id="top-main-balance">0 SLRC</div>
+                    <div class="top-main-bal-sub" id="top-daily-rate">+0/d SLRC</div>
+                </div>
+                <div class="top-right-badge" id="top-tonkeeper-status">Tonkeeper</div>
+            </div>
         </div>
 
-        <!-- Top Guide Box -->
         <div class="top-guide-box">
-            <b>راهنمای خرید SLRC:</b> آدرس توکن را کپی کنید، وارد ربات استون‌فای (STON.fi / KeepEye) شوید و با وارد کردن آدرس توکن، SLRC را خریداری کنید. پس از اتصال ولت به Tonkeeper، موجودی کیف‌پول شما روی کارت و بخش هولد لحاظ می‌شود.
+            <b>راهنمای خرید SLRC:</b> با زدن دکمه خرید، آدرس توکن کپی می‌شود و مستقیم وارد صفحه توکن در STON.fi می‌شوید تا SLRC را خریداری کنید. پس از اتصال ولت به Tonkeeper، موجودی کیف‌پول شما روی کارت و بخش هولد لحاظ می‌شود.
         </div>
 
-        <!-- VIEW 1: UPGRADE / MINE -->
         <div id="view-upgrade" class="view-section active">
             <div class="mine-hero-card">
-                <!-- Bank Card inside Top Frame -->
                 <div class="solaris-bank-card">
                     <div class="card-top-row">
                         <div class="emv-chip"></div>
                         <div class="card-mined-box">
-                            <div class="card-mined-label">موجودی استخراج SLRC</div>
-                            <div class="card-mined-amount" id="card-mined-slrc">0.0000 SLRC</div>
+                            <div class="card-mined-label">موجودی اصلی SLRC</div>
+                            <div class="card-mined-amount" id="card-main-slrc">0 SLRC</div>
                         </div>
                     </div>
 
@@ -785,12 +814,12 @@
                     </div>
 
                     <button class="card-bottom-buy-btn" onclick="copyAndGoBuyToken()">
-                        🛒 خرید توکن SLRC (کپی آدرس و ورود به ربات)
+                        🛒 خرید توکن SLRC در STON.fi
                     </button>
                 </div>
 
                 <div class="claim-box-center">
-                    <div class="claim-status-tag">آماده Claim • استخراج SLRC</div>
+                    <div class="claim-status-tag">در حال جمع شدن • استخراج SLRC</div>
                     <div class="claim-big-amount" id="claimable-slrc">0.0000</div>
                     <div class="claim-daily-sub" id="claim-daily-rate">+0 SLRC در روز</div>
 
@@ -855,7 +884,6 @@
             </div>
         </div>
 
-        <!-- VIEW 2: EARN -->
         <div id="view-earn" class="view-section">
             <div class="section-heading">EARN</div>
             <div class="section-sub">پاداش‌های روزانه، تسک‌ها و شرط هولد 2,500 SLRC</div>
@@ -897,7 +925,7 @@
                     • تایید کیف‌پول با Tonkeeper: <b>0.1 TON</b>
                 </div>
                 <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800;">
-                    <span>موجودی فعلی: <span id="bottom-box-balance">0</span> / 10,000 SLRC</span>
+                    <span>موجودی اصلی: <span id="bottom-box-balance">0</span> / 10,000 SLRC</span>
                     <span>هولد ولت: <span id="bottom-box-hold">0</span> / 2,500 SLRC</span>
                 </div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
@@ -907,7 +935,6 @@
             </div>
         </div>
 
-        <!-- VIEW 3: FRIENDS -->
         <div id="view-friends" class="view-section">
             <div class="white-card" style="text-align:center;">
                 <div style="font-size:18px; font-weight:900; margin-bottom:6px;">دوست‌هات رو دعوت کن و SLRC بگیر</div>
@@ -952,7 +979,6 @@
             </div>
         </div>
 
-        <!-- VIEW 4: PROFILE -->
         <div id="view-profile" class="view-section">
             <div class="profile-center-head">
                 <img id="profile-big-avatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-big-avatar" alt="Profile">
@@ -1035,7 +1061,7 @@
             <div class="white-card" style="background:var(--card-soft); margin-bottom:10px;">
                 <div style="font-size:12px; font-weight:800; margin-bottom:4px;">موجودی SLRC خریداری‌شده در ولت متصل</div>
                 <div style="font-size:10px; color:var(--text-muted); margin-bottom:6px;">
-                    پس از خرید SLRC در ولت و اتصال به Tonkeeper، موجودی ولت را ثبت کنید تا روی کارت و بخش هولد اعمال شود.
+                    پس از خرید SLRC در ولت و اتصال به Tonkeeper، موجودی ولت را ثبت کنید تا روی کارت و موجودی کل لحاظ شود.
                 </div>
                 <div style="display:flex; gap:8px;">
                     <input type="number" id="wallet-hold-input" class="clean-input" placeholder="مقدار SLRC در ولت (مثلاً 2500)" style="margin-top:0;">
@@ -1080,7 +1106,7 @@
         const slrcTokenAddress = "EQDSXXDeVWcQaWCCDZAFM-wiln9gIOs1VxOl4L3TgSYN0JPV";
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
-        const buySlrcRouteUrl = "https://t.me/Keepeyeapp";
+        const stonfiTokenUrl = `https://app.ston.fi/tokens/${slrcTokenAddress}`;
         const botUsername = "SolarisMiner_bot";
 
         const MIN_HOLD_SLRC = 2500;
@@ -1103,7 +1129,7 @@
         ];
 
         const communityTasks = [
-            { id: "buy_slrc", title: "خرید SLRC در KeepEye / STON.fi", desc: "آدرس توکن را کپی کنید، وارد ربات شوید و SLRC بخرید", reward: 500, actionLabel: "خرید", isBuy: true },
+            { id: "buy_slrc", title: "خرید SLRC در STON.fi", desc: "آدرس توکن کپی می‌شود و وارد صفحه توکن در STON.fi می‌شوید", reward: 500, actionLabel: "خرید", isBuy: true },
             { id: "join_channel", title: "عضویت در کانال اطلاع‌رسانی Solaris", desc: "دنبال کردن اخبار و اطلاعیه‌های توکن SLRC", reward: 250, actionLabel: "انجام" },
             { id: "share_story", title: "معرفی SLRC به دوستان", desc: "اشتراک‌گذاری لینک دعوت Solaris Miner", reward: 300, actionLabel: "اشتراک" }
         ];
@@ -1193,11 +1219,11 @@
             return 1 + Math.floor(state.balance / 2500);
         }
 
-        function getCardDisplayBalance() {
+        function getMainDisplayBalance() {
             if (tonConnectUI.connected && state.walletHold > 0) {
-                return state.unclaimed + state.walletHold;
+                return state.balance + state.walletHold;
             }
-            return state.unclaimed;
+            return state.balance;
         }
 
         function copyTokenAddress() {
@@ -1211,16 +1237,10 @@
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(slrcTokenAddress).catch(() => {});
             }
-            if (buySlrcRouteUrl.includes("t.me/")) {
-                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
-                    window.Telegram.WebApp.openTelegramLink(buySlrcRouteUrl);
-                } else {
-                    window.open(buySlrcRouteUrl, "_blank");
-                }
-            } else if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openLink) {
-                window.Telegram.WebApp.openLink(buySlrcRouteUrl);
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openLink) {
+                window.Telegram.WebApp.openLink(stonfiTokenUrl);
             } else {
-                window.open(buySlrcRouteUrl, "_blank");
+                window.open(stonfiTokenUrl, "_blank");
             }
         }
 
@@ -1277,7 +1297,7 @@
             state.walletHold = val;
             saveState();
             renderAll();
-            alert(`✅ موجودی ولت (${val.toLocaleString()} SLRC) ثبت شد و روی کارت اعمال گردید.`);
+            alert(`✅ موجودی ولت (${val.toLocaleString()} SLRC) ثبت شد و روی کارت و موجودی اصلی اعمال گردید.`);
         }
 
         function claimMinedSlrc() {
@@ -1289,14 +1309,14 @@
             state.unclaimed = 0;
             saveState();
             renderAll();
-            alert("✅ پاداش استخراج SLRC به موجودی درون‌رباتی اضافه شد.");
+            alert("✅ پاداش استخراج SLRC به موجودی اصلی اضافه شد.");
         }
 
         function buyCrewUnit(id) {
             if (state.ownedCrewIds.includes(id)) return;
             const unit = crewUnits.find(u => u.id === id);
             if (state.balance < unit.cost) {
-                alert(`❌ موجودی SLRC کافی نیست. نیاز به ${unit.cost.toLocaleString()} SLRC دارید.`);
+                alert(`❌ موجودی اصلی SLRC کافی نیست. نیاز به ${unit.cost.toLocaleString()} SLRC دارید.`);
                 return;
             }
             state.balance -= unit.cost;
@@ -1320,7 +1340,7 @@
             state.lastDailyClaim = now;
             saveState();
             renderAll();
-            alert(`✅ +${bonus} SLRC پاداش روزانه دریافت شد!`);
+            alert(`✅ +${bonus} SLRC پاداش روزانه به موجودی اصلی اضافه شد!`);
         }
 
         function runCommunityTask(taskId) {
@@ -1333,7 +1353,7 @@
                 state.balance += t.reward;
                 saveState();
                 renderAll();
-                alert(`✅ تسک انجام شد و +${t.reward} SLRC به موجودی اضافه شد.`);
+                alert(`✅ تسک انجام شد و +${t.reward} SLRC به موجودی اصلی اضافه شد.`);
             }
         }
 
@@ -1349,7 +1369,7 @@
             state.balance += tier.reward;
             saveState();
             renderAll();
-            alert(`✅ پاداش هولد ${tier.target.toLocaleString()} SLRC (+${tier.reward} SLRC) دریافت شد!`);
+            alert(`✅ پاداش هولد ${tier.target.toLocaleString()} SLRC (+${tier.reward} SLRC) به موجودی اصلی اضافه شد!`);
         }
 
         function shareInviteLink() {
@@ -1378,7 +1398,7 @@
             state.refPending = 0;
             saveState();
             renderAll();
-            alert("✅ پاداش دوست‌ها به موجودی SLRC اضافه شد.");
+            alert("✅ پاداش دوست‌ها به موجودی اصلی اضافه شد.");
         }
 
         function calcWithdrawFee(amount) {
@@ -1460,18 +1480,21 @@
             const lvl = getLevel();
             const holdMet = state.walletHold >= MIN_HOLD_SLRC;
             const connected = !!tonConnectUI.connected;
+            const mainBal = getMainDisplayBalance();
 
             document.getElementById("top-username").innerText = state.userName;
             document.getElementById("top-lvl-label").innerText = "Lv " + lvl;
             document.getElementById("top-next-lvl").innerText = "Lv " + (lvl + 1);
-            document.getElementById("top-tonkeeper-status").innerText = connected ? "Tonkeeper: متصل ✓" : "Tonkeeper: متصل نیست";
+            document.getElementById("top-main-balance").innerText = Math.floor(mainBal).toLocaleString() + " SLRC";
+            document.getElementById("top-daily-rate").innerText = "+" + daily.toLocaleString() + "/d";
+            document.getElementById("top-tonkeeper-status").innerText = connected ? "Tonkeeper ✓" : "Tonkeeper";
 
             if (state.photoUrl) {
                 document.getElementById("top-avatar").src = state.photoUrl;
                 document.getElementById("profile-big-avatar").src = state.photoUrl;
             }
 
-            document.getElementById("card-mined-slrc").innerText = getCardDisplayBalance().toFixed(4) + " SLRC";
+            document.getElementById("card-main-slrc").innerText = Math.floor(mainBal).toLocaleString() + " SLRC";
             document.getElementById("claimable-slrc").innerText = state.unclaimed.toFixed(4);
             document.getElementById("claim-daily-rate").innerText = "+" + daily.toLocaleString() + " SLRC در روز";
             document.getElementById("storage-text").innerText = `${Math.floor(state.unclaimed).toLocaleString()} / ${STORAGE_CAP_SLRC.toLocaleString()} SLRC`;
@@ -1573,8 +1596,6 @@
 
         setInterval(() => {
             state.unclaimed = Math.min(STORAGE_CAP_SLRC, state.unclaimed + getDailyRate() / 86400);
-            const cardEl = document.getElementById("card-mined-slrc");
-            if (cardEl) cardEl.innerText = getCardDisplayBalance().toFixed(4) + " SLRC";
             const el = document.getElementById("claimable-slrc");
             if (el) el.innerText = state.unclaimed.toFixed(4);
             document.getElementById("storage-text").innerText = `${Math.floor(state.unclaimed).toLocaleString()} / ${STORAGE_CAP_SLRC.toLocaleString()} SLRC`;
