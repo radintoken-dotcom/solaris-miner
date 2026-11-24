@@ -50,7 +50,7 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 4px 14px rgba(17, 24, 39, 0.06);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             position: sticky;
             top: 8px;
             z-index: 50;
@@ -146,18 +146,6 @@
             white-space: nowrap;
         }
 
-        .top-guide-box {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            border-radius: 16px;
-            padding: 9px 12px;
-            font-size: 11px;
-            font-weight: 700;
-            color: #78350f;
-            line-height: 1.55;
-            margin-bottom: 12px;
-        }
-
         .view-section {
             display: none;
         }
@@ -183,32 +171,35 @@
         }
 
         .solaris-bank-card {
-            border-radius: 20px;
-            padding: 16px;
+            border-radius: 22px;
+            padding: 18px 16px;
             color: #f3d28a;
             background:
-                radial-gradient(circle at 80% 20%, rgba(250, 204, 21, 0.16), transparent 45%),
+                radial-gradient(circle at 50% 35%, rgba(250, 204, 21, 0.22), transparent 60%),
                 repeating-radial-gradient(circle at 20% 20%, rgba(217, 167, 74, 0.08) 0px, rgba(217, 167, 74, 0.08) 2px, transparent 2px, transparent 8px),
-                linear-gradient(145deg, #231610 0%, #140c09 55%, #2b1b12 100%);
-            border: 1.5px solid rgba(234, 179, 8, 0.45);
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+                linear-gradient(145deg, #271811 0%, #140c09 55%, #2f1d14 100%);
+            border: 1.5px solid rgba(234, 179, 8, 0.5);
+            box-shadow:
+                0 14px 26px rgba(0, 0, 0, 0.32),
+                inset 0 1px 1px rgba(255, 244, 194, 0.35),
+                inset 0 -3px 8px rgba(0, 0, 0, 0.65);
             position: relative;
         }
 
         .card-top-row {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            margin-bottom: 14px;
+            justify-content: flex-start;
+            margin-bottom: 10px;
         }
 
         .emv-chip {
-            width: 42px;
-            height: 30px;
-            border-radius: 7px;
+            width: 44px;
+            height: 31px;
+            border-radius: 8px;
             background: linear-gradient(135deg, #fde68a, #ca8a04, #fef08a);
-            border: 1px solid rgba(120, 53, 15, 0.6);
+            border: 1px solid rgba(120, 53, 15, 0.65);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.7);
             position: relative;
             flex-shrink: 0;
         }
@@ -221,80 +212,47 @@
             border-radius: 4px;
         }
 
-        .card-mined-box {
-            text-align: left;
-            line-height: 1.25;
+        .card-center-balance-box {
+            text-align: center;
+            padding: 10px 8px 16px;
+            line-height: 1.3;
         }
 
         .card-mined-label {
-            font-size: 10px;
+            font-size: 11px;
             color: #fcd34d;
-            font-weight: 700;
-        }
-
-        .card-mined-amount {
-            font-size: 16px;
-            font-weight: 900;
-            color: #fef08a;
-            letter-spacing: 0.3px;
-        }
-
-        .card-address-box {
-            background: rgba(0, 0, 0, 0.38);
-            border: 1px solid rgba(250, 204, 21, 0.28);
-            border-radius: 12px;
-            padding: 8px 10px;
-            margin-bottom: 14px;
-        }
-
-        .card-address-title {
-            font-size: 10px;
-            color: #fde68a;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .card-address-line {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-
-        .card-address-text {
-            font-size: 10.5px;
-            font-family: monospace;
-            color: #ffffff;
-            direction: ltr;
-            text-align: left;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .copy-addr-btn {
-            background: rgba(250, 204, 21, 0.2);
-            border: 1px solid #facc15;
-            color: #fef08a;
-            border-radius: 9px;
-            padding: 4px 9px;
-            font-size: 10px;
             font-weight: 800;
-            cursor: pointer;
-            flex-shrink: 0;
+            margin-bottom: 6px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .card-mined-amount-3d {
+            display: inline-block;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 0.6px;
+            padding: 6px 16px;
+            border-radius: 16px;
+            background: linear-gradient(180deg, #fef08a 0%, #facc15 52%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter:
+                drop-shadow(0 2px 0px rgba(69, 26, 3, 0.95))
+                drop-shadow(0 4px 6px rgba(0, 0, 0, 0.75))
+                drop-shadow(0 0 12px rgba(250, 204, 21, 0.35));
         }
 
         .card-bottom-buy-btn {
             width: 100%;
             border: none;
-            border-radius: 12px;
-            padding: 10px 14px;
-            background: linear-gradient(135deg, #facc15, #eab308);
+            border-radius: 14px;
+            padding: 11px 14px;
+            background: linear-gradient(180deg, #fde047 0%, #eab308 100%);
             color: #1c1917;
             font-size: 13px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35);
+            box-shadow: 0 5px 14px rgba(234, 179, 8, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
 
         .claim-box-center {
@@ -566,6 +524,12 @@
             color: #166534;
         }
 
+        .task-action-pill.locked {
+            background: #f3f4f6;
+            border-color: #e5e7eb;
+            color: #9ca3af;
+        }
+
         .hold-progress-track {
             width: 100%;
             height: 6px;
@@ -686,6 +650,13 @@
             outline: none;
         }
 
+        .plus-circle-btn {
+            border: none;
+            background: var(--card-soft);
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
         .floating-dock-wrap {
             position: fixed;
             bottom: 14px;
@@ -790,27 +761,16 @@
             </div>
         </div>
 
-        <div class="top-guide-box">
-            <b>راهنمای خرید SLRC:</b> با زدن دکمه خرید، آدرس توکن کپی می‌شود و مستقیم وارد صفحه سواپ توکن SLRC در STON.fi می‌شوید تا خرید را انجام دهید. پس از اتصال ولت به Tonkeeper، موجودی کیف‌پول شما روی کارت و بخش هولد لحاظ می‌شود.
-        </div>
-
         <div id="view-upgrade" class="view-section active">
             <div class="mine-hero-card">
                 <div class="solaris-bank-card">
                     <div class="card-top-row">
                         <div class="emv-chip"></div>
-                        <div class="card-mined-box">
-                            <div class="card-mined-label">موجودی اصلی SLRC</div>
-                            <div class="card-mined-amount" id="card-main-slrc">0 SLRC</div>
-                        </div>
                     </div>
 
-                    <div class="card-address-box">
-                        <div class="card-address-title">آدرس قرارداد توکن SLRC</div>
-                        <div class="card-address-line">
-                            <span class="card-address-text" id="token-contract-text">EQDSXXDeVWcQaWCCDZAFM-wiln9gIOs1VxOl4L3TgSYN0JPV</span>
-                            <button class="copy-addr-btn" onclick="copyTokenAddress()">کپی آدرس</button>
-                        </div>
+                    <div class="card-center-balance-box">
+                        <div class="card-mined-label">موجودی اصلی SLRC</div>
+                        <div class="card-mined-amount-3d" id="card-main-slrc">0 SLRC</div>
                     </div>
 
                     <button class="card-bottom-buy-btn" onclick="copyAndGoBuyToken()">
@@ -908,7 +868,7 @@
                 <button class="lime-btn" onclick="claimDailyBonus()">دریافت پاداش روزانه SLRC</button>
             </div>
 
-            <div style="font-size:15px; font-weight:900; margin-bottom:8px;">کامیونیتی و خرید SLRC</div>
+            <div style="font-size:15px; font-weight:900; margin-bottom:8px;">کامیونیتی، خرید و ربات‌های پیشنهادی</div>
             <div id="community-tasks-list"></div>
 
             <div style="font-size:15px; font-weight:900; margin:14px 0 4px;">هولدرهای ON-CHAIN (کیف‌پول متصل)</div>
@@ -1109,6 +1069,13 @@
         const stonfiSwapTokenUrl = `https://app.ston.fi/swap?ft=TON&tt=${slrcTokenAddress}`;
         const botUsername = "SolarisMiner_bot";
 
+        const externalBotUrls = {
+            vortex_bot: "https://t.me/VRX_Vortex_bot?start=fB8OZoy",
+            zombie_miner: "https://t.me/ZOMBIE_MINER_bot/app?startapp=ref_1007321991",
+            oron_space: "https://t.me/oron_miner_bot?start=ref_1007321991",
+            cherry_play: "https://t.me/CherryPlayBot/play?startapp=rdz1r2sxmd"
+        };
+
         const MIN_HOLD_SLRC = 2500;
         const MIN_WITHDRAW_SLRC = 10000;
         const STORAGE_CAP_SLRC = 10000;
@@ -1129,9 +1096,12 @@
         ];
 
         const communityTasks = [
-            { id: "buy_slrc", title: "خرید SLRC در STON.fi", desc: "آدرس توکن کپی می‌شود و مستقیم وارد سواپ SLRC در STON.fi می‌شوید", reward: 500, actionLabel: "خرید", isBuy: true },
-            { id: "join_channel", title: "عضویت در کانال اطلاع‌رسانی Solaris", desc: "دنبال کردن اخبار و اطلاعیه‌های توکن SLRC", reward: 250, actionLabel: "انجام" },
-            { id: "share_story", title: "معرفی SLRC به دوستان", desc: "اشتراک‌گذاری لینک دعوت Solaris Miner", reward: 300, actionLabel: "اشتراک" }
+            { id: "buy_slrc", title: "خرید SLRC در STON.fi", desc: "وارد صفحه سواپ SLRC در STON.fi شوید و خرید را تایید کنید", reward: 500, actionLabel: "خرید", isBuy: true },
+            { id: "invite_friends_task", title: "دعوت واقعی از دوستان", desc: "فقط پس از ورود دوست با لینک دعوت شما فعال و قابل دریافت است", reward: 300, actionLabel: "دعوت", requiresRef: true },
+            { id: "vortex_bot", title: "VORTEX BOT", desc: "ورود به ربات از طریق دکمه اختصاصی و دریافت پاداش", reward: 150, actionLabel: "ورود", externalKey: "vortex_bot" },
+            { id: "zombie_miner", title: "ZOMBIE MINER", desc: "ورود به مینی‌اپ از طریق دکمه اختصاصی و دریافت پاداش", reward: 150, actionLabel: "ورود", externalKey: "zombie_miner" },
+            { id: "oron_space", title: "ORON SPACE", desc: "ورود به ربات از طریق دکمه اختصاصی و دریافت پاداش", reward: 150, actionLabel: "ورود", externalKey: "oron_space" },
+            { id: "cherry_play", title: "CHERRY PLAY", desc: "ورود به بازی از طریق دکمه اختصاصی و دریافت پاداش", reward: 150, actionLabel: "ورود", externalKey: "cherry_play" }
         ];
 
         const holdTiers = [
@@ -1146,6 +1116,7 @@
             walletHold: 0,
             ownedCrewIds: [1],
             completedTasks: [],
+            pendingBuyVerify: false,
             claimedHoldTiers: [],
             streak: 0,
             lastDailyClaim: 0,
@@ -1194,9 +1165,16 @@
             const raw = localStorage.getItem("solaris_empire_slrc_state_v1");
             if (raw) {
                 try {
-                    state = { ...state, ...JSON.parse(raw) };
+                    const parsed = JSON.parse(raw);
+                    state = { ...state, ...parsed };
                 } catch (e) {}
             }
+            // پاکسازی تیک‌های غیرواقعی قبلی برای خرید و دعوت
+            state.completedTasks = (state.completedTasks || []).filter(id => {
+                if (id === "buy_slrc") return false;
+                if ((id === "invite_friends_task" || id === "share_story") && state.refCount <= 0) return false;
+                return true;
+            });
             const now = Date.now();
             const sec = Math.max(0, (now - state.lastTick) / 1000);
             state.unclaimed = Math.min(STORAGE_CAP_SLRC, state.unclaimed + sec * (getDailyRate() / 86400));
@@ -1226,22 +1204,22 @@
             return state.balance;
         }
 
-        function copyTokenAddress() {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(slrcTokenAddress).catch(() => {});
+        function openExternalUrl(url) {
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openLink) {
+                window.Telegram.WebApp.openLink(url);
+            } else {
+                window.open(url, "_blank");
             }
-            alert("✅ آدرس توکن SLRC کپی شد:\n" + slrcTokenAddress);
         }
 
         function copyAndGoBuyToken() {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(slrcTokenAddress).catch(() => {});
             }
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openLink) {
-                window.Telegram.WebApp.openLink(stonfiSwapTokenUrl);
-            } else {
-                window.open(stonfiSwapTokenUrl, "_blank");
-            }
+            state.pendingBuyVerify = true;
+            saveState();
+            renderAll();
+            openExternalUrl(stonfiSwapTokenUrl);
         }
 
         function switchView(name) {
@@ -1295,6 +1273,11 @@
                 return;
             }
             state.walletHold = val;
+            if (val > 0 && state.pendingBuyVerify && !state.completedTasks.includes("buy_slrc")) {
+                state.completedTasks.push("buy_slrc");
+                state.pendingBuyVerify = false;
+                state.balance += 500;
+            }
             saveState();
             renderAll();
             alert(`✅ موجودی ولت (${val.toLocaleString()} SLRC) ثبت شد و روی کارت و موجودی اصلی اعمال گردید.`);
@@ -1346,14 +1329,35 @@
         function runCommunityTask(taskId) {
             const t = communityTasks.find(x => x.id === taskId);
             if (!t) return;
-            if (t.isBuy) copyAndGoBuyToken();
-            if (taskId === "share_story") shareInviteLink();
-            if (!state.completedTasks.includes(taskId)) {
+            if (state.completedTasks.includes(taskId)) return;
+
+            if (t.isBuy) {
+                copyAndGoBuyToken();
+                alert("🛒 وارد STON.fi شوید و پس از خرید، در بخش WALLET موجودی هولد را ثبت کنید تا پاداش خرید فعال شود.");
+                return;
+            }
+
+            if (t.requiresRef) {
+                if (state.refCount <= 0) {
+                    shareInviteLink();
+                    alert("🔒 هنوز هیچ دوستی با لینک شما وارد نشده است. پس از ثبت دعوت واقعی، پاداش فعال می‌شود.");
+                    return;
+                }
                 state.completedTasks.push(taskId);
                 state.balance += t.reward;
                 saveState();
                 renderAll();
-                alert(`✅ تسک انجام شد و +${t.reward} SLRC به موجودی اصلی اضافه شد.`);
+                alert(`✅ دعوت دوست تایید شد و +${t.reward} SLRC به موجودی اصلی اضافه شد.`);
+                return;
+            }
+
+            if (t.externalKey && externalBotUrls[t.externalKey]) {
+                openExternalUrl(externalBotUrls[t.externalKey]);
+                state.completedTasks.push(taskId);
+                state.balance += t.reward;
+                saveState();
+                renderAll();
+                alert(`✅ وارد ${t.title} شدید و +${t.reward} SLRC به موجودی اصلی اضافه شد.`);
             }
         }
 
@@ -1374,7 +1378,7 @@
 
         function shareInviteLink() {
             const link = document.getElementById("ref-link-box").value;
-            const txt = encodeURIComponent("☀️ در Solaris Miner توکن SLRC استخراج کن! آدرس توکن:\n" + slrcTokenAddress + "\nلینک ربات:\n" + link);
+            const txt = encodeURIComponent("☀️ در Solaris Miner توکن SLRC استخراج کن!\nلینک ربات:\n" + link);
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
                 window.Telegram.WebApp.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${txt}`);
             } else {
@@ -1530,6 +1534,11 @@
 
             document.getElementById("community-tasks-list").innerHTML = communityTasks.map(t => {
                 const done = state.completedTasks.includes(t.id);
+                const isRefLocked = t.requiresRef && !done && state.refCount <= 0;
+                const isBuyPending = t.isBuy && !done && state.pendingBuyVerify;
+                const btnLabel = done
+                    ? "انجام شد ✓"
+                    : (isRefLocked ? "دعوت نشده" : (isBuyPending ? "در انتظار خرید" : t.actionLabel));
                 return `
                     <div class="task-row-card">
                         <div>
@@ -1537,8 +1546,8 @@
                             <div style="font-size:10px; color:var(--text-muted); margin-top:2px;">${t.desc}</div>
                             <div style="font-size:11px; font-weight:800; color:#4d7c0f; margin-top:4px;">+${t.reward.toLocaleString()} SLRC</div>
                         </div>
-                        <button class="task-action-pill ${done ? "done" : ""}" onclick="runCommunityTask('${t.id}')">
-                            ${done ? "انجام شد ✓" : t.actionLabel}
+                        <button class="task-action-pill ${done ? "done" : (isRefLocked ? "locked" : "")}" onclick="runCommunityTask('${t.id}')">
+                            ${btnLabel}
                         </button>
                     </div>
                 `;
