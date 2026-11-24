@@ -247,7 +247,6 @@
             border-radius: 4px;
         }
 
-        /* دکمه چرخشی بروزرسانی ولت در گوشه بالا سمت راست کارت طلایی */
         @keyframes cardWalletSpin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -564,14 +563,7 @@
             width: 56px;
             height: 56px;
             pointer-events: none;
-            animation: none;
-            opacity: 0.55;
-        }
-
-        /* چرخش چرخ‌دنده‌ها فقط پس از تایید ولت فعال می‌شود */
-        .slrc-gear-coin-wrap.wallet-verified .slrc-rotating-gear-svg {
             animation: slrcGearRingSpin 4.5s linear infinite;
-            opacity: 1;
         }
 
         .slrc-static-coin-center {
@@ -1495,13 +1487,13 @@
             </div>
 
             <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px;" id="wallet-modal-sub">
-                Connect Tonkeeper, verify real on-chain SLRC hold, and withdraw minimum 20,000 SLRC
+                Connect Tonkeeper, verify wallet with 0.05 TON, check 5,000 SLRC hold, and withdraw 20,000+ SLRC
             </div>
 
             <div id="ton-connect-button-container" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
 
-            <button id="verify-wallet-btn" class="lime-btn secondary" style="margin-bottom:12px;" onclick="verifyWalletWith01Ton()">
-                Verify Wallet with 0.1 TON
+            <button id="verify-wallet-btn" class="lime-btn secondary" style="margin-bottom:12px;" onclick="verifyWalletWith005Ton()">
+                Verify Wallet with 0.05 TON
             </button>
 
             <div class="white-card" style="background:var(--card-soft); margin-bottom:10px;">
@@ -1562,6 +1554,7 @@
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
         const stonfiSwapTokenUrl = `https://app.ston.fi/swap?ft=TON&tt=${slrcTokenAddress}`;
         const botUsername = "SolarisMiner_bot";
+        const WALLET_VERIFY_TON = 0.05;
 
         const externalBotUrls = {
             vortex_bot: "https://t.me/VRX_Vortex_bot?start=fB8OZoy",
@@ -1623,7 +1616,7 @@
                 onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
                 onchainSub: "Holding at least 5,000 SLRC in wallet is required to unlock 20,000 SLRC withdrawal.",
                 earnBottomTitle: "📌 SLRC Withdrawal & Hold Status",
-                earnBottomDesc: "• In-app balance for withdrawal: <b>Min 20,000 SLRC</b><br>• Held balance in connected wallet: <b>Min 5,000 SLRC</b><br>• Tonkeeper wallet verification: <b>0.1 TON</b> (starts mining)<br>• Payout time: <b>1 to 24 hours</b>",
+                earnBottomDesc: "• In-app balance for withdrawal: <b>Min 20,000 SLRC</b><br>• Held balance in connected wallet: <b>Min 5,000 SLRC</b><br>• Tonkeeper wallet verification: <b>0.05 TON</b> (starts mining)<br>• Payout time: <b>1 to 24 hours</b>",
                 mainBalShort: "Main Balance",
                 walletHoldShort: "Wallet Hold",
                 buySlrcShort: "🛒 Buy SLRC",
@@ -1648,9 +1641,9 @@
                 dockFriends: "Friends",
                 dockProfile: "Profile",
                 closeBtn: "Close ✕",
-                walletModalSub: "Connect Tonkeeper, verify wallet with 0.1 TON, check 5,000 SLRC hold, and withdraw 20,000+ SLRC",
-                verify01Ton: "Verify Wallet with 0.1 TON",
-                verified01Ton: "✅ Wallet Verified (0.1 TON)",
+                walletModalSub: "Connect Tonkeeper, verify wallet with 0.05 TON, check 5,000 SLRC hold, and withdraw 20,000+ SLRC",
+                verify005Ton: "Verify Wallet with 0.05 TON",
+                verified005Ton: "✅ Wallet Verified (0.05 TON)",
                 walletSyncTitle: "Real On-Chain SLRC Hold Verification",
                 walletSyncDesc: "Connect your wallet and check your real SLRC balance directly on the TON blockchain (Min 5,000 SLRC required).",
                 checkOnchainBtn: "🔍 Check Real SLRC Hold on Blockchain",
@@ -1672,8 +1665,8 @@
                 holdLabel2: "Hold ON-CHAIN at 10,000 SLRC",
                 holdLabel3: "Hold ON-CHAIN at 25,000 SLRC",
                 claimedBadge: "Claimed ✓",
-                toastVerifyRequired: "⚠️ Wallet verification must be completed first!",
-                toastClaimNotVerified: "⚠️ Complete wallet verification first to extract and claim SLRC.",
+                toastVerifyRequired: "⚠️ Wallet verification (0.05 TON) must be completed first!",
+                toastClaimNotVerified: "⚠️ Complete wallet verification (0.05 TON) first to extract and claim SLRC.",
                 toastNothingToClaim: "No mined SLRC ready to claim yet.",
                 toastClaimSuccess: "✅ Mined SLRC added to main balance.",
                 toastWalletUpdated: "✅ Wallet balance updated: ",
@@ -1742,7 +1735,7 @@
                 onchainHeading: "هولدرهای ON-CHAIN (کیف‌پول متصل)",
                 onchainSub: "حداقل هولد 5,000 SLRC در کیف‌پول برای باز شدن برداشت 20,000 SLRC الزامی است.",
                 earnBottomTitle: "📌 وضعیت برداشت و هولد SLRC",
-                earnBottomDesc: "• موجودی درون‌رباتی برای برداشت: <b>حداقل 20,000 SLRC</b><br>• هولد واقعی در کیف‌پول متصل: <b>حداقل 5,000 SLRC</b><br>• تایید ولت برای شروع استخراج: <b>0.1 TON</b><br>• زمان واریزها: <b>1 الی 24 ساعت</b>",
+                earnBottomDesc: "• موجودی درون‌رباتی برای برداشت: <b>حداقل 20,000 SLRC</b><br>• هولد واقعی در کیف‌پول متصل: <b>حداقل 5,000 SLRC</b><br>• تایید ولت برای شروع استخراج: <b>0.05 TON</b><br>• زمان واریزها: <b>1 الی 24 ساعت</b>",
                 mainBalShort: "موجودی اصلی",
                 walletHoldShort: "هولد ولت",
                 buySlrcShort: "🛒 خرید SLRC",
@@ -1767,9 +1760,9 @@
                 dockFriends: "دوست‌ها",
                 dockProfile: "Profile",
                 closeBtn: "بستن ✕",
-                walletModalSub: "اتصال Tonkeeper، تایید ولت با 0.1 TON، استعلام هولد 5,000 و برداشت 20,000 SLRC",
-                verify01Ton: "تایید ولت با 0.1 TON",
-                verified01Ton: "✅ ولت تایید شد (0.1 TON)",
+                walletModalSub: "اتصال Tonkeeper، تایید ولت با 0.05 TON، استعلام هولد 5,000 و برداشت 20,000 SLRC",
+                verify005Ton: "تایید ولت با 0.05 TON",
+                verified005Ton: "✅ ولت تایید شد (0.05 TON)",
                 walletSyncTitle: "استعلام واقعی موجودی SLRC در بلاکچین",
                 walletSyncDesc: "کیف‌پول را وصل کنید تا موجودی واقعی SLRC مستقیم از بلاکچین TON خوانده شود.",
                 checkOnchainBtn: "🔍 استعلام واقعی هولد SLRC از بلاکچین",
@@ -1791,8 +1784,8 @@
                 holdLabel2: "نگه دار ON-CHAIN رو 10,000 SLRC",
                 holdLabel3: "نگه دار ON-CHAIN رو 25,000 SLRC",
                 claimedBadge: "دریافت شد ✓",
-                toastVerifyRequired: "⚠️ حتماً تایید ولت انجام بشه!",
-                toastClaimNotVerified: "⚠️ برای دریافت استخراج، حتماً تایید ولت انجام بشه!",
+                toastVerifyRequired: "⚠️ حتماً تایید ولت (0.05 TON) انجام بشه!",
+                toastClaimNotVerified: "⚠️ برای دریافت استخراج، حتماً تایید ولت (0.05 TON) انجام بشه!",
                 toastNothingToClaim: "هنوز SLRC استخراج‌شده‌ای برای دریافت آماده نیست.",
                 toastClaimSuccess: "✅ پاداش استخراج SLRC به موجودی اصلی اضافه شد.",
                 toastWalletUpdated: "✅ موجودی ولت بروزرسانی شد: ",
@@ -1861,7 +1854,7 @@
                 onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
                 onchainSub: "Holding at least 5,000 SLRC in wallet is required to unlock 20,000 SLRC withdrawal.",
                 earnBottomTitle: "📌 SLRC Withdrawal & Hold Status",
-                earnBottomDesc: "• In-app balance for withdrawal: <b>Min 20,000 SLRC</b><br>• Held balance in connected wallet: <b>Min 5,000 SLRC</b><br>• Wallet verification: <b>0.1 TON</b><br>• Payout time: <b>1 to 24 hours</b>",
+                earnBottomDesc: "• In-app balance for withdrawal: <b>Min 20,000 SLRC</b><br>• Held balance in connected wallet: <b>Min 5,000 SLRC</b><br>• Wallet verification: <b>0.05 TON</b><br>• Payout time: <b>1 to 24 hours</b>",
                 mainBalShort: "Main Balance",
                 walletHoldShort: "Wallet Hold",
                 buySlrcShort: "🛒 Buy SLRC",
@@ -1886,9 +1879,9 @@
                 dockFriends: "Friends",
                 dockProfile: "Profile",
                 closeBtn: "Close ✕",
-                walletModalSub: "Connect Tonkeeper, verify wallet with 0.1 TON, check 5,000 SLRC hold, and withdraw 20,000+ SLRC",
-                verify01Ton: "Verify Wallet with 0.1 TON",
-                verified01Ton: "✅ Wallet Verified (0.1 TON)",
+                walletModalSub: "Connect Tonkeeper, verify wallet with 0.05 TON, check 5,000 SLRC hold, and withdraw 20,000+ SLRC",
+                verify005Ton: "Verify Wallet with 0.05 TON",
+                verified005Ton: "✅ Wallet Verified (0.05 TON)",
                 walletSyncTitle: "Real On-Chain SLRC Hold Verification",
                 walletSyncDesc: "Connect your wallet and check your real SLRC balance directly on the TON blockchain (Min 5,000 SLRC required).",
                 checkOnchainBtn: "🔍 Check Real SLRC Hold on Blockchain",
@@ -1910,8 +1903,8 @@
                 holdLabel2: "Hold ON-CHAIN at 10,000 SLRC",
                 holdLabel3: "Hold ON-CHAIN at 25,000 SLRC",
                 claimedBadge: "Claimed ✓",
-                toastVerifyRequired: "⚠️ Wallet verification must be completed first!",
-                toastClaimNotVerified: "⚠️ Complete wallet verification first to extract and claim SLRC.",
+                toastVerifyRequired: "⚠️ Wallet verification (0.05 TON) must be completed first!",
+                toastClaimNotVerified: "⚠️ Complete wallet verification (0.05 TON) first to extract and claim SLRC.",
                 toastNothingToClaim: "No mined SLRC ready to claim yet.",
                 toastClaimSuccess: "✅ Mined SLRC added to main balance.",
                 toastWalletUpdated: "✅ Wallet balance updated: ",
@@ -2027,6 +2020,13 @@
                 <circle cx="32" cy="32" r="24" fill="none" stroke="url(#slrcGearGrad)" stroke-width="4.5"/>
                 <circle cx="32" cy="32" r="21.5" fill="none" stroke="#fef9c3" stroke-width="0.9" opacity="0.7"/>
             </svg>
+        `;
+
+        const lockBadgeHtml = `
+            <div class="cyber-lock-badge">
+                <div class="cyber-lock-shackle"></div>
+                <div class="cyber-lock-body"><div class="cyber-lock-keyhole"></div></div>
+            </div>
         `;
 
         let state = {
@@ -2754,12 +2754,12 @@
             document.getElementById(id).style.display = "none";
         }
 
-        async function verifyWalletWith01Ton() {
+        async function verifyWalletWith005Ton() {
             if (!tonConnectUI.connected) {
                 showTransientMessage(t("toastConnectWalletFirst"));
                 return;
             }
-            const nanoTon = Math.floor(0.1 * 1e9).toString();
+            const nanoTon = Math.floor(WALLET_VERIFY_TON * 1e9).toString();
             try {
                 const res = await tonConnectUI.sendTransaction({
                     validUntil: Math.floor(Date.now() / 1000) + 600,
@@ -2773,8 +2773,8 @@
                     renderAll();
                     showTransientMessage(
                         state.lang === "fa"
-                            ? "✅ تایید ولت با 0.1 TON انجام شد و همه بخش‌ها فعال شدند!"
-                            : "✅ Wallet verified with 0.1 TON and all units unlocked!"
+                            ? "✅ تایید ولت با 0.05 TON انجام شد و همه بخش‌ها فعال شدند!"
+                            : "✅ Wallet verified with 0.05 TON and all units unlocked!"
                     );
                 }
             } catch (err) {
@@ -3019,13 +3019,13 @@
             document.getElementById("info-modal-title").innerText = state.lang === "fa" ? "شرایط و قوانین SLRC" : "SLRC Rules";
             document.getElementById("info-modal-body").innerHTML = state.lang === "fa" ? `
                 • آدرس قرارداد توکن: <b style="font-family:monospace; font-size:10px;">${slrcTokenAddress}</b><br>
-                • تایید ولت برای فعال‌سازی بخش‌ها و استخراج: <b>0.1 TON</b><br>
+                • تایید ولت برای فعال‌سازی بخش‌ها و استخراج: <b>0.05 TON</b><br>
                 • حداقل موجودی برای برداشت: <b>20,000 SLRC</b><br>
                 • حداقل هولد واقعی در کیف‌پول متصل: <b>5,000 SLRC</b><br>
                 • زمان واریز مستقیم به Tonkeeper متصل: <b>1 الی 24 ساعت</b>
             ` : `
                 • Token contract: <b style="font-family:monospace; font-size:10px;">${slrcTokenAddress}</b><br>
-                • Wallet verification to unlock units & mining: <b>0.1 TON</b><br>
+                • Wallet verification to unlock units & mining: <b>0.05 TON</b><br>
                 • Minimum withdrawal: <b>20,000 SLRC</b><br>
                 • Minimum verified connected wallet hold: <b>5,000 SLRC</b><br>
                 • Payout time to connected Tonkeeper: <b>1 to 24 hours</b>
@@ -3095,9 +3095,11 @@
                 const owned = state.ownedCrewIds.includes(u.id);
                 const canAfford = state.balance >= u.cost;
                 const unitName = t("crewNames")[u.id] || ("Unit " + u.id);
-                const centerVisual = owned
-                    ? `<div class="slrc-gear-coin-wrap ${verified ? "wallet-verified" : ""}">${gearRingSvg}<div class="slrc-static-coin-center">SLRC</div></div>`
-                    : `<div class="cyber-lock-badge"><div class="cyber-lock-shackle"></div><div class="cyber-lock-body"><div class="cyber-lock-keyhole"></div></div></div>`;
+
+                // تا زمان تایید ولت، همه کارت‌ها قفل سایبری دارند؛ پس از تایید ولت، خریده‌شده‌ها چرخ‌دنده فعال می‌گیرند
+                const centerVisual = (verified && owned)
+                    ? `<div class="slrc-gear-coin-wrap">${gearRingSvg}<div class="slrc-static-coin-center">SLRC</div></div>`
+                    : lockBadgeHtml;
 
                 let btnClass = "crew-buy-btn";
                 let btnLabel = "";
@@ -3113,7 +3115,7 @@
                 }
 
                 return `
-                    <div class="crew-card ${owned ? "unlocked" : ""} ${verified ? "wallet-verified" : ""}">
+                    <div class="crew-card ${(verified && owned) ? "unlocked wallet-verified" : ""}">
                         ${centerVisual}
                         <div class="crew-name">${unitName}</div>
                         <div class="crew-speed">+${u.daily.toLocaleString()}/d</div>
@@ -3269,10 +3271,10 @@
             const vBtn = document.getElementById("verify-wallet-btn");
             if (verified) {
                 vBtn.className = "lime-btn";
-                vBtn.innerText = t("verified01Ton");
+                vBtn.innerText = t("verified005Ton");
             } else {
                 vBtn.className = "lime-btn secondary";
-                vBtn.innerText = t("verify01Ton");
+                vBtn.innerText = t("verify005Ton");
             }
         }
 
