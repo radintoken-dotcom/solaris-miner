@@ -36,6 +36,14 @@
             overflow-x: hidden;
         }
 
+        /* Ensure TonConnect modal always appears ABOVE #wallet-modal */
+        tc-root,
+        [data-tc-modal="true"],
+        .tc-modal-overlay,
+        .tc-modal-container {
+            z-index: 3500 !important;
+        }
+
         .app-shell {
             max-width: 460px;
             margin: 0 auto;
@@ -346,6 +354,13 @@
             background: var(--card-soft);
             color: var(--text-dark);
             border: 1px solid var(--border-light);
+            box-shadow: none;
+        }
+
+        .lime-btn.danger-outline {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
             box-shadow: none;
         }
 
@@ -905,6 +920,16 @@
             max-width: 410px;
             max-height: 88vh;
             overflow-y: auto;
+            position: relative;
+            z-index: 2001;
+        }
+
+        .wallet-connect-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -1182,7 +1207,12 @@
                 Connect Tonkeeper, verify real on-chain SLRC hold, and withdraw minimum 20,000 SLRC
             </div>
 
-            <div id="ton-connect-button-container" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
+            <div class="wallet-connect-actions">
+                <div id="ton-connect-button-container" style="display:flex; justify-content:center;"></div>
+                <button id="disconnect-wallet-btn" class="lime-btn danger-outline" style="padding:9px 14px; font-size:12px; display:none;" onclick="disconnectTonWallet()">
+                    🔌 Disconnect Wallet
+                </button>
+            </div>
 
             <button id="verify-wallet-btn" class="lime-btn secondary" style="margin-bottom:12px;" onclick="verifyWalletWith01Ton()">
                 Verify Wallet with 0.1 TON
@@ -1318,6 +1348,7 @@
                 dockProfile: "Profile",
                 closeBtn: "Close ✕",
                 walletModalSub: "Connect Tonkeeper, pay 0.1 TON to start mining, verify 5,000 SLRC hold, and withdraw 20,000+ SLRC",
+                disconnectBtn: "🔌 Disconnect Wallet",
                 verify01Ton: "Verify Wallet with 0.1 TON",
                 verified01Ton: "✅ Wallet Verified (0.1 TON)",
                 walletSyncTitle: "Real On-Chain SLRC Hold Verification",
@@ -1417,6 +1448,7 @@
                 dockProfile: "Profile",
                 closeBtn: "بستن ✕",
                 walletModalSub: "اتصال Tonkeeper، پرداخت 0.1 TON برای شروع استخراج، استعلام هولد 5,000 و برداشت 20,000 SLRC",
+                disconnectBtn: "🔌 قطع اتصال ولت (Disconnect)",
                 verify01Ton: "تایید ولت با 0.1 TON",
                 verified01Ton: "✅ ولت تایید شد (0.1 TON)",
                 walletSyncTitle: "استعلام واقعی موجودی SLRC در بلاکچین",
@@ -1516,6 +1548,7 @@
                 dockProfile: "Profile",
                 closeBtn: "Close ✕",
                 walletModalSub: "Connect Tonkeeper, pay 0.1 TON to start mining, verify 5,000 SLRC hold, and withdraw 20,000+ SLRC",
+                disconnectBtn: "🔌 Disconnect Wallet",
                 verify01Ton: "Verify Wallet with 0.1 TON",
                 verified01Ton: "✅ Wallet Verified (0.1 TON)",
                 walletSyncTitle: "Real On-Chain SLRC Hold Verification",
@@ -1562,6 +1595,47 @@
             manifestUrl: tonConnectManifestUrl,
             uiPreferences: { borderRadius: "m" }
         });
+
+        function elevateTonConnectModal() {
+            const selectors = [
+                "tc-root",
+                "[data-tc-modal='true']",
+                ".tc-modal-overlay",
+                ".tc-modal-container"
+            ];
+            selectors.forEach(sel => {
+                document.querySelectorAll(sel).forEach(el => {
+                    el.style.zIndex = "3500";
+                });
+            });
+        }
+
+        function closeTonConnectModalIfOpen() {
+            try {
+                if (tonConnectUI && typeof tonConnectUI.closeModal === "function") {
+                    tonConnectUI.closeModal();
+                }
+            } catch (e) {}
+            document.querySelectorAll("[data-tc-modal='true'], .tc-modal-overlay").forEach(el => {
+                el.style.display = "none";
+            });
+        }
+
+        async function disconnectTonWallet() {
+            try {
+                if (tonConnectUI && tonConnectUI.connected) {
+                    await tonConnectUI.disconnect();
+                }
+            } catch (e) {}
+            state.walletHold = 0;
+            saveState();
+            renderAll();
+            alert(
+                state.lang === "fa"
+                    ? "🔌 اتصال کیف‌پول قطع شد."
+                    : "🔌 Wallet disconnected."
+            );
+        }
 
         const crewUnits = [
             { id: 1, daily: 120, cost: 0 },
@@ -1647,10 +1721,15 @@
                 }
                 renderAll();
             });
+
+            const observer = new MutationObserver(() => elevateTonConnectModal());
+            observer.observe(document.body, { childList: true, subtree: true });
+
             initTelegramData();
             loadState();
             applyLanguageDirection();
             renderAll();
+            elevateTonConnectModal();
             if (tonConnectUI.connected) {
                 fetchRealOnchainSlrcHold(true);
             }
@@ -1856,9 +1935,13 @@
 
         function openWalletModal() {
             document.getElementById("wallet-modal").style.display = "flex";
+            elevateTonConnectModal();
         }
 
         function closeModal(id) {
+            if (id === "wallet-modal") {
+                closeTonConnectModalIfOpen();
+            }
             document.getElementById(id).style.display = "none";
         }
 
@@ -2313,6 +2396,11 @@
             document.getElementById("close-wallet-btn").innerText = t("closeBtn");
             document.getElementById("close-info-btn").innerText = t("closeBtn");
             document.getElementById("wallet-modal-sub").innerText = t("walletModalSub");
+
+            const discBtn = document.getElementById("disconnect-wallet-btn");
+            discBtn.innerText = t("disconnectBtn");
+            discBtn.style.display = connected ? "block" : "none";
+
             document.getElementById("wallet-sync-title").innerText = t("walletSyncTitle");
             document.getElementById("wallet-sync-desc").innerText = t("walletSyncDesc");
             document.getElementById("check-onchain-btn").innerText = isCheckingOnchain ? t("checkingOnchainBtn") : t("checkOnchainBtn");
