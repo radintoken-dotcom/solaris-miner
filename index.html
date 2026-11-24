@@ -175,7 +175,7 @@
             padding: 18px 16px;
             color: #f3d28a;
             background:
-                radial-gradient(circle at 50% 35%, rgba(250, 204, 21, 0.22), transparent 60%),
+                radial-gradient(circle at 50% 45%, rgba(250, 204, 21, 0.22), transparent 62%),
                 repeating-radial-gradient(circle at 20% 20%, rgba(217, 167, 74, 0.08) 0px, rgba(217, 167, 74, 0.08) 2px, transparent 2px, transparent 8px),
                 linear-gradient(145deg, #271811 0%, #140c09 55%, #2f1d14 100%);
             border: 1.5px solid rgba(234, 179, 8, 0.5);
@@ -190,7 +190,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
 
         .emv-chip {
@@ -214,32 +214,26 @@
 
         .card-center-balance-box {
             text-align: center;
-            padding: 10px 8px 16px;
-            line-height: 1.3;
-        }
-
-        .card-mined-label {
-            font-size: 11px;
-            color: #fcd34d;
-            font-weight: 800;
-            margin-bottom: 6px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+            padding: 16px 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 76px;
         }
 
         .card-mined-amount-3d {
             display: inline-block;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 900;
             letter-spacing: 0.6px;
             padding: 6px 16px;
-            border-radius: 16px;
-            background: linear-gradient(180deg, #fef08a 0%, #facc15 52%, #ca8a04 100%);
+            background: linear-gradient(180deg, #fef9c3 0%, #facc15 48%, #b45309 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             filter:
                 drop-shadow(0 2px 0px rgba(69, 26, 3, 0.95))
-                drop-shadow(0 4px 6px rgba(0, 0, 0, 0.75))
-                drop-shadow(0 0 12px rgba(250, 204, 21, 0.35));
+                drop-shadow(0 4px 7px rgba(0, 0, 0, 0.8))
+                drop-shadow(0 0 14px rgba(250, 204, 21, 0.4));
         }
 
         .card-bottom-buy-btn {
@@ -376,7 +370,27 @@
             flex-direction: column;
             justify-content: flex-end;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
             box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-tile::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: var(--dollar-bg);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.34;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+        }
+
+        .feature-tile > * {
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
         }
 
         .tile-1 { background: linear-gradient(135deg, #c2410c, #f59e0b); }
@@ -392,7 +406,7 @@
 
         .tile-sub {
             font-size: 10px;
-            opacity: 0.92;
+            opacity: 0.94;
             font-weight: 600;
         }
 
@@ -411,9 +425,23 @@
             text-align: center;
         }
 
-        .crew-icon {
-            font-size: 26px;
-            margin-bottom: 4px;
+        .crew-gem-wrap {
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 6px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #18181b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+        }
+
+        .crew-gem-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .crew-name {
@@ -769,7 +797,6 @@
                     </div>
 
                     <div class="card-center-balance-box">
-                        <div class="card-mined-label">موجودی اصلی SLRC</div>
                         <div class="card-mined-amount-3d" id="card-main-slrc">0 SLRC</div>
                     </div>
 
@@ -1063,6 +1090,13 @@
     </div>
 
     <script>
+        const ASSETS = {
+            emerald: "./emerald.jpg",
+            ruby: "./ruby.jpg",
+            diamond: "./diamond.jpg",
+            dollarBg: "./dollar-bills.jpg"
+        };
+
         const slrcTokenAddress = "EQDSXXDeVWcQaWCCDZAFM-wiln9gIOs1VxOl4L3TgSYN0JPV";
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
@@ -1086,13 +1120,14 @@
             uiPreferences: { borderRadius: "m" }
         });
 
+        // چیدمان از ارزان‌ترین تا گران‌ترین با سنگ‌های قیمتی واقعی (زمرد سبز، یاقوت سرخ، الماس درخشان)
         const crewUnits = [
-            { id: 1, name: "سرکارگر SLRC", icon: "👷", daily: 120, cost: 0 },
-            { id: 2, name: "Miner I", icon: "⛏️", daily: 350, cost: 600 },
-            { id: 3, name: "Miner II", icon: "⚡", daily: 800, cost: 1800 },
-            { id: 4, name: "Solar Rig", icon: "☀️", daily: 1600, cost: 3500 },
-            { id: 5, name: "Turbo Core", icon: "🔋", daily: 3200, cost: 7000 },
-            { id: 6, name: "Titan Node", icon: "🏭", daily: 6000, cost: 15000 }
+            { id: 1, name: "سرکارگر SLRC", gemSrc: ASSETS.emerald, gemAlt: "زمرد سبز", daily: 120, cost: 0 },
+            { id: 2, name: "Miner I", gemSrc: ASSETS.emerald, gemAlt: "زمرد سبز", daily: 350, cost: 600 },
+            { id: 3, name: "Miner II", gemSrc: ASSETS.ruby, gemAlt: "یاقوت سرخ", daily: 800, cost: 1800 },
+            { id: 4, name: "Solar Rig", gemSrc: ASSETS.ruby, gemAlt: "یاقوت سرخ", daily: 1600, cost: 3500 },
+            { id: 5, name: "Turbo Core", gemSrc: ASSETS.diamond, gemAlt: "الماس", daily: 3200, cost: 7000 },
+            { id: 6, name: "Titan Node", gemSrc: ASSETS.diamond, gemAlt: "الماس شفاف", daily: 6000, cost: 15000 }
         ];
 
         const communityTasks = [
@@ -1132,6 +1167,7 @@
         };
 
         window.addEventListener("DOMContentLoaded", () => {
+            document.documentElement.style.setProperty("--dollar-bg", `url("${ASSETS.dollarBg}")`);
             tonConnectUI.uiOptions = { buttonRootId: "ton-connect-button-container" };
             tonConnectUI.onStatusChange(() => {
                 renderAll();
@@ -1169,7 +1205,6 @@
                     state = { ...state, ...parsed };
                 } catch (e) {}
             }
-            // پاکسازی تیک‌های غیرواقعی قبلی برای خرید و دعوت
             state.completedTasks = (state.completedTasks || []).filter(id => {
                 if (id === "buy_slrc") return false;
                 if ((id === "invite_friends_task" || id === "share_story") && state.refCount <= 0) return false;
@@ -1513,7 +1548,9 @@
                 const owned = state.ownedCrewIds.includes(u.id);
                 return `
                     <div class="crew-card">
-                        <div class="crew-icon">${u.icon}</div>
+                        <div class="crew-gem-wrap">
+                            <img src="${u.gemSrc}" alt="${u.gemAlt}" class="crew-gem-img">
+                        </div>
                         <div class="crew-name">${u.name}</div>
                         <div class="crew-speed">+${u.daily.toLocaleString()}/d</div>
                         <button class="crew-buy-btn ${owned ? "owned" : ""}" onclick="buyCrewUnit(${u.id})">
