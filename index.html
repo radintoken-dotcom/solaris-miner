@@ -361,7 +361,6 @@
             margin-bottom: 14px;
         }
 
-        /* چهار کارت رنگی با بافت اسکناس دلار ظریف و تمیز بدون متن تکراری */
         .feature-tile {
             border-radius: 20px;
             padding: 14px;
@@ -371,40 +370,13 @@
             flex-direction: column;
             justify-content: flex-end;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
         }
 
-        .feature-tile::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='110' viewBox='0 0 180 110'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.22' stroke-width='1.2'%3E%3Crect x='6' y='6' width='168' height='98' rx='7'/%3E%3Crect x='13' y='13' width='154' height='84' rx='4'/%3E%3Cellipse cx='90' cy='55' rx='26' ry='19'/%3E%3Ccircle cx='90' cy='55' r='9'/%3E%3Cpath d='M26 24h24M130 86h24M26 86h20M134 24h20'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 150px auto;
-            background-repeat: repeat;
-            opacity: 0.75;
-            pointer-events: none;
-        }
-
-        .feature-tile::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.36) 100%);
-            pointer-events: none;
-        }
-
-        .feature-tile > * {
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
-        }
-
-        .tile-1 { background: linear-gradient(135deg, #b45309, #f59e0b); }
-        .tile-2 { background: linear-gradient(135deg, #1d4ed8, #0284c7); }
-        .tile-3 { background: linear-gradient(135deg, #1f2937, #0f172a); }
-        .tile-4 { background: linear-gradient(135deg, #6d28d9, #c026d3); }
+        .tile-1 { background: linear-gradient(135deg, #c2410c, #f59e0b); }
+        .tile-2 { background: linear-gradient(135deg, #1d4ed8, #0ea5e9); }
+        .tile-3 { background: linear-gradient(135deg, #374151, #111827); }
+        .tile-4 { background: linear-gradient(135deg, #6d28d9, #d97706); }
 
         .tile-title {
             font-size: 14px;
@@ -414,7 +386,7 @@
 
         .tile-sub {
             font-size: 10px;
-            opacity: 0.95;
+            opacity: 0.94;
             font-weight: 600;
         }
 
@@ -431,84 +403,96 @@
             border-radius: 16px;
             padding: 10px 6px;
             text-align: center;
+            transition: all 0.2s ease;
         }
 
-        /* سنگ‌های قیمتی تراش‌خورده و شیک (زمرد سبز، یاقوت سرخ، الماس درخشان) */
-        .gem-stone {
-            width: 52px;
-            height: 52px;
+        .crew-card.unlocked {
+            background: #fefce8;
+            border-color: #facc15;
+        }
+
+        /* قفل دیجیتال / کامپیوتری (ثابت و بدون چرخش هنگام غیرفعال بودن) */
+        .cyber-lock-badge {
+            width: 50px;
+            height: 50px;
             margin: 0 auto 6px;
-            border-radius: 16px;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1.5px solid #38bdf8;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.22), inset 0 0 8px rgba(56, 189, 248, 0.25);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16), inset 0 1px 2px rgba(255, 255, 255, 0.75);
+            color: #7dd3fc;
         }
 
-        .gem-stone-core {
-            width: 26px;
-            height: 26px;
-            transform: rotate(45deg);
-            border-radius: 5px;
-            position: relative;
-            box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.85), 0 2px 6px rgba(0, 0, 0, 0.35);
+        .cyber-lock-shackle {
+            width: 14px;
+            height: 9px;
+            border: 2.2px solid #7dd3fc;
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 1px;
         }
 
-        .gem-stone-core::after {
-            content: "";
-            position: absolute;
-            inset: 5px;
-            border: 1px solid rgba(255, 255, 255, 0.65);
+        .cyber-lock-body {
+            width: 20px;
+            height: 14px;
+            border-radius: 4px;
+            background: rgba(56, 189, 248, 0.2);
+            border: 1.8px solid #7dd3fc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cyber-lock-keyhole {
+            width: 4px;
+            height: 6px;
             border-radius: 2px;
+            background: #e0f2fe;
         }
 
-        .stone-emerald-1 {
-            background: linear-gradient(145deg, #d1fae5, #a7f3d0);
-            border: 1px solid #6ee7b7;
-        }
-        .stone-emerald-1 .gem-stone-core {
-            background: linear-gradient(135deg, #6ee7b7 0%, #10b981 55%, #047857 100%);
-        }
-
-        .stone-emerald-2 {
-            background: linear-gradient(145deg, #a7f3d0, #34d399);
-            border: 1px solid #10b981;
-        }
-        .stone-emerald-2 .gem-stone-core {
-            background: linear-gradient(135deg, #a7f3d0 0%, #059669 55%, #064e3b 100%);
+        /* سکه توکن SLRC چرخان (فقط وقتی واحد فعال باشد می‌چرخد) */
+        @keyframes slrcCoinSpin {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
         }
 
-        .stone-ruby-1 {
-            background: linear-gradient(145deg, #ffe4e6, #fecdd3);
-            border: 1px solid #fda4af;
-        }
-        .stone-ruby-1 .gem-stone-core {
-            background: linear-gradient(135deg, #fda4af 0%, #e11d48 55%, #881337 100%);
-        }
-
-        .stone-ruby-2 {
-            background: linear-gradient(145deg, #fecdd3, #fb7185);
-            border: 1px solid #f43f5e;
-        }
-        .stone-ruby-2 .gem-stone-core {
-            background: linear-gradient(135deg, #fecdd3 0%, #be123c 55%, #4c0519 100%);
+        .slrc-coin-stage {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 400px;
         }
 
-        .stone-diamond-1 {
-            background: linear-gradient(145deg, #f0f9ff, #e0f2fe);
-            border: 1px solid #bae6fd;
-        }
-        .stone-diamond-1 .gem-stone-core {
-            background: linear-gradient(135deg, #ffffff 0%, #7dd3fc 52%, #0284c7 100%);
-        }
-
-        .stone-diamond-2 {
-            background: linear-gradient(145deg, #ffffff, #bae6fd);
-            border: 1px solid #7dd3fc;
-        }
-        .stone-diamond-2 .gem-stone-core {
-            background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 45%, #0369a1 100%);
+        .slrc-token-coin {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 28%, #fef08a 0%, #facc15 48%, #b45309 100%);
+            border: 2px solid #fef9c3;
+            box-shadow:
+                0 5px 12px rgba(180, 83, 9, 0.35),
+                inset 0 0 0 2px rgba(120, 53, 15, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #451a03;
+            font-size: 9.5px;
+            font-weight: 900;
+            letter-spacing: 0.2px;
+            transform-style: preserve-3d;
+            animation: slrcCoinSpin 3.4s linear infinite;
         }
 
         .crew-name {
@@ -535,6 +519,11 @@
             background: #e5e7eb;
             color: var(--text-dark);
             cursor: pointer;
+        }
+
+        .crew-buy-btn.insufficient {
+            background: #f3f4f6;
+            color: #9ca3af;
         }
 
         .crew-buy-btn.owned {
@@ -1180,14 +1169,13 @@
             uiPreferences: { borderRadius: "m" }
         });
 
-        // ترتیب از ارزان‌ترین تا گران‌ترین: زمرد سبز -> یاقوت سرخ -> الماس درخشان
         const crewUnits = [
-            { id: 1, name: "سرکارگر SLRC", stoneClass: "stone-emerald-1", daily: 120, cost: 0 },
-            { id: 2, name: "Miner I", stoneClass: "stone-emerald-2", daily: 350, cost: 600 },
-            { id: 3, name: "Miner II", stoneClass: "stone-ruby-1", daily: 800, cost: 1800 },
-            { id: 4, name: "Solar Rig", stoneClass: "stone-ruby-2", daily: 1600, cost: 3500 },
-            { id: 5, name: "Turbo Core", stoneClass: "stone-diamond-1", daily: 3200, cost: 7000 },
-            { id: 6, name: "Titan Node", stoneClass: "stone-diamond-2", daily: 6000, cost: 15000 }
+            { id: 1, name: "سرکارگر SLRC", daily: 120, cost: 0 },
+            { id: 2, name: "Miner I", daily: 350, cost: 600 },
+            { id: 3, name: "Miner II", daily: 800, cost: 1800 },
+            { id: 4, name: "Solar Rig", daily: 1600, cost: 3500 },
+            { id: 5, name: "Turbo Core", daily: 3200, cost: 7000 },
+            { id: 6, name: "Titan Node", daily: 6000, cost: 15000 }
         ];
 
         const communityTasks = [
@@ -1393,14 +1381,14 @@
             if (state.ownedCrewIds.includes(id)) return;
             const unit = crewUnits.find(u => u.id === id);
             if (state.balance < unit.cost) {
-                alert(`❌ موجودی اصلی SLRC کافی نیست. نیاز به ${unit.cost.toLocaleString()} SLRC دارید.`);
+                alert(`🔒 موجودی کافی نیست و قفل دیجیتال بسته است. نیاز به ${unit.cost.toLocaleString()} SLRC دارید.`);
                 return;
             }
             state.balance -= unit.cost;
             state.ownedCrewIds.push(id);
             saveState();
             renderAll();
-            alert(`🎉 ${unit.name} فعال شد!`);
+            alert(`🪙 ${unit.name} فعال شد و سکه SLRC شروع به چرخش کرد!`);
         }
 
         function claimDailyBonus() {
@@ -1605,15 +1593,17 @@
 
             document.getElementById("crew-grid-list").innerHTML = crewUnits.map(u => {
                 const owned = state.ownedCrewIds.includes(u.id);
+                const canAfford = state.balance >= u.cost;
+                const centerVisual = owned
+                    ? `<div class="slrc-coin-stage"><div class="slrc-token-coin">SLRC</div></div>`
+                    : `<div class="cyber-lock-badge"><div class="cyber-lock-shackle"></div><div class="cyber-lock-body"><div class="cyber-lock-keyhole"></div></div></div>`;
                 return `
-                    <div class="crew-card">
-                        <div class="gem-stone ${u.stoneClass}">
-                            <div class="gem-stone-core"></div>
-                        </div>
+                    <div class="crew-card ${owned ? "unlocked" : ""}">
+                        ${centerVisual}
                         <div class="crew-name">${u.name}</div>
                         <div class="crew-speed">+${u.daily.toLocaleString()}/d</div>
-                        <button class="crew-buy-btn ${owned ? "owned" : ""}" onclick="buyCrewUnit(${u.id})">
-                            ${owned ? "فعال ✓" : u.cost.toLocaleString() + " SLRC"}
+                        <button class="crew-buy-btn ${owned ? "owned" : (!canAfford ? "insufficient" : "")}" onclick="buyCrewUnit(${u.id})">
+                            ${owned ? "فعال ✓" : "🔒 " + u.cost.toLocaleString() + " SLRC"}
                         </button>
                     </div>
                 `;
