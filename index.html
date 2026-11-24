@@ -167,29 +167,114 @@
             margin-bottom: 12px;
         }
 
+        /* SLRC Coin Showcase with Pulsing Yellow Sun */
         .mine-banner {
-            height: 158px;
+            height: 196px;
             border-radius: 18px;
-            background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #78350f 100%);
+            background: radial-gradient(circle at 50% 45%, #3f2b14 0%, #17191e 62%, #0c0e12 100%);
             position: relative;
             overflow: hidden;
             display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
             padding: 12px;
             color: #ffffff;
         }
 
-        .mine-badge {
-            background: rgba(17, 24, 39, 0.75);
-            backdrop-filter: blur(4px);
-            padding: 5px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 700;
+        .slrc-coin-disc {
+            width: 152px;
+            height: 152px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #4b5563 0%, #1f2937 45%, #0f172a 85%, #374151 100%);
+            border: 3px solid #9ca3af;
+            box-shadow:
+                inset 0 0 14px rgba(255, 255, 255, 0.14),
+                0 8px 24px rgba(0, 0, 0, 0.65);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        .mine-badge.gold {
+        .slrc-circuit-ring {
+            position: absolute;
+            inset: 12px;
+            border-radius: 50%;
+            border: 1px dashed rgba(209, 213, 219, 0.35);
+            pointer-events: none;
+        }
+
+        .slrc-sun-core {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fef08a 0%, #facc15 45%, #ea580c 85%, rgba(234, 88, 12, 0.15) 100%);
+            border: 2px solid #fde047;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            animation: solarPulse 2.6s ease-in-out infinite;
+        }
+
+        .slrc-sun-rays {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 2px dotted rgba(250, 204, 21, 0.8);
+            animation: solarRingSpin 10s linear infinite;
+        }
+
+        .slrc-coin-ticker {
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #e5e7eb;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+            z-index: 2;
+        }
+
+        @keyframes solarPulse {
+            0% {
+                transform: scale(0.92);
+                filter: brightness(0.78);
+                box-shadow: 0 0 10px rgba(250, 204, 21, 0.45), 0 0 22px rgba(245, 158, 11, 0.25);
+            }
+            50% {
+                transform: scale(1.08);
+                filter: brightness(1.32);
+                box-shadow: 0 0 24px rgba(254, 240, 138, 0.95), 0 0 46px rgba(250, 204, 21, 0.65);
+            }
+            100% {
+                transform: scale(0.92);
+                filter: brightness(0.78);
+                box-shadow: 0 0 10px rgba(250, 204, 21, 0.45), 0 0 22px rgba(245, 158, 11, 0.25);
+            }
+        }
+
+        @keyframes solarRingSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .mine-badge {
+            position: absolute;
+            bottom: 10px;
+            background: rgba(17, 24, 39, 0.78);
+            backdrop-filter: blur(4px);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            z-index: 3;
+        }
+
+        .mine-badge.left { left: 10px; }
+        .mine-badge.right {
+            right: 10px;
             background: rgba(234, 179, 8, 0.22);
             border: 1px solid rgba(250, 204, 21, 0.5);
             color: #fde047;
@@ -424,6 +509,14 @@
             font-weight: 800;
             color: #4d7c0f;
             border: 1px solid #d9f99d;
+            transition: all 0.2s ease;
+        }
+
+        .streak-pill.claimed {
+            background: #22c55e;
+            border-color: #16a34a;
+            color: #ffffff;
+            box-shadow: 0 3px 8px rgba(34, 197, 94, 0.35);
         }
 
         .task-row-card {
@@ -683,8 +776,16 @@
         <div id="view-upgrade" class="view-section active">
             <div class="mine-hero-card">
                 <div class="mine-banner">
-                    <span class="mine-badge" id="banner-rig-title">Solaris Core • SLRC</span>
-                    <span class="mine-badge gold">★ Solaris SLRC</span>
+                    <div class="slrc-coin-disc">
+                        <div class="slrc-circuit-ring"></div>
+                        <div class="slrc-sun-core">
+                            <div class="slrc-sun-rays"></div>
+                            <span style="font-size: 20px;">☀️</span>
+                        </div>
+                        <div class="slrc-coin-ticker">SLRC</div>
+                    </div>
+                    <span class="mine-badge left" id="banner-rig-title">Solaris Core • SLRC</span>
+                    <span class="mine-badge right">★ Solaris SLRC</span>
                 </div>
                 <div class="claim-box-center">
                     <div class="claim-status-tag">آماده Claim • استخراج SLRC</div>
@@ -760,18 +861,18 @@
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
                         <div style="font-size:18px; font-weight:900;">پاداش روزانه SLRC</div>
-                        <div style="font-size:11px; color:#3f6212; font-weight:700; margin-top:2px;">روز پشت سر هم: <span id="streak-days">1</span></div>
+                        <div style="font-size:11px; color:#3f6212; font-weight:700; margin-top:2px;">روز پشت سر هم: <span id="streak-days">0</span></div>
                     </div>
                     <span style="font-size:28px;">☀️</span>
                 </div>
-                <div class="streak-row">
-                    <div class="streak-pill">+50</div>
-                    <div class="streak-pill">+100</div>
-                    <div class="streak-pill">+150</div>
-                    <div class="streak-pill">+200</div>
-                    <div class="streak-pill">+300</div>
-                    <div class="streak-pill">+400</div>
-                    <div class="streak-pill">+600</div>
+                <div class="streak-row" id="streak-days-row">
+                    <div class="streak-pill" data-day="1">+50</div>
+                    <div class="streak-pill" data-day="2">+100</div>
+                    <div class="streak-pill" data-day="3">+150</div>
+                    <div class="streak-pill" data-day="4">+200</div>
+                    <div class="streak-pill" data-day="5">+300</div>
+                    <div class="streak-pill" data-day="6">+400</div>
+                    <div class="streak-pill" data-day="7">+600</div>
                 </div>
                 <button class="lime-btn" onclick="claimDailyBonus()">دریافت پاداش روزانه SLRC</button>
             </div>
@@ -896,10 +997,6 @@
                 <span>📜 شرایط و قوانین SLRC (هولد 2,500 / برداشت 10,000)</span>
                 <span>&rsaquo;</span>
             </div>
-            <div class="menu-list-item" onclick="openSupportChat()">
-                <span>🎧 پشتیبانی Solaris</span>
-                <span>&rsaquo;</span>
-            </div>
         </div>
     </div>
 
@@ -975,12 +1072,12 @@
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
         const buySlrcRouteUrl = "https://t.me/Keepeyeapp";
-        const supportTelegramId = "Dollar_Matrix";
         const botUsername = "SolarisMiner_bot";
 
         const MIN_HOLD_SLRC = 2500;
         const MIN_WITHDRAW_SLRC = 10000;
         const STORAGE_CAP_SLRC = 10000;
+        const dailyRewards = [50, 100, 150, 200, 300, 400, 600];
 
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: tonConnectManifestUrl,
@@ -1015,7 +1112,7 @@
             ownedCrewIds: [1],
             completedTasks: [],
             claimedHoldTiers: [],
-            streak: 1,
+            streak: 0,
             lastDailyClaim: 0,
             lastTick: Date.now(),
             isVerifiedWallet: false,
@@ -1188,9 +1285,10 @@
                 alert("⏳ پاداش امروز قبلاً دریافت شده است. فردا دوباره سر بزنید.");
                 return;
             }
-            const bonus = Math.min(600, state.streak * 100);
+            const nextIndex = Math.min(dailyRewards.length - 1, state.streak);
+            const bonus = dailyRewards[nextIndex];
             state.balance += bonus;
-            state.streak += 1;
+            state.streak = Math.min(dailyRewards.length, state.streak + 1);
             state.lastDailyClaim = now;
             saveState();
             renderAll();
@@ -1329,18 +1427,6 @@
             document.getElementById("info-modal").style.display = "flex";
         }
 
-        function openSupportChat() {
-            const text = encodeURIComponent(
-                `سلام پشتیبانی Solaris (SLRC)\nID: ${state.telegramId}\nموجودی SLRC: ${Math.floor(state.balance)}\nهولد ولت: ${state.walletHold}`
-            );
-            const url = `https://t.me/${supportTelegramId}?text=${text}`;
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
-                window.Telegram.WebApp.openTelegramLink(url);
-            } else {
-                window.open(url, "_blank");
-            }
-        }
-
         function renderAll() {
             const daily = getDailyRate();
             const lvl = getLevel();
@@ -1382,6 +1468,14 @@
             }).join("");
 
             document.getElementById("streak-days").innerText = state.streak;
+            document.querySelectorAll("#streak-days-row .streak-pill").forEach((pill, idx) => {
+                if (idx < state.streak) {
+                    pill.classList.add("claimed");
+                } else {
+                    pill.classList.remove("claimed");
+                }
+            });
+
             document.getElementById("community-tasks-list").innerHTML = communityTasks.map(t => {
                 const done = state.completedTasks.includes(t.id);
                 return `
