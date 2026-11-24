@@ -679,6 +679,160 @@
             box-shadow: 0 6px 18px rgba(132, 204, 22, 0.14);
         }
 
+        /* Chart View Styles */
+        .chart-price-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .chart-live-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 900;
+            color: var(--text-muted);
+            letter-spacing: 0.4px;
+        }
+
+        .chart-refresh-btn {
+            border: 1px solid #d9f99d;
+            background: #f5f8f3;
+            color: var(--green-dark);
+            border-radius: 99px;
+            padding: 3px 8px;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .chart-change-badge {
+            background: #ecfccb;
+            color: var(--green-dark);
+            border: 1px solid #bef264;
+            border-radius: 12px;
+            padding: 4px 9px;
+            font-size: 11px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .chart-change-badge.down {
+            background: #fef2f2;
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
+
+        .chart-big-usd {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--text-dark);
+            letter-spacing: -0.4px;
+        }
+
+        .chart-sub-ton {
+            font-size: 13px;
+            font-weight: 800;
+            color: #4d7c0f;
+            margin-top: 2px;
+            margin-bottom: 12px;
+        }
+
+        .chart-stats-3col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .chart-stat-box {
+            background: var(--card-soft);
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            padding: 9px 6px;
+            text-align: center;
+        }
+
+        .chart-stat-lbl {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 800;
+        }
+
+        .chart-stat-val {
+            font-size: 12px;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-top: 3px;
+        }
+
+        .chart-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tf-group {
+            display: flex;
+            gap: 4px;
+            background: var(--card-soft);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+        }
+
+        .tf-btn {
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 900;
+            padding: 5px 8px;
+            border-radius: 9px;
+            cursor: pointer;
+        }
+
+        .tf-btn.active {
+            background: #ecfccb;
+            color: var(--green-dark);
+        }
+
+        .chart-canvas-wrap {
+            background: linear-gradient(180deg, #f8faf5 0%, #ffffff 100%);
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 10px 8px 6px;
+            position: relative;
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 175px;
+            display: block;
+            overflow: visible;
+        }
+
+        .chart-axis-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            padding: 4px 4px 2px;
+        }
+
+        .chart-source-note {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
         .profile-center-head {
             text-align: center;
             padding: 10px 0 14px;
@@ -843,19 +997,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            padding: 0 12px;
+            gap: 8px;
+            padding: 0 10px;
             z-index: 900;
             pointer-events: none;
         }
 
         .floating-mine-fab {
-            width: 54px;
-            height: 54px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             border: 3px solid #ffffff;
             background: linear-gradient(135deg, #bef264, #84cc16);
-            font-size: 22px;
+            font-size: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -870,10 +1024,10 @@
             backdrop-filter: blur(10px);
             border: 1px solid #e5e7eb;
             border-radius: 28px;
-            padding: 6px 10px;
+            padding: 5px 8px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 2px;
             pointer-events: auto;
             box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
         }
@@ -881,12 +1035,13 @@
         .dock-tab {
             border: none;
             background: transparent;
-            padding: 6px 11px;
+            padding: 6px 9px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 800;
             color: var(--text-muted);
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .dock-tab.active {
@@ -1012,9 +1167,9 @@
                     <div class="tile-title" id="tile3-title">WALLET & HOLD</div>
                     <div class="tile-sub" id="tile3-sub">Min Hold 5,000 • Withdraw 20k</div>
                 </div>
-                <div class="feature-tile tile-4" onclick="switchView('friends')">
-                    <div class="tile-title" id="tile4-title">Friends</div>
-                    <div class="tile-sub" id="tile4-sub">Invite & earn SLRC rewards</div>
+                <div class="feature-tile tile-4" onclick="switchView('chart')">
+                    <div class="tile-title" id="tile4-title">Live SLRC Chart</div>
+                    <div class="tile-sub" id="tile4-sub">STON.fi price & trend</div>
                 </div>
             </div>
 
@@ -1027,6 +1182,83 @@
                     <button class="task-action-pill" id="crew-tasks-btn" onclick="switchView('earn')">SLRC Tasks</button>
                 </div>
                 <div class="crew-grid" id="crew-grid-list"></div>
+            </div>
+        </div>
+
+        <!-- NEW LIVE CHART TAB -->
+        <div id="view-chart" class="view-section">
+            <div class="section-heading" id="chart-heading">SLRC Live Chart</div>
+            <div class="section-sub" id="chart-sub">Real-time market & liquidity data for Solaris (SLRC)</div>
+
+            <div class="white-card">
+                <div class="chart-price-header">
+                    <div>
+                        <div class="chart-live-label">
+                            <span id="chart-live-title">LIVE SLRC PRICE</span>
+                            <button type="button" class="chart-refresh-btn" id="chart-refresh-btn" onclick="fetchSlrcMarketData(false)">↻</button>
+                        </div>
+                        <div class="chart-big-usd" id="chart-price-usd">$0.000000</div>
+                        <div class="chart-sub-ton" id="chart-price-ton">≈ 0.000000 TON</div>
+                    </div>
+                    <div class="chart-change-badge" id="chart-change-badge">+0.00%</div>
+                </div>
+
+                <div class="chart-stats-3col">
+                    <div class="chart-stat-box">
+                        <div class="chart-stat-lbl" id="lbl-chart-vol">24h Volume</div>
+                        <div class="chart-stat-val" id="chart-vol-val">$0</div>
+                    </div>
+                    <div class="chart-stat-box">
+                        <div class="chart-stat-lbl" id="lbl-chart-liq">Liquidity</div>
+                        <div class="chart-stat-val" id="chart-liq-val">$0</div>
+                    </div>
+                    <div class="chart-stat-box">
+                        <div class="chart-stat-lbl" id="lbl-chart-dex">Primary DEX</div>
+                        <div class="chart-stat-val" id="chart-dex-val">STON.fi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="white-card">
+                <div class="chart-toolbar">
+                    <div class="tf-group" id="chart-tf-group">
+                        <button type="button" class="tf-btn" data-tf="1H" onclick="setChartTimeframe('1H')">1H</button>
+                        <button type="button" class="tf-btn active" data-tf="24H" onclick="setChartTimeframe('24H')">24H</button>
+                        <button type="button" class="tf-btn" data-tf="7D" onclick="setChartTimeframe('7D')">7D</button>
+                        <button type="button" class="tf-btn" data-tf="30D" onclick="setChartTimeframe('30D')">30D</button>
+                        <button type="button" class="tf-btn" data-tf="ALL" onclick="setChartTimeframe('ALL')">ALL</button>
+                    </div>
+                    <span style="font-size:10.5px; font-weight:800; color:var(--green-dark);" id="chart-pair-badge">SLRC / TON</span>
+                </div>
+
+                <div class="chart-canvas-wrap">
+                    <svg id="slrc-price-svg" class="chart-svg" viewBox="0 0 380 175" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="slrcAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#84cc16" stop-opacity="0.35"/>
+                                <stop offset="100%" stop-color="#84cc16" stop-opacity="0.0"/>
+                            </linearGradient>
+                        </defs>
+                        <line x1="0" y1="35" x2="380" y2="35" stroke="#e5e7eb" stroke-dasharray="3 3" stroke-width="1"/>
+                        <line x1="0" y1="88" x2="380" y2="88" stroke="#e5e7eb" stroke-dasharray="3 3" stroke-width="1"/>
+                        <line x1="0" y1="140" x2="380" y2="140" stroke="#e5e7eb" stroke-dasharray="3 3" stroke-width="1"/>
+                        <path id="slrc-chart-area" d="" fill="url(#slrcAreaGrad)"/>
+                        <path id="slrc-chart-line" d="" fill="none" stroke="#65a30d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle id="slrc-chart-dot" cx="370" cy="40" r="5" fill="#84cc16" stroke="#ffffff" stroke-width="2"/>
+                    </svg>
+                    <div class="chart-axis-labels">
+                        <span id="chart-axis-start">--:--</span>
+                        <span id="chart-axis-mid">--:--</span>
+                        <span id="chart-axis-end">Now</span>
+                    </div>
+                </div>
+
+                <div class="chart-source-note" id="chart-status-note">Syncing live SLRC pool data...</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <button class="lime-btn" id="chart-trade-btn" onclick="copyAndGoBuyToken()">↗ Trade on STON.fi</button>
+                <button class="lime-btn secondary" id="chart-dexscreener-btn" onclick="openDexScreenerChart()">📈 View Chart (DexScreener)</button>
             </div>
         </div>
 
@@ -1175,6 +1407,7 @@
         <button class="floating-mine-fab" onclick="switchView('upgrade')" title="Mining">⛏</button>
         <div class="floating-nav-pill">
             <button class="dock-tab active" id="dock-upgrade" onclick="switchView('upgrade')">Upgrade</button>
+            <button class="dock-tab" id="dock-chart" onclick="switchView('chart')">Chart</button>
             <button class="dock-tab" id="dock-earn" onclick="switchView('earn')">Earn</button>
             <button class="dock-tab" id="dock-friends" onclick="switchView('friends')">Friends</button>
             <button class="dock-tab" id="dock-profile" onclick="switchView('profile')">Profile</button>
@@ -1254,6 +1487,7 @@
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
         const stonfiSwapTokenUrl = `https://app.ston.fi/swap?ft=TON&tt=${slrcTokenAddress}`;
+        const dexScreenerTokenUrl = `https://dexscreener.com/ton/${slrcTokenAddress}`;
         const botUsername = "SolarisMiner_bot";
 
         const externalBotUrls = {
@@ -1288,12 +1522,23 @@
                 tile2Sub: "Claim daily SLRC bonus",
                 tile3Title: "WALLET & HOLD",
                 tile3Sub: "Min Hold 5,000 • Withdraw 20k",
-                tile4Title: "Friends",
-                tile4Sub: "Invite & earn SLRC rewards",
+                tile4Title: "Live SLRC Chart",
+                tile4Sub: "STON.fi price & trend",
                 crewTitle: "Your Crew (SLRC Mining Units)",
                 crewTasksBtn: "SLRC Tasks",
                 minerWord: "miner",
                 activeBadge: "Active ✓",
+                chartHeading: "SLRC Live Chart",
+                chartSub: "Real-time market & liquidity data for Solaris (SLRC)",
+                chartLiveTitle: "LIVE SLRC PRICE",
+                chartVol: "24h Volume",
+                chartLiq: "Liquidity",
+                chartDex: "Primary DEX",
+                chartTradeBtn: "↗ Trade on STON.fi",
+                chartDexBtn: "📈 View Chart (DexScreener)",
+                chartSyncing: "Syncing live SLRC pool data...",
+                chartSyncedPrefix: "Live pool feed • ",
+                chartFallbackNote: "Showing estimated curve from latest pool price (candle API unavailable or no swaps yet).",
                 earnHeading: "EARN",
                 earnSub: "Daily rewards, tasks, and 5,000 SLRC hold requirement",
                 dailyCardTitle: "Daily Reward SLRC",
@@ -1323,6 +1568,7 @@
                 menuHistory: "🕒 SLRC Withdrawal History",
                 menuRules: "📜 SLRC Rules (Hold 5,000 / Withdraw 20,000)",
                 dockUpgrade: "Upgrade",
+                dockChart: "Chart",
                 dockEarn: "Earn",
                 dockFriends: "Friends",
                 dockProfile: "Profile",
@@ -1387,12 +1633,23 @@
                 tile2Sub: "دریافت جایزه روزانه SLRC",
                 tile3Title: "WALLET & HOLD",
                 tile3Sub: "حداقل هولد 5,000 • برداشت 20k",
-                tile4Title: "دوست‌ها",
-                tile4Sub: "دعوت و دریافت پاداش SLRC",
+                tile4Title: "چارت زنده SLRC",
+                tile4Sub: "قیمت و روند در STON.fi",
                 crewTitle: "Crew تو (واحدهای استخراج SLRC)",
                 crewTasksBtn: "تسک‌های SLRC",
                 minerWord: "واحد",
                 activeBadge: "فعال ✓",
+                chartHeading: "چارت قیمت آنلاین SLRC",
+                chartSub: "نمایش قیمت لحظه‌ای، نقدینگی و حجم معاملات سولاریس (SLRC)",
+                chartLiveTitle: "قیمت لحظه‌ای SLRC",
+                chartVol: "حجم ۲۴ ساعته",
+                chartLiq: "نقدینگی استخر",
+                chartDex: "صرافی اصلی",
+                chartTradeBtn: "↗ معامله در STON.fi",
+                chartDexBtn: "📈 مشاهده چارت در DexScreener",
+                chartSyncing: "در حال دریافت اطلاعات زنده استخر SLRC...",
+                chartSyncedPrefix: "به‌روزرسانی زنده استخر • ",
+                chartFallbackNote: "نمودار بر اساس آخرین قیمت استخر رسم شده است (در صورت نبود کندل جدید یا محدودیت API).",
                 earnHeading: "EARN",
                 earnSub: "پاداش‌های روزانه، تسک‌ها و شرط هولد 5,000 SLRC",
                 dailyCardTitle: "پاداش روزانه SLRC",
@@ -1422,6 +1679,7 @@
                 menuHistory: "🕒 فعالیت و تاریخچه برداشت SLRC",
                 menuRules: "📜 شرایط و قوانین SLRC (هولد 5,000 / برداشت 20,000)",
                 dockUpgrade: "Upgrade",
+                dockChart: "Chart",
                 dockEarn: "Earn",
                 dockFriends: "دوست‌ها",
                 dockProfile: "Profile",
@@ -1486,12 +1744,23 @@
                 tile2Sub: "Claim daily SLRC bonus",
                 tile3Title: "WALLET & HOLD",
                 tile3Sub: "Min Hold 5,000 • Withdraw 20k",
-                tile4Title: "Friends",
-                tile4Sub: "Invite & earn SLRC rewards",
+                tile4Title: "Live SLRC Chart",
+                tile4Sub: "STON.fi price & trend",
                 crewTitle: "Your Crew (SLRC Mining Units)",
                 crewTasksBtn: "SLRC Tasks",
                 minerWord: "miner",
                 activeBadge: "Active ✓",
+                chartHeading: "SLRC Live Chart",
+                chartSub: "Real-time market & liquidity data for Solaris (SLRC)",
+                chartLiveTitle: "LIVE SLRC PRICE",
+                chartVol: "24h Volume",
+                chartLiq: "Liquidity",
+                chartDex: "Primary DEX",
+                chartTradeBtn: "↗ Trade on STON.fi",
+                chartDexBtn: "📈 View Chart (DexScreener)",
+                chartSyncing: "Syncing live SLRC pool data...",
+                chartSyncedPrefix: "Live pool feed • ",
+                chartFallbackNote: "Showing estimated curve from latest pool price.",
                 earnHeading: "EARN",
                 earnSub: "Daily rewards, tasks, and 5,000 SLRC hold requirement",
                 dailyCardTitle: "Daily Reward SLRC",
@@ -1521,6 +1790,7 @@
                 menuHistory: "🕒 SLRC Withdrawal History",
                 menuRules: "📜 SLRC Rules (Hold 5,000 / Withdraw 20,000)",
                 dockUpgrade: "Upgrade",
+                dockChart: "Chart",
                 dockEarn: "Earn",
                 dockFriends: "Friends",
                 dockProfile: "Profile",
@@ -1669,7 +1939,24 @@
             withdrawHistory: []
         };
 
+        let marketState = {
+            priceUsd: 0,
+            priceTon: 0,
+            tonUsd: 0,
+            change24h: 0,
+            volume24h: 0,
+            liquidityUsd: 0,
+            dexName: "STON.fi",
+            pairLabel: "SLRC / TON",
+            poolAddress: "",
+            timeframe: "24H",
+            points: [],
+            usingFallbackCurve: false,
+            lastUpdated: 0
+        };
+
         let isCheckingOnchain = false;
+        let isFetchingMarket = false;
 
         window.addEventListener("DOMContentLoaded", () => {
             tonConnectUI.uiOptions = { buttonRootId: "ton-connect-button-container" };
@@ -1690,11 +1977,295 @@
             loadState();
             applyLanguageDirection();
             renderAll();
+            renderChartSvg();
             elevateTonConnectModal();
             if (tonConnectUI.connected) {
                 fetchRealOnchainSlrcHold(true);
             }
+            fetchSlrcMarketData(true);
+            setInterval(() => fetchSlrcMarketData(true), 30000);
         });
+
+        function formatUsdPrice(val) {
+            const num = Number(val) || 0;
+            if (num === 0) return "$0.000000";
+            if (num >= 1) return "$" + num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+            if (num >= 0.01) return "$" + num.toFixed(4);
+            return "$" + num.toFixed(8).replace(/0+$/, "").replace(/\.$/, ".00");
+        }
+
+        function formatCompactUsd(val) {
+            const num = Number(val) || 0;
+            if (num >= 1e6) return "$" + (num / 1e6).toFixed(2) + "M";
+            if (num >= 1e3) return "$" + (num / 1e3).toFixed(1) + "K";
+            return "$" + num.toFixed(0);
+        }
+
+        function buildFallbackSeries(currentPrice, changePct, tf) {
+            const base = currentPrice > 0 ? currentPrice : 0.000001;
+            const factorMap = { "1H": 0.25, "24H": 1, "7D": 2.2, "30D": 3.5, "ALL": 4.5 };
+            const mult = factorMap[tf] || 1;
+            const totalChange = ((Number(changePct) || 0) / 100) * mult;
+            const startPrice = base / Math.max(0.15, 1 + totalChange);
+            const count = 24;
+            const nowSec = Math.floor(Date.now() / 1000);
+            const stepSec = tf === "1H" ? 150 : tf === "24H" ? 3600 : tf === "7D" ? 21600 : 86400;
+            const arr = [];
+            for (let i = 0; i < count; i++) {
+                const progress = i / (count - 1);
+                const wave = Math.sin(i * 0.85) * 0.04 * Math.abs(base - startPrice || base * 0.05);
+                const price = i === count - 1
+                    ? base
+                    : Math.max(1e-12, startPrice + (base - startPrice) * progress + wave);
+                arr.push({
+                    ts: nowSec - (count - 1 - i) * stepSec,
+                    price
+                });
+            }
+            return arr;
+        }
+
+        async function fetchCandlesForPool(poolAddress, tf, fallbackPrice, fallbackChange) {
+            if (!poolAddress) {
+                marketState.usingFallbackCurve = true;
+                marketState.points = buildFallbackSeries(fallbackPrice, fallbackChange, tf);
+                return;
+            }
+            const cfg = {
+                "1H": { timeframe: "minute", aggregate: 5, limit: 24 },
+                "24H": { timeframe: "hour", aggregate: 1, limit: 24 },
+                "7D": { timeframe: "hour", aggregate: 6, limit: 28 },
+                "30D": { timeframe: "day", aggregate: 1, limit: 30 },
+                "ALL": { timeframe: "day", aggregate: 1, limit: 45 }
+            }[tf] || { timeframe: "hour", aggregate: 1, limit: 24 };
+
+            try {
+                const url = `https://api.geckoterminal.com/api/v2/networks/ton/pools/${poolAddress}/ohlcv/${cfg.timeframe}?aggregate=${cfg.aggregate}&limit=${cfg.limit}`;
+                const resp = await fetch(url);
+                if (!resp.ok) throw new Error("OHLCV HTTP " + resp.status);
+                const json = await resp.json();
+                const list = json?.data?.attributes?.ohlcv_list || [];
+                if (Array.isArray(list) && list.length >= 2) {
+                    const parsed = list
+                        .slice()
+                        .reverse()
+                        .map(row => ({
+                            ts: Number(row[0]) || Math.floor(Date.now() / 1000),
+                            price: Number(row[4]) || Number(row[1]) || fallbackPrice
+                        }))
+                        .filter(p => p.price > 0);
+                    if (parsed.length >= 2) {
+                        marketState.usingFallbackCurve = false;
+                        marketState.points = parsed;
+                        return;
+                    }
+                }
+            } catch (e) {}
+
+            marketState.usingFallbackCurve = true;
+            marketState.points = buildFallbackSeries(fallbackPrice, fallbackChange, tf);
+        }
+
+        async function fetchSlrcMarketData(silent = false) {
+            if (isFetchingMarket) return;
+            isFetchingMarket = true;
+            try {
+                const [gtRes, dsRes] = await Promise.allSettled([
+                    fetch(`https://api.geckoterminal.com/api/v2/networks/ton/tokens/${slrcTokenAddress}/pools?page=1`),
+                    fetch(`https://api.dexscreener.com/latest/dex/tokens/${slrcTokenAddress}`)
+                ]);
+
+                let priceUsd = 0;
+                let priceTon = 0;
+                let change24h = 0;
+                let volume24h = 0;
+                let liquidityUsd = 0;
+                let poolAddress = "";
+                let pairLabel = "SLRC / TON";
+                let dexName = "STON.fi";
+
+                if (gtRes.status === "fulfilled" && gtRes.value.ok) {
+                    const gtJson = await gtRes.value.json();
+                    const pools = gtJson?.data || [];
+                    const bestPool = pools.find(p => (p?.attributes?.name || "").toLowerCase().includes("ston")) || pools[0];
+                    if (bestPool && bestPool.attributes) {
+                        const attr = bestPool.attributes;
+                        priceUsd = Number(attr.base_token_price_usd) || 0;
+                        priceTon = Number(attr.base_token_price_native_currency) || 0;
+                        change24h = Number(attr.price_change_percentage?.h24) || 0;
+                        volume24h = Number(attr.volume_usd?.h24) || 0;
+                        liquidityUsd = Number(attr.reserve_in_usd) || 0;
+                        poolAddress = attr.address || "";
+                        pairLabel = attr.name || "SLRC / TON";
+                    }
+                }
+
+                if ((priceUsd === 0 || liquidityUsd === 0) && dsRes.status === "fulfilled" && dsRes.value.ok) {
+                    const dsJson = await dsRes.value.json();
+                    const pairs = dsJson?.pairs || [];
+                    const bestPair = pairs.find(p => p.dexId === "stonfi") || pairs[0];
+                    if (bestPair) {
+                        priceUsd = priceUsd || Number(bestPair.priceUsd) || 0;
+                        priceTon = priceTon || Number(bestPair.priceNative) || 0;
+                        change24h = Number(bestPair.priceChange?.h24) ?? change24h;
+                        volume24h = volume24h || Number(bestPair.volume?.h24) || 0;
+                        liquidityUsd = liquidityUsd || Number(bestPair.liquidity?.usd) || 0;
+                        poolAddress = poolAddress || bestPair.pairAddress || "";
+                        dexName = bestPair.dexId === "stonfi" ? "STON.fi" : (bestPair.dexId || "STON.fi");
+                        if (bestPair.baseToken?.symbol && bestPair.quoteToken?.symbol) {
+                            pairLabel = `${bestPair.baseToken.symbol} / ${bestPair.quoteToken.symbol}`;
+                        }
+                    }
+                }
+
+                if (priceUsd > 0 && priceTon === 0) {
+                    try {
+                        const tonResp = await fetch("https://api.geckoterminal.com/api/v2/simple/networks/ton/token_price/EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c");
+                        if (tonResp.ok) {
+                            const tonJson = await tonResp.json();
+                            const pricesObj = tonJson?.data?.attributes?.token_prices || {};
+                            const tonUsd = Number(Object.values(pricesObj)[0]) || 0;
+                            if (tonUsd > 0) priceTon = priceUsd / tonUsd;
+                        }
+                    } catch (e) {}
+                }
+
+                marketState.priceUsd = priceUsd;
+                marketState.priceTon = priceTon;
+                marketState.change24h = change24h;
+                marketState.volume24h = volume24h;
+                marketState.liquidityUsd = liquidityUsd;
+                marketState.poolAddress = poolAddress;
+                marketState.pairLabel = pairLabel;
+                marketState.dexName = dexName;
+                marketState.lastUpdated = Date.now();
+
+                await fetchCandlesForPool(poolAddress, marketState.timeframe, priceUsd, change24h);
+                renderChartView();
+                renderChartSvg();
+            } catch (err) {
+                marketState.usingFallbackCurve = true;
+                marketState.points = buildFallbackSeries(marketState.priceUsd, marketState.change24h, marketState.timeframe);
+                renderChartView();
+                renderChartSvg();
+                if (!silent) {
+                    alert(state.lang === "fa" ? "⚠️ امکان دریافت لحظه‌ای داده وجود نداشت؛ آخرین حالت نمایش داده شد." : "⚠️ Could not refresh live market feed right now.");
+                }
+            } finally {
+                isFetchingMarket = false;
+            }
+        }
+
+        async function setChartTimeframe(tf) {
+            if (!["1H", "24H", "7D", "30D", "ALL"].includes(tf)) return;
+            marketState.timeframe = tf;
+            document.querySelectorAll("#chart-tf-group .tf-btn").forEach(btn => {
+                btn.classList.toggle("active", btn.dataset.tf === tf);
+            });
+            await fetchCandlesForPool(marketState.poolAddress, tf, marketState.priceUsd, marketState.change24h);
+            renderChartView();
+            renderChartSvg();
+        }
+
+        function openDexScreenerChart() {
+            openExternalUrl(dexScreenerTokenUrl);
+        }
+
+        function renderChartView() {
+            const priceUsdEl = document.getElementById("chart-price-usd");
+            const priceTonEl = document.getElementById("chart-price-ton");
+            const badgeEl = document.getElementById("chart-change-badge");
+            if (!priceUsdEl) return;
+
+            document.getElementById("chart-heading").innerText = t("chartHeading");
+            document.getElementById("chart-sub").innerText = t("chartSub");
+            document.getElementById("chart-live-title").innerText = t("chartLiveTitle");
+            document.getElementById("lbl-chart-vol").innerText = t("chartVol");
+            document.getElementById("lbl-chart-liq").innerText = t("chartLiq");
+            document.getElementById("lbl-chart-dex").innerText = t("chartDex");
+            document.getElementById("chart-trade-btn").innerText = t("chartTradeBtn");
+            document.getElementById("chart-dexscreener-btn").innerText = t("chartDexBtn");
+            document.getElementById("chart-pair-badge").innerText = marketState.pairLabel || "SLRC / TON";
+            document.getElementById("chart-dex-val").innerText = marketState.dexName || "STON.fi";
+
+            priceUsdEl.innerText = formatUsdPrice(marketState.priceUsd);
+            priceTonEl.innerText = `≈ ${marketState.priceTon > 0 ? marketState.priceTon.toFixed(8).replace(/0+$/, "").replace(/\.$/, ".00") : "0.000000"} TON`;
+
+            const chg = Number(marketState.change24h) || 0;
+            const sign = chg >= 0 ? "+" : "";
+            badgeEl.innerText = `${sign}${chg.toFixed(2)}%`;
+            badgeEl.classList.toggle("down", chg < 0);
+
+            document.getElementById("chart-vol-val").innerText = formatCompactUsd(marketState.volume24h);
+            document.getElementById("chart-liq-val").innerText = formatCompactUsd(marketState.liquidityUsd);
+
+            const statusNote = document.getElementById("chart-status-note");
+            if (!marketState.lastUpdated) {
+                statusNote.innerText = t("chartSyncing");
+            } else {
+                const timeStr = new Date(marketState.lastUpdated).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+                const extra = marketState.usingFallbackCurve ? ` (${t("chartFallbackNote")})` : "";
+                statusNote.innerText = `${t("chartSyncedPrefix")}${timeStr}${extra}`;
+            }
+        }
+
+        function renderChartSvg() {
+            const lineEl = document.getElementById("slrc-chart-line");
+            const areaEl = document.getElementById("slrc-chart-area");
+            const dotEl = document.getElementById("slrc-chart-dot");
+            if (!lineEl || !areaEl || !dotEl) return;
+
+            const pts = marketState.points && marketState.points.length >= 2
+                ? marketState.points
+                : buildFallbackSeries(marketState.priceUsd, marketState.change24h, marketState.timeframe);
+
+            const width = 380;
+            const height = 175;
+            const padX = 8;
+            const padTop = 16;
+            const padBottom = 18;
+
+            const prices = pts.map(p => Number(p.price) || 0);
+            let minP = Math.min(...prices);
+            let maxP = Math.max(...prices);
+            if (minP === maxP) {
+                minP = minP * 0.95 || 0;
+                maxP = (maxP * 1.05) || 1;
+            }
+
+            const coords = pts.map((p, idx) => {
+                const x = padX + (idx / (pts.length - 1)) * (width - padX * 2);
+                const norm = (Number(p.price) - minP) / (maxP - minP);
+                const y = height - padBottom - norm * (height - padTop - padBottom);
+                return { x, y, ts: p.ts };
+            });
+
+            const pathD = coords.map((c, idx) => `${idx === 0 ? "M" : "L"} ${c.x.toFixed(1)} ${c.y.toFixed(1)}`).join(" ");
+            const last = coords[coords.length - 1];
+            const first = coords[0];
+            const areaD = `${pathD} L ${last.x.toFixed(1)} ${height} L ${first.x.toFixed(1)} ${height} Z`;
+
+            const isPositive = prices[prices.length - 1] >= prices[0];
+            lineEl.setAttribute("d", pathD);
+            lineEl.setAttribute("stroke", isPositive ? "#65a30d" : "#dc2626");
+            areaEl.setAttribute("d", areaD);
+            dotEl.setAttribute("cx", last.x.toFixed(1));
+            dotEl.setAttribute("cy", last.y.toFixed(1));
+            dotEl.setAttribute("fill", isPositive ? "#84cc16" : "#ef4444");
+
+            const fmtLabel = (ts) => {
+                if (!ts) return "--:--";
+                const d = new Date(ts * 1000);
+                if (marketState.timeframe === "7D" || marketState.timeframe === "30D" || marketState.timeframe === "ALL") {
+                    return `${d.getMonth() + 1}/${d.getDate()}`;
+                }
+                return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+            };
+            const mid = coords[Math.floor(coords.length / 2)];
+            document.getElementById("chart-axis-start").innerText = fmtLabel(first.ts);
+            document.getElementById("chart-axis-mid").innerText = fmtLabel(mid?.ts);
+            document.getElementById("chart-axis-end").innerText = state.lang === "fa" ? "اکنون" : "Now";
+        }
 
         function t(key) {
             return i18n[state.lang]?.[key] ?? i18n.en[key];
@@ -1891,6 +2462,11 @@
             const dock = document.getElementById("dock-" + name);
             if (target) target.classList.add("active");
             if (dock) dock.classList.add("active");
+            if (name === "chart") {
+                fetchSlrcMarketData(true);
+                renderChartView();
+                renderChartSvg();
+            }
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
@@ -2254,6 +2830,8 @@
                 `;
             }).join("");
 
+            renderChartView();
+
             document.getElementById("earn-heading").innerText = t("earnHeading");
             document.getElementById("earn-sub").innerText = t("earnSub");
             document.getElementById("daily-card-title").innerText = t("dailyCardTitle");
@@ -2350,6 +2928,7 @@
             document.getElementById("menu-rules").innerText = t("menuRules");
 
             document.getElementById("dock-upgrade").innerText = t("dockUpgrade");
+            document.getElementById("dock-chart").innerText = t("dockChart");
             document.getElementById("dock-earn").innerText = t("dockEarn");
             document.getElementById("dock-friends").innerText = t("dockFriends");
             document.getElementById("dock-profile").innerText = t("dockProfile");
