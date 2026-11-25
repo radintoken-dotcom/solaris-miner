@@ -1066,29 +1066,96 @@
             padding: 12px 14px;
             margin-bottom: 12px;
             box-shadow: 0 3px 10px rgba(17, 24, 39, 0.04);
+            position: relative;
         }
 
-        .lang-btn-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
+        .lang-dropdown-box {
+            position: relative;
         }
 
-        .lang-option-btn {
-            border: 1px solid #d1d5db;
-            background: var(--card-soft);
-            color: var(--text-dark);
-            border-radius: 12px;
-            padding: 6px 11px;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        .lang-option-btn.active {
+        .lang-dropdown-trigger {
+            border: 1px solid #84cc16;
             background: #ecfccb;
-            border-color: #84cc16;
             color: var(--green-dark);
+            border-radius: 13px;
+            padding: 7px 12px;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .lang-dropdown-menu {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: min(88vw, 320px);
+            max-height: 75vh;
+            overflow-y: auto;
+            background: #ffffff;
+            border: 1.5px solid #d9f99d;
+            border-radius: 20px;
+            padding: 8px;
+            box-shadow: 0 18px 40px rgba(17, 24, 39, 0.28);
+            z-index: 2600;
+        }
+
+        .lang-dropdown-menu.open {
+            display: block;
+        }
+
+        .lang-menu-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(17, 24, 39, 0.35);
+            z-index: 2590;
+        }
+
+        .lang-menu-backdrop.open {
+            display: block;
+        }
+
+        .lang-menu-item {
+            width: 100%;
+            border: none;
+            background: transparent;
+            border-radius: 14px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 12.5px;
+            font-weight: 800;
+            color: var(--text-dark);
+            cursor: pointer;
+            text-align: start;
+        }
+
+        .lang-menu-item:hover {
+            background: var(--card-soft);
+        }
+
+        .lang-menu-item.active {
+            background: #ecfccb;
+            color: var(--green-dark);
+        }
+
+        .lang-menu-left {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-flag {
+            font-size: 17px;
+            line-height: 1;
         }
 
         .dual-balance-row {
@@ -1556,7 +1623,7 @@
                         <div style="font-size:11px; color:var(--text-muted); font-weight:700;" id="lbl-friends-ready">Ready referral rewards</div>
                         <div style="font-size:18px; font-weight:900;" id="ref-pending-val">0 SLR</div>
                     </div>
-                    <button class="lime-btn" style="width:auto; padding:10px 18px;" onclick="collectRefBonus()">Claim</button>
+                    <button class="lime-btn" style="width:auto; padding:10px 18px;" id="ref-claim-btn" onclick="collectRefBonus()">Claim</button>
                 </div>
             </div>
         </div>
@@ -1570,10 +1637,12 @@
 
             <div class="lang-switch-wrap">
                 <div style="font-size:13px; font-weight:900;" id="lang-label">Language</div>
-                <div class="lang-btn-group">
-                    <button class="lang-option-btn" id="btn-lang-fa" onclick="setLanguage('fa')">FA</button>
-                    <button class="lang-option-btn active" id="btn-lang-en" onclick="setLanguage('en')">English</button>
-                    <button class="lang-option-btn" id="btn-lang-ru" onclick="setLanguage('ru')">RU</button>
+                <div class="lang-dropdown-box">
+                    <button type="button" class="lang-dropdown-trigger" id="lang-dropdown-trigger" onclick="toggleLanguageMenu(event)">
+                        <span class="lang-flag" id="current-lang-flag">🇺🇸</span>
+                        <span id="current-lang-label">United States</span>
+                        <span id="lang-arrow-icon">▼</span>
+                    </button>
                 </div>
             </div>
 
@@ -1613,15 +1682,43 @@
                 <span id="menu-history">🕒 SLR Withdrawal History</span>
                 <span>&rsaquo;</span>
             </div>
-            <div class="menu-list-item" onclick="openAirdropModal()">
-                <span id="menu-airdrop">🎁 SLR Airdrop Distribution & 10-Day Lock</span>
-                <span>&rsaquo;</span>
-            </div>
             <div class="menu-list-item" onclick="openRulesModal()">
                 <span id="menu-rules">📜 SLR Rules (10d Lock • Hold 5,000 • Withdraw 20,000)</span>
                 <span>&rsaquo;</span>
             </div>
         </div>
+    </div>
+
+    <div id="lang-menu-backdrop" class="lang-menu-backdrop" onclick="closeLanguageMenu()"></div>
+    <div id="lang-dropdown-menu" class="lang-dropdown-menu" role="menu">
+        <button type="button" class="lang-menu-item active" data-lang="en-us" onclick="selectLanguageFromMenu('en-us')">
+            <span class="lang-menu-left"><span class="lang-flag">🇺🇸</span><span>United States (US)</span></span>
+            <span>✓</span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="en-gb" onclick="selectLanguageFromMenu('en-gb')">
+            <span class="lang-menu-left"><span class="lang-flag">🇬🇧</span><span>United Kingdom (UK)</span></span>
+            <span></span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="fa" onclick="selectLanguageFromMenu('fa')">
+            <span class="lang-menu-left"><span class="lang-flag">🇮🇷</span><span>ایران (فارسی)</span></span>
+            <span></span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="ru" onclick="selectLanguageFromMenu('ru')">
+            <span class="lang-menu-left"><span class="lang-flag">🇷🇺</span><span>Россия (Русский)</span></span>
+            <span></span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="zh" onclick="selectLanguageFromMenu('zh')">
+            <span class="lang-menu-left"><span class="lang-flag">🇨🇳</span><span>中国 (中文)</span></span>
+            <span></span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="hi" onclick="selectLanguageFromMenu('hi')">
+            <span class="lang-menu-left"><span class="lang-flag">🇮🇳</span><span>भारत (हिन्दी)</span></span>
+            <span></span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="de" onclick="selectLanguageFromMenu('de')">
+            <span class="lang-menu-left"><span class="lang-flag">🇩🇪</span><span>Deutschland (Deutsch)</span></span>
+            <span></span>
+        </button>
     </div>
 
     <div class="floating-dock-wrap">
@@ -1687,8 +1784,8 @@
             </div>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px;">
-                <button class="lime-btn" id="submit-withdraw-btn" onclick="submitSlrWithdraw()">Withdraw SLR</button>
-                <button class="lime-btn secondary" id="modal-buy-btn" onclick="copyAndGoBuyToken()">Buy SLR</button>
+                <button class="lime-btn secondary" id="modal-buy-btn" onclick="copyAndGoBuyToken()">خرید SLR</button>
+                <button class="lime-btn" id="submit-withdraw-btn" onclick="submitSlrWithdraw()">Withdraw</button>
             </div>
         </div>
     </div>
@@ -1753,164 +1850,176 @@
             </span>
         `;
 
-        const i18n = {
-            en: {
-                dir: "ltr",
-                cardWalletHold: "TON wallet Hold",
-                cardInappSlr: "In-app SLR",
-                cardBuyBtn: "🛒 Buy Token on STON.fi",
-                miningStatus: "Mining • SLR Extraction",
-                perDay: "SLR per day",
-                storageLabel: "Storage SLR",
-                claimMined: "⛏ Claim SLR",
-                statLevel: "LEVEL",
-                statCrew: "CREW",
-                activeUnits: "Active Units",
-                statHolding: "HOLDING",
-                minHoldSub: "SLR (Min 5,000)",
-                tile1Title: "Solaris World",
-                tile1Sub: "Tasks & SLR Hold",
-                tile2Title: "Daily Reward",
-                dailyTileSub: "Claim daily SLR bonus",
-                tile3Title: "WALLET & HOLD",
-                tile3Sub: "10d Lock • Hold 5,000 • Withdraw 20k",
-                tile4Title: "Live SLR Chart",
-                tile4Sub: "STON.fi price & trend",
-                crewTitle: "Your Crew (SLR Hold Units)",
-                crewTasksBtn: "SLR Tasks",
-                minerWord: "miner",
-                activeBadge: "Active ✓",
-                holdReqPrefix: "Hold",
-                buyToHoldBtn: "🛒 Hold",
-                verifyFirstBtn: "🔒 Verify",
-                chartHeading: "SLR Live Chart",
-                chartSub: "Real-time STON.fi pool & price feed for Solaris (SLR)",
-                chartLiveTitle: "LIVE SLR PRICE",
-                chartVol: "24h Volume",
-                chartLiq: "Liquidity",
-                chartDex: "Primary DEX",
-                liveChartPillText: "Live Chart",
-                chartTradeBtn: "↗ Trade on STON.fi",
-                chartDexBtn: "📈 View Pool / Chart (STON.fi & DYOR)",
-                chartSyncing: "Syncing live STON.fi SLR pool data...",
-                chartSyncedPrefix: "Live STON.fi feed • ",
-                chartNoPoolNote: "Connected to STON.fi pool feed • Trade or add swaps on STON.fi to record new candles.",
-                earnHeading: "EARN",
-                earnSub: "Daily rewards, tasks, and 5,000 SLR hold requirement",
-                airdropDistTitle: "🎁 SLR Airdrop Distribution",
-                airdropDistDesc: "• Airdrop rewards are distributed to active miners & verified ON-CHAIN holders.<br>• A <b>10-day lock period</b> applies before withdrawal/airdrop eligibility unlocks.<br>• Keep at least <b>5,000 SLR</b> in your connected TON wallet and reach <b>20,000 SLR</b> balance.",
-                lockActiveText: "🔒 10-Day Lock Active: {days}d {hours}h remaining",
-                lockUnlockedText: "✅ 10-Day Lock period completed",
-                dailyCardTitle: "Daily Reward SLR",
-                streakLabel: "Streak days",
-                dailyClaimBtn: "Daily Reward",
-                communityHeading: "Community, X Tasks & Recommended Bots",
-                onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
-                onchainSub: "Holding at least 5,000 SLR in wallet is required to unlock 20,000 SLR withdrawal.",
-                earnBottomTitle: "📌 SLR Withdrawal & Hold Status",
-                earnBottomDesc: "• Lock period: <b>10 days</b><br>• In-app balance for withdrawal: <b>Min 20,000 SLR</b><br>• Held balance in connected wallet: <b>Min 5,000 SLR</b><br>• Payout time: <b>1 to 24 hours</b>",
-                mainBalShort: "Main Balance",
-                walletHoldShort: "Wallet Hold",
-                buySlrShort: "🛒 Buy SLR",
-                walletShort: "💼 WALLET",
-                friendsTitle: "Invite Friends & Earn SLR",
-                friendsDesc: "Earn <b>15%</b> from your friends' mining and get <b>+100 SLR</b> for every referral.",
-                personalRefLink: "Your Personal Referral Link",
-                inviteBtn: "Invite Friend",
-                friendsCount: "Friends",
-                friendsEarned: "Friends Earnings",
-                friendsReady: "Ready referral rewards",
-                langLabel: "Language",
-                withdrawBtn: "↓ Withdraw",
-                totalHolding: "Total HOLDING (Wallet)",
-                manageWalletPill: "Wallet ⓘ",
-                profileHoldHint: "10-day lock • Min hold: <b>5,000 SLR</b> • Min withdrawal: <b>20,000 SLR</b> • Payout: <b>1–24h</b>",
-                menuWallet: "💼 Open WALLET & Connect Tonkeeper",
-                menuHistory: "🕒 SLR Withdrawal History",
-                menuAirdrop: "🎁 SLR Airdrop Distribution & 10-Day Lock",
-                menuRules: "📜 SLR Rules (10d Lock • Hold 5,000 • Withdraw 20,000)",
-                dockUpgrade: "Upgrade",
-                dockChart: "Chart",
-                dockEarn: "Earn",
-                dockFriends: "Friends",
-                dockProfile: "Profile",
-                closeBtn: "Close ✕",
-                walletModalSub: "Connect Tonkeeper, verify wallet with 0.05 TON, check SLR hold, and withdraw 20,000+ SLR",
-                verify005Ton: "Verify Wallet with 0.05 TON",
-                verified005Ton: "✅ Wallet Verified (0.05 TON)",
-                walletSyncTitle: "Real On-Chain SLR Hold Verification",
-                walletSyncDesc: "Tracks only SLR contract balance in your connected TON wallet.",
-                checkOnchainBtn: "🔍 Check Real SLR Hold on Blockchain",
-                checkingOnchainBtn: "⏳ Checking blockchain...",
-                lblTxOptional: "Optional purchase TX hash proof:",
-                txPlaceholder: "TON Transaction Hash (optional)",
-                saveTxBtn: "Record TX",
-                lblWithdrawAmt: "Withdraw amount (Min 20,000 SLR - requires 10d lock + 20k balance + 5k hold):",
-                withdrawAmtPlaceholder: "Locked until 10d lock + 20,000 SLR + 5,000 hold",
-                withdrawAmtUnlockedPlaceholder: "e.g. 20000",
-                lblWithdrawAddr: "Connected Tonkeeper Wallet Address:",
-                notConnectedAddr: "Not connected",
-                payoutTimeNote: "⏱ Payouts take 1 to 24 hours directly to your connected Tonkeeper wallet.",
-                buyBtnPlain: "Buy SLR",
-                taskDone: "Done ✓",
-                taskNotInvited: "Not invited",
-                taskPendingBuy: "Pending buy",
-                submitProofBtn: "Submit",
-                holdLabel1: "Hold ON-CHAIN at 5,000 SLR (Min withdrawal hold requirement)",
-                holdLabel2: "Hold ON-CHAIN at 10,000 SLR",
-                holdLabel3: "Hold ON-CHAIN at 25,000 SLR",
-                claimedBadge: "Claimed ✓",
-                toastVerifyRequired: "⚠️ Verify your wallet (0.05 TON) first to activate mining units!",
-                toastGoBuyToHold: "🛒 Hold {req} SLR in wallet to unlock {unit} — opening STON.fi...",
-                toastClaimNotVerified: "⚠️ Complete wallet verification (0.05 TON) first to extract and claim SLR.",
-                toastNothingToClaim: "No mined SLR ready to claim yet.",
-                toastClaimSuccess: "✅ Mined SLR added to main balance.",
-                toastWalletUpdated: "✅ SLR wallet hold updated: ",
-                toastConnectWalletFirst: "⚠️ Connect your Tonkeeper wallet first to refresh balance.",
-                toastPasteValidXLink: "⚠️ Paste a valid X / Twitter link first to claim 500 SLR!",
-                toastDuplicateXLink: "⚠️ This X link was already used for another task!",
-                crewNames: {
-                    1: "SLR Foreman",
-                    2: "Miner I",
-                    3: "Miner II",
-                    4: "Solar Rig",
-                    5: "Turbo Core",
-                    6: "Titan Node"
+        const baseEnglishPack = {
+            dir: "ltr",
+            flag: "🇺🇸",
+            shortName: "United States",
+            cardWalletHold: "TON wallet Hold",
+            cardInappSlr: "In-app SLR",
+            cardBuyBtn: "🛒 Buy Token on STON.fi",
+            miningStatus: "Mining • SLR Extraction",
+            perDay: "SLR per day",
+            storageLabel: "Storage SLR",
+            claimMined: "⛏ Claim SLR",
+            statLevel: "LEVEL",
+            statCrew: "CREW",
+            activeUnits: "Active Units",
+            statHolding: "HOLDING",
+            minHoldSub: "SLR (Min 5,000)",
+            tile1Title: "Solaris World",
+            tile1Sub: "Tasks & SLR Hold",
+            tile2Title: "Daily Reward",
+            dailyTileSub: "Claim daily SLR bonus",
+            tile3Title: "WALLET & HOLD",
+            tile3Sub: "10d Lock • Hold 5,000 • Withdraw 20k",
+            tile4Title: "Live SLR Chart",
+            tile4Sub: "STON.fi price & trend",
+            crewTitle: "Your Crew (SLR Hold Units)",
+            crewTasksBtn: "SLR Tasks",
+            minerWord: "miner",
+            activeBadge: "Active ✓",
+            holdReqPrefix: "Hold",
+            buyToHoldBtn: "🛒 Hold",
+            verifyFirstBtn: "🔒 Verify",
+            chartHeading: "SLR Live Chart",
+            chartSub: "Real-time STON.fi pool & price feed for Solaris (SLR)",
+            chartLiveTitle: "LIVE SLR PRICE",
+            chartVol: "24h Volume",
+            chartLiq: "Liquidity",
+            chartDex: "Primary DEX",
+            liveChartPillText: "Live Chart",
+            chartTradeBtn: "↗ Trade on STON.fi",
+            chartDexBtn: "📈 View Pool / Chart (STON.fi & DYOR)",
+            chartSyncing: "Syncing live STON.fi SLR pool data...",
+            chartSyncedPrefix: "Live STON.fi feed • ",
+            chartNoPoolNote: "Connected to STON.fi pool feed • Trade or add swaps on STON.fi to record new candles.",
+            earnHeading: "EARN",
+            earnSub: "Daily rewards, tasks, and 5,000 SLR hold requirement",
+            dailyCardTitle: "Daily Reward SLR",
+            streakLabel: "Streak days",
+            dailyClaimBtn: "Daily Reward",
+            communityHeading: "Community, X Tasks & Recommended Bots",
+            onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
+            onchainSub: "Holding at least 5,000 SLR in wallet is required to unlock 20,000 SLR withdrawal.",
+            earnBottomTitle: "📌 SLR Withdrawal & Hold Status",
+            earnBottomDesc: "• Lock period: <b>10 days</b><br>• In-app balance for withdrawal: <b>Min 20,000 SLR</b><br>• Held balance in connected wallet: <b>Min 5,000 SLR</b><br>• Payout time: <b>1 to 24 hours</b>",
+            mainBalShort: "Main Balance",
+            walletHoldShort: "Wallet Hold",
+            buySlrShort: "🛒 Buy SLR",
+            walletShort: "💼 WALLET",
+            friendsTitle: "Invite Friends & Earn SLR",
+            friendsDesc: "Earn <b>15%</b> from your friends' mining and get <b>+100 SLR</b> for every referral.",
+            personalRefLink: "Your Personal Referral Link",
+            inviteBtn: "Invite Friend",
+            friendsCount: "Friends",
+            friendsEarned: "Friends Earnings",
+            friendsReady: "Ready referral rewards",
+            claimBtn: "Claim",
+            langLabel: "Language",
+            withdrawBtn: "↓ Withdraw",
+            submitWithdrawBtn: "Withdraw",
+            totalHolding: "Total HOLDING (Wallet)",
+            manageWalletPill: "Wallet ⓘ",
+            profileHoldHint: "10-day lock • Min hold: <b>5,000 SLR</b> • Min withdrawal: <b>20,000 SLR</b> • Payout: <b>1–24h</b>",
+            menuWallet: "💼 Open WALLET & Connect Tonkeeper",
+            menuHistory: "🕒 SLR Withdrawal History",
+            menuRules: "📜 SLR Rules (10d Lock • Hold 5,000 • Withdraw 20,000)",
+            dockUpgrade: "Upgrade",
+            dockChart: "Chart",
+            dockEarn: "Earn",
+            dockFriends: "Friends",
+            dockProfile: "Profile",
+            closeBtn: "Close ✕",
+            walletModalSub: "Connect Tonkeeper, verify wallet with 0.05 TON, check SLR hold, and withdraw 20,000+ SLR",
+            verify005Ton: "Verify Wallet with 0.05 TON",
+            verified005Ton: "✅ Wallet Verified (0.05 TON)",
+            walletSyncTitle: "Real On-Chain SLR Hold Verification",
+            walletSyncDesc: "Tracks only SLR contract balance in your connected TON wallet.",
+            checkOnchainBtn: "🔍 Check Real SLR Hold on Blockchain",
+            checkingOnchainBtn: "⏳ Checking blockchain...",
+            lblTxOptional: "Optional purchase TX hash proof:",
+            txPlaceholder: "TON Transaction Hash (optional)",
+            saveTxBtn: "Record TX",
+            lblWithdrawAmt: "Withdraw amount (Min 20,000 SLR - requires 10d lock + 20k balance + 5k hold):",
+            withdrawAmtPlaceholder: "Locked until 10d lock + 20,000 SLR + 5,000 hold",
+            withdrawAmtUnlockedPlaceholder: "e.g. 20000",
+            lblWithdrawAddr: "Connected Tonkeeper Wallet Address:",
+            notConnectedAddr: "Not connected",
+            payoutTimeNote: "⏱ Payouts take 1 to 24 hours directly to your connected Tonkeeper wallet.",
+            buyBtnPlain: "خرید SLR",
+            taskDone: "Done ✓",
+            taskNotInvited: "Not invited",
+            taskPendingBuy: "Pending buy",
+            submitProofBtn: "Submit",
+            holdLabel1: "Hold ON-CHAIN at 5,000 SLR (Min withdrawal hold requirement)",
+            holdLabel2: "Hold ON-CHAIN at 10,000 SLR",
+            holdLabel3: "Hold ON-CHAIN at 25,000 SLR",
+            claimedBadge: "Claimed ✓",
+            toastVerifyRequired: "⚠️ Verify your wallet (0.05 TON) first to activate mining units!",
+            toastGoBuyToHold: "🛒 Hold {req} SLR in wallet to unlock {unit} — opening STON.fi...",
+            toastClaimNotVerified: "⚠️ Complete wallet verification (0.05 TON) first to extract and claim SLR.",
+            toastNothingToClaim: "No mined SLR ready to claim yet.",
+            toastClaimSuccess: "✅ Mined SLR added to main balance.",
+            toastWalletUpdated: "✅ SLR wallet hold updated: ",
+            toastConnectWalletFirst: "⚠️ Connect your Tonkeeper wallet first to refresh balance.",
+            toastPasteValidXLink: "⚠️ Paste a valid X / Twitter link first to claim 500 SLR!",
+            toastDuplicateXLink: "⚠️ This X link was already used for another task!",
+            crewNames: {
+                1: "SLR Foreman",
+                2: "Miner I",
+                3: "Miner II",
+                4: "Solar Rig",
+                5: "Turbo Core",
+                6: "Titan Node"
+            },
+            tasks: {
+                x_follow_comment: {
+                    title: "Follow X & Comment Proof",
+                    desc: "Follow @void_R_walker, comment on a post, and submit your comment link",
+                    action: "Open",
+                    guide: "1. Follow @void_R_walker on X.\n2. Leave a comment on one of our posts.\n3. Paste your comment link below and tap Submit to claim +500 SLR.",
+                    placeholder: "https://x.com/your_username/status/..."
                 },
-                tasks: {
-                    x_follow_comment: {
-                        title: "Follow X & Comment Proof",
-                        desc: "Follow @void_R_walker, comment on a post, and submit your comment link",
-                        action: "Open",
-                        guide: "1. Follow @void_R_walker on X.\n2. Leave a comment on one of our posts.\n3. Paste your comment link below and tap Submit to claim +500 SLR.",
-                        placeholder: "https://x.com/your_username/status/..."
-                    },
-                    x_engage_post_1: {
-                        title: "Like, Comment & Share — Post 1",
-                        desc: "Like, comment & share Post 1, then submit your post/comment link",
-                        action: "Open",
-                        guide: "1. Like, comment & share/repost Post 1 on X.\n2. Paste the link to your shared post or comment below.\n3. Tap Submit to receive +500 SLR.",
-                        placeholder: "https://x.com/your_username/status/..."
-                    },
-                    x_engage_post_2: {
-                        title: "Like, Comment & Share — Post 2",
-                        desc: "Like, comment & share Post 2, then submit your post/comment link",
-                        action: "Open",
-                        guide: "1. Like, comment & share/repost Post 2 on X.\n2. Paste the link to your shared post or comment below.\n3. Tap Submit to receive +500 SLR.",
-                        placeholder: "https://x.com/your_username/status/..."
-                    },
-                    buy_slr: { title: "Buy SLR on STON.fi", desc: "Buy SLR on STON.fi and verify real on-chain hold (5,000+ SLR)", action: "Buy" },
-                    invite_friends_task: { title: "Real Friend Invites", desc: "Unlocks only after a friend joins via your invite link", action: "Invite" },
-                    vortex_bot: { title: "VORTEX BOT", desc: "Open bot via dedicated button and claim reward", action: "Open" },
-                    zombie_miner: { title: "ZOMBIE MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
-                    orx_miner: { title: "ORX MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
-                    mmix: { title: "MMIX", desc: "Open project via dedicated button and claim reward", action: "Open" },
-                    victors_company: { title: "VICTORS COMPANY", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
-                    cherry_play: { title: "CHERRY PLAY", desc: "Open game via dedicated button and claim reward", action: "Open" }
-                }
+                x_engage_post_1: {
+                    title: "Like, Comment & Share — Post 1",
+                    desc: "Like, comment & share Post 1, then submit your post/comment link",
+                    action: "Open",
+                    guide: "1. Like, comment & share/repost Post 1 on X.\n2. Paste the link to your shared post or comment below.\n3. Tap Submit to receive +500 SLR.",
+                    placeholder: "https://x.com/your_username/status/..."
+                },
+                x_engage_post_2: {
+                    title: "Like, Comment & Share — Post 2",
+                    desc: "Like, comment & share Post 2, then submit your post/comment link",
+                    action: "Open",
+                    guide: "1. Like, comment & share/repost Post 2 on X.\n2. Paste the link to your shared post or comment below.\n3. Tap Submit to receive +500 SLR.",
+                    placeholder: "https://x.com/your_username/status/..."
+                },
+                buy_slr: { title: "Buy SLR on STON.fi", desc: "Buy SLR on STON.fi and verify real on-chain hold (5,000+ SLR)", action: "Buy" },
+                invite_friends_task: { title: "Real Friend Invites", desc: "Unlocks only after a friend joins via your invite link", action: "Invite" },
+                vortex_bot: { title: "VORTEX BOT", desc: "Open bot via dedicated button and claim reward", action: "Open" },
+                zombie_miner: { title: "ZOMBIE MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
+                orx_miner: { title: "ORX MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
+                mmix: { title: "MMIX", desc: "Open project via dedicated button and claim reward", action: "Open" },
+                victors_company: { title: "VICTORS COMPANY", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
+                cherry_play: { title: "CHERRY PLAY", desc: "Open game via dedicated button and claim reward", action: "Open" }
+            }
+        };
+
+        const i18n = {
+            "en-us": {
+                ...baseEnglishPack,
+                flag: "🇺🇸",
+                shortName: "United States"
+            },
+            "en-gb": {
+                ...baseEnglishPack,
+                flag: "🇬🇧",
+                shortName: "United Kingdom"
             },
             fa: {
                 dir: "rtl",
+                flag: "🇮🇷",
+                shortName: "ایران",
                 cardWalletHold: "هولد ولت TON",
                 cardInappSlr: "موجودی درون‌رباتی SLR",
                 cardBuyBtn: "🛒 خرید توکن در استون فای",
@@ -1952,10 +2061,6 @@
                 chartNoPoolNote: "متصل به شبکه STON.fi • با انجام معامله روی استخر، کندل‌های جدید ثبت می‌شوند.",
                 earnHeading: "EARN",
                 earnSub: "پاداش‌های روزانه، تسک‌ها و شرط هولد 5,000 SLR",
-                airdropDistTitle: "🎁 نحوه توزیع ایردراپ SLR",
-                airdropDistDesc: "• توزیع ایردراپ بر اساس فعالیت استخراج، انجام تسک‌ها و هولد واقعی در کیف‌پول انجام می‌شود.<br>• برای فعال شدن شرایط برداشت/ایردراپ، یک دوره <b>قفل ۱۰ روزه</b> در نظر گرفته شده است.<br>• حفظ حداقل <b>5,000 SLR</b> در ولت متصل و رسیدن به موجودی <b>20,000 SLR</b> الزامی است.",
-                lockActiveText: "🔒 قفل ۱۰ روزه فعال است: {days} روز و {hours} ساعت باقی‌مانده",
-                lockUnlockedText: "✅ دوره قفل ۱۰ روزه به پایان رسیده است",
                 dailyCardTitle: "پاداش روزانه SLR",
                 streakLabel: "روز پشت سر هم",
                 dailyClaimBtn: "دریافت پاداش روزانه",
@@ -1975,14 +2080,15 @@
                 friendsCount: "دوست‌ها",
                 friendsEarned: "درآمد از دوست‌ها",
                 friendsReady: "پاداش دوست‌ها آماده است",
+                claimBtn: "دریافت",
                 langLabel: "Language",
                 withdrawBtn: "↓ Withdraw",
+                submitWithdrawBtn: "Withdraw",
                 totalHolding: "HOLDING کل (کیف‌پول)",
                 manageWalletPill: "مدیریت ولت ⓘ",
                 profileHoldHint: "قفل ۱۰ روزه • حداقل هولد: <b>5,000 SLR</b> • حداقل برداشت: <b>20,000 SLR</b> • واریز: <b>1 الی 24 ساعت</b>",
                 menuWallet: "💼 باز کردن صفحه WALLET و اتصال Tonkeeper",
                 menuHistory: "🕒 فعالیت و تاریخچه برداشت SLR",
-                menuAirdrop: "🎁 نحوه توزیع ایردراپ SLR و قفل ۱۰ روزه",
                 menuRules: "📜 شرایط و قوانین SLR (قفل ۱۰ روزه • هولد 5,000 • برداشت 20,000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
@@ -2066,121 +2172,120 @@
             },
             ru: {
                 dir: "ltr",
+                flag: "🇷🇺",
+                shortName: "Россия",
                 cardWalletHold: "TON wallet Hold",
                 cardInappSlr: "In-app SLR",
-                cardBuyBtn: "🛒 Buy Token on STON.fi",
+                cardBuyBtn: "🛒 Купить токен на STON.fi",
                 miningStatus: "Mining • SLR Extraction",
-                perDay: "SLR per day",
+                perDay: "SLR в день",
                 storageLabel: "Storage SLR",
                 claimMined: "⛏ Claim SLR",
                 statLevel: "LEVEL",
                 statCrew: "CREW",
-                activeUnits: "Active Units",
+                activeUnits: "Активные юниты",
                 statHolding: "HOLDING",
-                minHoldSub: "SLR (Min 5,000)",
+                minHoldSub: "SLR (Мин. 5,000)",
                 tile1Title: "Solaris World",
-                tile1Sub: "Tasks & SLR Hold",
-                tile2Title: "Daily Reward",
-                dailyTileSub: "Claim daily SLR bonus",
+                tile1Sub: "Задания и холд SLR",
+                tile2Title: "Ежедневная награда",
+                dailyTileSub: "Получить бонус SLR",
                 tile3Title: "WALLET & HOLD",
-                tile3Sub: "10d Lock • Hold 5,000 • Withdraw 20k",
-                tile4Title: "Live SLR Chart",
-                tile4Sub: "STON.fi price & trend",
-                crewTitle: "Your Crew (SLR Hold Units)",
-                crewTasksBtn: "SLR Tasks",
-                minerWord: "miner",
-                activeBadge: "Active ✓",
-                holdReqPrefix: "Hold",
-                buyToHoldBtn: "🛒 Hold",
-                verifyFirstBtn: "🔒 Verify",
-                chartHeading: "SLR Live Chart",
-                chartSub: "Real-time STON.fi pool & price feed for Solaris (SLR)",
-                chartLiveTitle: "LIVE SLR PRICE",
-                chartVol: "24h Volume",
-                chartLiq: "Liquidity",
-                chartDex: "Primary DEX",
+                tile3Sub: "Блок 10д • Холд 5,000 • Вывод 20k",
+                tile4Title: "График SLR онлайн",
+                tile4Sub: "Цена и тренд STON.fi",
+                crewTitle: "Ваша команда (Холд SLR)",
+                crewTasksBtn: "Задания SLR",
+                minerWord: "майнер",
+                activeBadge: "Активен ✓",
+                holdReqPrefix: "Холд",
+                buyToHoldBtn: "🛒 Холд",
+                verifyFirstBtn: "🔒 Подтвердить",
+                chartHeading: "График SLR онлайн",
+                chartSub: "Данные пула STON.fi и курс Solaris (SLR) в реальном времени",
+                chartLiveTitle: "КУРС SLR ОНЛАЙН",
+                chartVol: "Объём 24ч",
+                chartLiq: "Ликвидность",
+                chartDex: "Основной DEX",
                 liveChartPillText: "Live Chart",
-                chartTradeBtn: "↗ Trade on STON.fi",
-                chartDexBtn: "📈 View Pool / Chart (STON.fi & DYOR)",
-                chartSyncing: "Syncing live STON.fi SLR pool data...",
-                chartSyncedPrefix: "Live STON.fi feed • ",
-                chartNoPoolNote: "Connected to STON.fi pool feed.",
+                chartTradeBtn: "↗ Торговать на STON.fi",
+                chartDexBtn: "📈 Пул и график (STON.fi / DYOR)",
+                chartSyncing: "Синхронизация данных пула SLR на STON.fi...",
+                chartSyncedPrefix: "Лента STON.fi • ",
+                chartNoPoolNote: "Подключено к сети STON.fi.",
                 earnHeading: "EARN",
-                earnSub: "Daily rewards, tasks, and 5,000 SLR hold requirement",
-                airdropDistTitle: "🎁 SLR Airdrop Distribution",
-                airdropDistDesc: "• Airdrop rewards are distributed to active miners & ON-CHAIN holders.<br>• A <b>10-day lock period</b> applies before withdrawal/airdrop eligibility.<br>• Keep at least <b>5,000 SLR</b> in wallet and reach <b>20,000 SLR</b> balance.",
-                lockActiveText: "🔒 10-Day Lock Active: {days}d {hours}h remaining",
-                lockUnlockedText: "✅ 10-Day Lock period completed",
-                dailyCardTitle: "Daily Reward SLR",
-                streakLabel: "Streak days",
-                dailyClaimBtn: "Daily Reward",
-                communityHeading: "Community, X Tasks & Recommended Bots",
-                onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
-                onchainSub: "Holding at least 5,000 SLR in wallet is required to unlock 20,000 SLR withdrawal.",
-                earnBottomTitle: "📌 SLR Withdrawal & Hold Status",
-                earnBottomDesc: "• Lock period: <b>10 days</b><br>• In-app balance for withdrawal: <b>Min 20,000 SLR</b><br>• Held balance in connected wallet: <b>Min 5,000 SLR</b><br>• Payout time: <b>1 to 24 hours</b>",
-                mainBalShort: "Main Balance",
-                walletHoldShort: "Wallet Hold",
-                buySlrShort: "🛒 Buy SLR",
+                earnSub: "Ежедневные награды, задания и холд от 5,000 SLR",
+                dailyCardTitle: "Ежедневная награда SLR",
+                streakLabel: "Дней подряд",
+                dailyClaimBtn: "Ежедневная награда",
+                communityHeading: "Сообщество, задания X и боты",
+                onchainHeading: "ON-CHAIN холдеры (Подключённый кошелёк)",
+                onchainSub: "Для вывода от 20,000 SLR требуется холд минимум 5,000 SLR в кошельке.",
+                earnBottomTitle: "📌 Статус вывода и холда SLR",
+                earnBottomDesc: "• Период блокировки: <b>10 дней</b><br>• Баланс для вывода: <b>Мин. 20,000 SLR</b><br>• Холд в кошельке: <b>Мин. 5,000 SLR</b><br>• Время выплаты: <b>от 1 до 24 часов</b>",
+                mainBalShort: "Основной баланс",
+                walletHoldShort: "Холд кошелька",
+                buySlrShort: "🛒 Купить SLR",
                 walletShort: "💼 WALLET",
-                friendsTitle: "Invite Friends & Earn SLR",
-                friendsDesc: "Earn <b>15%</b> from your friends' mining and get <b>+100 SLR</b> for every referral.",
-                personalRefLink: "Your Personal Referral Link",
-                inviteBtn: "Invite Friend",
-                friendsCount: "Friends",
-                friendsEarned: "Friends Earnings",
-                friendsReady: "Ready referral rewards",
+                friendsTitle: "Приглашайте друзей и получайте SLR",
+                friendsDesc: "Получайте <b>15%</b> от майнинга друзей и <b>+100 SLR</b> за каждого приглашённого.",
+                personalRefLink: "Ваша реферальная ссылка",
+                inviteBtn: "Пригласить друга",
+                friendsCount: "Друзья",
+                friendsEarned: "Доход от друзей",
+                friendsReady: "Доступные реферальные награды",
+                claimBtn: "Забрать",
                 langLabel: "Language",
                 withdrawBtn: "↓ Withdraw",
-                totalHolding: "Total HOLDING (Wallet)",
-                manageWalletPill: "Wallet ⓘ",
-                profileHoldHint: "10-day lock • Min hold: <b>5,000 SLR</b> • Min withdrawal: <b>20,000 SLR</b> • Payout: <b>1–24h</b>",
-                menuWallet: "💼 Open WALLET & Connect Tonkeeper",
-                menuHistory: "🕒 SLR Withdrawal History",
-                menuAirdrop: "🎁 SLR Airdrop Distribution & 10-Day Lock",
-                menuRules: "📜 SLR Rules (10d Lock • Hold 5,000 • Withdraw 20,000)",
+                submitWithdrawBtn: "Withdraw",
+                totalHolding: "Всего HOLDING (Кошелёк)",
+                manageWalletPill: "Кошелёк ⓘ",
+                profileHoldHint: "Блок 10 дней • Мин. холд: <b>5,000 SLR</b> • Мин. вывод: <b>20,000 SLR</b> • Выплата: <b>1–24ч</b>",
+                menuWallet: "💼 Открыть WALLET и подключить Tonkeeper",
+                menuHistory: "🕒 История выводов SLR",
+                menuRules: "📜 Правила SLR (Блок 10д • Холд 5,000 • Вывод 20,000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
                 dockEarn: "Earn",
-                dockFriends: "Friends",
+                dockFriends: "Друзья",
                 dockProfile: "Profile",
-                closeBtn: "Close ✕",
-                walletModalSub: "Connect Tonkeeper, verify wallet with 0.05 TON, check SLR hold, and withdraw 20,000+ SLR",
-                verify005Ton: "Verify Wallet with 0.05 TON",
-                verified005Ton: "✅ Wallet Verified (0.05 TON)",
-                walletSyncTitle: "Real On-Chain SLR Hold Verification",
-                walletSyncDesc: "Tracks only SLR contract balance in your connected TON wallet.",
-                checkOnchainBtn: "🔍 Check Real SLR Hold on Blockchain",
-                checkingOnchainBtn: "⏳ Checking blockchain...",
-                lblTxOptional: "Optional purchase TX hash proof:",
-                txPlaceholder: "TON Transaction Hash (optional)",
-                saveTxBtn: "Record TX",
-                lblWithdrawAmt: "Withdraw amount (Min 20,000 SLR - requires 10d lock + 20k balance + 5k hold):",
-                withdrawAmtPlaceholder: "Locked until 10d lock + 20,000 SLR + 5,000 hold",
-                withdrawAmtUnlockedPlaceholder: "e.g. 20000",
-                lblWithdrawAddr: "Connected Tonkeeper Wallet Address:",
-                notConnectedAddr: "Not connected",
-                payoutTimeNote: "⏱ Payouts take 1 to 24 hours directly to your connected Tonkeeper wallet.",
-                buyBtnPlain: "Buy SLR",
-                taskDone: "Done ✓",
-                taskNotInvited: "Not invited",
-                taskPendingBuy: "Pending buy",
-                submitProofBtn: "Submit",
-                holdLabel1: "Hold ON-CHAIN at 5,000 SLR (Min withdrawal hold requirement)",
-                holdLabel2: "Hold ON-CHAIN at 10,000 SLR",
-                holdLabel3: "Hold ON-CHAIN at 25,000 SLR",
-                claimedBadge: "Claimed ✓",
-                toastVerifyRequired: "⚠️ Verify your wallet (0.05 TON) first to activate mining units!",
-                toastGoBuyToHold: "🛒 Hold {req} SLR in wallet to unlock {unit} — opening STON.fi...",
-                toastClaimNotVerified: "⚠️ Complete wallet verification (0.05 TON) first to extract and claim SLR.",
-                toastNothingToClaim: "No mined SLR ready to claim yet.",
-                toastClaimSuccess: "✅ Mined SLR added to main balance.",
-                toastWalletUpdated: "✅ SLR wallet hold updated: ",
-                toastConnectWalletFirst: "⚠️ Connect your wallet first to refresh balance.",
-                toastPasteValidXLink: "⚠️ Paste a valid X / Twitter link first to claim 500 SLR!",
-                toastDuplicateXLink: "⚠️ This X link was already used for another task!",
+                closeBtn: "Закрыть ✕",
+                walletModalSub: "Подключите Tonkeeper, подтвердите кошелёк (0.05 TON), проверьте холд SLR и выводите от 20,000 SLR",
+                verify005Ton: "Подтвердить кошелёк за 0.05 TON",
+                verified005Ton: "✅ Кошелёк подтверждён (0.05 TON)",
+                walletSyncTitle: "Проверка реального холда SLR в блокчейне",
+                walletSyncDesc: "Учитывается только баланс контракта SLR в подключённом кошельке TON.",
+                checkOnchainBtn: "🔍 Проверить реальный холд SLR в блокчейне",
+                checkingOnchainBtn: "⏳ Проверка блокчейна...",
+                lblTxOptional: "Хэш транзакции покупки (необязательно):",
+                txPlaceholder: "Хэш транзакции TON (необязательно)",
+                saveTxBtn: "Записать TX",
+                lblWithdrawAmt: "Сумма вывода (Мин. 20,000 SLR - нужен блок 10д + баланс 20k + холд 5k):",
+                withdrawAmtPlaceholder: "Заблокировано до окончания 10д, 20,000 SLR и холда 5,000",
+                withdrawAmtUnlockedPlaceholder: "например, 20000",
+                lblWithdrawAddr: "Адрес подключённого кошелька Tonkeeper:",
+                notConnectedAddr: "Не подключён",
+                payoutTimeNote: "⏱ Выплаты занимают от 1 до 24 часов напрямую на подключённый Tonkeeper.",
+                buyBtnPlain: "خرید SLR",
+                taskDone: "Готово ✓",
+                taskNotInvited: "Нет приглашений",
+                taskPendingBuy: "Ожидание покупки",
+                submitProofBtn: "Отправить",
+                holdLabel1: "Холд ON-CHAIN от 5,000 SLR (Мин. холд для вывода)",
+                holdLabel2: "Холд ON-CHAIN от 10,000 SLR",
+                holdLabel3: "Холд ON-CHAIN от 25,000 SLR",
+                claimedBadge: "Получено ✓",
+                toastVerifyRequired: "⚠️ Сначала подтвердите кошелёк (0.05 TON) для активации юнитов!",
+                toastGoBuyToHold: "🛒 Для разблокировки {unit} нужен холд {req} SLR — открываем STON.fi...",
+                toastClaimNotVerified: "⚠️ Сначала подтвердите кошелёк (0.05 TON) для клейма SLR.",
+                toastNothingToClaim: "Пока нет добытых SLR для получения.",
+                toastClaimSuccess: "✅ Добытые SLR добавлены на основной баланс.",
+                toastWalletUpdated: "✅ Холд SLR в кошельке обновлён: ",
+                toastConnectWalletFirst: "⚠️ Сначала подключите кошелёк Tonkeeper.",
+                toastPasteValidXLink: "⚠️ Вставьте корректную ссылку на пост/комментарий в X для получения 500 SLR!",
+                toastDuplicateXLink: "⚠️ Эта ссылка X уже использовалась для другого задания!",
                 crewNames: {
-                    1: "SLR Foreman",
+                    1: "Бригадир SLR",
                     2: "Miner I",
                     3: "Miner II",
                     4: "Solar Rig",
@@ -2189,34 +2294,496 @@
                 },
                 tasks: {
                     x_follow_comment: {
-                        title: "Follow X & Comment Proof",
-                        desc: "Follow @void_R_walker, comment on a post, and submit your comment link",
-                        action: "Open",
-                        guide: "1. Follow @void_R_walker on X.\n2. Leave a comment on a post.\n3. Paste your comment link below and tap Submit to claim +500 SLR.",
+                        title: "Подписка на X и комментарий",
+                        desc: "Подпишитесь на @void_R_walker, оставьте комментарий и отправьте ссылку",
+                        action: "Открыть",
+                        guide: "1. Подпишитесь на @void_R_walker в X.\n2. Оставьте комментарий под постом.\n3. Вставьте ссылку на комментарий ниже и нажмите «Отправить» (+500 SLR).",
                         placeholder: "https://x.com/your_username/status/..."
                     },
                     x_engage_post_1: {
-                        title: "Like, Comment & Share — Post 1",
-                        desc: "Like, comment & share Post 1, then submit your post/comment link",
-                        action: "Open",
-                        guide: "1. Like, comment & share/repost Post 1 on X.\n2. Paste your post or comment link below.\n3. Tap Submit to claim +500 SLR.",
+                        title: "Лайк, комментарий и репост — Пост 1",
+                        desc: "Оцените, прокомментируйте и сделайте репост Поста 1, затем отправьте ссылку",
+                        action: "Открыть",
+                        guide: "1. Поставьте лайк, прокомментируйте и сделайте репост Поста 1 в X.\n2. Вставьте ссылку на репост или комментарий ниже.\n3. Нажмите «Отправить» (+500 SLR).",
                         placeholder: "https://x.com/your_username/status/..."
                     },
                     x_engage_post_2: {
-                        title: "Like, Comment & Share — Post 2",
-                        desc: "Like, comment & share Post 2, then submit your post/comment link",
-                        action: "Open",
-                        guide: "1. Like, comment & share/repost Post 2 on X.\n2. Paste your post or comment link below.\n3. Tap Submit to claim +500 SLR.",
+                        title: "Лайк, комментарий и репост — Пост 2",
+                        desc: "Оцените, прокомментируйте и сделайте репост Поста 2, затем отправьте ссылку",
+                        action: "Открыть",
+                        guide: "1. Поставьте лайк, прокомментируйте и сделайте репост Поста 2 в X.\n2. Вставьте ссылку на репост или комментарий ниже.\n3. Нажмите «Отправить» (+500 SLR).",
                         placeholder: "https://x.com/your_username/status/..."
                     },
-                    buy_slr: { title: "Buy SLR on STON.fi", desc: "Buy SLR on STON.fi and verify real on-chain hold (5,000+ SLR)", action: "Buy" },
-                    invite_friends_task: { title: "Real Friend Invites", desc: "Unlocks only after a friend joins via your invite link", action: "Invite" },
-                    vortex_bot: { title: "VORTEX BOT", desc: "Open bot via dedicated button and claim reward", action: "Open" },
-                    zombie_miner: { title: "ZOMBIE MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
-                    orx_miner: { title: "ORX MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
-                    mmix: { title: "MMIX", desc: "Open project via dedicated button and claim reward", action: "Open" },
-                    victors_company: { title: "VICTORS COMPANY", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
-                    cherry_play: { title: "CHERRY PLAY", desc: "Open game via dedicated button and claim reward", action: "Open" }
+                    buy_slr: { title: "Купить SLR на STON.fi", desc: "Купите SLR на STON.fi и подтвердите холд от 5,000 SLR", action: "Купить" },
+                    invite_friends_task: { title: "Приглашение друзей", desc: "Открывается после входа друга по вашей реферальной ссылке", action: "Пригласить" },
+                    vortex_bot: { title: "VORTEX BOT", desc: "Откройте бота по кнопке и получите награду", action: "Открыть" },
+                    zombie_miner: { title: "ZOMBIE MINER", desc: "Откройте мини-приложение по кнопке и получите награду", action: "Открыть" },
+                    orx_miner: { title: "ORX MINER", desc: "Откройте мини-приложение по кнопке и получите награду", action: "Открыть" },
+                    mmix: { title: "MMIX", desc: "Откройте проект по кнопке и получите награду", action: "Открыть" },
+                    victors_company: { title: "VICTORS COMPANY", desc: "Откройте мини-приложение по кнопке и получите награду", action: "Открыть" },
+                    cherry_play: { title: "CHERRY PLAY", desc: "Откройте игру по кнопке и получите награду", action: "Открыть" }
+                }
+            },
+            zh: {
+                dir: "ltr",
+                flag: "🇨🇳",
+                shortName: "中国",
+                cardWalletHold: "TON 钱包持仓",
+                cardInappSlr: "应用内 SLR",
+                cardBuyBtn: "🛒 在 STON.fi 购买代币",
+                miningStatus: "挖矿中 • SLR 提取",
+                perDay: "SLR / 天",
+                storageLabel: "存储 SLR",
+                claimMined: "⛏ 领取 SLR",
+                statLevel: "等级",
+                statCrew: "矿机团",
+                activeUnits: "活跃单位",
+                statHolding: "持仓量",
+                minHoldSub: "SLR (最低 5,000)",
+                tile1Title: "Solaris 世界",
+                tile1Sub: "任务与 SLR 持仓",
+                tile2Title: "每日奖励",
+                dailyTileSub: "领取每日 SLR 奖励",
+                tile3Title: "钱包与持仓",
+                tile3Sub: "10天锁仓 • 持仓 5,000 • 提现 20k",
+                tile4Title: "实时 SLR 图表",
+                tile4Sub: "STON.fi 价格与趋势",
+                crewTitle: "你的矿机团队 (SLR 持仓解锁)",
+                crewTasksBtn: "SLR 任务",
+                minerWord: "单位",
+                activeBadge: "已激活 ✓",
+                holdReqPrefix: "持仓",
+                buyToHoldBtn: "🛒 持仓",
+                verifyFirstBtn: "🔒 验证",
+                chartHeading: "SLR 实时图表",
+                chartSub: "Solaris (SLR) STON.fi 流动性池与实时价格",
+                chartLiveTitle: "SLR 实时价格",
+                chartVol: "24小时成交量",
+                chartLiq: "流动性",
+                chartDex: "主要 DEX",
+                liveChartPillText: "实时图表",
+                chartTradeBtn: "↗ 在 STON.fi 交易",
+                chartDexBtn: "📈 查看池子 / 图表 (STON.fi & DYOR)",
+                chartSyncing: "正在同步 STON.fi SLR 池数据...",
+                chartSyncedPrefix: "STON.fi 实时数据 • ",
+                chartNoPoolNote: "已连接 STON.fi 网络。",
+                earnHeading: "赚取奖励",
+                earnSub: "每日奖励、任务与 5,000 SLR 持仓要求",
+                dailyCardTitle: "每日奖励 SLR",
+                streakLabel: "连续天数",
+                dailyClaimBtn: "每日奖励",
+                communityHeading: "社区、X 任务与推荐机器人",
+                onchainHeading: "链上持仓者 (已连接钱包)",
+                onchainSub: "钱包中至少持有 5,000 SLR 才能解锁 20,000 SLR 提现。",
+                earnBottomTitle: "📌 SLR 提现与持仓状态",
+                earnBottomDesc: "• 锁定期：<b>10 天</b><br>• 提现最低余额：<b>20,000 SLR</b><br>• 钱包最低持仓：<b>5,000 SLR</b><br>• 到账时间：<b>1 至 24 小时</b>",
+                mainBalShort: "主余额",
+                walletHoldShort: "钱包持仓",
+                buySlrShort: "🛒 购买 SLR",
+                walletShort: "💼 钱包",
+                friendsTitle: "邀请好友赚取 SLR",
+                friendsDesc: "获得好友挖矿收益的 <b>15%</b>，每邀请一位好友奖励 <b>+100 SLR</b>。",
+                personalRefLink: "你的专属邀请链接",
+                inviteBtn: "邀请好友",
+                friendsCount: "好友数",
+                friendsEarned: "好友收益",
+                friendsReady: "可领取邀请奖励",
+                claimBtn: "领取",
+                langLabel: "Language",
+                withdrawBtn: "↓ Withdraw",
+                submitWithdrawBtn: "Withdraw",
+                totalHolding: "总持仓 (钱包)",
+                manageWalletPill: "钱包 ⓘ",
+                profileHoldHint: "10天锁仓 • 最低持仓：<b>5,000 SLR</b> • 最低提现：<b>20,000 SLR</b> • 到账：<b>1–24小时</b>",
+                menuWallet: "💼 打开钱包并连接 Tonkeeper",
+                menuHistory: "🕒 SLR 提现记录",
+                menuRules: "📜 SLR 规则 (10天锁仓 • 持仓 5,000 • 提现 20,000)",
+                dockUpgrade: "升级",
+                dockChart: "图表",
+                dockEarn: "赚取",
+                dockFriends: "好友",
+                dockProfile: "个人",
+                closeBtn: "关闭 ✕",
+                walletModalSub: "连接 Tonkeeper，使用 0.05 TON 验证钱包，检查 SLR 持仓并提现 20,000+ SLR",
+                verify005Ton: "使用 0.05 TON 验证钱包",
+                verified005Ton: "✅ 钱包已验证 (0.05 TON)",
+                walletSyncTitle: "链上真实 SLR 持仓验证",
+                walletSyncDesc: "仅统计已连接 TON 钱包中的 SLR 合约余额。",
+                checkOnchainBtn: "🔍 查询链上真实 SLR 持仓",
+                checkingOnchainBtn: "⏳ 正在查询链上数据...",
+                lblTxOptional: "可选购买交易哈希凭证：",
+                txPlaceholder: "TON 交易哈希（可选）",
+                saveTxBtn: "记录 TX",
+                lblWithdrawAmt: "提现数量（最低 20,000 SLR - 需完成10天锁仓 + 20k余额 + 5k持仓）：",
+                withdrawAmtPlaceholder: "需满足10天锁仓 + 20,000 SLR + 5,000持仓",
+                withdrawAmtUnlockedPlaceholder: "例如 20000",
+                lblWithdrawAddr: "已连接的 Tonkeeper 钱包地址：",
+                notConnectedAddr: "未连接",
+                payoutTimeNote: "⏱ 提现将在 1 至 24 小时内直接发放至已连接的 Tonkeeper 钱包。",
+                buyBtnPlain: "خرید SLR",
+                taskDone: "已完成 ✓",
+                taskNotInvited: "未邀请",
+                taskPendingBuy: "等待购买",
+                submitProofBtn: "提交",
+                holdLabel1: "链上持有 5,000 SLR（最低提现持仓要求）",
+                holdLabel2: "链上持有 10,000 SLR",
+                holdLabel3: "链上持有 25,000 SLR",
+                claimedBadge: "已领取 ✓",
+                toastVerifyRequired: "⚠️ 请先验证钱包 (0.05 TON) 以激活挖矿单位！",
+                toastGoBuyToHold: "🛒 解锁 {unit} 需在钱包持有 {req} SLR — 正在打开 STON.fi...",
+                toastClaimNotVerified: "⚠️ 请先完成钱包验证 (0.05 TON) 再领取 SLR。",
+                toastNothingToClaim: "暂无可领取的已挖矿 SLR。",
+                toastClaimSuccess: "✅ 已挖矿 SLR 已加入主余额。",
+                toastWalletUpdated: "✅ 钱包 SLR 持仓已更新：",
+                toastConnectWalletFirst: "⚠️ 请先连接 Tonkeeper 钱包以刷新余额。",
+                toastPasteValidXLink: "⚠️ 请粘贴有效的 X / Twitter 链接以领取 500 SLR！",
+                toastDuplicateXLink: "⚠️ 该 X 链接已被其他任务使用！",
+                crewNames: {
+                    1: "SLR 工头",
+                    2: "Miner I",
+                    3: "Miner II",
+                    4: "Solar Rig",
+                    5: "Turbo Core",
+                    6: "Titan Node"
+                },
+                tasks: {
+                    x_follow_comment: {
+                        title: "关注 X 并提交评论链接",
+                        desc: "关注 @void_R_walker，发表评论并提交评论链接",
+                        action: "前往",
+                        guide: "1. 在 X 上关注 @void_R_walker。\n2. 在帖子下发表评论。\n3. 在下方粘贴你的评论链接并点击“提交”领取 +500 SLR。",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    x_engage_post_1: {
+                        title: "点赞、评论并转发 — 帖子 1",
+                        desc: "点赞、评论并转发帖子 1，然后提交链接",
+                        action: "前往",
+                        guide: "1. 在 X 上点赞、评论并转发帖子 1。\n2. 在下方粘贴你的转发或评论链接。\n3. 点击“提交”领取 +500 SLR。",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    x_engage_post_2: {
+                        title: "点赞、评论并转发 — 帖子 2",
+                        desc: "点赞、评论并转发帖子 2，然后提交链接",
+                        action: "前往",
+                        guide: "1. 在 X 上点赞、评论并转发帖子 2。\n2. 在下方粘贴你的转发或评论链接。\n3. 点击“提交”领取 +500 SLR。",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    buy_slr: { title: "在 STON.fi 购买 SLR", desc: "在 STON.fi 购买 SLR 并验证链上持仓（5,000+ SLR）", action: "购买" },
+                    invite_friends_task: { title: "真实邀请好友", desc: "好友通过你的邀请链接加入后解锁", action: "邀请" },
+                    vortex_bot: { title: "VORTEX BOT", desc: "通过专属按钮打开机器人并领取奖励", action: "前往" },
+                    zombie_miner: { title: "ZOMBIE MINER", desc: "通过专属按钮打开小程序并领取奖励", action: "前往" },
+                    orx_miner: { title: "ORX MINER", desc: "通过专属按钮打开小程序并领取奖励", action: "前往" },
+                    mmix: { title: "MMIX", desc: "通过专属按钮打开项目并领取奖励", action: "前往" },
+                    victors_company: { title: "VICTORS COMPANY", desc: "通过专属按钮打开小程序并领取奖励", action: "前往" },
+                    cherry_play: { title: "CHERRY PLAY", desc: "通过专属按钮打开游戏并领取奖励", action: "前往" }
+                }
+            },
+            hi: {
+                dir: "ltr",
+                flag: "🇮🇳",
+                shortName: "भारत",
+                cardWalletHold: "TON वॉलेट होल्ड",
+                cardInappSlr: "इन-ऐप SLR",
+                cardBuyBtn: "🛒 STON.fi पर टोकन खरीदें",
+                miningStatus: "माइनिंग जारी • SLR निष्कर्षण",
+                perDay: "SLR प्रति दिन",
+                storageLabel: "स्टोरेज SLR",
+                claimMined: "⛏ SLR क्लेम करें",
+                statLevel: "लेवल",
+                statCrew: "क्रू",
+                activeUnits: "सक्रिय यूनिट्स",
+                statHolding: "होल्डिंग",
+                minHoldSub: "SLR (न्यूनतम 5,000)",
+                tile1Title: "Solaris वर्ल्ड",
+                tile1Sub: "टास्क और SLR होल्ड",
+                tile2Title: "दैनिक इनाम",
+                dailyTileSub: "दैनिक SLR बोनस लें",
+                tile3Title: "वॉलेट और होल्ड",
+                tile3Sub: "10 दिन लॉक • होल्ड 5,000 • निकासी 20k",
+                tile4Title: "लाइव SLR चार्ट",
+                tile4Sub: "STON.fi मूल्य और ट्रेंड",
+                crewTitle: "आपका क्रू (SLR होल्ड यूनिट्स)",
+                crewTasksBtn: "SLR टास्क",
+                minerWord: "यूनिट",
+                activeBadge: "सक्रिय ✓",
+                holdReqPrefix: "होल्ड",
+                buyToHoldBtn: "🛒 होल्ड",
+                verifyFirstBtn: "🔒 सत्यापित करें",
+                chartHeading: "SLR लाइव चार्ट",
+                chartSub: "Solaris (SLR) के लिए STON.fi पूल और लाइव मूल्य",
+                chartLiveTitle: "लाइव SLR मूल्य",
+                chartVol: "24 घंटे वॉल्यूम",
+                chartLiq: "लिक्विडिटी",
+                chartDex: "मुख्य DEX",
+                liveChartPillText: "लाइव चार्ट",
+                chartTradeBtn: "↗ STON.fi पर ट्रेड करें",
+                chartDexBtn: "📈 पूल / चार्ट देखें (STON.fi और DYOR)",
+                chartSyncing: "STON.fi SLR पूल डेटा सिंक हो रहा है...",
+                chartSyncedPrefix: "STON.fi लाइव फ़ीड • ",
+                chartNoPoolNote: "STON.fi नेटवर्क से जुड़ा हुआ है।",
+                earnHeading: "कमाएं (EARN)",
+                earnSub: "दैनिक इनाम, टास्क और 5,000 SLR होल्ड नियम",
+                dailyCardTitle: "दैनिक इनाम SLR",
+                streakLabel: "लगातार दिन",
+                dailyClaimBtn: "दैनिक इनाम",
+                communityHeading: "कम्युनिटी, X टास्क और बॉट्स",
+                onchainHeading: "ON-CHAIN होल्डर्स (जुड़ा हुआ वॉलेट)",
+                onchainSub: "20,000 SLR निकासी खोलने के लिए वॉलेट में कम से कम 5,000 SLR होल्ड ज़रूरी है।",
+                earnBottomTitle: "📌 SLR निकासी और होल्ड स्थिति",
+                earnBottomDesc: "• लॉक अवधि: <b>10 दिन</b><br>• निकासी हेतु न्यूनतम बैलेंस: <b>20,000 SLR</b><br>• वॉलेट में न्यूनतम होल्ड: <b>5,000 SLR</b><br>• भुगतान समय: <b>1 से 24 घंटे</b>",
+                mainBalShort: "मुख्य बैलेंस",
+                walletHoldShort: "वॉलेट होल्ड",
+                buySlrShort: "🛒 SLR खरीदें",
+                walletShort: "💼 वॉलेट",
+                friendsTitle: "दोस्तों को आमंत्रित करें और SLR कमाएं",
+                friendsDesc: "दोस्तों की माइनिंग से <b>15%</b> पाएं और हर रेफरल पर <b>+100 SLR</b> कमाएं।",
+                personalRefLink: "आपका व्यक्तिगत रेफरल लिंक",
+                inviteBtn: "दोस्त को बुलाएं",
+                friendsCount: "दोस्त",
+                friendsEarned: "दोस्तों से कमाई",
+                friendsReady: "तैयार रेफरल इनाम",
+                claimBtn: "क्लेम करें",
+                langLabel: "Language",
+                withdrawBtn: "↓ Withdraw",
+                submitWithdrawBtn: "Withdraw",
+                totalHolding: "कुल होल्डिंग (वॉलेट)",
+                manageWalletPill: "वॉलेट ⓘ",
+                profileHoldHint: "10 दिन लॉक • न्यूनतम होल्ड: <b>5,000 SLR</b> • न्यूनतम निकासी: <b>20,000 SLR</b> • भुगतान: <b>1–24 घंटे</b>",
+                menuWallet: "💼 वॉलेट खोलें और Tonkeeper जोड़ें",
+                menuHistory: "🕒 SLR निकासी इतिहास",
+                menuRules: "📜 SLR नियम (10 दिन लॉक • होल्ड 5,000 • निकासी 20,000)",
+                dockUpgrade: "अपग्रेड",
+                dockChart: "चार्ट",
+                dockEarn: "कमाएं",
+                dockFriends: "दोस्त",
+                dockProfile: "प्रोफ़ाइल",
+                closeBtn: "बंद करें ✕",
+                walletModalSub: "Tonkeeper जोड़ें, 0.05 TON से वॉलेट सत्यापित करें, SLR होल्ड जांचें और 20,000+ SLR निकालें",
+                verify005Ton: "0.05 TON से वॉलेट सत्यापित करें",
+                verified005Ton: "✅ वॉलेट सत्यापित (0.05 TON)",
+                walletSyncTitle: "ब्लॉकचेन पर वास्तविक SLR होल्ड सत्यापन",
+                walletSyncDesc: "केवल जुड़े हुए TON वॉलेट में SLR कॉन्ट्रैक्ट बैलेंस की जांच करता है।",
+                checkOnchainBtn: "🔍 ब्लॉकचेन पर असली SLR होल्ड जांचें",
+                checkingOnchainBtn: "⏳ ब्लॉकचेन जांचा जा रहा है...",
+                lblTxOptional: "वैकल्पिक खरीद TX हैश प्रमाण:",
+                txPlaceholder: "TON ट्रांजैक्शन हैश (वैकल्पिक)",
+                saveTxBtn: "TX दर्ज करें",
+                lblWithdrawAmt: "निकासी राशि (न्यूनतम 20,000 SLR - 10 दिन लॉक + 20k बैलेंस + 5k होल्ड आवश्यक):",
+                withdrawAmtPlaceholder: "10 दिन लॉक + 20,000 SLR + 5,000 होल्ड तक लॉक",
+                withdrawAmtUnlockedPlaceholder: "उदा. 20000",
+                lblWithdrawAddr: "जुड़ा हुआ Tonkeeper वॉलेट पता:",
+                notConnectedAddr: "जुड़ा नहीं है",
+                payoutTimeNote: "⏱ भुगतान सीधे आपके जुड़े Tonkeeper वॉलेट में 1 से 24 घंटे में आता है।",
+                buyBtnPlain: "خرید SLR",
+                taskDone: "पूरा हुआ ✓",
+                taskNotInvited: "आमंत्रित नहीं",
+                taskPendingBuy: "खरीद लंबित",
+                submitProofBtn: "सबमिट",
+                holdLabel1: "ON-CHAIN पर 5,000 SLR होल्ड करें (न्यूनतम निकासी शर्त)",
+                holdLabel2: "ON-CHAIN पर 10,000 SLR होल्ड करें",
+                holdLabel3: "ON-CHAIN पर 25,000 SLR होल्ड करें",
+                claimedBadge: "प्राप्त किया ✓",
+                toastVerifyRequired: "⚠️ माइनिंग यूनिट सक्रिय करने के लिए पहले वॉलेट (0.05 TON) सत्यापित करें!",
+                toastGoBuyToHold: "🛒 {unit} अनलॉक करने के लिए वॉलेट में {req} SLR होल्ड करें — STON.fi खुल रहा है...",
+                toastClaimNotVerified: "⚠️ SLR क्लेम करने से पहले वॉलेट सत्यापन (0.05 TON) पूरा करें।",
+                toastNothingToClaim: "अभी क्लेम करने के लिए कोई माइन किया गया SLR नहीं है।",
+                toastClaimSuccess: "✅ माइन किया गया SLR मुख्य बैलेंस में जुड़ गया।",
+                toastWalletUpdated: "✅ वॉलेट SLR होल्ड अपडेट हुआ: ",
+                toastConnectWalletFirst: "⚠️ बैलेंस रीफ़्रेश करने के लिए पहले Tonkeeper वॉलेट जोड़ें।",
+                toastPasteValidXLink: "⚠️ 500 SLR पाने के लिए मान्य X / Twitter लिंक पेस्ट करें!",
+                toastDuplicateXLink: "⚠️ यह X लिंक पहले ही किसी अन्य टास्क में उपयोग हो चुका है!",
+                crewNames: {
+                    1: "SLR फ़ोरमैन",
+                    2: "Miner I",
+                    3: "Miner II",
+                    4: "Solar Rig",
+                    5: "Turbo Core",
+                    6: "Titan Node"
+                },
+                tasks: {
+                    x_follow_comment: {
+                        title: "X फ़ॉलो करें और कमेंट लिंक दें",
+                        desc: "@void_R_walker को फ़ॉलो करें, कमेंट करें और लिंक सबमिट करें",
+                        action: "खोलें",
+                        guide: "1. X पर @void_R_walker को फ़ॉलो करें।\n2. पोस्ट पर कमेंट करें।\n3. नीचे कमेंट लिंक पेस्ट करें और +500 SLR के लिए सबमिट दबाएं।",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    x_engage_post_1: {
+                        title: "लाइक, कमेंट और शेयर — पोस्ट 1",
+                        desc: "पोस्ट 1 को लाइक, कमेंट और शेयर करें, फिर लिंक सबमिट करें",
+                        action: "खोलें",
+                        guide: "1. X पर पोस्ट 1 को लाइक, कमेंट और शेयर/रीपोस्ट करें।\n2. नीचे लिंक पेस्ट करें।\n3. +500 SLR के लिए सबमिट दबाएं।",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    x_engage_post_2: {
+                        title: "लाइक, कमेंट और शेयर — पोस्ट 2",
+                        desc: "पोस्ट 2 को लाइक, कमेंट और शेयर करें, फिर लिंक सबमिट करें",
+                        action: "खोलें",
+                        guide: "1. X पर पोस्ट 2 को लाइक, कमेंट और शेयर/रीपोस्ट करें।\n2. नीचे लिंक पेस्ट करें।\n3. +500 SLR के लिए सबमिट दबाएं।",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    buy_slr: { title: "STON.fi पर SLR खरीदें", desc: "STON.fi पर SLR खरीदें और 5,000+ SLR होल्ड सत्यापित करें", action: "खरीदें" },
+                    invite_friends_task: { title: "असली दोस्त आमंत्रण", desc: "दोस्त के आपके लिंक से जुड़ने के बाद ही अनलॉक होगा", action: "बुलाएं" },
+                    vortex_bot: { title: "VORTEX BOT", desc: "बटन से बॉट खोलें और इनाम पाएं", action: "खोलें" },
+                    zombie_miner: { title: "ZOMBIE MINER", desc: "बटन से मिनी-ऐप खोलें और इनाम पाएं", action: "खोलें" },
+                    orx_miner: { title: "ORX MINER", desc: "बटन से मिनी-ऐप खोलें और इनाम पाएं", action: "खोलें" },
+                    mmix: { title: "MMIX", desc: "बटन से प्रोजेक्ट खोलें और इनाम पाएं", action: "खोलें" },
+                    victors_company: { title: "VICTORS COMPANY", desc: "बटन से मिनी-ऐप खोलें और इनाम पाएं", action: "खोलें" },
+                    cherry_play: { title: "CHERRY PLAY", desc: "बटन से गेम खोलें और इनाम पाएं", action: "खोलें" }
+                }
+            },
+            de: {
+                dir: "ltr",
+                flag: "🇩🇪",
+                shortName: "Deutschland",
+                cardWalletHold: "TON Wallet Hold",
+                cardInappSlr: "In-App SLR",
+                cardBuyBtn: "🛒 Token auf STON.fi kaufen",
+                miningStatus: "Mining • SLR-Extraktion",
+                perDay: "SLR pro Tag",
+                storageLabel: "Speicher SLR",
+                claimMined: "⛏ SLR abholen",
+                statLevel: "LEVEL",
+                statCrew: "CREW",
+                activeUnits: "Aktive Einheiten",
+                statHolding: "HOLDING",
+                minHoldSub: "SLR (Min. 5.000)",
+                tile1Title: "Solaris Welt",
+                tile1Sub: "Aufgaben & SLR Hold",
+                tile2Title: "Tagesbelohnung",
+                dailyTileSub: "Täglichen SLR-Bonus holen",
+                tile3Title: "WALLET & HOLD",
+                tile3Sub: "10T Lock • Hold 5.000 • Auszahlung 20k",
+                tile4Title: "Live SLR-Chart",
+                tile4Sub: "STON.fi Kurs & Trend",
+                crewTitle: "Deine Crew (SLR Hold Einheiten)",
+                crewTasksBtn: "SLR-Aufgaben",
+                minerWord: "Einheit",
+                activeBadge: "Aktiv ✓",
+                holdReqPrefix: "Hold",
+                buyToHoldBtn: "🛒 Hold",
+                verifyFirstBtn: "🔒 Verifizieren",
+                chartHeading: "SLR Live-Chart",
+                chartSub: "Echtzeit STON.fi Pool & Kurs für Solaris (SLR)",
+                chartLiveTitle: "LIVE SLR-KURS",
+                chartVol: "24h Volumen",
+                chartLiq: "Liquidität",
+                chartDex: "Haupt-DEX",
+                liveChartPillText: "Live-Chart",
+                chartTradeBtn: "↗ Auf STON.fi handeln",
+                chartDexBtn: "📈 Pool / Chart ansehen (STON.fi & DYOR)",
+                chartSyncing: "Synchronisiere STON.fi SLR-Pooldaten...",
+                chartSyncedPrefix: "STON.fi Live-Feed • ",
+                chartNoPoolNote: "Mit STON.fi-Netzwerk verbunden.",
+                earnHeading: "VERDIENEN",
+                earnSub: "Tagesbelohnungen, Aufgaben & 5.000 SLR Hold-Pflicht",
+                dailyCardTitle: "Tagesbelohnung SLR",
+                streakLabel: "Tage in Folge",
+                dailyClaimBtn: "Tagesbelohnung",
+                communityHeading: "Community, X-Aufgaben & Bots",
+                onchainHeading: "ON-CHAIN Halter (Verbundenes Wallet)",
+                onchainSub: "Mindestens 5.000 SLR im Wallet sind nötig, um 20.000 SLR Auszahlung freizuschalten.",
+                earnBottomTitle: "📌 SLR Auszahlungs- & Hold-Status",
+                earnBottomDesc: "• Sperrfrist: <b>10 Tage</b><br>• Mindestguthaben für Auszahlung: <b>20.000 SLR</b><br>• Mindest-Hold im Wallet: <b>5.000 SLR</b><br>• Auszahlungsdauer: <b>1 bis 24 Stunden</b>",
+                mainBalShort: "Hauptguthaben",
+                walletHoldShort: "Wallet Hold",
+                buySlrShort: "🛒 SLR kaufen",
+                walletShort: "💼 WALLET",
+                friendsTitle: "Freunde einladen & SLR verdienen",
+                friendsDesc: "Erhalte <b>15%</b> vom Mining deiner Freunde und <b>+100 SLR</b> pro Einladung.",
+                personalRefLink: "Dein persönlicher Einladungslink",
+                inviteBtn: "Freund einladen",
+                friendsCount: "Freunde",
+                friendsEarned: "Verdienst durch Freunde",
+                friendsReady: "Verfügbare Empfehlungsboni",
+                claimBtn: "Abholen",
+                langLabel: "Language",
+                withdrawBtn: "↓ Withdraw",
+                submitWithdrawBtn: "Withdraw",
+                totalHolding: "Gesamt HOLDING (Wallet)",
+                manageWalletPill: "Wallet ⓘ",
+                profileHoldHint: "10 Tage Lock • Min. Hold: <b>5.000 SLR</b> • Min. Auszahlung: <b>20.000 SLR</b> • Auszahlung: <b>1–24h</b>",
+                menuWallet: "💼 WALLET öffnen & Tonkeeper verbinden",
+                menuHistory: "🕒 SLR Auszahlungsverlauf",
+                menuRules: "📜 SLR Regeln (10T Lock • Hold 5.000 • Auszahlung 20.000)",
+                dockUpgrade: "Upgrade",
+                dockChart: "Chart",
+                dockEarn: "Earn",
+                dockFriends: "Freunde",
+                dockProfile: "Profil",
+                closeBtn: "Schließen ✕",
+                walletModalSub: "Tonkeeper verbinden, mit 0,05 TON verifizieren, SLR Hold prüfen & ab 20.000 SLR auszahlen",
+                verify005Ton: "Wallet mit 0,05 TON verifizieren",
+                verified005Ton: "✅ Wallet verifiziert (0,05 TON)",
+                walletSyncTitle: "Echte On-Chain SLR Hold-Prüfung",
+                walletSyncDesc: "Prüft nur den SLR-Vertragsbestand im verbundenen TON-Wallet.",
+                checkOnchainBtn: "🔍 Echten SLR Hold auf Blockchain prüfen",
+                checkingOnchainBtn: "⏳ Prüfe Blockchain...",
+                lblTxOptional: "Optionaler Kauf-TX-Hash-Nachweis:",
+                txPlaceholder: "TON Transaktions-Hash (optional)",
+                saveTxBtn: "TX speichern",
+                lblWithdrawAmt: "Auszahlungsbetrag (Min. 20.000 SLR - erfordert 10T Lock + 20k Guthaben + 5k Hold):",
+                withdrawAmtPlaceholder: "Gesperrt bis 10T Lock + 20.000 SLR + 5.000 Hold",
+                withdrawAmtUnlockedPlaceholder: "z. B. 20000",
+                lblWithdrawAddr: "Verbundene Tonkeeper Wallet-Adresse:",
+                notConnectedAddr: "Nicht verbunden",
+                payoutTimeNote: "⏱ Auszahlungen dauern 1 bis 24 Stunden direkt auf dein verbundenes Tonkeeper-Wallet.",
+                buyBtnPlain: "خرید SLR",
+                taskDone: "Erledigt ✓",
+                taskNotInvited: "Nicht eingeladen",
+                taskPendingBuy: "Kauf offen",
+                submitProofBtn: "Senden",
+                holdLabel1: "ON-CHAIN 5.000 SLR halten (Min. Hold für Auszahlung)",
+                holdLabel2: "ON-CHAIN 10.000 SLR halten",
+                holdLabel3: "ON-CHAIN 25.000 SLR halten",
+                claimedBadge: "Abgeholt ✓",
+                toastVerifyRequired: "⚠️ Verifiziere zuerst dein Wallet (0,05 TON), um Mining-Einheiten zu aktivieren!",
+                toastGoBuyToHold: "🛒 Halte {req} SLR im Wallet für {unit} — öffne STON.fi...",
+                toastClaimNotVerified: "⚠️ Schließe zuerst die Wallet-Verifizierung (0,05 TON) ab, um SLR abzuholen.",
+                toastNothingToClaim: "Noch keine geschürften SLR zum Abholen bereit.",
+                toastClaimSuccess: "✅ Geschürfte SLR zum Hauptguthaben hinzugefügt.",
+                toastWalletUpdated: "✅ Wallet SLR Hold aktualisiert: ",
+                toastConnectWalletFirst: "⚠️ Verbinde zuerst dein Tonkeeper-Wallet.",
+                toastPasteValidXLink: "⚠️ Füge einen gültigen X / Twitter-Link ein, um 500 SLR zu erhalten!",
+                toastDuplicateXLink: "⚠️ Dieser X-Link wurde bereits für eine andere Aufgabe verwendet!",
+                crewNames: {
+                    1: "SLR Vorarbeiter",
+                    2: "Miner I",
+                    3: "Miner II",
+                    4: "Solar Rig",
+                    5: "Turbo Core",
+                    6: "Titan Node"
+                },
+                tasks: {
+                    x_follow_comment: {
+                        title: "X folgen & Kommentar-Link senden",
+                        desc: "Folge @void_R_walker, kommentiere einen Post und sende den Link",
+                        action: "Öffnen",
+                        guide: "1. Folge @void_R_walker auf X.\n2. Kommentiere einen Beitrag.\n3. Füge den Link zu deinem Kommentar unten ein und klicke Senden (+500 SLR).",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    x_engage_post_1: {
+                        title: "Liken, Kommentieren & Teilen — Post 1",
+                        desc: "Like, kommentiere und teile Post 1 und sende den Link",
+                        action: "Öffnen",
+                        guide: "1. Like, kommentiere und teile Post 1 auf X.\n2. Füge den Link unten ein.\n3. Klicke Senden für +500 SLR.",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    x_engage_post_2: {
+                        title: "Liken, Kommentieren & Teilen — Post 2",
+                        desc: "Like, kommentiere und teile Post 2 und sende den Link",
+                        action: "Öffnen",
+                        guide: "1. Like, kommentiere und teile Post 2 auf X.\n2. Füge den Link unten ein.\n3. Klicke Senden für +500 SLR.",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    buy_slr: { title: "SLR auf STON.fi kaufen", desc: "Kaufe SLR auf STON.fi und bestätige 5.000+ SLR Hold", action: "Kaufen" },
+                    invite_friends_task: { title: "Echte Freundeseinladungen", desc: "Wird freigeschaltet, sobald ein Freund über deinen Link beitritt", action: "Einladen" },
+                    vortex_bot: { title: "VORTEX BOT", desc: "Bot über Button öffnen und Belohnung holen", action: "Öffnen" },
+                    zombie_miner: { title: "ZOMBIE MINER", desc: "Mini-App über Button öffnen und Belohnung holen", action: "Öffnen" },
+                    orx_miner: { title: "ORX MINER", desc: "Mini-App über Button öffnen und Belohnung holen", action: "Öffnen" },
+                    mmix: { title: "MMIX", desc: "Projekt über Button öffnen und Belohnung holen", action: "Öffnen" },
+                    victors_company: { title: "VICTORS COMPANY", desc: "Mini-App über Button öffnen und Belohnung holen", action: "Öffnen" },
+                    cherry_play: { title: "CHERRY PLAY", desc: "Spiel über Button öffnen und Belohnung holen", action: "Öffnen" }
                 }
             }
         };
@@ -2332,8 +2899,30 @@
             });
         }
 
+        function toggleLanguageMenu(e) {
+            if (e) e.stopPropagation();
+            const menu = document.getElementById("lang-dropdown-menu");
+            const backdrop = document.getElementById("lang-menu-backdrop");
+            if (!menu) return;
+            const willOpen = !menu.classList.contains("open");
+            menu.classList.toggle("open", willOpen);
+            if (backdrop) backdrop.classList.toggle("open", willOpen);
+        }
+
+        function closeLanguageMenu() {
+            const menu = document.getElementById("lang-dropdown-menu");
+            const backdrop = document.getElementById("lang-menu-backdrop");
+            if (menu) menu.classList.remove("open");
+            if (backdrop) backdrop.classList.remove("open");
+        }
+
+        function selectLanguageFromMenu(langCode) {
+            closeLanguageMenu();
+            setLanguage(langCode);
+        }
+
         let state = {
-            lang: "en",
+            lang: "en-us",
             balance: 0,
             unclaimed: 0,
             walletHold: 0,
@@ -2881,11 +3470,11 @@
         }
 
         function t(key) {
-            return i18n[state.lang]?.[key] ?? i18n.en[key];
+            return i18n[state.lang]?.[key] ?? i18n["en-us"][key];
         }
 
         function setLanguage(lang) {
-            if (!["en", "fa", "ru"].includes(lang)) return;
+            if (!Object.prototype.hasOwnProperty.call(i18n, lang)) return;
             state.lang = lang;
             applyLanguageDirection();
             saveState();
@@ -2894,13 +3483,20 @@
         }
 
         function applyLanguageDirection() {
-            const pack = i18n[state.lang] || i18n.en;
+            const pack = i18n[state.lang] || i18n["en-us"];
             document.documentElement.lang = state.lang;
             document.documentElement.dir = pack.dir;
             document.body.dir = pack.dir;
-            document.getElementById("btn-lang-fa").classList.toggle("active", state.lang === "fa");
-            document.getElementById("btn-lang-en").classList.toggle("active", state.lang === "en");
-            document.getElementById("btn-lang-ru").classList.toggle("active", state.lang === "ru");
+
+            document.getElementById("current-lang-flag").innerText = pack.flag || "🇺🇸";
+            document.getElementById("current-lang-label").innerText = pack.shortName || "United States";
+
+            document.querySelectorAll("#lang-dropdown-menu .lang-menu-item").forEach(item => {
+                const isSelected = item.dataset.lang === state.lang;
+                item.classList.toggle("active", isSelected);
+                const checkSpan = item.querySelector("span:last-child");
+                if (checkSpan) checkSpan.innerText = isSelected ? "✓" : "";
+            });
         }
 
         function initTelegramData() {
@@ -2937,7 +3533,8 @@
                     state = { ...state, ...parsed };
                 } catch (e) {}
             }
-            if (!["en", "fa", "ru"].includes(state.lang)) state.lang = "en";
+            if (state.lang === "en") state.lang = "en-us";
+            if (!Object.prototype.hasOwnProperty.call(i18n, state.lang)) state.lang = "en-us";
             if (!Array.isArray(state.openedXTasks)) state.openedXTasks = [];
             if (!state.submittedXLinks || typeof state.submittedXLinks !== "object") state.submittedXLinks = {};
             if (!Number(state.lockStartAt)) state.lockStartAt = Date.now();
@@ -3146,6 +3743,7 @@
         }
 
         function switchView(name) {
+            closeLanguageMenu();
             document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
             document.querySelectorAll(".dock-tab").forEach(el => el.classList.remove("active"));
             const target = document.getElementById("view-" + name);
@@ -3161,6 +3759,7 @@
         }
 
         function openWalletModal() {
+            closeLanguageMenu();
             document.getElementById("wallet-modal").style.display = "flex";
             elevateTonConnectModal();
         }
@@ -3483,6 +4082,7 @@
         }
 
         function openHistoryModal() {
+            closeLanguageMenu();
             const body = document.getElementById("info-modal-body");
             document.getElementById("info-modal-title").innerText = state.lang === "fa" ? "تاریخچه برداشت SLR" : "SLR Withdrawal History";
             if (!state.withdrawHistory.length) {
@@ -3498,20 +4098,8 @@
             document.getElementById("info-modal").style.display = "flex";
         }
 
-        function openAirdropModal() {
-            const lockInfo = getRemainingLockInfo();
-            const lockLine = lockInfo.locked
-                ? t("lockActiveText").replace("{days}", lockInfo.days).replace("{hours}", lockInfo.hours)
-                : t("lockUnlockedText");
-            document.getElementById("info-modal-title").innerText = t("airdropDistTitle");
-            document.getElementById("info-modal-body").innerHTML = `
-                ${t("airdropDistDesc")}<br><br>
-                <b>${lockLine}</b>
-            `;
-            document.getElementById("info-modal").style.display = "flex";
-        }
-
         function openRulesModal() {
+            closeLanguageMenu();
             document.getElementById("info-modal-title").innerText = state.lang === "fa" ? "شرایط و قوانین SLR" : "SLR Rules";
             document.getElementById("info-modal-body").innerHTML = state.lang === "fa" ? `
                 • آدرس قرارداد توکن: <b style="font-family:monospace; font-size:10px;">${slrTokenAddress}</b><br>
@@ -3722,7 +4310,7 @@
                                 <div style="font-size:11px; font-weight:800; color:#4d7c0f; margin-top:3px;">+${tier.reward.toLocaleString()} SLR</div>
                             </div>
                             <button class="task-action-pill ${claimed ? "done" : ""}" onclick="claimHoldTier(${tier.target})">
-                                ${claimed ? t("claimedBadge") : (eligible ? "Claim" : "🔒 " + Math.floor(state.walletHold).toLocaleString() + "/" + tier.target.toLocaleString())}
+                                ${claimed ? t("claimedBadge") : (eligible ? t("claimBtn") : "🔒 " + Math.floor(state.walletHold).toLocaleString() + "/" + tier.target.toLocaleString())}
                             </button>
                         </div>
                         <div class="hold-progress-track"><div class="hold-progress-fill" style="width:${pct}%;"></div></div>
@@ -3746,6 +4334,7 @@
             document.getElementById("lbl-friends-count").innerText = t("friendsCount");
             document.getElementById("lbl-friends-earned").innerText = t("friendsEarned");
             document.getElementById("lbl-friends-ready").innerText = t("friendsReady");
+            document.getElementById("ref-claim-btn").innerText = t("claimBtn");
             document.getElementById("ref-count-val").innerText = state.refCount;
             document.getElementById("ref-earned-val").innerText = state.refEarned.toLocaleString() + " SLR";
             document.getElementById("ref-pending-val").innerText = state.refPending.toLocaleString() + " SLR";
@@ -3766,7 +4355,6 @@
             document.getElementById("profile-hold-hint").innerHTML = t("profileHoldHint");
             document.getElementById("menu-wallet").innerText = t("menuWallet");
             document.getElementById("menu-history").innerText = t("menuHistory");
-            document.getElementById("menu-airdrop").innerText = t("menuAirdrop");
             document.getElementById("menu-rules").innerText = t("menuRules");
 
             document.getElementById("dock-upgrade").innerText = t("dockUpgrade");
@@ -3800,6 +4388,7 @@
                 : t("notConnectedAddr");
             document.getElementById("payout-time-note").innerText = t("payoutTimeNote");
             document.getElementById("modal-buy-btn").innerText = t("buyBtnPlain");
+            document.getElementById("submit-withdraw-btn").innerText = t("submitWithdrawBtn");
 
             const alertBox = document.getElementById("wallet-rule-alert");
             if (withdrawUnlocked) {
