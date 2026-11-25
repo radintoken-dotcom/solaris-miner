@@ -26,6 +26,8 @@
             --green-bright: #a3e635;
             --green-dark: #4d7c0f;
             --border-light: #e5e7eb;
+            --splash-img: url("./11f9a1db.jpg");
+            --coin-img: url("./image_1be087b2.jpg");
         }
 
         body {
@@ -34,6 +36,42 @@
             min-height: 100vh;
             padding-bottom: 96px;
             overflow-x: hidden;
+        }
+
+        /* صفحه عمودی اول ربات */
+        .solaris-splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 5000;
+            background:
+                linear-gradient(180deg, rgba(10, 12, 16, 0.25) 0%, rgba(10, 12, 16, 0.15) 55%, rgba(10, 12, 16, 0.82) 100%),
+                var(--splash-img) center center / cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 28px 20px 38px;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+
+        .solaris-splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .solaris-splash-btn {
+            width: 100%;
+            max-width: 340px;
+            border: 1.5px solid rgba(254, 240, 138, 0.9);
+            border-radius: 18px;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, #facc15 0%, #eab308 55%, #b45309 100%);
+            color: #1c1917;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.7);
         }
 
         tc-root,
@@ -568,19 +606,12 @@
         .slrc-static-coin-center {
             position: relative;
             z-index: 2;
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: radial-gradient(circle at 30% 28%, #fef08a 0%, #facc15 55%, #b45309 100%);
-            border: 1.5px solid #fef9c3;
-            box-shadow: 0 3px 8px rgba(120, 53, 15, 0.35), inset 0 0 0 1.5px rgba(120, 53, 15, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #451a03;
-            font-size: 8.5px;
-            font-weight: 900;
-            letter-spacing: 0.2px;
+            background: var(--coin-img) center center / cover no-repeat;
+            border: 1.5px solid #fef08a;
+            box-shadow: 0 3px 8px rgba(120, 53, 15, 0.45);
         }
 
         .crew-name {
@@ -1219,6 +1250,10 @@
     </style>
 </head>
 <body>
+    <div id="solaris-splash-screen" class="solaris-splash-screen">
+        <button type="button" class="solaris-splash-btn" onclick="dismissSplashScreen()">Enter Solaris</button>
+    </div>
+
     <div id="toast-banner" class="toast-banner" role="status" aria-live="polite"></div>
 
     <div class="app-shell">
@@ -1626,6 +1661,9 @@
     </div>
 
     <script>
+        const SPLASH_IMAGE_URL = "./11f9a1db.jpg";
+        const COIN_IMAGE_URL = "./image_1be087b2.jpg";
+
         const slrcTokenAddress = "EQDSXXDeVWcQaWCCDZAFM-wiln9gIOs1VxOl4L3TgSYN0JPV";
         const nativeTonAddress = "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c";
         const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
@@ -1652,13 +1690,6 @@
         const STORAGE_CAP_SLRC = 10000;
         const dailyRewards = [50, 100, 150, 200, 300, 400, 600];
 
-        // ترتیب هر ۶ واحد استخراج بر اساس تایید ولت و هولد واقعی SLRC در کیف‌پول:
-        // 1: فعال با تایید ولت (holdReq: 0)
-        // 2: هولد حداقل 500 SLRC
-        // 3: هولد حداقل 1,800 SLRC
-        // 4: هولد حداقل 4,500 SLRC
-        // 5: هولد حداقل 10,000 SLRC
-        // 6: هولد حداقل 25,000 SLRC
         const crewUnits = [
             { id: 1, daily: 120, holdReq: 0 },
             { id: 2, daily: 350, holdReq: 500 },
@@ -1679,6 +1710,7 @@
         const i18n = {
             en: {
                 dir: "ltr",
+                splashEnterBtn: "Enter Solaris",
                 cardBuyBtn: "🛒 Buy Token on STON.fi",
                 miningStatus: "Mining • SLRC Extraction",
                 perDay: "SLRC per day",
@@ -1826,6 +1858,7 @@
             },
             fa: {
                 dir: "rtl",
+                splashEnterBtn: "ورود به Solaris",
                 cardBuyBtn: "🛒 خرید توکن در استون فای",
                 miningStatus: "در حال جمع شدن • استخراج SLRC",
                 perDay: "SLRC در روز",
@@ -1973,6 +2006,7 @@
             },
             ru: {
                 dir: "ltr",
+                splashEnterBtn: "Enter Solaris",
                 cardBuyBtn: "🛒 Buy Token on STON.fi",
                 miningStatus: "Mining • SLRC Extraction",
                 perDay: "SLRC per day",
@@ -2188,6 +2222,11 @@
             }, duration);
         }
 
+        function dismissSplashScreen() {
+            const el = document.getElementById("solaris-splash-screen");
+            if (el) el.classList.add("hidden");
+        }
+
         function elevateTonConnectModal() {
             const selectors = [
                 "tc-root",
@@ -2259,6 +2298,9 @@
         let isFetchingMarket = false;
 
         window.addEventListener("DOMContentLoaded", () => {
+            document.documentElement.style.setProperty("--splash-img", `url("${SPLASH_IMAGE_URL}")`);
+            document.documentElement.style.setProperty("--coin-img", `url("${COIN_IMAGE_URL}")`);
+
             tonConnectUI.uiOptions = { buttonRootId: "ton-connect-button-container" };
             tonConnectUI.onStatusChange(async (wallet) => {
                 if (!wallet) {
@@ -2292,7 +2334,6 @@
             drawChartCanvas();
         });
 
-        // همگام‌سازی خودکار واحدهای استخراج بر اساس تایید ولت و هولد واقعی در کیف‌پول
         function syncHoldCrewUnlocks() {
             const set = new Set([1]);
             if (state.isVerifiedWallet && state.walletHold > 0) {
@@ -3011,10 +3052,6 @@
             showTransientMessage(t("toastClaimSuccess"));
         }
 
-        // کلیک روی هر یک از ۶ واحد استخراج:
-        // اگر ولت تایید نشده باشد -> هشدار تایید ولت
-        // اگر فعال باشد -> وضعیت فعال نمایش داده می‌شود
-        // اگر نیاز به هولد داشته باشد و هولد کافی نباشد -> کپی آدرس توکن و رفتن به صفحه خرید توکن برای هولد
         function handleCrewButtonClick(id) {
             const unit = crewUnits.find(u => u.id === id);
             if (!unit) return;
@@ -3315,6 +3352,9 @@
             const verified = !!state.isVerifiedWallet;
             const activeCount = crewUnits.filter(u => isUnitActive(u)).length;
 
+            const splashBtn = document.querySelector(".solaris-splash-btn");
+            if (splashBtn) splashBtn.innerText = t("splashEnterBtn");
+
             document.getElementById("top-username").innerText = state.userName;
             document.getElementById("top-lvl-label").innerText = "Lv " + lvl;
             document.getElementById("top-next-lvl").innerText = "Lv " + (lvl + 1);
@@ -3368,7 +3408,7 @@
                 const unitName = t("crewNames")[u.id] || ("Unit " + u.id);
 
                 const centerVisual = active
-                    ? `<div class="slrc-gear-coin-wrap">${gearRingSvg}<div class="slrc-static-coin-center">SLRC</div></div>`
+                    ? `<div class="slrc-gear-coin-wrap">${gearRingSvg}<div class="slrc-static-coin-center"></div></div>`
                     : lockBadgeHtml;
 
                 const reqText = u.holdReq <= 0
