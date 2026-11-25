@@ -1707,9 +1707,9 @@
         const SPLASH_IMAGE_URL = "./image_11f9a1db.jpg";
         const COIN_IMAGE_URL = "./image_1be087b2.jpg";
 
-        const slrcTokenAddress = "EQDSXXDeVWcQaWCCDZAFM-wiln9gIOs1VxOl4L3TgSYN0JPV";
+        const slrcTokenAddress = "EQB1yCD3HAgcXFJiVqAmnySiTDyYQ90e3KmX_g8xzPtRddfN";
         const nativeTonAddress = "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c";
-        const recipientWalletAddress = "UQB9Q80VvzlJSFsfGBA6IO1Yh3UMcGJfGyNmq3PejlPIdR9v";
+        const recipientWalletAddress = "UQAdCHii_qXuljrHeL2aUPcAAGu7doyzZCK-3kiG0DXDuuoy";
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
         const stonfiSwapTokenUrl = `https://app.ston.fi/swap?ft=TON&tt=${slrcTokenAddress}`;
         const botUsername = "SolarisMiner_bot";
@@ -2015,7 +2015,7 @@
                 holdLabel3: "نگه دار ON-CHAIN رو 25,000 SLRC",
                 claimedBadge: "دریافت شد ✓",
                 toastVerifyRequired: "⚠️ ابتدا تایید ولت را انجام دهید تا واحدهای استخراج فعال شوند!",
-                toastGoBuyToHold: "🛒 برای فعال شدن {unit} باید {req} SLRC در ولت هولد کنید — در حال انتقال به خرید توکن...",
+                toastGoBuyToHold: "🛒 برای فعال شدن {unit} باید {req} SLRC در ولت هولد کنید — آدرس کپی و وارد خرید شد...",
                 toastClaimNotVerified: "⚠️ برای دریافت استخراج، حتماً تایید ولت انجام بشه!",
                 toastNothingToClaim: "هنوز SLRC استخراج‌شده‌ای برای دریافت آماده نیست.",
                 toastClaimSuccess: "✅ پاداش استخراج SLRC به موجودی اصلی اضافه شد.",
@@ -3082,14 +3082,37 @@
             }
         }
 
-        function copyAndGoBuyToken() {
+        function copyContractAddressSilent() {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(slrcTokenAddress).catch(() => {});
+            } else {
+                try {
+                    const tmp = document.createElement("textarea");
+                    tmp.value = slrcTokenAddress;
+                    tmp.style.position = "fixed";
+                    tmp.style.opacity = "0";
+                    document.body.appendChild(tmp);
+                    tmp.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(tmp);
+                } catch (e) {}
             }
+        }
+
+        function copyAndGoBuyToken() {
+            copyContractAddressSilent();
             state.pendingBuyVerify = true;
             saveState();
             renderAll();
-            openExternalUrl(stonfiSwapTokenUrl);
+            showTransientMessage(
+                state.lang === "fa"
+                    ? "📋 آدرس قرارداد کپی شد؛ در حال ورود به صفحه توکن در STON.fi..."
+                    : "📋 Contract copied; opening SLRC token page on STON.fi...",
+                1600
+            );
+            setTimeout(() => {
+                openExternalUrl(stonfiSwapTokenUrl);
+            }, 180);
         }
 
         function switchView(name) {
