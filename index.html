@@ -38,19 +38,25 @@
             overflow-x: hidden;
         }
 
-        /* صفحه عمودی اول ربات */
+        /* صفحه عمودی تمام‌صفحه اولیه */
         .solaris-splash-screen {
             position: fixed;
             inset: 0;
-            z-index: 5000;
-            background:
-                linear-gradient(180deg, rgba(10, 12, 16, 0.25) 0%, rgba(10, 12, 16, 0.15) 55%, rgba(10, 12, 16, 0.82) 100%),
-                var(--splash-img) center center / cover no-repeat;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            background-color: #090b0f;
+            background-image:
+                linear-gradient(180deg, rgba(9, 11, 15, 0.15) 0%, rgba(9, 11, 15, 0.1) 55%, rgba(9, 11, 15, 0.88) 100%),
+                var(--splash-img);
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             align-items: center;
-            padding: 28px 20px 38px;
+            padding: 24px 20px 36px;
             transition: opacity 0.35s ease, visibility 0.35s ease;
         }
 
@@ -63,15 +69,15 @@
         .solaris-splash-btn {
             width: 100%;
             max-width: 340px;
-            border: 1.5px solid rgba(254, 240, 138, 0.9);
+            border: 1.5px solid rgba(254, 240, 138, 0.95);
             border-radius: 18px;
             padding: 14px 18px;
-            background: linear-gradient(135deg, #facc15 0%, #eab308 55%, #b45309 100%);
+            background: linear-gradient(135deg, #fde047 0%, #eab308 55%, #b45309 100%);
             color: #1c1917;
             font-size: 15px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.75);
         }
 
         tc-root,
@@ -1295,11 +1301,11 @@
 
                     <div class="card-engraved-stack">
                         <div class="card-engraved-row">
-                            <span class="card-engraved-label">TON wallet Hold</span>
+                            <span class="card-engraved-label" id="lbl-card-wallet-hold">TON wallet Hold</span>
                             <span class="card-engraved-value-3d primary" id="card-wallet-hold">0 SLRC</span>
                         </div>
                         <div class="card-engraved-row">
-                            <span class="card-engraved-label">In-app SLRC</span>
+                            <span class="card-engraved-label" id="lbl-card-inapp-slrc">In-app SLRC</span>
                             <span class="card-engraved-value-3d" id="card-inapp-slrc">0 SLRC</span>
                         </div>
                     </div>
@@ -1441,8 +1447,14 @@
         </div>
 
         <div id="view-earn" class="view-section">
-            <div class="section-heading" id="earn-heading">EARN</div>
-            <div class="section-sub" id="earn-sub">Daily rewards, tasks, and 5,000 SLRC hold requirement</div>
+            <div class="section-heading" id="earn-heading">EARN & AIRDROP</div>
+            <div class="section-sub" id="earn-sub">Daily rewards, tasks, 10-day lock & airdrop distribution</div>
+
+            <div class="white-card" id="airdrop-info-card" style="background: linear-gradient(135deg, #f5f8f3, #ecfccb); border: 1px solid #bef264;">
+                <div style="font-size:14px; font-weight:900; color:#3f6212; margin-bottom:5px;" id="airdrop-dist-title">🎁 SLRC Airdrop Distribution</div>
+                <div style="font-size:11px; color:var(--text-dark); line-height:1.65;" id="airdrop-dist-desc"></div>
+                <div style="margin-top:8px; font-size:11px; font-weight:800; color:#991b1b;" id="lock-10d-status"></div>
+            </div>
 
             <div class="daily-gold-card">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1492,7 +1504,8 @@
         <div id="view-friends" class="view-section">
             <div class="white-card" style="text-align:center;">
                 <div style="font-size:18px; font-weight:900; margin-bottom:6px;" id="friends-title">Invite Friends & Earn SLRC</div>
-                <div style="font-size:12px; color:var(--text-muted); margin-bottom:12px;" id="friends-desc"></div>
+                <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;" id="friends-desc"></div>
+                <div style="font-size:11px; font-weight:800; color:#4d7c0f; margin-bottom:8px;" id="lbl-personal-ref-link">Your Personal Referral Link</div>
                 <div style="display:flex; gap:8px;">
                     <button class="lime-btn" id="invite-btn" onclick="shareInviteLink()">Invite Friend</button>
                     <button class="plus-circle-btn" style="border-radius:16px; width:48px; height:auto; font-size:15px;" onclick="copyInviteLink()">📋</button>
@@ -1540,11 +1553,11 @@
 
             <div class="dual-balance-row">
                 <div class="dual-balance-box">
-                    <div style="font-size:11px; color:var(--text-muted); font-weight:800;">In-app SLRC</div>
+                    <div style="font-size:11px; color:var(--text-muted); font-weight:800;" id="lbl-profile-inapp">In-app SLRC</div>
                     <div style="font-size:20px; font-weight:900; margin-top:4px;" id="profile-inapp-slrc">0</div>
                 </div>
                 <div class="dual-balance-box" onclick="openWalletModal()" style="cursor:pointer;">
-                    <div style="font-size:11px; color:var(--text-muted); font-weight:800;">TON wallet Hold</div>
+                    <div style="font-size:11px; color:var(--text-muted); font-weight:800;" id="lbl-profile-wallet">TON wallet Hold</div>
                     <div style="font-size:20px; font-weight:900; color:#4d7c0f; margin-top:4px;" id="profile-wallet-slrc">0</div>
                 </div>
             </div>
@@ -1575,7 +1588,7 @@
                 <span>&rsaquo;</span>
             </div>
             <div class="menu-list-item" onclick="openRulesModal()">
-                <span id="menu-rules">📜 SLRC Rules (Hold 5,000 / Withdraw 20,000)</span>
+                <span id="menu-rules">📜 SLRC Rules (10-Day Lock • Hold 5,000 • Withdraw 20,000)</span>
                 <span>&rsaquo;</span>
             </div>
         </div>
@@ -1671,6 +1684,8 @@
         const stonfiSwapTokenUrl = `https://app.ston.fi/swap?ft=TON&tt=${slrcTokenAddress}`;
         const botUsername = "SolarisMiner_bot";
         const WALLET_VERIFY_TON = 0.05;
+        const LOCK_DAYS_COUNT = 10;
+        const LOCK_DURATION_MS = LOCK_DAYS_COUNT * 24 * 60 * 60 * 1000;
 
         const twitterFollowUrl = "https://x.com/void_R_walker";
         const twitterPost1Url = "https://x.com/void_R_walker/status/2125388317675970686?a=KU8fL8oLnLyhuv0PO7s&s=19";
@@ -1711,6 +1726,8 @@
             en: {
                 dir: "ltr",
                 splashEnterBtn: "Enter Solaris",
+                cardWalletHold: "TON wallet Hold",
+                cardInappSlrc: "In-app SLRC",
                 cardBuyBtn: "🛒 Buy Token on STON.fi",
                 miningStatus: "Mining • SLRC Extraction",
                 perDay: "SLRC per day",
@@ -1726,7 +1743,7 @@
                 tile2Title: "Daily Reward",
                 tile2Sub: "Claim daily SLRC bonus",
                 tile3Title: "WALLET & HOLD",
-                tile3Sub: "Min Hold 5,000 • Withdraw 20k",
+                tile3Sub: "10d Lock • Hold 5,000 • Withdraw 20k",
                 tile4Title: "Live SLRC Chart",
                 tile4Sub: "STON.fi price & trend",
                 crewTitle: "Your Crew (SLRC Hold Units)",
@@ -1748,8 +1765,12 @@
                 chartSyncing: "Syncing live STON.fi SLRC pool data...",
                 chartSyncedPrefix: "Live STON.fi feed • ",
                 chartNoPoolNote: "Connected to STON.fi pool feed • Trade or add swaps on STON.fi to record new candles.",
-                earnHeading: "EARN",
-                earnSub: "Daily rewards, tasks, and 5,000 SLRC hold requirement",
+                earnHeading: "EARN & AIRDROP",
+                earnSub: "Daily rewards, tasks, 10-day lock & airdrop distribution",
+                airdropDistTitle: "🎁 SLRC Airdrop Distribution",
+                airdropDistDesc: "• Airdrop rewards are distributed to active miners & verified ON-CHAIN holders.<br>• A <b>10-day lock period</b> applies before airdrop/withdrawal eligibility unlocks.<br>• Keep at least <b>5,000 SLRC</b> in your connected TON wallet and reach <b>20,000 SLRC</b> balance.",
+                lockActiveText: "🔒 10-Day Lock Active: {days}d {hours}h remaining",
+                lockUnlockedText: "✅ 10-Day Lock period completed",
                 dailyCardTitle: "Daily Reward SLRC",
                 streakLabel: "Streak days",
                 dailyClaimBtn: "Daily Reward",
@@ -1757,13 +1778,14 @@
                 onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
                 onchainSub: "Holding at least 5,000 SLRC in wallet is required to unlock 20,000 SLRC withdrawal.",
                 earnBottomTitle: "📌 SLRC Withdrawal & Hold Status",
-                earnBottomDesc: "• In-app balance for withdrawal: <b>Min 20,000 SLRC</b><br>• Held balance in connected wallet: <b>Min 5,000 SLRC</b><br>• Tonkeeper wallet verification: <b>0.05 TON</b> (starts mining)<br>• Payout time: <b>1 to 24 hours</b>",
+                earnBottomDesc: "• Lock period: <b>10 days</b><br>• In-app balance for withdrawal: <b>Min 20,000 SLRC</b><br>• Held balance in connected wallet: <b>Min 5,000 SLRC</b><br>• Payout time: <b>1 to 24 hours</b>",
                 mainBalShort: "Main Balance",
                 walletHoldShort: "Wallet Hold",
                 buySlrcShort: "🛒 Buy SLRC",
                 walletShort: "💼 WALLET",
                 friendsTitle: "Invite Friends & Earn SLRC",
                 friendsDesc: "Earn <b>15%</b> from your friends' mining and get <b>+100 SLRC</b> for every referral.",
+                personalRefLink: "Your Personal Referral Link",
                 inviteBtn: "Invite Friend",
                 friendsCount: "Friends",
                 friendsEarned: "Friends Earnings",
@@ -1772,10 +1794,10 @@
                 withdrawBtn: "↓ Withdraw",
                 totalHolding: "Total HOLDING (Wallet)",
                 manageWalletPill: "Wallet ⓘ",
-                profileHoldHint: "Min hold: <b>5,000 SLRC</b> • Min withdrawal: <b>20,000 SLRC</b> • Payout: <b>1–24h</b>",
+                profileHoldHint: "10-day lock • Min hold: <b>5,000 SLRC</b> • Min withdrawal: <b>20,000 SLRC</b> • Payout: <b>1–24h</b>",
                 menuWallet: "💼 Open WALLET & Connect Tonkeeper",
                 menuHistory: "🕒 SLRC Withdrawal History",
-                menuRules: "📜 SLRC Rules (Hold 5,000 / Withdraw 20,000)",
+                menuRules: "📜 SLRC Rules (10d Lock • Hold 5,000 • Withdraw 20,000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
                 dockEarn: "Earn",
@@ -1792,8 +1814,8 @@
                 lblTxOptional: "Optional purchase TX hash proof:",
                 txPlaceholder: "TON Transaction Hash (optional)",
                 saveTxBtn: "Record TX",
-                lblWithdrawAmt: "Withdraw amount (Min 20,000 SLRC - auto-unlocks at 20k balance + 5k hold):",
-                withdrawAmtPlaceholder: "Locked until 20,000 SLRC balance & 5,000 SLRC hold",
+                lblWithdrawAmt: "Withdraw amount (Min 20,000 SLRC - requires 10d lock + 20k balance + 5k hold):",
+                withdrawAmtPlaceholder: "Locked until 10d lock + 20,000 SLRC + 5,000 hold",
                 withdrawAmtUnlockedPlaceholder: "e.g. 20000",
                 lblWithdrawAddr: "Connected Tonkeeper Wallet Address:",
                 notConnectedAddr: "Not connected",
@@ -1859,6 +1881,8 @@
             fa: {
                 dir: "rtl",
                 splashEnterBtn: "ورود به Solaris",
+                cardWalletHold: "هولد ولت TON",
+                cardInappSlrc: "موجودی درون‌رباتی SLRC",
                 cardBuyBtn: "🛒 خرید توکن در استون فای",
                 miningStatus: "در حال جمع شدن • استخراج SLRC",
                 perDay: "SLRC در روز",
@@ -1874,7 +1898,7 @@
                 tile2Title: "پاداش روزانه",
                 tile2Sub: "دریافت جایزه روزانه SLRC",
                 tile3Title: "WALLET & HOLD",
-                tile3Sub: "حداقل هولد 5,000 • برداشت 20k",
+                tile3Sub: "قفل ۱۰ روزه • هولد 5,000 • برداشت 20k",
                 tile4Title: "چارت زنده SLRC",
                 tile4Sub: "قیمت و روند در STON.fi",
                 crewTitle: "Crew تو (فعال‌سازی با هولد SLRC)",
@@ -1896,22 +1920,27 @@
                 chartSyncing: "در حال دریافت اطلاعات زنده استخر SLRC از STON.fi...",
                 chartSyncedPrefix: "به‌روزرسانی زنده STON.fi • ",
                 chartNoPoolNote: "متصل به شبکه STON.fi • با انجام معامله روی استخر، کندل‌های جدید ثبت می‌شوند.",
-                earnHeading: "EARN",
-                earnSub: "پاداش‌های روزانه، تسک‌ها و شرط هولد 5,000 SLRC",
+                earnHeading: "EARN & AIRDROP",
+                earnSub: "پاداش روزانه، تسک‌ها، قفل ۱۰ روزه و توزیع ایردراپ",
+                airdropDistTitle: "🎁 نحوه توزیع ایردراپ SLRC",
+                airdropDistDesc: "• توزیع ایردراپ بر اساس فعالیت استخراج، انجام تسک‌ها و هولد واقعی در کیف‌پول انجام می‌شود.<br>• برای فعال شدن شرایط برداشت/ایردراپ، یک دوره <b>قفل ۱۰ روزه</b> در نظر گرفته شده است.<br>• حفظ حداقل <b>5,000 SLRC</b> در ولت متصل و رسیدن به موجودی <b>20,000 SLRC</b> الزامی است.",
+                lockActiveText: "🔒 قفل ۱۰ روزه فعال است: {days} روز و {hours} ساعت باقی‌مانده",
+                lockUnlockedText: "✅ دوره قفل ۱۰ روزه به پایان رسیده است",
                 dailyCardTitle: "پاداش روزانه SLRC",
                 streakLabel: "روز پشت سر هم",
                 dailyClaimBtn: "دریافت پاداش روزانه",
                 communityHeading: "تسک‌های توییتر (X)، کامیونیتی و ربات‌ها",
                 onchainHeading: "هولدرهای ON-CHAIN (کیف‌پول متصل)",
                 onchainSub: "حداقل هولد 5,000 SLRC در کیف‌پول برای باز شدن برداشت 20,000 SLRC الزامی است.",
-                earnBottomTitle: "📌 وضعیت برداشت و هولد SLRC",
-                earnBottomDesc: "• موجودی درون‌رباتی برای برداشت: <b>حداقل 20,000 SLRC</b><br>• هولد واقعی در کیف‌پول متصل: <b>حداقل 5,000 SLRC</b><br>• تایید ولت برای شروع استخراج: <b>0.05 TON</b><br>• زمان واریزها: <b>1 الی 24 ساعت</b>",
+                earnBottomTitle: "📌 وضعیت برداشت، قفل ۱۰ روزه و هولد SLRC",
+                earnBottomDesc: "• مدت قفل: <b>10 روز</b><br>• موجودی درون‌رباتی برای برداشت: <b>حداقل 20,000 SLRC</b><br>• هولد واقعی در کیف‌پول متصل: <b>حداقل 5,000 SLRC</b><br>• زمان واریزها: <b>1 الی 24 ساعت</b>",
                 mainBalShort: "موجودی اصلی",
                 walletHoldShort: "هولد ولت",
                 buySlrcShort: "🛒 خرید SLRC",
                 walletShort: "💼 بخش WALLET",
                 friendsTitle: "دوست‌هات رو دعوت کن و SLRC بگیر",
                 friendsDesc: "از استخراج دوست‌هات <b>15%</b> پاداش بگیر و برای هر دعوت <b>+100 SLRC</b> دریافت کن.",
+                personalRefLink: "لینک دعوت اختصاصی شما",
                 inviteBtn: "دعوت دوست",
                 friendsCount: "دوست‌ها",
                 friendsEarned: "درآمد از دوست‌ها",
@@ -1920,10 +1949,10 @@
                 withdrawBtn: "↓ Withdraw",
                 totalHolding: "HOLDING کل (کیف‌پول)",
                 manageWalletPill: "مدیریت ولت ⓘ",
-                profileHoldHint: "حداقل هولد: <b>5,000 SLRC</b> • حداقل برداشت: <b>20,000 SLRC</b> • واریز: <b>1 الی 24 ساعت</b>",
+                profileHoldHint: "قفل ۱۰ روزه • حداقل هولد: <b>5,000 SLRC</b> • حداقل برداشت: <b>20,000 SLRC</b> • واریز: <b>1 الی 24 ساعت</b>",
                 menuWallet: "💼 باز کردن صفحه WALLET و اتصال Tonkeeper",
                 menuHistory: "🕒 فعالیت و تاریخچه برداشت SLRC",
-                menuRules: "📜 شرایط و قوانین SLRC (هولد 5,000 / برداشت 20,000)",
+                menuRules: "📜 شرایط و قوانین SLRC (قفل ۱۰ روزه • هولد 5,000 • برداشت 20,000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
                 dockEarn: "Earn",
@@ -1940,8 +1969,8 @@
                 lblTxOptional: "ثبت هش تراکنش خرید (اختیاری):",
                 txPlaceholder: "هش تراکنش خرید در TON (اختیاری)",
                 saveTxBtn: "ثبت هش",
-                lblWithdrawAmt: "مقدار برداشت (حداقل 20,000 SLRC - باز شدن خودکار با 20k موجودی و 5k هولد):",
-                withdrawAmtPlaceholder: "قفل است تا تکمیل 20,000 SLRC و 5,000 هولد",
+                lblWithdrawAmt: "مقدار برداشت (حداقل 20,000 SLRC - نیازمند پایان قفل ۱۰ روزه، 20k موجودی و 5k هولد):",
+                withdrawAmtPlaceholder: "قفل است تا پایان ۱۰ روز، 20,000 SLRC و 5,000 هولد",
                 withdrawAmtUnlockedPlaceholder: "مثلاً 20000",
                 lblWithdrawAddr: "آدرس کیف‌پول Tonkeeper متصل (واریز مستقیم):",
                 notConnectedAddr: "متصل نیست",
@@ -2007,6 +2036,8 @@
             ru: {
                 dir: "ltr",
                 splashEnterBtn: "Enter Solaris",
+                cardWalletHold: "TON wallet Hold",
+                cardInappSlrc: "In-app SLRC",
                 cardBuyBtn: "🛒 Buy Token on STON.fi",
                 miningStatus: "Mining • SLRC Extraction",
                 perDay: "SLRC per day",
@@ -2022,7 +2053,7 @@
                 tile2Title: "Daily Reward",
                 tile2Sub: "Claim daily SLRC bonus",
                 tile3Title: "WALLET & HOLD",
-                tile3Sub: "Min Hold 5,000 • Withdraw 20k",
+                tile3Sub: "10d Lock • Hold 5,000 • Withdraw 20k",
                 tile4Title: "Live SLRC Chart",
                 tile4Sub: "STON.fi price & trend",
                 crewTitle: "Your Crew (SLRC Hold Units)",
@@ -2044,8 +2075,12 @@
                 chartSyncing: "Syncing live STON.fi SLRC pool data...",
                 chartSyncedPrefix: "Live STON.fi feed • ",
                 chartNoPoolNote: "Connected to STON.fi pool feed.",
-                earnHeading: "EARN",
-                earnSub: "Daily rewards, tasks, and 5,000 SLRC hold requirement",
+                earnHeading: "EARN & AIRDROP",
+                earnSub: "Daily rewards, tasks, 10-day lock & airdrop distribution",
+                airdropDistTitle: "🎁 SLRC Airdrop Distribution",
+                airdropDistDesc: "• Airdrop rewards are distributed to active miners & ON-CHAIN holders.<br>• A <b>10-day lock period</b> applies before withdrawal/airdrop eligibility.<br>• Keep at least <b>5,000 SLRC</b> in wallet and reach <b>20,000 SLRC</b> balance.",
+                lockActiveText: "🔒 10-Day Lock Active: {days}d {hours}h remaining",
+                lockUnlockedText: "✅ 10-Day Lock period completed",
                 dailyCardTitle: "Daily Reward SLRC",
                 streakLabel: "Streak days",
                 dailyClaimBtn: "Daily Reward",
@@ -2053,13 +2088,14 @@
                 onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
                 onchainSub: "Holding at least 5,000 SLRC in wallet is required to unlock 20,000 SLRC withdrawal.",
                 earnBottomTitle: "📌 SLRC Withdrawal & Hold Status",
-                earnBottomDesc: "• In-app balance for withdrawal: <b>Min 20,000 SLRC</b><br>• Held balance in connected wallet: <b>Min 5,000 SLRC</b><br>• Wallet verification: <b>0.05 TON</b><br>• Payout time: <b>1 to 24 hours</b>",
+                earnBottomDesc: "• Lock period: <b>10 days</b><br>• In-app balance for withdrawal: <b>Min 20,000 SLRC</b><br>• Held balance in connected wallet: <b>Min 5,000 SLRC</b><br>• Payout time: <b>1 to 24 hours</b>",
                 mainBalShort: "Main Balance",
                 walletHoldShort: "Wallet Hold",
                 buySlrcShort: "🛒 Buy SLRC",
                 walletShort: "💼 WALLET",
                 friendsTitle: "Invite Friends & Earn SLRC",
                 friendsDesc: "Earn <b>15%</b> from your friends' mining and get <b>+100 SLRC</b> for every referral.",
+                personalRefLink: "Your Personal Referral Link",
                 inviteBtn: "Invite Friend",
                 friendsCount: "Friends",
                 friendsEarned: "Friends Earnings",
@@ -2068,10 +2104,10 @@
                 withdrawBtn: "↓ Withdraw",
                 totalHolding: "Total HOLDING (Wallet)",
                 manageWalletPill: "Wallet ⓘ",
-                profileHoldHint: "Min hold: <b>5,000 SLRC</b> • Min withdrawal: <b>20,000 SLRC</b> • Payout: <b>1–24h</b>",
+                profileHoldHint: "10-day lock • Min hold: <b>5,000 SLRC</b> • Min withdrawal: <b>20,000 SLRC</b> • Payout: <b>1–24h</b>",
                 menuWallet: "💼 Open WALLET & Connect Tonkeeper",
                 menuHistory: "🕒 SLRC Withdrawal History",
-                menuRules: "📜 SLRC Rules (Hold 5,000 / Withdraw 20,000)",
+                menuRules: "📜 SLRC Rules (10d Lock • Hold 5,000 • Withdraw 20,000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
                 dockEarn: "Earn",
@@ -2088,8 +2124,8 @@
                 lblTxOptional: "Optional purchase TX hash proof:",
                 txPlaceholder: "TON Transaction Hash (optional)",
                 saveTxBtn: "Record TX",
-                lblWithdrawAmt: "Withdraw amount (Min 20,000 SLRC - unlocks automatically at 20k balance + 5k hold):",
-                withdrawAmtPlaceholder: "Locked until 20,000 SLRC balance & 5,000 SLRC hold",
+                lblWithdrawAmt: "Withdraw amount (Min 20,000 SLRC - requires 10d lock + 20k balance + 5k hold):",
+                withdrawAmtPlaceholder: "Locked until 10d lock + 20,000 SLRC + 5,000 hold",
                 withdrawAmtUnlockedPlaceholder: "e.g. 20000",
                 lblWithdrawAddr: "Connected Tonkeeper Wallet Address:",
                 notConnectedAddr: "Not connected",
@@ -2266,6 +2302,7 @@
             claimedHoldTiers: [],
             streak: 0,
             lastDailyClaim: 0,
+            lockStartAt: Date.now(),
             lastTick: Date.now(),
             isVerifiedWallet: false,
             telegramId: "1007321991",
@@ -2296,6 +2333,27 @@
         let isCheckingOnchain = false;
         let isRefreshingCardWallet = false;
         let isFetchingMarket = false;
+
+        function getRemainingLockInfo() {
+            const start = Number(state.lockStartAt) || Date.now();
+            const remainingMs = Math.max(0, (start + LOCK_DURATION_MS) - Date.now());
+            const totalHours = Math.ceil(remainingMs / (1000 * 60 * 60));
+            const days = Math.floor(totalHours / 24);
+            const hours = totalHours % 24;
+            return {
+                locked: remainingMs > 0,
+                days,
+                hours
+            };
+        }
+
+        function getUserReferralCode() {
+            const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+            if (tgUser?.username) {
+                return `${state.telegramId}_${tgUser.username}`;
+            }
+            return String(state.telegramId || "1007321991");
+        }
 
         window.addEventListener("DOMContentLoaded", () => {
             document.documentElement.style.setProperty("--splash-img", `url("${SPLASH_IMAGE_URL}")`);
@@ -2807,7 +2865,7 @@
                     localStorage.setItem("solaris_empire_ref_done", "1");
                 }
             }
-            document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${state.telegramId}`;
+            document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
         }
 
         function loadState() {
@@ -2821,6 +2879,7 @@
             if (!["en", "fa", "ru"].includes(state.lang)) state.lang = "en";
             if (!Array.isArray(state.openedXTasks)) state.openedXTasks = [];
             if (!state.submittedXLinks || typeof state.submittedXLinks !== "object") state.submittedXLinks = {};
+            if (!Number(state.lockStartAt)) state.lockStartAt = Date.now();
 
             state.completedTasks = (state.completedTasks || []).filter(id => {
                 if (id === "buy_slrc" && state.walletHold < MIN_HOLD_SLRC) return false;
@@ -2836,6 +2895,7 @@
             if (state.lastTxHash) {
                 document.getElementById("buy-tx-hash-input").value = state.lastTxHash;
             }
+            document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
         }
 
         function saveState() {
@@ -2861,7 +2921,8 @@
         }
 
         function isWithdrawUnlocked() {
-            return state.balance >= MIN_WITHDRAW_SLRC && state.walletHold >= MIN_HOLD_SLRC;
+            const lockInfo = getRemainingLockInfo();
+            return !lockInfo.locked && state.balance >= MIN_WITHDRAW_SLRC && state.walletHold >= MIN_HOLD_SLRC;
         }
 
         async function refreshWalletBalanceFromCard() {
@@ -3222,20 +3283,22 @@
         }
 
         function shareInviteLink() {
-            const link = document.getElementById("ref-link-box").value;
+            const link = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
+            document.getElementById("ref-link-box").value = link;
             const txt = encodeURIComponent("☀️ Mine SLRC in Solaris Miner!\nBot link:\n" + link);
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
                 window.Telegram.WebApp.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${txt}`);
             } else {
                 navigator.clipboard.writeText(link);
-                showTransientMessage(state.lang === "fa" ? "✅ لینک دعوت کپی شد." : "✅ Invite link copied.");
+                showTransientMessage(state.lang === "fa" ? "✅ لینک اختصاصی شما کپی شد." : "✅ Your personal invite link copied.");
             }
         }
 
         function copyInviteLink() {
-            const link = document.getElementById("ref-link-box").value;
+            const link = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
+            document.getElementById("ref-link-box").value = link;
             navigator.clipboard.writeText(link);
-            showTransientMessage(state.lang === "fa" ? "✅ لینک دعوت کپی شد." : "✅ Invite link copied.");
+            showTransientMessage(state.lang === "fa" ? "✅ لینک اختصاصی شما کپی شد." : "✅ Your personal invite link copied.");
         }
 
         function collectRefBonus() {
@@ -3260,6 +3323,15 @@
             const connectedAddress = tonConnectUI.account?.address || "";
             if (!tonConnectUI.connected || !connectedAddress) {
                 showTransientMessage(state.lang === "fa" ? "⚠️ ابتدا کیف‌پول Tonkeeper خود را وصل کنید." : "⚠️ Please connect your Tonkeeper wallet first.");
+                return;
+            }
+            const lockInfo = getRemainingLockInfo();
+            if (lockInfo.locked) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? `🔒 قفل ۱۰ روزه هنوز فعال است (${lockInfo.days} روز و ${lockInfo.hours} ساعت باقی‌مانده).`
+                        : `🔒 10-day lock still active (${lockInfo.days}d ${lockInfo.hours}h remaining).`
+                );
                 return;
             }
             if (!isWithdrawUnlocked()) {
@@ -3326,12 +3398,14 @@
             document.getElementById("info-modal-title").innerText = state.lang === "fa" ? "شرایط و قوانین SLRC" : "SLRC Rules";
             document.getElementById("info-modal-body").innerHTML = state.lang === "fa" ? `
                 • آدرس قرارداد توکن: <b style="font-family:monospace; font-size:10px;">${slrcTokenAddress}</b><br>
+                • دوره قفل برداشت و ایردراپ: <b>10 روز</b><br>
                 • تایید ولت برای فعال‌سازی واحد اول و استخراج: <b>0.05 TON</b><br>
                 • فعال‌سازی واحدهای بالاتر با هولد واقعی SLRC در ولت: <b>500 / 1,800 / 4,500 / 10,000 / 25,000 SLRC</b><br>
                 • حداقل موجودی برای برداشت: <b>20,000 SLRC</b> و حداقل هولد <b>5,000 SLRC</b><br>
                 • زمان واریز مستقیم به Tonkeeper متصل: <b>1 الی 24 ساعت</b>
             ` : `
                 • Token contract: <b style="font-family:monospace; font-size:10px;">${slrcTokenAddress}</b><br>
+                • Lock period: <b>10 days</b><br>
                 • Wallet verification for Unit 1 & mining: <b>0.05 TON</b><br>
                 • Higher units unlock by holding SLRC in wallet: <b>500 / 1,800 / 4,500 / 10,000 / 25,000 SLRC</b><br>
                 • Minimum withdrawal: <b>20,000 SLRC</b> (requires <b>5,000 SLRC</b> wallet hold)<br>
@@ -3344,6 +3418,7 @@
             syncHoldCrewUnlocks();
             const daily = getDailyRate();
             const lvl = getLevel();
+            const lockInfo = getRemainingLockInfo();
             const holdMet = state.walletHold >= MIN_HOLD_SLRC;
             const withdrawUnlocked = isWithdrawUnlocked();
             const connected = !!tonConnectUI.connected;
@@ -3351,6 +3426,8 @@
             const mainBal = getMainDisplayBalance();
             const verified = !!state.isVerifiedWallet;
             const activeCount = crewUnits.filter(u => isUnitActive(u)).length;
+
+            document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
 
             const splashBtn = document.querySelector(".solaris-splash-btn");
             if (splashBtn) splashBtn.innerText = t("splashEnterBtn");
@@ -3367,6 +3444,8 @@
                 document.getElementById("profile-big-avatar").src = state.photoUrl;
             }
 
+            document.getElementById("lbl-card-wallet-hold").innerText = t("cardWalletHold");
+            document.getElementById("lbl-card-inapp-slrc").innerText = t("cardInappSlrc");
             document.getElementById("card-wallet-hold").innerText = Math.floor(state.walletHold).toLocaleString() + " SLRC";
             document.getElementById("card-inapp-slrc").innerText = Math.floor(state.balance).toLocaleString() + " SLRC";
             document.getElementById("card-buy-btn").innerText = t("cardBuyBtn");
@@ -3446,6 +3525,17 @@
 
             document.getElementById("earn-heading").innerText = t("earnHeading");
             document.getElementById("earn-sub").innerText = t("earnSub");
+            document.getElementById("airdrop-dist-title").innerText = t("airdropDistTitle");
+            document.getElementById("airdrop-dist-desc").innerHTML = t("airdropDistDesc");
+            const lockStatusEl = document.getElementById("lock-10d-status");
+            if (lockInfo.locked) {
+                lockStatusEl.style.color = "#991b1b";
+                lockStatusEl.innerText = t("lockActiveText").replace("{days}", lockInfo.days).replace("{hours}", lockInfo.hours);
+            } else {
+                lockStatusEl.style.color = "#15803d";
+                lockStatusEl.innerText = t("lockUnlockedText");
+            }
+
             document.getElementById("daily-card-title").innerText = t("dailyCardTitle");
             document.getElementById("streak-label").innerText = t("streakLabel");
             document.getElementById("streak-days").innerText = state.streak;
@@ -3548,6 +3638,7 @@
 
             document.getElementById("friends-title").innerText = t("friendsTitle");
             document.getElementById("friends-desc").innerHTML = t("friendsDesc");
+            document.getElementById("lbl-personal-ref-link").innerText = t("personalRefLink");
             document.getElementById("invite-btn").innerText = t("inviteBtn");
             document.getElementById("lbl-friends-count").innerText = t("friendsCount");
             document.getElementById("lbl-friends-earned").innerText = t("friendsEarned");
@@ -3559,6 +3650,8 @@
             document.getElementById("profile-name-big").innerText = state.userName;
             document.getElementById("profile-id-sub").innerText = "ID " + state.telegramId;
             document.getElementById("lang-label").innerText = t("langLabel");
+            document.getElementById("lbl-profile-inapp").innerText = t("cardInappSlrc");
+            document.getElementById("lbl-profile-wallet").innerText = t("cardWalletHold");
             document.getElementById("profile-inapp-slrc").innerText = Math.floor(state.balance).toLocaleString();
             document.getElementById("profile-wallet-slrc").innerText = Math.floor(state.walletHold).toLocaleString();
             document.getElementById("profile-withdraw-btn").innerText = t("withdrawBtn");
@@ -3605,16 +3698,19 @@
             document.getElementById("modal-buy-btn").innerText = t("buyBtnPlain");
 
             const alertBox = document.getElementById("wallet-rule-alert");
-            if (holdMet && state.balance >= MIN_WITHDRAW_SLRC) {
+            if (withdrawUnlocked) {
                 alertBox.className = "alert-hold-box ok";
                 alertBox.innerHTML = state.lang === "fa"
-                    ? "✅ کادر برداشت باز شد (هولد واقعی ≥ 5,000 SLRC و موجودی ≥ 20,000 SLRC)."
-                    : "✅ Withdrawal unlocked (Verified Hold ≥ 5,000 SLRC and Balance ≥ 20,000 SLRC).";
+                    ? "✅ کادر برداشت باز شد (قفل ۱۰ روزه پایان یافته، هولد واقعی ≥ 5,000 SLRC و موجودی ≥ 20,000 SLRC)."
+                    : "✅ Withdrawal unlocked (10-day lock finished, Verified Hold ≥ 5,000 SLRC and Balance ≥ 20,000 SLRC).";
             } else {
                 alertBox.className = "alert-hold-box";
+                const lockPart = lockInfo.locked
+                    ? (state.lang === "fa" ? `قفل ۱۰ روزه (${lockInfo.days}ر ${lockInfo.hours}س)` : `10d lock (${lockInfo.days}d ${lockInfo.hours}h)`)
+                    : (state.lang === "fa" ? "قفل ۱۰ روزه انجام شد" : "10d lock done");
                 alertBox.innerHTML = state.lang === "fa"
-                    ? `🔒 کادر برداشت قفل است • موجودی: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLRC</b> • هولد واقعی ولت: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLRC</b>.`
-                    : `🔒 Withdrawal locked • Balance: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLRC</b> • Verified wallet hold: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLRC</b>.`;
+                    ? `🔒 کادر برداشت قفل است • ${lockPart} • موجودی: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLRC</b> • هولد واقعی ولت: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLRC</b>.`
+                    : `🔒 Withdrawal locked • ${lockPart} • Balance: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLRC</b> • Verified wallet hold: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLRC</b>.`;
             }
 
             const vBtn = document.getElementById("verify-wallet-btn");
