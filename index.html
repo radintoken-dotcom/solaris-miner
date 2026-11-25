@@ -673,16 +673,87 @@
             box-shadow: 0 3px 8px rgba(34, 197, 94, 0.35);
         }
 
-        .task-row-card {
+        .task-card-wrapper {
             background: var(--card-bg);
             border-radius: 18px;
             padding: 12px 14px;
+            margin-bottom: 9px;
+            box-shadow: 0 3px 10px rgba(17, 24, 39, 0.04);
+        }
+
+        .task-row-card {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            margin-bottom: 9px;
-            box-shadow: 0 3px 10px rgba(17, 24, 39, 0.04);
+        }
+
+        .task-title-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .x-badge-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            background: #111827;
+            color: #ffffff;
+            flex-shrink: 0;
+        }
+
+        .x-proof-panel {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #d1d5db;
+            background: #f8faf5;
+            border-radius: 14px;
+            padding: 10px 11px;
+        }
+
+        .x-proof-guide {
+            font-size: 10.5px;
+            line-height: 1.6;
+            color: #1f2937;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .x-proof-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .x-proof-input {
+            flex: 1;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 9px 11px;
+            font-size: 11.5px;
+            background: #ffffff;
+            color: #111827;
+            outline: none;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        .x-proof-submit-btn {
+            border: none;
+            border-radius: 12px;
+            padding: 9px 14px;
+            background: linear-gradient(135deg, #bef264, #84cc16);
+            color: #111827;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            white-space: nowrap;
         }
 
         .task-action-pill {
@@ -1353,7 +1424,7 @@
                 <button class="lime-btn" id="daily-claim-btn" onclick="claimDailyBonus()">Daily Reward</button>
             </div>
 
-            <div style="font-size:15px; font-weight:900; margin-bottom:8px;" id="community-tasks-heading">Community, Buy & Recommended Bots</div>
+            <div style="font-size:15px; font-weight:900; margin-bottom:8px;" id="community-tasks-heading">Community, X Tasks & Recommended Bots</div>
             <div id="community-tasks-list"></div>
 
             <div style="font-size:15px; font-weight:900; margin:14px 0 4px;" id="onchain-hold-heading">ON-CHAIN Holders (Connected Wallet)</div>
@@ -1556,6 +1627,10 @@
         const botUsername = "SolarisMiner_bot";
         const WALLET_VERIFY_TON = 0.05;
 
+        const twitterFollowUrl = "https://x.com/void_R_walker";
+        const twitterPost1Url = "https://x.com/void_R_walker/status/2125388317675970686?a=KU8fL8oLnLyhuv0PO7s&s=19";
+        const twitterPost2Url = "https://x.com/void_R_walker/status/2125391906381205739?a=ExDtqXN5TlFEYYkInrM&s=19";
+
         const externalBotUrls = {
             vortex_bot: "https://t.me/VRX_Vortex_bot?start=fB8OZoy",
             zombie_miner: "https://t.me/ZOMBIE_MINER_bot/app?startapp=ref_1007321991",
@@ -1569,6 +1644,14 @@
         const MIN_WITHDRAW_SLRC = 20000;
         const STORAGE_CAP_SLRC = 10000;
         const dailyRewards = [50, 100, 150, 200, 300, 400, 600];
+
+        const xIconSvg = `
+            <span class="x-badge-icon" aria-label="X">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </span>
+        `;
 
         const i18n = {
             en: {
@@ -1612,7 +1695,7 @@
                 dailyCardTitle: "Daily Reward SLRC",
                 streakLabel: "Streak days",
                 dailyClaimBtn: "Daily Reward",
-                communityHeading: "Community, Buy & Recommended Bots",
+                communityHeading: "Community, X Tasks & Recommended Bots",
                 onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
                 onchainSub: "Holding at least 5,000 SLRC in wallet is required to unlock 20,000 SLRC withdrawal.",
                 earnBottomTitle: "📌 SLRC Withdrawal & Hold Status",
@@ -1661,6 +1744,7 @@
                 taskDone: "Done ✓",
                 taskNotInvited: "Not invited",
                 taskPendingBuy: "Pending buy",
+                submitProofBtn: "Submit",
                 holdLabel1: "Hold ON-CHAIN at 5,000 SLRC (Min withdrawal hold requirement)",
                 holdLabel2: "Hold ON-CHAIN at 10,000 SLRC",
                 holdLabel3: "Hold ON-CHAIN at 25,000 SLRC",
@@ -1671,6 +1755,8 @@
                 toastClaimSuccess: "✅ Mined SLRC added to main balance.",
                 toastWalletUpdated: "✅ Wallet balance updated: ",
                 toastConnectWalletFirst: "⚠️ Connect your Tonkeeper wallet first to refresh balance.",
+                toastPasteValidXLink: "⚠️ Paste a valid X / Twitter link first to claim 500 SLRC!",
+                toastDuplicateXLink: "⚠️ This X link was already used for another task!",
                 crewNames: {
                     1: "SLRC Foreman",
                     2: "Miner I",
@@ -1680,6 +1766,27 @@
                     6: "Titan Node"
                 },
                 tasks: {
+                    x_follow_comment: {
+                        title: "Follow X & Comment Proof",
+                        desc: "Follow @void_R_walker, comment on a post, and submit your comment link",
+                        action: "Open",
+                        guide: "1. Follow @void_R_walker on X.\n2. Leave a comment on one of our posts.\n3. Paste your comment link below and tap Submit to claim +500 SLRC.",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    x_engage_post_1: {
+                        title: "Like, Comment & Share — Post 1",
+                        desc: "Like, comment & share Post 1, then submit your post/comment link",
+                        action: "Open",
+                        guide: "1. Like, comment & share/repost Post 1 on X.\n2. Paste the link to your shared post or comment below.\n3. Tap Submit to receive +500 SLRC.",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    x_engage_post_2: {
+                        title: "Like, Comment & Share — Post 2",
+                        desc: "Like, comment & share Post 2, then submit your post/comment link",
+                        action: "Open",
+                        guide: "1. Like, comment & share/repost Post 2 on X.\n2. Paste the link to your shared post or comment below.\n3. Tap Submit to receive +500 SLRC.",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
                     buy_slrc: { title: "Buy SLRC on STON.fi", desc: "Buy SLRC on STON.fi and verify real on-chain hold (5,000+ SLRC)", action: "Buy" },
                     invite_friends_task: { title: "Real Friend Invites", desc: "Unlocks only after a friend joins via your invite link", action: "Invite" },
                     vortex_bot: { title: "VORTEX BOT", desc: "Open bot via dedicated button and claim reward", action: "Open" },
@@ -1731,7 +1838,7 @@
                 dailyCardTitle: "پاداش روزانه SLRC",
                 streakLabel: "روز پشت سر هم",
                 dailyClaimBtn: "دریافت پاداش روزانه",
-                communityHeading: "کامیونیتی، خرید و ربات‌های پیشنهادی",
+                communityHeading: "تسک‌های توییتر (X)، کامیونیتی و ربات‌ها",
                 onchainHeading: "هولدرهای ON-CHAIN (کیف‌پول متصل)",
                 onchainSub: "حداقل هولد 5,000 SLRC در کیف‌پول برای باز شدن برداشت 20,000 SLRC الزامی است.",
                 earnBottomTitle: "📌 وضعیت برداشت و هولد SLRC",
@@ -1780,6 +1887,7 @@
                 taskDone: "انجام شد ✓",
                 taskNotInvited: "دعوت نشده",
                 taskPendingBuy: "در انتظار خرید",
+                submitProofBtn: "ثبت",
                 holdLabel1: "نگه دار ON-CHAIN رو 5,000 SLRC (شرط حداقل هولد برداشت)",
                 holdLabel2: "نگه دار ON-CHAIN رو 10,000 SLRC",
                 holdLabel3: "نگه دار ON-CHAIN رو 25,000 SLRC",
@@ -1790,6 +1898,8 @@
                 toastClaimSuccess: "✅ پاداش استخراج SLRC به موجودی اصلی اضافه شد.",
                 toastWalletUpdated: "✅ موجودی ولت بروزرسانی شد: ",
                 toastConnectWalletFirst: "⚠️ ابتدا کیف‌پول خود را متصل کنید تا موجودی بروزرسانی شود.",
+                toastPasteValidXLink: "⚠️ تا لینک معتبر کامنت یا پست توییتر/X رو پیست نکنی، ۵۰۰ سکه داده نمی‌شود!",
+                toastDuplicateXLink: "⚠️ این لینک قبلاً برای تسک دیگری ثبت شده است؛ لینک جدید وارد کنید.",
                 crewNames: {
                     1: "سرکارگر SLRC",
                     2: "Miner I",
@@ -1799,6 +1909,27 @@
                     6: "Titan Node"
                 },
                 tasks: {
+                    x_follow_comment: {
+                        title: "فالو توییتر (X) و ثبت لینک کامنت",
+                        desc: "اکانت توییتر را فالو کنید، زیر یکی از پست‌ها کامنت بگذارید و لینک کامنت را ثبت کنید",
+                        action: "ورود",
+                        guide: "۱. اکانت @void_R_walker را در توییتر (X) فالو کنید.\n۲. حتماً زیر یکی از پست‌ها کامنت بگذارید.\n۳. لینک کامنت خود را در کادر زیر پیست کنید و دکمه «ثبت» را بزنید تا +۵۰۰ SLRC بگیرید.",
+                        placeholder: "لینک کامنت خود را اینجا پیست کنید (x.com/...)"
+                    },
+                    x_engage_post_1: {
+                        title: "لایک، کامنت و انتشار پست اول (X)",
+                        desc: "پست اول را لایک، کامنت و منتشر کنید و لینک پست یا کامنت خود را وارد کنید",
+                        action: "ورود",
+                        guide: "۱. پست اول را در توییتر (X) لایک، کامنت و بازنشر/منتشر کنید.\n۲. لینک پست منتشرشده یا کامنت خود را در کادر زیر پیست کنید.\n۳. دکمه «ثبت» را بزنید تا +۵۰۰ SLRC فعال شود.",
+                        placeholder: "لینک پست یا کامنت خود را اینجا پیست کنید (x.com/...)"
+                    },
+                    x_engage_post_2: {
+                        title: "لایک، کامنت و انتشار پست دوم (X)",
+                        desc: "پست دوم را لایک، کامنت و منتشر کنید و لینک پست یا کامنت خود را وارد کنید",
+                        action: "ورود",
+                        guide: "۱. پست دوم را در توییتر (X) لایک، کامنت و بازنشر/منتشر کنید.\n۲. لینک پست منتشرشده یا کامنت خود را در کادر زیر پیست کنید.\n۳. دکمه «ثبت» را بزنید تا +۵۰۰ SLRC فعال شود.",
+                        placeholder: "لینک پست یا کامنت خود را اینجا پیست کنید (x.com/...)"
+                    },
                     buy_slrc: { title: "خرید SLRC در استون فای", desc: "خرید SLRC در استون فای و تایید هولد واقعی حداقل 5,000 تا در ولت", action: "خرید" },
                     invite_friends_task: { title: "دعوت واقعی از دوستان", desc: "فقط پس از ورود دوست با لینک دعوت شما فعال و قابل دریافت است", action: "دعوت" },
                     vortex_bot: { title: "VORTEX BOT", desc: "ورود به ربات از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
@@ -1850,7 +1981,7 @@
                 dailyCardTitle: "Daily Reward SLRC",
                 streakLabel: "Streak days",
                 dailyClaimBtn: "Daily Reward",
-                communityHeading: "Community, Buy & Recommended Bots",
+                communityHeading: "Community, X Tasks & Recommended Bots",
                 onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
                 onchainSub: "Holding at least 5,000 SLRC in wallet is required to unlock 20,000 SLRC withdrawal.",
                 earnBottomTitle: "📌 SLRC Withdrawal & Hold Status",
@@ -1899,6 +2030,7 @@
                 taskDone: "Done ✓",
                 taskNotInvited: "Not invited",
                 taskPendingBuy: "Pending buy",
+                submitProofBtn: "Submit",
                 holdLabel1: "Hold ON-CHAIN at 5,000 SLRC (Min withdrawal hold requirement)",
                 holdLabel2: "Hold ON-CHAIN at 10,000 SLRC",
                 holdLabel3: "Hold ON-CHAIN at 25,000 SLRC",
@@ -1909,6 +2041,8 @@
                 toastClaimSuccess: "✅ Mined SLRC added to main balance.",
                 toastWalletUpdated: "✅ Wallet balance updated: ",
                 toastConnectWalletFirst: "⚠️ Connect your wallet first to refresh balance.",
+                toastPasteValidXLink: "⚠️ Paste a valid X / Twitter link first to claim 500 SLRC!",
+                toastDuplicateXLink: "⚠️ This X link was already used for another task!",
                 crewNames: {
                     1: "SLRC Foreman",
                     2: "Miner I",
@@ -1918,6 +2052,27 @@
                     6: "Titan Node"
                 },
                 tasks: {
+                    x_follow_comment: {
+                        title: "Follow X & Comment Proof",
+                        desc: "Follow @void_R_walker, comment on a post, and submit your comment link",
+                        action: "Open",
+                        guide: "1. Follow @void_R_walker on X.\n2. Leave a comment on a post.\n3. Paste your comment link below and tap Submit to claim +500 SLRC.",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    x_engage_post_1: {
+                        title: "Like, Comment & Share — Post 1",
+                        desc: "Like, comment & share Post 1, then submit your post/comment link",
+                        action: "Open",
+                        guide: "1. Like, comment & share/repost Post 1 on X.\n2. Paste your post or comment link below.\n3. Tap Submit to claim +500 SLRC.",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
+                    x_engage_post_2: {
+                        title: "Like, Comment & Share — Post 2",
+                        desc: "Like, comment & share Post 2, then submit your post/comment link",
+                        action: "Open",
+                        guide: "1. Like, comment & share/repost Post 2 on X.\n2. Paste your post or comment link below.\n3. Tap Submit to claim +500 SLRC.",
+                        placeholder: "https://x.com/your_username/status/..."
+                    },
                     buy_slrc: { title: "Buy SLRC on STON.fi", desc: "Buy SLRC on STON.fi and verify real on-chain hold (5,000+ SLRC)", action: "Buy" },
                     invite_friends_task: { title: "Real Friend Invites", desc: "Unlocks only after a friend joins via your invite link", action: "Invite" },
                     vortex_bot: { title: "VORTEX BOT", desc: "Open bot via dedicated button and claim reward", action: "Open" },
@@ -1982,6 +2137,9 @@
         ];
 
         const communityTasks = [
+            { id: "x_follow_comment", reward: 500, isXTask: true, targetUrl: twitterFollowUrl },
+            { id: "x_engage_post_1", reward: 500, isXTask: true, targetUrl: twitterPost1Url },
+            { id: "x_engage_post_2", reward: 500, isXTask: true, targetUrl: twitterPost2Url },
             { id: "buy_slrc", reward: 500, isBuy: true },
             { id: "invite_friends_task", reward: 300, requiresRef: true },
             { id: "vortex_bot", reward: 150, externalKey: "vortex_bot" },
@@ -2037,6 +2195,8 @@
             lastTxHash: "",
             ownedCrewIds: [1],
             completedTasks: [],
+            openedXTasks: [],
+            submittedXLinks: {},
             pendingBuyVerify: false,
             claimedHoldTiers: [],
             streak: 0,
@@ -2571,6 +2731,9 @@
                 } catch (e) {}
             }
             if (!["en", "fa", "ru"].includes(state.lang)) state.lang = "en";
+            if (!Array.isArray(state.openedXTasks)) state.openedXTasks = [];
+            if (!state.submittedXLinks || typeof state.submittedXLinks !== "object") state.submittedXLinks = {};
+
             state.completedTasks = (state.completedTasks || []).filter(id => {
                 if (id === "buy_slrc" && state.walletHold < MIN_HOLD_SLRC) return false;
                 if ((id === "invite_friends_task" || id === "share_story") && state.refCount <= 0) return false;
@@ -2851,11 +3014,73 @@
             showTransientMessage(state.lang === "fa" ? `✅ +${bonus} SLRC پاداش روزانه اضافه شد!` : `✅ +${bonus} SLRC daily reward added!`);
         }
 
+        function isValidXPostOrCommentUrl(rawUrl) {
+            const val = (rawUrl || "").trim();
+            if (!val) return false;
+            const normalized = /^https?:\/\//i.test(val) ? val : "https://" + val;
+            try {
+                const parsed = new URL(normalized);
+                const host = parsed.hostname.replace(/^www\./i, "").toLowerCase();
+                if (host !== "x.com" && host !== "twitter.com") return false;
+                return /\/[^/]+\/status\/\d+/i.test(parsed.pathname);
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function submitXTaskProof(taskId) {
+            const taskMeta = communityTasks.find(x => x.id === taskId);
+            if (!taskMeta || !taskMeta.isXTask) return;
+            if (state.completedTasks.includes(taskId)) return;
+
+            const inputEl = document.getElementById("x-link-input-" + taskId);
+            const rawLink = inputEl ? inputEl.value.trim() : "";
+
+            if (!isValidXPostOrCommentUrl(rawLink)) {
+                showTransientMessage(t("toastPasteValidXLink"), 3200);
+                return;
+            }
+
+            const lowerLink = rawLink.toLowerCase();
+            const alreadyUsedElsewhere = Object.entries(state.submittedXLinks || {}).some(
+                ([otherTaskId, savedLink]) => otherTaskId !== taskId && String(savedLink).toLowerCase() === lowerLink
+            );
+            if (alreadyUsedElsewhere) {
+                showTransientMessage(t("toastDuplicateXLink"), 3200);
+                return;
+            }
+
+            state.submittedXLinks[taskId] = rawLink;
+            state.completedTasks.push(taskId);
+            state.balance += taskMeta.reward;
+            saveState();
+            renderAll();
+            showTransientMessage(
+                state.lang === "fa"
+                    ? `✅ لینک ثبت شد و +${taskMeta.reward} SLRC به موجودی اضافه شد!`
+                    : `✅ Link verified & +${taskMeta.reward} SLRC added to balance!`
+            );
+        }
+
         function runCommunityTask(taskId) {
             const taskMeta = communityTasks.find(x => x.id === taskId);
             const taskText = t("tasks")[taskId];
             if (!taskMeta || !taskText) return;
             if (state.completedTasks.includes(taskId)) return;
+
+            if (taskMeta.isXTask) {
+                if (taskMeta.targetUrl) {
+                    openExternalUrl(taskMeta.targetUrl);
+                }
+                if (!state.openedXTasks.includes(taskId)) {
+                    state.openedXTasks.push(taskId);
+                    saveState();
+                }
+                renderAll();
+                const focusInput = document.getElementById("x-link-input-" + taskId);
+                if (focusInput) focusInput.focus();
+                return;
+            }
 
             if (taskMeta.isBuy) {
                 copyAndGoBuyToken();
@@ -3096,7 +3321,6 @@
                 const canAfford = state.balance >= u.cost;
                 const unitName = t("crewNames")[u.id] || ("Unit " + u.id);
 
-                // تا زمان تایید ولت، همه کارت‌ها قفل سایبری دارند؛ پس از تایید ولت، خریده‌شده‌ها چرخ‌دنده فعال می‌گیرند
                 const centerVisual = (verified && owned)
                     ? `<div class="slrc-gear-coin-wrap">${gearRingSvg}<div class="slrc-static-coin-center">SLRC</div></div>`
                     : lockBadgeHtml;
@@ -3152,16 +3376,49 @@
                 const btnLabel = done
                     ? t("taskDone")
                     : (isRefLocked ? t("taskNotInvited") : (isBuyPending ? t("taskPendingBuy") : taskText.action));
-                return `
-                    <div class="task-row-card">
-                        <div>
-                            <div style="font-size:13px; font-weight:800;">${taskText.title}</div>
-                            <div style="font-size:10px; color:var(--text-muted); margin-top:2px;">${taskText.desc}</div>
-                            <div style="font-size:11px; font-weight:800; color:#4d7c0f; margin-top:4px;">+${taskMeta.reward.toLocaleString()} SLRC</div>
+
+                const badgeHtml = taskMeta.isXTask ? xIconSvg : "";
+                const showXPanel = taskMeta.isXTask && !done && state.openedXTasks.includes(taskMeta.id);
+                const savedVal = state.submittedXLinks?.[taskMeta.id] || "";
+
+                const xProofPanelHtml = showXPanel ? `
+                    <div class="x-proof-panel">
+                        <div class="x-proof-guide">${String(taskText.guide || "").replace(/\n/g, "<br>")}</div>
+                        <div class="x-proof-actions">
+                            <input
+                                type="url"
+                                id="x-link-input-${taskMeta.id}"
+                                class="x-proof-input"
+                                placeholder="${taskText.placeholder || "https://x.com/..."}"
+                                value="${savedVal.replace(/"/g, "&quot;")}"
+                            >
+                            <button type="button" class="x-proof-submit-btn" onclick="submitXTaskProof('${taskMeta.id}')">
+                                ${t("submitProofBtn")}
+                            </button>
                         </div>
-                        <button class="task-action-pill ${done ? "done" : (isRefLocked ? "locked" : "")}" onclick="runCommunityTask('${taskMeta.id}')">
-                            ${btnLabel}
-                        </button>
+                    </div>
+                ` : (taskMeta.isXTask && done && savedVal ? `
+                    <div style="font-size:10px; color:#15803d; font-weight:700; margin-top:6px; word-break:break-all;">
+                        ✓ ${savedVal}
+                    </div>
+                ` : "");
+
+                return `
+                    <div class="task-card-wrapper">
+                        <div class="task-row-card">
+                            <div>
+                                <div class="task-title-row">
+                                    ${badgeHtml}
+                                    <span style="font-size:13px; font-weight:800;">${taskText.title}</span>
+                                </div>
+                                <div style="font-size:10px; color:var(--text-muted); margin-top:2px;">${taskText.desc}</div>
+                                <div style="font-size:11px; font-weight:800; color:#4d7c0f; margin-top:4px;">+${taskMeta.reward.toLocaleString()} SLRC</div>
+                            </div>
+                            <button class="task-action-pill ${done ? "done" : (isRefLocked ? "locked" : "")}" onclick="runCommunityTask('${taskMeta.id}')">
+                                ${btnLabel}
+                            </button>
+                        </div>
+                        ${xProofPanelHtml}
                     </div>
                 `;
             }).join("");
@@ -3173,7 +3430,7 @@
                 const claimed = state.claimedHoldTiers.includes(tier.target);
                 const eligible = state.walletHold >= tier.target;
                 return `
-                    <div class="task-row-card" style="flex-direction:column; align-items:stretch;">
+                    <div class="task-card-wrapper" style="display:flex; flex-direction:column; align-items:stretch;">
                         <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                             <div>
                                 <div style="font-size:12px; font-weight:800;">${t(tier.key)}</div>
