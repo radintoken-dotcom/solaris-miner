@@ -43,7 +43,6 @@
             z-index: 3500 !important;
         }
 
-        /* پیام لحظه‌ای شناور و محوشونده */
         .toast-banner {
             position: fixed;
             top: 64px;
@@ -597,13 +596,20 @@
             margin-top: 2px;
         }
 
+        .crew-hold-req {
+            font-size: 9px;
+            font-weight: 800;
+            color: #4b5563;
+            margin-top: 2px;
+        }
+
         .crew-buy-btn {
             margin-top: 6px;
             width: 100%;
             border: none;
             border-radius: 10px;
-            padding: 5px;
-            font-size: 10px;
+            padding: 5px 4px;
+            font-size: 9.5px;
             font-weight: 800;
             background: #e5e7eb;
             color: var(--text-dark);
@@ -616,9 +622,10 @@
             border: 1px dashed #cbd5e1;
         }
 
-        .crew-buy-btn.insufficient {
-            background: #f3f4f6;
-            color: #9ca3af;
+        .crew-buy-btn.hold-cta {
+            background: #fef9c3;
+            color: #854d0e;
+            border: 1px solid #facc15;
         }
 
         .crew-buy-btn.owned {
@@ -1324,7 +1331,7 @@
             <div class="white-card">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div style="font-size:15px; font-weight:900;" id="crew-section-title">Your Crew (SLRC Mining Units)</div>
+                        <div style="font-size:15px; font-weight:900;" id="crew-section-title">Your Crew (SLRC Hold Units)</div>
                         <div style="font-size:11px; color:var(--text-muted);" id="crew-summary-line">1 miner • +120 SLRC/day</div>
                     </div>
                     <button class="task-action-pill" id="crew-tasks-btn" onclick="switchView('earn')">SLRC Tasks</button>
@@ -1558,7 +1565,7 @@
             </div>
 
             <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px;" id="wallet-modal-sub">
-                Connect Tonkeeper, verify wallet with 0.05 TON, check 5,000 SLRC hold, and withdraw 20,000+ SLRC
+                Connect Tonkeeper, verify wallet with 0.05 TON, check SLRC hold, and withdraw 20,000+ SLRC
             </div>
 
             <div id="ton-connect-button-container" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
@@ -1570,7 +1577,7 @@
             <div class="white-card" style="background:var(--card-soft); margin-bottom:10px;">
                 <div style="font-size:12px; font-weight:800; margin-bottom:4px;" id="wallet-sync-title">Real On-Chain SLRC Hold Verification</div>
                 <div style="font-size:10px; color:var(--text-muted); margin-bottom:8px;" id="wallet-sync-desc">
-                    Connect your wallet and check your real SLRC balance directly on the TON blockchain (Min 5,000 SLRC required).
+                    Connect your wallet and check your real SLRC balance directly on the TON blockchain.
                 </div>
                 <button class="lime-btn" style="padding:10px; font-size:12px;" id="check-onchain-btn" onclick="fetchRealOnchainSlrcHold()">
                     🔍 Check Real SLRC Hold on Blockchain
@@ -1645,6 +1652,22 @@
         const STORAGE_CAP_SLRC = 10000;
         const dailyRewards = [50, 100, 150, 200, 300, 400, 600];
 
+        // ترتیب هر ۶ واحد استخراج بر اساس تایید ولت و هولد واقعی SLRC در کیف‌پول:
+        // 1: فعال با تایید ولت (holdReq: 0)
+        // 2: هولد حداقل 500 SLRC
+        // 3: هولد حداقل 1,800 SLRC
+        // 4: هولد حداقل 4,500 SLRC
+        // 5: هولد حداقل 10,000 SLRC
+        // 6: هولد حداقل 25,000 SLRC
+        const crewUnits = [
+            { id: 1, daily: 120, holdReq: 0 },
+            { id: 2, daily: 350, holdReq: 500 },
+            { id: 3, daily: 800, holdReq: 1800 },
+            { id: 4, daily: 1600, holdReq: 4500 },
+            { id: 5, daily: 3200, holdReq: 10000 },
+            { id: 6, daily: 6000, holdReq: 25000 }
+        ];
+
         const xIconSvg = `
             <span class="x-badge-icon" aria-label="X">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
@@ -1674,10 +1697,13 @@
                 tile3Sub: "Min Hold 5,000 • Withdraw 20k",
                 tile4Title: "Live SLRC Chart",
                 tile4Sub: "STON.fi price & trend",
-                crewTitle: "Your Crew (SLRC Mining Units)",
+                crewTitle: "Your Crew (SLRC Hold Units)",
                 crewTasksBtn: "SLRC Tasks",
                 minerWord: "miner",
                 activeBadge: "Active ✓",
+                holdReqPrefix: "Hold",
+                buyToHoldBtn: "🛒 Hold",
+                verifyFirstBtn: "🔒 Verify",
                 chartHeading: "SLRC Live Chart",
                 chartSub: "Real-time STON.fi pool & price feed for Solaris (SLRC)",
                 chartLiveTitle: "LIVE SLRC PRICE",
@@ -1724,11 +1750,11 @@
                 dockFriends: "Friends",
                 dockProfile: "Profile",
                 closeBtn: "Close ✕",
-                walletModalSub: "Connect Tonkeeper, verify wallet with 0.05 TON, check 5,000 SLRC hold, and withdraw 20,000+ SLRC",
+                walletModalSub: "Connect Tonkeeper, verify wallet with 0.05 TON, check SLRC hold, and withdraw 20,000+ SLRC",
                 verify005Ton: "Verify Wallet with 0.05 TON",
                 verified005Ton: "✅ Wallet Verified (0.05 TON)",
                 walletSyncTitle: "Real On-Chain SLRC Hold Verification",
-                walletSyncDesc: "Connect your wallet and check your real SLRC balance directly on the TON blockchain (Min 5,000 SLRC required).",
+                walletSyncDesc: "Connect your wallet and check your real SLRC balance directly on the TON blockchain.",
                 checkOnchainBtn: "🔍 Check Real SLRC Hold on Blockchain",
                 checkingOnchainBtn: "⏳ Checking blockchain...",
                 lblTxOptional: "Optional purchase TX hash proof:",
@@ -1749,7 +1775,8 @@
                 holdLabel2: "Hold ON-CHAIN at 10,000 SLRC",
                 holdLabel3: "Hold ON-CHAIN at 25,000 SLRC",
                 claimedBadge: "Claimed ✓",
-                toastVerifyRequired: "⚠️ Wallet verification (0.05 TON) must be completed first!",
+                toastVerifyRequired: "⚠️ Verify your wallet (0.05 TON) first to activate mining units!",
+                toastGoBuyToHold: "🛒 Hold {req} SLRC in wallet to unlock {unit} — opening STON.fi...",
                 toastClaimNotVerified: "⚠️ Complete wallet verification (0.05 TON) first to extract and claim SLRC.",
                 toastNothingToClaim: "No mined SLRC ready to claim yet.",
                 toastClaimSuccess: "✅ Mined SLRC added to main balance.",
@@ -1817,10 +1844,13 @@
                 tile3Sub: "حداقل هولد 5,000 • برداشت 20k",
                 tile4Title: "چارت زنده SLRC",
                 tile4Sub: "قیمت و روند در STON.fi",
-                crewTitle: "Crew تو (واحدهای استخراج SLRC)",
+                crewTitle: "Crew تو (فعال‌سازی با هولد SLRC)",
                 crewTasksBtn: "تسک‌های SLRC",
                 minerWord: "واحد",
                 activeBadge: "فعال ✓",
+                holdReqPrefix: "هولد",
+                buyToHoldBtn: "🛒 خرید و هولد",
+                verifyFirstBtn: "🔒 تایید ولت",
                 chartHeading: "چارت قیمت آنلاین SLRC",
                 chartSub: "اطلاعات زنده استخر STON.fi و قیمت لحظه‌ای سولاریس (SLRC)",
                 chartLiveTitle: "قیمت لحظه‌ای SLRC",
@@ -1867,7 +1897,7 @@
                 dockFriends: "دوست‌ها",
                 dockProfile: "Profile",
                 closeBtn: "بستن ✕",
-                walletModalSub: "اتصال Tonkeeper، تایید ولت با 0.05 TON، استعلام هولد 5,000 و برداشت 20,000 SLRC",
+                walletModalSub: "اتصال Tonkeeper، تایید ولت با 0.05 TON، استعلام هولد و برداشت 20,000 SLRC",
                 verify005Ton: "تایید ولت با 0.05 TON",
                 verified005Ton: "✅ ولت تایید شد (0.05 TON)",
                 walletSyncTitle: "استعلام واقعی موجودی SLRC در بلاکچین",
@@ -1892,8 +1922,9 @@
                 holdLabel2: "نگه دار ON-CHAIN رو 10,000 SLRC",
                 holdLabel3: "نگه دار ON-CHAIN رو 25,000 SLRC",
                 claimedBadge: "دریافت شد ✓",
-                toastVerifyRequired: "⚠️ حتماً تایید ولت (0.05 TON) انجام بشه!",
-                toastClaimNotVerified: "⚠️ برای دریافت استخراج، حتماً تایید ولت (0.05 TON) انجام بشه!",
+                toastVerifyRequired: "⚠️ ابتدا تایید ولت را انجام دهید تا واحدهای استخراج فعال شوند!",
+                toastGoBuyToHold: "🛒 برای فعال شدن {unit} باید {req} SLRC در ولت هولد کنید — در حال انتقال به خرید توکن...",
+                toastClaimNotVerified: "⚠️ برای دریافت استخراج، حتماً تایید ولت انجام بشه!",
                 toastNothingToClaim: "هنوز SLRC استخراج‌شده‌ای برای دریافت آماده نیست.",
                 toastClaimSuccess: "✅ پاداش استخراج SLRC به موجودی اصلی اضافه شد.",
                 toastWalletUpdated: "✅ موجودی ولت بروزرسانی شد: ",
@@ -1960,10 +1991,13 @@
                 tile3Sub: "Min Hold 5,000 • Withdraw 20k",
                 tile4Title: "Live SLRC Chart",
                 tile4Sub: "STON.fi price & trend",
-                crewTitle: "Your Crew (SLRC Mining Units)",
+                crewTitle: "Your Crew (SLRC Hold Units)",
                 crewTasksBtn: "SLRC Tasks",
                 minerWord: "miner",
                 activeBadge: "Active ✓",
+                holdReqPrefix: "Hold",
+                buyToHoldBtn: "🛒 Hold",
+                verifyFirstBtn: "🔒 Verify",
                 chartHeading: "SLRC Live Chart",
                 chartSub: "Real-time STON.fi pool & price feed for Solaris (SLRC)",
                 chartLiveTitle: "LIVE SLRC PRICE",
@@ -2010,17 +2044,17 @@
                 dockFriends: "Friends",
                 dockProfile: "Profile",
                 closeBtn: "Close ✕",
-                walletModalSub: "Connect Tonkeeper, verify wallet with 0.05 TON, check 5,000 SLRC hold, and withdraw 20,000+ SLRC",
+                walletModalSub: "Connect Tonkeeper, verify wallet with 0.05 TON, check SLRC hold, and withdraw 20,000+ SLRC",
                 verify005Ton: "Verify Wallet with 0.05 TON",
                 verified005Ton: "✅ Wallet Verified (0.05 TON)",
                 walletSyncTitle: "Real On-Chain SLRC Hold Verification",
-                walletSyncDesc: "Connect your wallet and check your real SLRC balance directly on the TON blockchain (Min 5,000 SLRC required).",
+                walletSyncDesc: "Connect your wallet and check your real SLRC balance directly on the TON blockchain.",
                 checkOnchainBtn: "🔍 Check Real SLRC Hold on Blockchain",
                 checkingOnchainBtn: "⏳ Checking blockchain...",
                 lblTxOptional: "Optional purchase TX hash proof:",
                 txPlaceholder: "TON Transaction Hash (optional)",
                 saveTxBtn: "Record TX",
-                lblWithdrawAmt: "Withdraw amount (Min 20,000 SLRC - unlocks automatically at 20k + 5k hold):",
+                lblWithdrawAmt: "Withdraw amount (Min 20,000 SLRC - unlocks automatically at 20k balance + 5k hold):",
                 withdrawAmtPlaceholder: "Locked until 20,000 SLRC balance & 5,000 SLRC hold",
                 withdrawAmtUnlockedPlaceholder: "e.g. 20000",
                 lblWithdrawAddr: "Connected Tonkeeper Wallet Address:",
@@ -2035,7 +2069,8 @@
                 holdLabel2: "Hold ON-CHAIN at 10,000 SLRC",
                 holdLabel3: "Hold ON-CHAIN at 25,000 SLRC",
                 claimedBadge: "Claimed ✓",
-                toastVerifyRequired: "⚠️ Wallet verification (0.05 TON) must be completed first!",
+                toastVerifyRequired: "⚠️ Verify your wallet (0.05 TON) first to activate mining units!",
+                toastGoBuyToHold: "🛒 Hold {req} SLRC in wallet to unlock {unit} — opening STON.fi...",
                 toastClaimNotVerified: "⚠️ Complete wallet verification (0.05 TON) first to extract and claim SLRC.",
                 toastNothingToClaim: "No mined SLRC ready to claim yet.",
                 toastClaimSuccess: "✅ Mined SLRC added to main balance.",
@@ -2084,57 +2119,6 @@
                 }
             }
         };
-
-        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: tonConnectManifestUrl,
-            uiPreferences: { borderRadius: "m" }
-        });
-
-        let toastTimer = null;
-        function showTransientMessage(msg, duration = 2600) {
-            const el = document.getElementById("toast-banner");
-            if (!el) return;
-            el.innerText = msg;
-            el.classList.add("show");
-            if (toastTimer) clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => {
-                el.classList.remove("show");
-            }, duration);
-        }
-
-        function elevateTonConnectModal() {
-            const selectors = [
-                "tc-root",
-                "[data-tc-modal='true']",
-                ".tc-modal-overlay",
-                ".tc-modal-container"
-            ];
-            selectors.forEach(sel => {
-                document.querySelectorAll(sel).forEach(el => {
-                    el.style.zIndex = "3500";
-                });
-            });
-        }
-
-        function closeTonConnectModalIfOpen() {
-            try {
-                if (tonConnectUI && typeof tonConnectUI.closeModal === "function") {
-                    tonConnectUI.closeModal();
-                }
-            } catch (e) {}
-            document.querySelectorAll("[data-tc-modal='true'], .tc-modal-overlay").forEach(el => {
-                el.style.display = "none";
-            });
-        }
-
-        const crewUnits = [
-            { id: 1, daily: 120, cost: 0 },
-            { id: 2, daily: 350, cost: 600 },
-            { id: 3, daily: 800, cost: 1800 },
-            { id: 4, daily: 1600, cost: 3500 },
-            { id: 5, daily: 3200, cost: 7000 },
-            { id: 6, daily: 6000, cost: 15000 }
-        ];
 
         const communityTasks = [
             { id: "x_follow_comment", reward: 500, isXTask: true, targetUrl: twitterFollowUrl },
@@ -2187,6 +2171,48 @@
             </div>
         `;
 
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: tonConnectManifestUrl,
+            uiPreferences: { borderRadius: "m" }
+        });
+
+        let toastTimer = null;
+        function showTransientMessage(msg, duration = 2600) {
+            const el = document.getElementById("toast-banner");
+            if (!el) return;
+            el.innerText = msg;
+            el.classList.add("show");
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                el.classList.remove("show");
+            }, duration);
+        }
+
+        function elevateTonConnectModal() {
+            const selectors = [
+                "tc-root",
+                "[data-tc-modal='true']",
+                ".tc-modal-overlay",
+                ".tc-modal-container"
+            ];
+            selectors.forEach(sel => {
+                document.querySelectorAll(sel).forEach(el => {
+                    el.style.zIndex = "3500";
+                });
+            });
+        }
+
+        function closeTonConnectModalIfOpen() {
+            try {
+                if (tonConnectUI && typeof tonConnectUI.closeModal === "function") {
+                    tonConnectUI.closeModal();
+                }
+            } catch (e) {}
+            document.querySelectorAll("[data-tc-modal='true'], .tc-modal-overlay").forEach(el => {
+                el.style.display = "none";
+            });
+        }
+
         let state = {
             lang: "en",
             balance: 0,
@@ -2237,6 +2263,7 @@
             tonConnectUI.onStatusChange(async (wallet) => {
                 if (!wallet) {
                     state.walletHold = 0;
+                    syncHoldCrewUnlocks();
                     saveState();
                 } else {
                     await fetchRealOnchainSlrcHold(true);
@@ -2249,6 +2276,7 @@
 
             initTelegramData();
             loadState();
+            syncHoldCrewUnlocks();
             applyLanguageDirection();
             renderAll();
             drawChartCanvas();
@@ -2263,6 +2291,25 @@
         window.addEventListener("resize", () => {
             drawChartCanvas();
         });
+
+        // همگام‌سازی خودکار واحدهای استخراج بر اساس تایید ولت و هولد واقعی در کیف‌پول
+        function syncHoldCrewUnlocks() {
+            const set = new Set([1]);
+            if (state.isVerifiedWallet && state.walletHold > 0) {
+                crewUnits.forEach(u => {
+                    if (state.walletHold >= u.holdReq) {
+                        set.add(u.id);
+                    }
+                });
+            }
+            state.ownedCrewIds = Array.from(set).sort((a, b) => a - b);
+        }
+
+        function isUnitActive(unit) {
+            if (!state.isVerifiedWallet) return false;
+            if (unit.holdReq <= 0) return true;
+            return state.walletHold >= unit.holdReq;
+        }
 
         function formatUsdPrice(val) {
             const num = Number(val) || 0;
@@ -2757,7 +2804,7 @@
 
         function getDailyRate() {
             return crewUnits
-                .filter(u => state.ownedCrewIds.includes(u.id))
+                .filter(u => isUnitActive(u))
                 .reduce((acc, u) => acc + u.daily, 0);
         }
 
@@ -2823,6 +2870,8 @@
                 const safeTokens = Number.isFinite(realTokens) && realTokens > 0 ? Math.floor(realTokens) : 0;
 
                 state.walletHold = safeTokens;
+                syncHoldCrewUnlocks();
+
                 if (safeTokens >= MIN_HOLD_SLRC && !state.completedTasks.includes("buy_slrc")) {
                     state.completedTasks.push("buy_slrc");
                     state.pendingBuyVerify = false;
@@ -2931,13 +2980,14 @@
                 if (res) {
                     state.isVerifiedWallet = true;
                     state.lastTick = Date.now();
-                    saveState();
                     await fetchRealOnchainSlrcHold(true);
+                    syncHoldCrewUnlocks();
+                    saveState();
                     renderAll();
                     showTransientMessage(
                         state.lang === "fa"
-                            ? "✅ تایید ولت با 0.05 TON انجام شد و همه بخش‌ها فعال شدند!"
-                            : "✅ Wallet verified with 0.05 TON and all units unlocked!"
+                            ? "✅ تایید ولت انجام شد! واحد اول فعال شد و سایر واحدها با هولد توکن باز می‌شوند."
+                            : "✅ Wallet verified! Unit 1 is active and higher units unlock by holding SLRC."
                     );
                 }
             } catch (err) {
@@ -2961,40 +3011,35 @@
             showTransientMessage(t("toastClaimSuccess"));
         }
 
+        // کلیک روی هر یک از ۶ واحد استخراج:
+        // اگر ولت تایید نشده باشد -> هشدار تایید ولت
+        // اگر فعال باشد -> وضعیت فعال نمایش داده می‌شود
+        // اگر نیاز به هولد داشته باشد و هولد کافی نباشد -> کپی آدرس توکن و رفتن به صفحه خرید توکن برای هولد
         function handleCrewButtonClick(id) {
+            const unit = crewUnits.find(u => u.id === id);
+            if (!unit) return;
+            const unitName = t("crewNames")[id] || ("Unit " + id);
+
             if (!state.isVerifiedWallet) {
                 showTransientMessage(t("toastVerifyRequired"), 2800);
                 return;
             }
-            if (state.ownedCrewIds.includes(id)) {
-                const unitName = t("crewNames")[id] || ("Unit " + id);
+
+            if (isUnitActive(unit)) {
                 showTransientMessage(
                     state.lang === "fa"
-                        ? `⚙️ ${unitName} فعال و در حال چرخش است.`
-                        : `⚙️ ${unitName} is active and spinning.`
+                        ? `⚙️ ${unitName} فعال است و روزانه +${unit.daily.toLocaleString()} SLRC تولید می‌کند.`
+                        : `⚙️ ${unitName} is active and mines +${unit.daily.toLocaleString()} SLRC/day.`
                 );
                 return;
             }
-            const unit = crewUnits.find(u => u.id === id);
-            const unitName = t("crewNames")[id] || ("Unit " + id);
-            if (!unit) return;
-            if (state.balance < unit.cost) {
-                showTransientMessage(
-                    state.lang === "fa"
-                        ? `🔒 موجودی کافی نیست (${unit.cost.toLocaleString()} SLRC لازم است).`
-                        : `🔒 Insufficient balance (${unit.cost.toLocaleString()} SLRC required).`
-                );
-                return;
-            }
-            state.balance -= unit.cost;
-            state.ownedCrewIds.push(id);
-            saveState();
-            renderAll();
-            showTransientMessage(
-                state.lang === "fa"
-                    ? `⚙️ ${unitName} فعال شد!`
-                    : `⚙️ ${unitName} unlocked!`
-            );
+
+            const reqText = unit.holdReq.toLocaleString();
+            const msg = t("toastGoBuyToHold")
+                .replace("{req}", reqText)
+                .replace("{unit}", unitName);
+            showTransientMessage(msg, 2800);
+            setTimeout(() => copyAndGoBuyToken(), 350);
         }
 
         function claimDailyBonus() {
@@ -3244,21 +3289,22 @@
             document.getElementById("info-modal-title").innerText = state.lang === "fa" ? "شرایط و قوانین SLRC" : "SLRC Rules";
             document.getElementById("info-modal-body").innerHTML = state.lang === "fa" ? `
                 • آدرس قرارداد توکن: <b style="font-family:monospace; font-size:10px;">${slrcTokenAddress}</b><br>
-                • تایید ولت برای فعال‌سازی بخش‌ها و استخراج: <b>0.05 TON</b><br>
-                • حداقل موجودی برای برداشت: <b>20,000 SLRC</b><br>
-                • حداقل هولد واقعی در کیف‌پول متصل: <b>5,000 SLRC</b><br>
+                • تایید ولت برای فعال‌سازی واحد اول و استخراج: <b>0.05 TON</b><br>
+                • فعال‌سازی واحدهای بالاتر با هولد واقعی SLRC در ولت: <b>500 / 1,800 / 4,500 / 10,000 / 25,000 SLRC</b><br>
+                • حداقل موجودی برای برداشت: <b>20,000 SLRC</b> و حداقل هولد <b>5,000 SLRC</b><br>
                 • زمان واریز مستقیم به Tonkeeper متصل: <b>1 الی 24 ساعت</b>
             ` : `
                 • Token contract: <b style="font-family:monospace; font-size:10px;">${slrcTokenAddress}</b><br>
-                • Wallet verification to unlock units & mining: <b>0.05 TON</b><br>
-                • Minimum withdrawal: <b>20,000 SLRC</b><br>
-                • Minimum verified connected wallet hold: <b>5,000 SLRC</b><br>
+                • Wallet verification for Unit 1 & mining: <b>0.05 TON</b><br>
+                • Higher units unlock by holding SLRC in wallet: <b>500 / 1,800 / 4,500 / 10,000 / 25,000 SLRC</b><br>
+                • Minimum withdrawal: <b>20,000 SLRC</b> (requires <b>5,000 SLRC</b> wallet hold)<br>
                 • Payout time to connected Tonkeeper: <b>1 to 24 hours</b>
             `;
             document.getElementById("info-modal").style.display = "flex";
         }
 
         function renderAll() {
+            syncHoldCrewUnlocks();
             const daily = getDailyRate();
             const lvl = getLevel();
             const holdMet = state.walletHold >= MIN_HOLD_SLRC;
@@ -3267,6 +3313,7 @@
             const connectedAddress = tonConnectUI.account?.address || "";
             const mainBal = getMainDisplayBalance();
             const verified = !!state.isVerifiedWallet;
+            const activeCount = crewUnits.filter(u => isUnitActive(u)).length;
 
             document.getElementById("top-username").innerText = state.userName;
             document.getElementById("top-lvl-label").innerText = "Lv " + lvl;
@@ -3297,7 +3344,7 @@
             document.getElementById("lbl-stat-level").innerText = t("statLevel");
             document.getElementById("stat-level").innerText = lvl;
             document.getElementById("lbl-stat-crew").innerText = t("statCrew");
-            document.getElementById("stat-crew").innerText = state.ownedCrewIds.length;
+            document.getElementById("stat-crew").innerText = activeCount;
             document.getElementById("lbl-active-units").innerText = t("activeUnits");
             document.getElementById("lbl-stat-holding").innerText = t("statHolding");
             document.getElementById("stat-holding").innerText = Math.floor(state.walletHold).toLocaleString();
@@ -3306,7 +3353,7 @@
             document.getElementById("tile1-title").innerText = t("tile1Title");
             document.getElementById("tile1-sub").innerText = t("tile1Sub");
             document.getElementById("tile2-title").innerText = t("tile2Title");
-            document.getElementById("daily-tile-sub").innerText = t("tile2Sub");
+            document.getElementById("daily-tile-sub").innerText = t("dailyTileSub");
             document.getElementById("tile3-title").innerText = t("tile3Title");
             document.getElementById("tile3-sub").innerText = t("tile3Sub");
             document.getElementById("tile4-title").innerText = t("tile4Title");
@@ -3314,35 +3361,40 @@
 
             document.getElementById("crew-section-title").innerText = t("crewTitle");
             document.getElementById("crew-tasks-btn").innerText = t("crewTasksBtn");
-            document.getElementById("crew-summary-line").innerText = `${state.ownedCrewIds.length} ${t("minerWord")} • +${daily.toLocaleString()} SLRC/day`;
+            document.getElementById("crew-summary-line").innerText = `${activeCount} ${t("minerWord")} • +${daily.toLocaleString()} SLRC/day`;
 
             document.getElementById("crew-grid-list").innerHTML = crewUnits.map(u => {
-                const owned = state.ownedCrewIds.includes(u.id);
-                const canAfford = state.balance >= u.cost;
+                const active = isUnitActive(u);
                 const unitName = t("crewNames")[u.id] || ("Unit " + u.id);
 
-                const centerVisual = (verified && owned)
+                const centerVisual = active
                     ? `<div class="slrc-gear-coin-wrap">${gearRingSvg}<div class="slrc-static-coin-center">SLRC</div></div>`
                     : lockBadgeHtml;
 
+                const reqText = u.holdReq <= 0
+                    ? (state.lang === "fa" ? "با تایید ولت" : "Wallet Verify")
+                    : `${t("holdReqPrefix")} ${u.holdReq.toLocaleString()}`;
+
                 let btnClass = "crew-buy-btn";
                 let btnLabel = "";
-                if (!verified) {
-                    btnClass += " wallet-locked";
-                    btnLabel = owned ? ("🔒 " + t("activeBadge")) : ("🔒 " + u.cost.toLocaleString() + " SLRC");
-                } else if (owned) {
+
+                if (active) {
                     btnClass += " owned";
                     btnLabel = t("activeBadge");
+                } else if (!verified) {
+                    btnClass += " wallet-locked";
+                    btnLabel = t("verifyFirstBtn");
                 } else {
-                    if (!canAfford) btnClass += " insufficient";
-                    btnLabel = "🔒 " + u.cost.toLocaleString() + " SLRC";
+                    btnClass += " hold-cta";
+                    btnLabel = t("buyToHoldBtn");
                 }
 
                 return `
-                    <div class="crew-card ${(verified && owned) ? "unlocked wallet-verified" : ""}">
+                    <div class="crew-card ${active ? "unlocked wallet-verified" : ""}">
                         ${centerVisual}
                         <div class="crew-name">${unitName}</div>
                         <div class="crew-speed">+${u.daily.toLocaleString()}/d</div>
+                        <div class="crew-hold-req">${reqText}</div>
                         <button type="button" class="${btnClass}" onclick="handleCrewButtonClick(${u.id})">
                             ${btnLabel}
                         </button>
