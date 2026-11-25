@@ -26,7 +26,7 @@
             --green-bright: #a3e635;
             --green-dark: #4d7c0f;
             --border-light: #e5e7eb;
-            --splash-img: url("./11f9a1db.jpg");
+            --splash-img: url("./image_11f9a1db.jpg");
             --coin-img: url("./image_1be087b2.jpg");
         }
 
@@ -38,46 +38,29 @@
             overflow-x: hidden;
         }
 
-        /* صفحه عمودی تمام‌صفحه اولیه */
+        body.splash-locked {
+            overflow: hidden;
+            height: 100vh;
+        }
+
         .solaris-splash-screen {
             position: fixed;
             inset: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 9999;
+            z-index: 99999;
             background-color: #090b0f;
-            background-image:
-                linear-gradient(180deg, rgba(9, 11, 15, 0.15) 0%, rgba(9, 11, 15, 0.1) 55%, rgba(9, 11, 15, 0.88) 100%),
-                var(--splash-img);
+            background-image: var(--splash-img);
             background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 24px 20px 36px;
-            transition: opacity 0.35s ease, visibility 0.35s ease;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .solaris-splash-screen.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-        }
-
-        .solaris-splash-btn {
-            width: 100%;
-            max-width: 340px;
-            border: 1.5px solid rgba(254, 240, 138, 0.95);
-            border-radius: 18px;
-            padding: 14px 18px;
-            background: linear-gradient(135deg, #fde047 0%, #eab308 55%, #b45309 100%);
-            color: #1c1917;
-            font-size: 15px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.75);
         }
 
         tc-root,
@@ -1255,10 +1238,8 @@
         }
     </style>
 </head>
-<body>
-    <div id="solaris-splash-screen" class="solaris-splash-screen">
-        <button type="button" class="solaris-splash-btn" onclick="dismissSplashScreen()">Enter Solaris</button>
-    </div>
+<body class="splash-locked">
+    <div id="solaris-splash-screen" class="solaris-splash-screen" onclick="dismissSplashScreen()"></div>
 
     <div id="toast-banner" class="toast-banner" role="status" aria-live="polite"></div>
 
@@ -1361,7 +1342,7 @@
                 </div>
                 <div class="feature-tile tile-3" onclick="openWalletModal()">
                     <div class="tile-title" id="tile3-title">WALLET & HOLD</div>
-                    <div class="tile-sub" id="tile3-sub">Min Hold 5,000 • Withdraw 20k</div>
+                    <div class="tile-sub" id="tile3-sub">10d Lock • Hold 5,000 • Withdraw 20k</div>
                 </div>
                 <div class="feature-tile tile-4" onclick="switchView('chart')">
                     <div class="tile-title" id="tile4-title">Live SLRC Chart</div>
@@ -1447,14 +1428,8 @@
         </div>
 
         <div id="view-earn" class="view-section">
-            <div class="section-heading" id="earn-heading">EARN & AIRDROP</div>
-            <div class="section-sub" id="earn-sub">Daily rewards, tasks, 10-day lock & airdrop distribution</div>
-
-            <div class="white-card" id="airdrop-info-card" style="background: linear-gradient(135deg, #f5f8f3, #ecfccb); border: 1px solid #bef264;">
-                <div style="font-size:14px; font-weight:900; color:#3f6212; margin-bottom:5px;" id="airdrop-dist-title">🎁 SLRC Airdrop Distribution</div>
-                <div style="font-size:11px; color:var(--text-dark); line-height:1.65;" id="airdrop-dist-desc"></div>
-                <div style="margin-top:8px; font-size:11px; font-weight:800; color:#991b1b;" id="lock-10d-status"></div>
-            </div>
+            <div class="section-heading" id="earn-heading">EARN</div>
+            <div class="section-sub" id="earn-sub">Daily rewards, tasks, and 5,000 SLRC hold requirement</div>
 
             <div class="daily-gold-card">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1587,8 +1562,12 @@
                 <span id="menu-history">🕒 SLRC Withdrawal History</span>
                 <span>&rsaquo;</span>
             </div>
+            <div class="menu-list-item" onclick="openAirdropModal()">
+                <span id="menu-airdrop">🎁 SLRC Airdrop Distribution & 10-Day Lock</span>
+                <span>&rsaquo;</span>
+            </div>
             <div class="menu-list-item" onclick="openRulesModal()">
-                <span id="menu-rules">📜 SLRC Rules (10-Day Lock • Hold 5,000 • Withdraw 20,000)</span>
+                <span id="menu-rules">📜 SLRC Rules (10d Lock • Hold 5,000 • Withdraw 20,000)</span>
                 <span>&rsaquo;</span>
             </div>
         </div>
@@ -1674,7 +1653,7 @@
     </div>
 
     <script>
-        const SPLASH_IMAGE_URL = "./11f9a1db.jpg";
+        const SPLASH_IMAGE_URL = "./image_11f9a1db.jpg";
         const COIN_IMAGE_URL = "./image_1be087b2.jpg";
 
         const slrcTokenAddress = "EQDSXXDeVWcQaWCCDZAFM-wiln9gIOs1VxOl4L3TgSYN0JPV";
@@ -1725,7 +1704,6 @@
         const i18n = {
             en: {
                 dir: "ltr",
-                splashEnterBtn: "Enter Solaris",
                 cardWalletHold: "TON wallet Hold",
                 cardInappSlrc: "In-app SLRC",
                 cardBuyBtn: "🛒 Buy Token on STON.fi",
@@ -1765,10 +1743,10 @@
                 chartSyncing: "Syncing live STON.fi SLRC pool data...",
                 chartSyncedPrefix: "Live STON.fi feed • ",
                 chartNoPoolNote: "Connected to STON.fi pool feed • Trade or add swaps on STON.fi to record new candles.",
-                earnHeading: "EARN & AIRDROP",
-                earnSub: "Daily rewards, tasks, 10-day lock & airdrop distribution",
+                earnHeading: "EARN",
+                earnSub: "Daily rewards, tasks, and 5,000 SLRC hold requirement",
                 airdropDistTitle: "🎁 SLRC Airdrop Distribution",
-                airdropDistDesc: "• Airdrop rewards are distributed to active miners & verified ON-CHAIN holders.<br>• A <b>10-day lock period</b> applies before airdrop/withdrawal eligibility unlocks.<br>• Keep at least <b>5,000 SLRC</b> in your connected TON wallet and reach <b>20,000 SLRC</b> balance.",
+                airdropDistDesc: "• Airdrop rewards are distributed to active miners & verified ON-CHAIN holders.<br>• A <b>10-day lock period</b> applies before withdrawal/airdrop eligibility unlocks.<br>• Keep at least <b>5,000 SLRC</b> in your connected TON wallet and reach <b>20,000 SLRC</b> balance.",
                 lockActiveText: "🔒 10-Day Lock Active: {days}d {hours}h remaining",
                 lockUnlockedText: "✅ 10-Day Lock period completed",
                 dailyCardTitle: "Daily Reward SLRC",
@@ -1797,6 +1775,7 @@
                 profileHoldHint: "10-day lock • Min hold: <b>5,000 SLRC</b> • Min withdrawal: <b>20,000 SLRC</b> • Payout: <b>1–24h</b>",
                 menuWallet: "💼 Open WALLET & Connect Tonkeeper",
                 menuHistory: "🕒 SLRC Withdrawal History",
+                menuAirdrop: "🎁 SLRC Airdrop Distribution & 10-Day Lock",
                 menuRules: "📜 SLRC Rules (10d Lock • Hold 5,000 • Withdraw 20,000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
@@ -1880,7 +1859,6 @@
             },
             fa: {
                 dir: "rtl",
-                splashEnterBtn: "ورود به Solaris",
                 cardWalletHold: "هولد ولت TON",
                 cardInappSlrc: "موجودی درون‌رباتی SLRC",
                 cardBuyBtn: "🛒 خرید توکن در استون فای",
@@ -1920,8 +1898,8 @@
                 chartSyncing: "در حال دریافت اطلاعات زنده استخر SLRC از STON.fi...",
                 chartSyncedPrefix: "به‌روزرسانی زنده STON.fi • ",
                 chartNoPoolNote: "متصل به شبکه STON.fi • با انجام معامله روی استخر، کندل‌های جدید ثبت می‌شوند.",
-                earnHeading: "EARN & AIRDROP",
-                earnSub: "پاداش روزانه، تسک‌ها، قفل ۱۰ روزه و توزیع ایردراپ",
+                earnHeading: "EARN",
+                earnSub: "پاداش‌های روزانه، تسک‌ها و شرط هولد 5,000 SLRC",
                 airdropDistTitle: "🎁 نحوه توزیع ایردراپ SLRC",
                 airdropDistDesc: "• توزیع ایردراپ بر اساس فعالیت استخراج، انجام تسک‌ها و هولد واقعی در کیف‌پول انجام می‌شود.<br>• برای فعال شدن شرایط برداشت/ایردراپ، یک دوره <b>قفل ۱۰ روزه</b> در نظر گرفته شده است.<br>• حفظ حداقل <b>5,000 SLRC</b> در ولت متصل و رسیدن به موجودی <b>20,000 SLRC</b> الزامی است.",
                 lockActiveText: "🔒 قفل ۱۰ روزه فعال است: {days} روز و {hours} ساعت باقی‌مانده",
@@ -1952,6 +1930,7 @@
                 profileHoldHint: "قفل ۱۰ روزه • حداقل هولد: <b>5,000 SLRC</b> • حداقل برداشت: <b>20,000 SLRC</b> • واریز: <b>1 الی 24 ساعت</b>",
                 menuWallet: "💼 باز کردن صفحه WALLET و اتصال Tonkeeper",
                 menuHistory: "🕒 فعالیت و تاریخچه برداشت SLRC",
+                menuAirdrop: "🎁 نحوه توزیع ایردراپ SLRC و قفل ۱۰ روزه",
                 menuRules: "📜 شرایط و قوانین SLRC (قفل ۱۰ روزه • هولد 5,000 • برداشت 20,000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
@@ -2035,7 +2014,6 @@
             },
             ru: {
                 dir: "ltr",
-                splashEnterBtn: "Enter Solaris",
                 cardWalletHold: "TON wallet Hold",
                 cardInappSlrc: "In-app SLRC",
                 cardBuyBtn: "🛒 Buy Token on STON.fi",
@@ -2075,8 +2053,8 @@
                 chartSyncing: "Syncing live STON.fi SLRC pool data...",
                 chartSyncedPrefix: "Live STON.fi feed • ",
                 chartNoPoolNote: "Connected to STON.fi pool feed.",
-                earnHeading: "EARN & AIRDROP",
-                earnSub: "Daily rewards, tasks, 10-day lock & airdrop distribution",
+                earnHeading: "EARN",
+                earnSub: "Daily rewards, tasks, and 5,000 SLRC hold requirement",
                 airdropDistTitle: "🎁 SLRC Airdrop Distribution",
                 airdropDistDesc: "• Airdrop rewards are distributed to active miners & ON-CHAIN holders.<br>• A <b>10-day lock period</b> applies before withdrawal/airdrop eligibility.<br>• Keep at least <b>5,000 SLRC</b> in wallet and reach <b>20,000 SLRC</b> balance.",
                 lockActiveText: "🔒 10-Day Lock Active: {days}d {hours}h remaining",
@@ -2107,6 +2085,7 @@
                 profileHoldHint: "10-day lock • Min hold: <b>5,000 SLRC</b> • Min withdrawal: <b>20,000 SLRC</b> • Payout: <b>1–24h</b>",
                 menuWallet: "💼 Open WALLET & Connect Tonkeeper",
                 menuHistory: "🕒 SLRC Withdrawal History",
+                menuAirdrop: "🎁 SLRC Airdrop Distribution & 10-Day Lock",
                 menuRules: "📜 SLRC Rules (10d Lock • Hold 5,000 • Withdraw 20,000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
@@ -2261,6 +2240,7 @@
         function dismissSplashScreen() {
             const el = document.getElementById("solaris-splash-screen");
             if (el) el.classList.add("hidden");
+            document.body.classList.remove("splash-locked");
         }
 
         function elevateTonConnectModal() {
@@ -3394,6 +3374,19 @@
             document.getElementById("info-modal").style.display = "flex";
         }
 
+        function openAirdropModal() {
+            const lockInfo = getRemainingLockInfo();
+            const lockLine = lockInfo.locked
+                ? t("lockActiveText").replace("{days}", lockInfo.days).replace("{hours}", lockInfo.hours)
+                : t("lockUnlockedText");
+            document.getElementById("info-modal-title").innerText = t("airdropDistTitle");
+            document.getElementById("info-modal-body").innerHTML = `
+                ${t("airdropDistDesc")}<br><br>
+                <b>${lockLine}</b>
+            `;
+            document.getElementById("info-modal").style.display = "flex";
+        }
+
         function openRulesModal() {
             document.getElementById("info-modal-title").innerText = state.lang === "fa" ? "شرایط و قوانین SLRC" : "SLRC Rules";
             document.getElementById("info-modal-body").innerHTML = state.lang === "fa" ? `
@@ -3419,7 +3412,6 @@
             const daily = getDailyRate();
             const lvl = getLevel();
             const lockInfo = getRemainingLockInfo();
-            const holdMet = state.walletHold >= MIN_HOLD_SLRC;
             const withdrawUnlocked = isWithdrawUnlocked();
             const connected = !!tonConnectUI.connected;
             const connectedAddress = tonConnectUI.account?.address || "";
@@ -3428,9 +3420,6 @@
             const activeCount = crewUnits.filter(u => isUnitActive(u)).length;
 
             document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
-
-            const splashBtn = document.querySelector(".solaris-splash-btn");
-            if (splashBtn) splashBtn.innerText = t("splashEnterBtn");
 
             document.getElementById("top-username").innerText = state.userName;
             document.getElementById("top-lvl-label").innerText = "Lv " + lvl;
@@ -3525,16 +3514,6 @@
 
             document.getElementById("earn-heading").innerText = t("earnHeading");
             document.getElementById("earn-sub").innerText = t("earnSub");
-            document.getElementById("airdrop-dist-title").innerText = t("airdropDistTitle");
-            document.getElementById("airdrop-dist-desc").innerHTML = t("airdropDistDesc");
-            const lockStatusEl = document.getElementById("lock-10d-status");
-            if (lockInfo.locked) {
-                lockStatusEl.style.color = "#991b1b";
-                lockStatusEl.innerText = t("lockActiveText").replace("{days}", lockInfo.days).replace("{hours}", lockInfo.hours);
-            } else {
-                lockStatusEl.style.color = "#15803d";
-                lockStatusEl.innerText = t("lockUnlockedText");
-            }
 
             document.getElementById("daily-card-title").innerText = t("dailyCardTitle");
             document.getElementById("streak-label").innerText = t("streakLabel");
@@ -3663,6 +3642,7 @@
             document.getElementById("profile-hold-hint").innerHTML = t("profileHoldHint");
             document.getElementById("menu-wallet").innerText = t("menuWallet");
             document.getElementById("menu-history").innerText = t("menuHistory");
+            document.getElementById("menu-airdrop").innerText = t("menuAirdrop");
             document.getElementById("menu-rules").innerText = t("menuRules");
 
             document.getElementById("dock-upgrade").innerText = t("dockUpgrade");
