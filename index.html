@@ -50,17 +50,93 @@
             height: 100vh;
             z-index: 99999;
             background-color: #090b0f;
-            background-image: var(--splash-img);
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(9, 11, 15, 0.25) 0%, rgba(9, 11, 15, 0.68) 100%),
+                var(--splash-img);
             background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.45s ease, visibility 0.45s ease;
         }
 
         .solaris-splash-screen.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
+        }
+
+        .splash-center-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 22px 26px;
+            border-radius: 26px;
+            background: rgba(11, 15, 23, 0.72);
+            border: 1px solid rgba(253, 224, 71, 0.42);
+            box-shadow:
+                0 16px 38px rgba(0, 0, 0, 0.6),
+                inset 0 0 18px rgba(250, 204, 21, 0.14);
+            backdrop-filter: blur(8px);
+        }
+
+        @keyframes solarisRingSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes solarisCorePulse {
+            0%, 100% { transform: scale(0.92); opacity: 0.75; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        .solaris-loader-ring-wrap {
+            position: relative;
+            width: 68px;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .solaris-loader-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 3.5px solid rgba(254, 240, 138, 0.18);
+            border-top-color: #fde047;
+            border-right-color: #a3e635;
+            animation: solarisRingSpin 0.95s linear infinite;
+            box-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+        }
+
+        .solaris-loader-core {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fef08a 0%, #eab308 65%, #a16207 100%);
+            box-shadow: 0 0 18px rgba(253, 224, 71, 0.75);
+            animation: solarisCorePulse 1.4s ease-in-out infinite;
+        }
+
+        .solaris-loader-text {
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fef9c3;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+        }
+
+        .solaris-loader-sub {
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: #d9f99d;
+            margin-top: -8px;
         }
 
         tc-root,
@@ -1239,7 +1315,16 @@
     </style>
 </head>
 <body class="splash-locked">
-    <div id="solaris-splash-screen" class="solaris-splash-screen" onclick="dismissSplashScreen()"></div>
+    <div id="solaris-splash-screen" class="solaris-splash-screen" onclick="dismissSplashScreen()">
+        <div class="splash-center-loader" onclick="event.stopPropagation()">
+            <div class="solaris-loader-ring-wrap">
+                <div class="solaris-loader-ring"></div>
+                <div class="solaris-loader-core"></div>
+            </div>
+            <div class="solaris-loader-text" id="solaris-loader-text">LOADING SOLARIS...</div>
+            <div class="solaris-loader-sub" id="solaris-loader-sub">Entering Mining Empire • 0%</div>
+        </div>
+    </div>
 
     <div id="toast-banner" class="toast-banner" role="status" aria-live="polite"></div>
 
@@ -2237,7 +2322,37 @@
             }, duration);
         }
 
+        let splashProgressTimer = null;
+        let splashAutoHideTimer = null;
+        let splashDismissed = false;
+
+        function startAutoSplashLoader() {
+            const subEl = document.getElementById("solaris-loader-sub");
+            let pct = 0;
+            if (subEl) subEl.innerText = "Entering Mining Empire • 0%";
+
+            splashProgressTimer = setInterval(() => {
+                pct = Math.min(100, pct + Math.floor(Math.random() * 14) + 11);
+                if (subEl) {
+                    subEl.innerText = pct < 100
+                        ? `Entering Mining Empire • ${pct}%`
+                        : "Launching Solaris • 100%";
+                }
+                if (pct >= 100) {
+                    clearInterval(splashProgressTimer);
+                }
+            }, 180);
+
+            splashAutoHideTimer = setTimeout(() => {
+                dismissSplashScreen();
+            }, 2100);
+        }
+
         function dismissSplashScreen() {
+            if (splashDismissed) return;
+            splashDismissed = true;
+            if (splashProgressTimer) clearInterval(splashProgressTimer);
+            if (splashAutoHideTimer) clearTimeout(splashAutoHideTimer);
             const el = document.getElementById("solaris-splash-screen");
             if (el) el.classList.add("hidden");
             document.body.classList.remove("splash-locked");
@@ -2339,6 +2454,8 @@
             document.documentElement.style.setProperty("--splash-img", `url("${SPLASH_IMAGE_URL}")`);
             document.documentElement.style.setProperty("--coin-img", `url("${COIN_IMAGE_URL}")`);
 
+            startAutoSplashLoader();
+
             tonConnectUI.uiOptions = { buttonRootId: "ton-connect-button-container" };
             tonConnectUI.onStatusChange(async (wallet) => {
                 if (!wallet) {
@@ -2366,6 +2483,10 @@
             }
             fetchSlrcMarketData(true);
             setInterval(() => fetchSlrcMarketData(true), 30000);
+        });
+
+        window.addEventListener("load", () => {
+            setTimeout(() => dismissSplashScreen(), 1200);
         });
 
         window.addEventListener("resize", () => {
@@ -2829,6 +2950,12 @@
         }
 
         function initTelegramData() {
+            if (window.Telegram && window.Telegram.WebApp) {
+                try {
+                    window.Telegram.WebApp.ready();
+                    window.Telegram.WebApp.expand();
+                } catch (e) {}
+            }
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
                 const tgUser = window.Telegram.WebApp.initDataUnsafe.user;
                 if (tgUser) {
