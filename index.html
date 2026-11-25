@@ -1708,6 +1708,7 @@
         const COIN_IMAGE_URL = "./image_1be087b2.jpg";
 
         const slrcTokenAddress = "EQB1yCD3HAgcXFJiVqAmnySiTDyYQ90e3KmX_g8xzPtRddfN";
+        const slrcDecimals = 9;
         const nativeTonAddress = "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c";
         const recipientWalletAddress = "UQAdCHii_qXuljrHeL2aUPcAAGu7doyzZCK-3kiG0DXDuuoy";
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
@@ -1838,7 +1839,7 @@
                 verify005Ton: "Verify Wallet with 0.05 TON",
                 verified005Ton: "✅ Wallet Verified (0.05 TON)",
                 walletSyncTitle: "Real On-Chain SLRC Hold Verification",
-                walletSyncDesc: "Connect your wallet and check your real SLRC balance directly on the TON blockchain.",
+                walletSyncDesc: "Tracks only SLRC contract balance in your connected TON wallet.",
                 checkOnchainBtn: "🔍 Check Real SLRC Hold on Blockchain",
                 checkingOnchainBtn: "⏳ Checking blockchain...",
                 lblTxOptional: "Optional purchase TX hash proof:",
@@ -1864,7 +1865,7 @@
                 toastClaimNotVerified: "⚠️ Complete wallet verification (0.05 TON) first to extract and claim SLRC.",
                 toastNothingToClaim: "No mined SLRC ready to claim yet.",
                 toastClaimSuccess: "✅ Mined SLRC added to main balance.",
-                toastWalletUpdated: "✅ Wallet balance updated: ",
+                toastWalletUpdated: "✅ SLRC wallet hold updated: ",
                 toastConnectWalletFirst: "⚠️ Connect your Tonkeeper wallet first to refresh balance.",
                 toastPasteValidXLink: "⚠️ Paste a valid X / Twitter link first to claim 500 SLRC!",
                 toastDuplicateXLink: "⚠️ This X link was already used for another task!",
@@ -1992,8 +1993,8 @@
                 walletModalSub: "اتصال Tonkeeper، تایید ولت با 0.05 TON، استعلام هولد و برداشت 20,000 SLRC",
                 verify005Ton: "تایید ولت با 0.05 TON",
                 verified005Ton: "✅ ولت تایید شد (0.05 TON)",
-                walletSyncTitle: "استعلام واقعی موجودی SLRC در بلاکچین",
-                walletSyncDesc: "کیف‌پول را وصل کنید تا موجودی واقعی SLRC مستقیم از بلاکچین TON خوانده شود.",
+                walletSyncTitle: "استعلام واقعی موجودی همین توکن در بلاکچین",
+                walletSyncDesc: "فقط موجودی قرارداد جدید SLRC در کیف‌پول متصل بررسی می‌شود و هیچ توکن دیگری لحاظ نمی‌شود.",
                 checkOnchainBtn: "🔍 استعلام واقعی هولد SLRC از بلاکچین",
                 checkingOnchainBtn: "⏳ در حال استعلام از بلاکچین...",
                 lblTxOptional: "ثبت هش تراکنش خرید (اختیاری):",
@@ -2019,7 +2020,7 @@
                 toastClaimNotVerified: "⚠️ برای دریافت استخراج، حتماً تایید ولت انجام بشه!",
                 toastNothingToClaim: "هنوز SLRC استخراج‌شده‌ای برای دریافت آماده نیست.",
                 toastClaimSuccess: "✅ پاداش استخراج SLRC به موجودی اصلی اضافه شد.",
-                toastWalletUpdated: "✅ موجودی ولت بروزرسانی شد: ",
+                toastWalletUpdated: "✅ موجودی ولت SLRC بروزرسانی شد: ",
                 toastConnectWalletFirst: "⚠️ ابتدا کیف‌پول خود را متصل کنید تا موجودی بروزرسانی شود.",
                 toastPasteValidXLink: "⚠️ تا لینک معتبر کامنت یا پست توییتر/X رو پیست نکنی، ۵۰۰ سکه داده نمی‌شود!",
                 toastDuplicateXLink: "⚠️ این لینک قبلاً برای تسک دیگری ثبت شده است؛ لینک جدید وارد کنید.",
@@ -2148,7 +2149,7 @@
                 verify005Ton: "Verify Wallet with 0.05 TON",
                 verified005Ton: "✅ Wallet Verified (0.05 TON)",
                 walletSyncTitle: "Real On-Chain SLRC Hold Verification",
-                walletSyncDesc: "Connect your wallet and check your real SLRC balance directly on the TON blockchain.",
+                walletSyncDesc: "Tracks only SLRC contract balance in your connected TON wallet.",
                 checkOnchainBtn: "🔍 Check Real SLRC Hold on Blockchain",
                 checkingOnchainBtn: "⏳ Checking blockchain...",
                 lblTxOptional: "Optional purchase TX hash proof:",
@@ -2174,7 +2175,7 @@
                 toastClaimNotVerified: "⚠️ Complete wallet verification (0.05 TON) first to extract and claim SLRC.",
                 toastNothingToClaim: "No mined SLRC ready to claim yet.",
                 toastClaimSuccess: "✅ Mined SLRC added to main balance.",
-                toastWalletUpdated: "✅ Wallet balance updated: ",
+                toastWalletUpdated: "✅ SLRC wallet hold updated: ",
                 toastConnectWalletFirst: "⚠️ Connect your wallet first to refresh balance.",
                 toastPasteValidXLink: "⚠️ Paste a valid X / Twitter link first to claim 500 SLRC!",
                 toastDuplicateXLink: "⚠️ This X link was already used for another task!",
@@ -2336,6 +2337,7 @@
             balance: 0,
             unclaimed: 0,
             walletHold: 0,
+            lastWalletAddress: "",
             lastTxHash: "",
             ownedCrewIds: [1],
             completedTasks: [],
@@ -2406,11 +2408,19 @@
 
             tonConnectUI.uiOptions = { buttonRootId: "ton-connect-button-container" };
             tonConnectUI.onStatusChange(async (wallet) => {
-                if (!wallet) {
+                const nextAddr = wallet?.account?.address || "";
+                if (!wallet || !nextAddr) {
                     state.walletHold = 0;
+                    state.lastWalletAddress = "";
                     syncHoldCrewUnlocks();
                     saveState();
                 } else {
+                    if (state.lastWalletAddress && state.lastWalletAddress !== nextAddr) {
+                        state.walletHold = 0;
+                    }
+                    state.lastWalletAddress = nextAddr;
+                    syncHoldCrewUnlocks();
+                    saveState();
                     await fetchRealOnchainSlrcHold(true);
                 }
                 renderAll();
@@ -2920,7 +2930,7 @@
         }
 
         function loadState() {
-            const raw = localStorage.getItem("solaris_empire_slrc_state_v3");
+            const raw = localStorage.getItem("solaris_empire_slrc_state_v4");
             if (raw) {
                 try {
                     const parsed = JSON.parse(raw);
@@ -2951,7 +2961,7 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem("solaris_empire_slrc_state_v3", JSON.stringify(state));
+            localStorage.setItem("solaris_empire_slrc_state_v4", JSON.stringify(state));
         }
 
         function getDailyRate() {
@@ -2965,9 +2975,6 @@
         }
 
         function getMainDisplayBalance() {
-            if (tonConnectUI.connected && state.walletHold > 0) {
-                return state.balance + state.walletHold;
-            }
             return state.balance;
         }
 
@@ -2997,6 +3004,10 @@
 
         async function fetchRealOnchainSlrcHold(silent = false) {
             if (!tonConnectUI.connected || !tonConnectUI.account?.address) {
+                state.walletHold = 0;
+                syncHoldCrewUnlocks();
+                saveState();
+                renderAll();
                 if (!silent) {
                     showTransientMessage(t("toastConnectWalletFirst"));
                 }
@@ -3007,10 +3018,26 @@
             renderAll();
 
             try {
-                const ownerAddress = encodeURIComponent(tonConnectUI.account.address);
+                const currentConnectedAddr = tonConnectUI.account.address;
+                const ownerAddress = encodeURIComponent(currentConnectedAddr);
                 const jettonMaster = encodeURIComponent(slrcTokenAddress);
                 const endpoint = `https://tonapi.io/v2/accounts/${ownerAddress}/jettons/${jettonMaster}`;
                 const resp = await fetch(endpoint);
+
+                if (resp.status === 404) {
+                    state.walletHold = 0;
+                    syncHoldCrewUnlocks();
+                    saveState();
+                    renderAll();
+                    if (!silent) {
+                        showTransientMessage(
+                            state.lang === "fa"
+                                ? "موجودی این توکن در ولت متصل ۰ است."
+                                : "0 SLRC found in connected wallet."
+                        );
+                    }
+                    return;
+                }
 
                 if (!resp.ok) {
                     throw new Error("HTTP " + resp.status);
@@ -3018,10 +3045,13 @@
 
                 const data = await resp.json();
                 const rawBalance = data?.balance ? String(data.balance) : "0";
-                const decimals = Number(data?.jetton?.decimals ?? 9);
+                const decimals = Number.isFinite(Number(data?.jetton?.decimals))
+                    ? Number(data.jetton.decimals)
+                    : slrcDecimals;
                 const realTokens = Number(rawBalance) / Math.pow(10, decimals);
                 const safeTokens = Number.isFinite(realTokens) && realTokens > 0 ? Math.floor(realTokens) : 0;
 
+                state.lastWalletAddress = currentConnectedAddr;
                 state.walletHold = safeTokens;
                 syncHoldCrewUnlocks();
 
