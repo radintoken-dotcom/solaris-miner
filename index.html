@@ -1842,36 +1842,67 @@
             return out.replace(/\+/g, "-").replace(/\//g, "_");
         }
 
-        function normalizeTonAddressToUQ(rawOrFriendly) {
-            const addr = String(rawOrFriendly || "").trim();
-            if (!addr) return "";
+        function base64UrlToBytes(str) {
+            const clean = String(str || "").trim().replace(/-/g, "+").replace(/_/g, "/");
+            const padLen = (4 - (clean.length % 4)) % 4;
+            const padded = clean + "=".repeat(padLen);
+            const out = [];
+            for (let i = 0; i < padded.length; i += 4) {
+                const c0 = BASE64_ALPHABET.indexOf(padded[i]);
+                const c1 = BASE64_ALPHABET.indexOf(padded[i + 1]);
+                const c2 = padded[i + 2] === "=" ? -1 : BASE64_ALPHABET.indexOf(padded[i + 2]);
+                const c3 = padded[i + 3] === "=" ? -1 : BASE64_ALPHABET.indexOf(padded[i + 3]);
+                if (c0 < 0 || c1 < 0) return null;
 
-            if (/^[EU]Q[A-Za-z0-9_-]{46}$/.test(addr)) {
-                return "U" + addr.slice(1);
+                const triple = (c0 << 18) | (c1 << 12) | ((c2 < 0 ? 0 : c2) << 6) | (c3 < 0 ? 0 : c3);
+                out.push((triple >> 16) & 0xff);
+                if (c2 >= 0) out.push((triple >> 8) & 0xff);
+                if (c3 >= 0) out.push(triple & 0xff);
             }
+            return new Uint8Array(out);
+        }
 
-            const parts = addr.split(":");
-            if (parts.length !== 2) return addr;
-
-            const wc = parseInt(parts[0], 10);
-            const hex = parts[1].trim();
-            if (!Number.isInteger(wc) || !/^[0-9a-fA-F]{64}$/.test(hex)) {
-                return addr;
-            }
-
-            const tag = 0x11;
+        function buildNonBounceableUQ(wcByte, hashBytes32) {
             const body = new Uint8Array(34);
-            body[0] = tag;
-            body[1] = wc & 0xff;
-            for (let i = 0; i < 32; i++) {
-                body[2 + i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
-            }
-
+            body[0] = 0x11; // non-bounceable user-friendly tag
+            body[1] = wcByte & 0xff;
+            body.set(hashBytes32, 2);
             const sig = crc16Ton(body);
             const full = new Uint8Array(36);
             full.set(body, 0);
             full.set(sig, 34);
             return bytesToBase64Url(full);
+        }
+
+        function normalizeTonAddressToUQ(rawOrFriendly) {
+            const addr = String(rawOrFriendly || "").trim();
+            if (!addr) return "";
+
+            // 1) Raw hex format: "0:hex64" or "-1:hex64"
+            const parts = addr.split(":");
+            if (parts.length === 2) {
+                const wc = parseInt(parts[0], 10);
+                const hex = parts[1].trim();
+                if (Number.isInteger(wc) && /^[0-9a-fA-F]{64}$/.test(hex)) {
+                    const hashBytes = new Uint8Array(32);
+                    for (let i = 0; i < 32; i++) {
+                        hashBytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+                    }
+                    return buildNonBounceableUQ(wc, hashBytes);
+                }
+            }
+
+            // 2) Friendly base64url address (EQ... or UQ...) -> recalculate valid non-bounceable UQ checksum
+            if (/^[EU]Q[A-Za-z0-9_-]{46}$/.test(addr)) {
+                const decoded = base64UrlToBytes(addr);
+                if (decoded && decoded.length === 36) {
+                    const wcByte = decoded[1];
+                    const hashBytes = decoded.slice(2, 34);
+                    return buildNonBounceableUQ(wcByte, hashBytes);
+                }
+            }
+
+            return addr;
         }
 
         function getActiveConnectedWalletAddress() {
