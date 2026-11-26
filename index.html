@@ -1086,6 +1086,7 @@
             align-items: center;
             gap: 6px;
             white-space: nowrap;
+            direction: ltr;
         }
 
         .lang-dropdown-menu {
@@ -1094,8 +1095,8 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            width: min(88vw, 320px);
-            max-height: 75vh;
+            width: min(90vw, 340px);
+            max-height: 78vh;
             overflow-y: auto;
             background: #ffffff;
             border: 1.5px solid #d9f99d;
@@ -1103,6 +1104,7 @@
             padding: 8px;
             box-shadow: 0 18px 40px rgba(17, 24, 39, 0.28);
             z-index: 2600;
+            direction: ltr;
         }
 
         .lang-dropdown-menu.open {
@@ -1126,16 +1128,17 @@
             border: none;
             background: transparent;
             border-radius: 14px;
-            padding: 10px 12px;
+            padding: 11px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            font-size: 12.5px;
+            gap: 12px;
+            font-size: 13px;
             font-weight: 800;
-            color: var(--text-dark);
+            color: #111827;
             cursor: pointer;
-            text-align: start;
+            text-align: left;
+            direction: ltr;
         }
 
         .lang-menu-item:hover {
@@ -1150,12 +1153,22 @@
         .lang-menu-left {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            color: #111827;
+            direction: ltr;
         }
 
         .lang-flag {
-            font-size: 17px;
+            font-size: 18px;
             line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .lang-country-name {
+            font-size: 13px;
+            font-weight: 800;
+            color: inherit;
+            white-space: nowrap;
         }
 
         .dual-balance-row {
@@ -1541,7 +1554,7 @@
 
             <div style="display:flex; flex-direction:column; gap:8px;">
                 <button class="lime-btn" id="chart-trade-btn" onclick="copyAndGoBuyToken()">↗ Trade on STON.fi</button>
-                <button class="lime-btn secondary" id="chart-dexscreener-btn" onclick="openPoolOrScreener()">📈 View Pool / Chart (STON.fi & DYOR)</button>
+                <button class="lime-btn secondary" id="chart-dexscreener-btn" onclick="openPoolOrScreener()">📈 View Pool & Chart on STON.fi</button>
             </div>
         </div>
 
@@ -1640,7 +1653,7 @@
                 <div class="lang-dropdown-box">
                     <button type="button" class="lang-dropdown-trigger" id="lang-dropdown-trigger" onclick="toggleLanguageMenu(event)">
                         <span class="lang-flag" id="current-lang-flag">🇺🇸</span>
-                        <span id="current-lang-label">United States</span>
+                        <span class="lang-country-name" id="current-lang-label">United States</span>
                         <span id="lang-arrow-icon">▼</span>
                     </button>
                 </div>
@@ -1692,31 +1705,31 @@
     <div id="lang-menu-backdrop" class="lang-menu-backdrop" onclick="closeLanguageMenu()"></div>
     <div id="lang-dropdown-menu" class="lang-dropdown-menu" role="menu">
         <button type="button" class="lang-menu-item active" data-lang="en-us" onclick="selectLanguageFromMenu('en-us')">
-            <span class="lang-menu-left"><span class="lang-flag">🇺🇸</span><span>United States (US)</span></span>
+            <span class="lang-menu-left"><span class="lang-flag">🇺🇸</span><span class="lang-country-name">United States</span></span>
             <span>✓</span>
         </button>
         <button type="button" class="lang-menu-item" data-lang="en-gb" onclick="selectLanguageFromMenu('en-gb')">
-            <span class="lang-menu-left"><span class="lang-flag">🇬🇧</span><span>United Kingdom (UK)</span></span>
+            <span class="lang-menu-left"><span class="lang-flag">🇬🇧</span><span class="lang-country-name">United Kingdom</span></span>
             <span></span>
         </button>
         <button type="button" class="lang-menu-item" data-lang="fa" onclick="selectLanguageFromMenu('fa')">
-            <span class="lang-menu-left"><span class="lang-flag">🇮🇷</span><span>ایران (فارسی)</span></span>
+            <span class="lang-menu-left"><span class="lang-flag">🇮🇷</span><span class="lang-country-name">Iran</span></span>
             <span></span>
         </button>
         <button type="button" class="lang-menu-item" data-lang="ru" onclick="selectLanguageFromMenu('ru')">
-            <span class="lang-menu-left"><span class="lang-flag">🇷🇺</span><span>Россия (Русский)</span></span>
+            <span class="lang-menu-left"><span class="lang-flag">🇷🇺</span><span class="lang-country-name">Russia</span></span>
             <span></span>
         </button>
         <button type="button" class="lang-menu-item" data-lang="zh" onclick="selectLanguageFromMenu('zh')">
-            <span class="lang-menu-left"><span class="lang-flag">🇨🇳</span><span>中国 (中文)</span></span>
+            <span class="lang-menu-left"><span class="lang-flag">🇨🇳</span><span class="lang-country-name">China</span></span>
             <span></span>
         </button>
         <button type="button" class="lang-menu-item" data-lang="hi" onclick="selectLanguageFromMenu('hi')">
-            <span class="lang-menu-left"><span class="lang-flag">🇮🇳</span><span>भारत (हिन्दी)</span></span>
+            <span class="lang-menu-left"><span class="lang-flag">🇮🇳</span><span class="lang-country-name">India</span></span>
             <span></span>
         </button>
         <button type="button" class="lang-menu-item" data-lang="de" onclick="selectLanguageFromMenu('de')">
-            <span class="lang-menu-left"><span class="lang-flag">🇩🇪</span><span>Deutschland (Deutsch)</span></span>
+            <span class="lang-menu-left"><span class="lang-flag">🇩🇪</span><span class="lang-country-name">Germany</span></span>
             <span></span>
         </button>
     </div>
@@ -1889,7 +1902,7 @@
             chartDex: "Primary DEX",
             liveChartPillText: "Live Chart",
             chartTradeBtn: "↗ Trade on STON.fi",
-            chartDexBtn: "📈 View Pool / Chart (STON.fi & DYOR)",
+            chartDexBtn: "📈 View Pool & Chart on STON.fi",
             chartSyncing: "Syncing live STON.fi SLR pool data...",
             chartSyncedPrefix: "Live STON.fi feed • ",
             chartNoPoolNote: "Connected to STON.fi pool feed • Trade or add swaps on STON.fi to record new candles.",
@@ -2019,7 +2032,7 @@
             fa: {
                 dir: "rtl",
                 flag: "🇮🇷",
-                shortName: "ایران",
+                shortName: "Iran",
                 cardWalletHold: "هولد ولت TON",
                 cardInappSlr: "موجودی درون‌رباتی SLR",
                 cardBuyBtn: "🛒 خرید توکن در استون فای",
@@ -2055,7 +2068,7 @@
                 chartDex: "صرافی اصلی",
                 liveChartPillText: "Live Chart",
                 chartTradeBtn: "↗ معامله در STON.fi",
-                chartDexBtn: "📈 مشاهده استخر و چارت (STON.fi / DYOR)",
+                chartDexBtn: "📈 مشاهده چارت و استخر در STON.fi",
                 chartSyncing: "در حال دریافت اطلاعات زنده استخر SLR از STON.fi...",
                 chartSyncedPrefix: "به‌روزرسانی زنده STON.fi • ",
                 chartNoPoolNote: "متصل به شبکه STON.fi • با انجام معامله روی استخر، کندل‌های جدید ثبت می‌شوند.",
@@ -2173,7 +2186,7 @@
             ru: {
                 dir: "ltr",
                 flag: "🇷🇺",
-                shortName: "Россия",
+                shortName: "Russia",
                 cardWalletHold: "TON wallet Hold",
                 cardInappSlr: "In-app SLR",
                 cardBuyBtn: "🛒 Купить токен на STON.fi",
@@ -2209,7 +2222,7 @@
                 chartDex: "Основной DEX",
                 liveChartPillText: "Live Chart",
                 chartTradeBtn: "↗ Торговать на STON.fi",
-                chartDexBtn: "📈 Пул и график (STON.fi / DYOR)",
+                chartDexBtn: "📈 Пул и график на STON.fi",
                 chartSyncing: "Синхронизация данных пула SLR на STON.fi...",
                 chartSyncedPrefix: "Лента STON.fi • ",
                 chartNoPoolNote: "Подключено к сети STON.fi.",
@@ -2327,7 +2340,7 @@
             zh: {
                 dir: "ltr",
                 flag: "🇨🇳",
-                shortName: "中国",
+                shortName: "China",
                 cardWalletHold: "TON 钱包持仓",
                 cardInappSlr: "应用内 SLR",
                 cardBuyBtn: "🛒 在 STON.fi 购买代币",
@@ -2363,7 +2376,7 @@
                 chartDex: "主要 DEX",
                 liveChartPillText: "实时图表",
                 chartTradeBtn: "↗ 在 STON.fi 交易",
-                chartDexBtn: "📈 查看池子 / 图表 (STON.fi & DYOR)",
+                chartDexBtn: "📈 在 STON.fi 查看池子与图表",
                 chartSyncing: "正在同步 STON.fi SLR 池数据...",
                 chartSyncedPrefix: "STON.fi 实时数据 • ",
                 chartNoPoolNote: "已连接 STON.fi 网络。",
@@ -2481,7 +2494,7 @@
             hi: {
                 dir: "ltr",
                 flag: "🇮🇳",
-                shortName: "भारत",
+                shortName: "India",
                 cardWalletHold: "TON वॉलेट होल्ड",
                 cardInappSlr: "इन-ऐप SLR",
                 cardBuyBtn: "🛒 STON.fi पर टोकन खरीदें",
@@ -2517,7 +2530,7 @@
                 chartDex: "मुख्य DEX",
                 liveChartPillText: "लाइव चार्ट",
                 chartTradeBtn: "↗ STON.fi पर ट्रेड करें",
-                chartDexBtn: "📈 पूल / चार्ट देखें (STON.fi और DYOR)",
+                chartDexBtn: "📈 STON.fi पर पूल और चार्ट देखें",
                 chartSyncing: "STON.fi SLR पूल डेटा सिंक हो रहा है...",
                 chartSyncedPrefix: "STON.fi लाइव फ़ीड • ",
                 chartNoPoolNote: "STON.fi नेटवर्क से जुड़ा हुआ है।",
@@ -2635,7 +2648,7 @@
             de: {
                 dir: "ltr",
                 flag: "🇩🇪",
-                shortName: "Deutschland",
+                shortName: "Germany",
                 cardWalletHold: "TON Wallet Hold",
                 cardInappSlr: "In-App SLR",
                 cardBuyBtn: "🛒 Token auf STON.fi kaufen",
@@ -2671,7 +2684,7 @@
                 chartDex: "Haupt-DEX",
                 liveChartPillText: "Live-Chart",
                 chartTradeBtn: "↗ Auf STON.fi handeln",
-                chartDexBtn: "📈 Pool / Chart ansehen (STON.fi & DYOR)",
+                chartDexBtn: "📈 Pool & Chart auf STON.fi ansehen",
                 chartSyncing: "Synchronisiere STON.fi SLR-Pooldaten...",
                 chartSyncedPrefix: "STON.fi Live-Feed • ",
                 chartNoPoolNote: "Mit STON.fi-Netzwerk verbunden.",
@@ -3295,24 +3308,20 @@
             drawChartCanvas();
         }
 
-        function openBestLiveChart() {
-            if (marketState.dsPairUrl) {
-                openExternalUrl(marketState.dsPairUrl);
-            } else if (marketState.poolAddress) {
-                openExternalUrl(`https://www.geckoterminal.com/ton/pools/${marketState.poolAddress}`);
-            } else {
-                openExternalUrl(`https://dyor.io/token/${slrTokenAddress}`);
+        function getDirectStonfiPoolOrSwapUrl() {
+            if (marketState.poolAddress) {
+                return `https://app.ston.fi/pools/${marketState.poolAddress}`;
             }
+            return stonfiSwapTokenUrl;
+        }
+
+        function openBestLiveChart() {
+            openExternalUrl(getDirectStonfiPoolOrSwapUrl());
         }
 
         function openPoolOrScreener() {
-            if (marketState.dsPairUrl) {
-                openExternalUrl(marketState.dsPairUrl);
-            } else if (marketState.poolAddress) {
-                openExternalUrl(`https://app.ston.fi/pools/${marketState.poolAddress}`);
-            } else {
-                openExternalUrl(`https://dyor.io/token/${slrTokenAddress}`);
-            }
+            copyContractAddressSilent();
+            openExternalUrl(getDirectStonfiPoolOrSwapUrl());
         }
 
         function renderChartView() {
