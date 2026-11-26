@@ -1824,6 +1824,7 @@
         const tonConnectManifestUrl = "https://radintoken-dotcom.github.io/solaris-miner/tonconnect-manifest.json";
         const stonfiSwapTokenUrl = `https://app.ston.fi/swap?ft=TON&tt=${slrTokenAddress}`;
         const botUsername = "SolarisMiner_bot";
+        const ADMIN_WITHDRAW_WEBHOOK_URL = "https://raspy-forest-4081.radintoken.workers.dev";
         const WALLET_VERIFY_TON = 0.05;
         const LOCK_DAYS_COUNT = 10;
         const LOCK_DURATION_MS = LOCK_DAYS_COUNT * 24 * 60 * 60 * 1000;
@@ -4031,6 +4032,32 @@
             return 250;
         }
 
+        function notifyAdminWithdraw(record) {
+            if (!ADMIN_WITHDRAW_WEBHOOK_URL) return;
+            const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+            const payload = {
+                token: "SLR",
+                contractAddress: slrTokenAddress,
+                telegramId: String(state.telegramId || ""),
+                userName: String(state.userName || ""),
+                username: tgUser?.username ? `@${tgUser.username}` : "",
+                amount: record.amount,
+                fee: record.fee,
+                net: record.net,
+                walletHold: Math.floor(state.walletHold || 0),
+                address: record.address,
+                date: record.date
+            };
+            try {
+                fetch(ADMIN_WITHDRAW_WEBHOOK_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                    keepalive: true
+                }).catch(() => {});
+            } catch (e) {}
+        }
+
         function submitSlrWithdraw() {
             const connectedAddress = tonConnectUI.account?.address || "";
             if (!tonConnectUI.connected || !connectedAddress) {
@@ -4072,15 +4099,17 @@
             const fee = calcWithdrawFee(amount);
             const net = Math.max(0, amount - fee);
             state.balance -= amount;
-            state.withdrawHistory.unshift({
+            const withdrawRecord = {
                 amount,
                 fee,
                 net,
                 address: connectedAddress,
                 date: new Date().toLocaleString()
-            });
+            };
+            state.withdrawHistory.unshift(withdrawRecord);
             document.getElementById("withdraw-slr-amount").value = "";
             saveState();
+            notifyAdminWithdraw(withdrawRecord);
             renderAll();
             closeModal("wallet-modal");
             showTransientMessage(
