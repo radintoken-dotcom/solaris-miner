@@ -1207,22 +1207,6 @@
             box-shadow: 0 3px 10px rgba(17, 24, 39, 0.03);
         }
 
-        .tier-fee-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            margin: 10px 0;
-            text-align: center;
-        }
-
-        .tier-fee-box {
-            background: var(--card-soft);
-            border-radius: 12px;
-            padding: 8px 4px;
-            font-size: 10px;
-            font-weight: 800;
-        }
-
         .alert-hold-box {
             background: #fef2f2;
             border: 1px solid #fecaca;
@@ -1473,7 +1457,7 @@
                 </div>
                 <div class="feature-tile tile-3" onclick="openWalletModal()">
                     <div class="tile-title" id="tile3-title">WALLET & HOLD</div>
-                    <div class="tile-sub" id="tile3-sub">Hold 5,000 • Withdraw 5,000</div>
+                    <div class="tile-sub" id="tile3-sub">Hold 5,000 • Withdraw 20,000</div>
                 </div>
                 <div class="feature-tile tile-4" onclick="switchView('chart')">
                     <div class="tile-title" id="tile4-title">Live SLR Chart</div>
@@ -1560,7 +1544,7 @@
 
         <div id="view-earn" class="view-section">
             <div class="section-heading" id="earn-heading">EARN</div>
-            <div class="section-sub" id="earn-sub">Daily rewards, tasks, and 5,000 SLR hold requirement</div>
+            <div class="section-sub" id="earn-sub">Daily rewards, tasks, 5,000 SLR hold & 20,000 SLR withdrawal</div>
 
             <div class="daily-gold-card">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1588,7 +1572,7 @@
             <div id="community-tasks-list"></div>
 
             <div style="font-size:15px; font-weight:900; margin:14px 0 4px;" id="onchain-hold-heading">ON-CHAIN Holders (Connected Wallet)</div>
-            <div class="section-sub" id="onchain-hold-sub">Holding at least 5,000 SLR in wallet is required to unlock 5,000 SLR withdrawal.</div>
+            <div class="section-sub" id="onchain-hold-sub">Wallet verification + 5,000 SLR hold + 20,000 SLR balance are required to unlock withdrawal.</div>
             <div id="onchain-hold-tiers"></div>
 
             <div class="earn-bottom-box">
@@ -1597,7 +1581,7 @@
                 </div>
                 <div style="font-size:11px; color:var(--text-dark); line-height:1.6; margin-bottom:10px;" id="earn-bottom-desc"></div>
                 <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800;">
-                    <span><span id="lbl-main-bal-short">Main Balance</span>: <span id="bottom-box-balance">0</span> / 5,000 SLR</span>
+                    <span><span id="lbl-main-bal-short">Main Balance</span>: <span id="bottom-box-balance">0</span> / 20,000 SLR</span>
                     <span><span id="lbl-wallet-hold-short">Wallet Hold</span>: <span id="bottom-box-hold">0</span> / 5,000 SLR</span>
                 </div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
@@ -1696,7 +1680,7 @@
                 <span>&rsaquo;</span>
             </div>
             <div class="menu-list-item" onclick="openRulesModal()">
-                <span id="menu-rules">📜 SLR Rules (Hold 5,000 • Withdraw 5,000)</span>
+                <span id="menu-rules">📜 SLR Rules (Hold 5,000 • Withdraw 20,000)</span>
                 <span>&rsaquo;</span>
             </div>
         </div>
@@ -1753,7 +1737,7 @@
             </div>
 
             <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px;" id="wallet-modal-sub">
-                Connect Tonkeeper, check SLR hold, and withdraw 5,000+ SLR
+                Connect Tonkeeper, verify wallet, hold 5,000 SLR & withdraw 20,000+ SLR
             </div>
 
             <div id="ton-connect-button-container" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
@@ -1778,16 +1762,10 @@
                 <div id="recorded-tx-note" style="font-size:10px; color:#4d7c0f; font-weight:700; margin-top:5px;"></div>
             </div>
 
-            <div id="wallet-rule-alert" class="alert-hold-box ok"></div>
+            <div id="wallet-rule-alert" class="alert-hold-box"></div>
 
-            <div class="tier-fee-grid">
-                <div class="tier-fee-box">5,000 - 49,999<br><span style="color:#4d7c0f;">Fee 250 SLR</span></div>
-                <div class="tier-fee-box">50,000 - 99,999<br><span style="color:#4d7c0f;">Fee 500 SLR</span></div>
-                <div class="tier-fee-box">100,000+<br><span style="color:#4d7c0f;">Fee 1,000 SLR</span></div>
-            </div>
-
-            <label style="font-size:11px; font-weight:800; color:var(--text-muted);" id="lbl-withdraw-amt">Withdraw amount (Min 5,000 SLR):</label>
-            <input type="number" id="withdraw-slr-amount" class="clean-input" placeholder="e.g. 5000">
+            <label style="font-size:11px; font-weight:800; color:var(--text-muted);" id="lbl-withdraw-amt">Withdraw amount (Min 20k • Fee 1,000 SLR):</label>
+            <input type="number" id="withdraw-slr-amount" class="clean-input" placeholder="Min 20,000">
 
             <label style="font-size:11px; font-weight:800; color:var(--text-muted); display:block; margin-top:8px;" id="lbl-withdraw-addr">Connected Tonkeeper Wallet Address:</label>
             <div class="connected-wallet-box" id="connected-wallet-display">Not connected</div>
@@ -1826,8 +1804,7 @@
         const botUsername = "SolarisMiner_bot";
         const ADMIN_WITHDRAW_WEBHOOK_URL = "https://raspy-forest-4081.radintoken.workers.dev";
         const WALLET_VERIFY_TON = 0.05;
-        const LOCK_DAYS_COUNT = 0;
-        const LOCK_DURATION_MS = 0;
+        const WITHDRAW_FEE_SLR = 1000;
 
         const twitterFollowUrl = "https://x.com/void_R_walker";
         const twitterPost1Url = "https://x.com/void_R_walker/status/2125388317675970686?a=KU8fL8oLnLyhuv0PO7s&s=19";
@@ -1843,7 +1820,7 @@
         };
 
         const MIN_HOLD_SLR = 5000;
-        const MIN_WITHDRAW_SLR = 5000;
+        const MIN_WITHDRAW_SLR = 20000;
         const STORAGE_CAP_SLR = 10000;
         const dailyRewards = [50, 100, 150, 200, 300, 400, 600];
 
@@ -1885,7 +1862,7 @@
             tile2Title: "Daily Reward",
             dailyTileSub: "Claim daily SLR bonus",
             tile3Title: "WALLET & HOLD",
-            tile3Sub: "Hold 5,000 • Withdraw 5,000",
+            tile3Sub: "Hold 5,000 • Withdraw 20,000",
             tile4Title: "Live SLR Chart",
             tile4Sub: "STON.fi price & trend",
             crewTitle: "Your Crew (SLR Hold Units)",
@@ -1908,15 +1885,15 @@
             chartSyncedPrefix: "Live STON.fi feed • ",
             chartNoPoolNote: "Connected to STON.fi pool feed • Trade or add swaps on STON.fi to record new candles.",
             earnHeading: "EARN",
-            earnSub: "Daily rewards, tasks, and 5,000 SLR hold requirement",
+            earnSub: "Daily rewards, tasks, 5,000 SLR hold & 20,000 SLR withdrawal",
             dailyCardTitle: "Daily Reward SLR",
             streakLabel: "Streak days",
             dailyClaimBtn: "Daily Reward",
             communityHeading: "Community, X Tasks & Recommended Bots",
             onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
-            onchainSub: "Holding at least 5,000 SLR in wallet is required to unlock 5,000 SLR withdrawal.",
+            onchainSub: "Wallet verification + 5,000 SLR hold + 20,000 SLR balance are required to unlock withdrawal.",
             earnBottomTitle: "📌 SLR Withdrawal & Hold Status",
-            earnBottomDesc: "• In-app balance for withdrawal: <b>Min 5,000 SLR</b><br>• Held balance in connected wallet: <b>Min 5,000 SLR</b><br>• Payout time: <b>1 to 24 hours</b>",
+            earnBottomDesc: "• Wallet verification: <b>0.05 TON</b> required<br>• Held in connected wallet: <b>Min 5,000 SLR</b><br>• Min withdrawal balance: <b>20,000 SLR</b> (Fee: <b>1,000 SLR</b>)<br>• Payout time: <b>1 to 24 hours</b>",
             mainBalShort: "Main Balance",
             walletHoldShort: "Wallet Hold",
             buySlrShort: "🛒 Buy SLR",
@@ -1934,17 +1911,17 @@
             submitWithdrawBtn: "Withdraw",
             totalHolding: "Total HOLDING (Wallet)",
             manageWalletPill: "Wallet ⓘ",
-            profileHoldHint: "Min hold: <b>5,000 SLR</b> • Min withdrawal: <b>5,000 SLR</b> • Payout: <b>1–24h</b>",
+            profileHoldHint: "Min hold: <b>5,000 SLR</b> • Min withdrawal: <b>20,000 SLR</b> (Fee: <b>1,000 SLR</b>) • Payout: <b>1–24h</b>",
             menuWallet: "💼 Open WALLET & Connect Tonkeeper",
             menuHistory: "🕒 SLR Withdrawal History",
-            menuRules: "📜 SLR Rules (Hold 5,000 • Withdraw 5,000)",
+            menuRules: "📜 SLR Rules (Hold 5,000 • Withdraw 20,000)",
             dockUpgrade: "Upgrade",
             dockChart: "Chart",
             dockEarn: "Earn",
             dockFriends: "Friends",
             dockProfile: "Profile",
             closeBtn: "Close ✕",
-            walletModalSub: "Connect Tonkeeper, check SLR hold, and withdraw 5,000+ SLR",
+            walletModalSub: "Verify wallet, hold 5,000 SLR & withdraw 20,000+ SLR (Fee 1,000)",
             verify005Ton: "Verify Wallet with 0.05 TON",
             verified005Ton: "✅ Wallet Verified (0.05 TON)",
             walletSyncTitle: "Real On-Chain SLR Hold Verification",
@@ -1954,9 +1931,9 @@
             lblTxOptional: "Optional purchase TX hash proof:",
             txPlaceholder: "TON Transaction Hash (optional)",
             saveTxBtn: "Record TX",
-            lblWithdrawAmt: "Withdraw amount (Min 5,000 SLR):",
-            withdrawAmtPlaceholder: "e.g. 5000",
-            withdrawAmtUnlockedPlaceholder: "e.g. 5000",
+            lblWithdrawAmt: "Withdraw amount (Min 20k • Fee 1,000 SLR):",
+            withdrawAmtPlaceholder: "Min 20,000",
+            withdrawAmtUnlockedPlaceholder: "Min 20,000",
             lblWithdrawAddr: "Connected Tonkeeper Wallet Address:",
             notConnectedAddr: "Not connected",
             payoutTimeNote: "⏱ Payouts take 1 to 24 hours directly to your connected Tonkeeper wallet.",
@@ -2051,7 +2028,7 @@
                 tile2Title: "پاداش روزانه",
                 dailyTileSub: "دریافت جایزه روزانه SLR",
                 tile3Title: "WALLET & HOLD",
-                tile3Sub: "هولد 5,000 • برداشت 5,000",
+                tile3Sub: "هولد 5,000 • برداشت 20,000",
                 tile4Title: "چارت زنده SLR",
                 tile4Sub: "قیمت و روند در STON.fi",
                 crewTitle: "Crew تو (فعال‌سازی با هولد SLR)",
@@ -2074,15 +2051,15 @@
                 chartSyncedPrefix: "به‌روزرسانی زنده STON.fi • ",
                 chartNoPoolNote: "متصل به شبکه STON.fi • با انجام معامله روی استخر، کندل‌های جدید ثبت می‌شوند.",
                 earnHeading: "EARN",
-                earnSub: "پاداش‌های روزانه، تسک‌ها و شرط هولد 5,000 SLR",
+                earnSub: "پاداش‌های روزانه، تسک‌ها، هولد 5,000 و برداشت 20,000 SLR",
                 dailyCardTitle: "پاداش روزانه SLR",
                 streakLabel: "روز پشت سر هم",
                 dailyClaimBtn: "دریافت پاداش روزانه",
                 communityHeading: "تسک‌های توییتر (X)، کامیونیتی و ربات‌ها",
                 onchainHeading: "هولدرهای ON-CHAIN (کیف‌پول متصل)",
-                onchainSub: "حداقل هولد 5,000 SLR در کیف‌پول برای باز شدن برداشت 5,000 SLR الزامی است.",
+                onchainSub: "برای باز شدن قفل برداشت باید تایید ولت انجام شود، 5,000 SLR در ولت هولد شود و موجودی برداشت به 20,000 SLR برسد.",
                 earnBottomTitle: "📌 وضعیت برداشت و هولد SLR",
-                earnBottomDesc: "• موجودی درون‌رباتی برای برداشت: <b>حداقل 5,000 SLR</b><br>• هولد واقعی در کیف‌پول متصل: <b>حداقل 5,000 SLR</b><br>• زمان واریزها: <b>1 الی 24 ساعت</b>",
+                earnBottomDesc: "• تایید ولت: <b>0.05 TON</b> الزامی است<br>• هولد واقعی در کیف‌پول متصل: <b>حداقل 5,000 SLR</b><br>• حداقل موجودی برداشت: <b>20,000 SLR</b> (کارمزد: <b>1,000 SLR</b>)<br>• زمان واریزها: <b>1 الی 24 ساعت</b>",
                 mainBalShort: "موجودی اصلی",
                 walletHoldShort: "هولد ولت",
                 buySlrShort: "🛒 خرید SLR",
@@ -2100,17 +2077,17 @@
                 submitWithdrawBtn: "Withdraw",
                 totalHolding: "HOLDING کل (کیف‌پول)",
                 manageWalletPill: "مدیریت ولت ⓘ",
-                profileHoldHint: "حداقل هولد: <b>5,000 SLR</b> • حداقل برداشت: <b>5,000 SLR</b> • واریز: <b>1 الی 24 ساعت</b>",
+                profileHoldHint: "هولد ولت: <b>5,000 SLR</b> • تایید ولت الزامی • حداقل برداشت: <b>20,000 SLR</b> (کارمزد: <b>1,000 SLR</b>)",
                 menuWallet: "💼 باز کردن صفحه WALLET و اتصال Tonkeeper",
                 menuHistory: "🕒 فعالیت و تاریخچه برداشت SLR",
-                menuRules: "📜 شرایط و قوانین SLR (هولد 5,000 • برداشت 5,000)",
+                menuRules: "📜 شرایط و قوانین SLR (هولد 5,000 • برداشت 20,000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
                 dockEarn: "Earn",
                 dockFriends: "دوست‌ها",
                 dockProfile: "Profile",
                 closeBtn: "بستن ✕",
-                walletModalSub: "اتصال Tonkeeper، استعلام هولد و برداشت 5,000 SLR",
+                walletModalSub: "تایید ولت، هولد 5,000 SLR و برداشت حداقل 20,000 SLR (کارمزد 1,000)",
                 verify005Ton: "تایید ولت با 0.05 TON",
                 verified005Ton: "✅ ولت تایید شد (0.05 TON)",
                 walletSyncTitle: "استعلام واقعی موجودی همین توکن در بلاکچین",
@@ -2120,9 +2097,9 @@
                 lblTxOptional: "ثبت هش تراکنش خرید (اختیاری):",
                 txPlaceholder: "هش تراکنش خرید در TON (اختیاری)",
                 saveTxBtn: "ثبت هش",
-                lblWithdrawAmt: "مقدار برداشت (حداقل 5,000 SLR):",
-                withdrawAmtPlaceholder: "مثلاً 5000",
-                withdrawAmtUnlockedPlaceholder: "مثلاً 5000",
+                lblWithdrawAmt: "مقدار برداشت (حداقل 20k • کارمزد 1,000 SLR):",
+                withdrawAmtPlaceholder: "حداقل 20,000",
+                withdrawAmtUnlockedPlaceholder: "حداقل 20,000",
                 lblWithdrawAddr: "آدرس کیف‌پول Tonkeeper متصل (واریز مستقیم):",
                 notConnectedAddr: "متصل نیست",
                 payoutTimeNote: "⏱ واریزی‌ها 1 الی 24 ساعت زمان می‌برد و مستقیم به Tonkeeper متصل واریز می‌شود.",
@@ -2205,7 +2182,7 @@
                 tile2Title: "Ежедневная награда",
                 dailyTileSub: "Получить бонус SLR",
                 tile3Title: "WALLET & HOLD",
-                tile3Sub: "Холд 5,000 • Вывод 5,000",
+                tile3Sub: "Холд 5,000 • Вывод 20,000",
                 tile4Title: "График SLR онлайн",
                 tile4Sub: "Цена и тренд STON.fi",
                 crewTitle: "Ваша команда (Холд SLR)",
@@ -2228,15 +2205,15 @@
                 chartSyncedPrefix: "Лента STON.fi • ",
                 chartNoPoolNote: "Подключено к сети STON.fi.",
                 earnHeading: "EARN",
-                earnSub: "Ежедневные награды, задания и холд от 5,000 SLR",
+                earnSub: "Ежедневные награды, задания, холд 5,000 и вывод 20,000 SLR",
                 dailyCardTitle: "Ежедневная награда SLR",
                 streakLabel: "Дней подряд",
                 dailyClaimBtn: "Ежедневная награда",
                 communityHeading: "Сообщество, задания X и боты",
                 onchainHeading: "ON-CHAIN холдеры (Подключённый кошелёк)",
-                onchainSub: "Для вывода от 5,000 SLR требуется холд минимум 5,000 SLR в кошельке.",
+                onchainSub: "Для разблокировки вывода нужны верификация кошелька, холд от 5,000 SLR и баланс от 20,000 SLR.",
                 earnBottomTitle: "📌 Статус вывода и холда SLR",
-                earnBottomDesc: "• Баланс для вывода: <b>Мин. 5,000 SLR</b><br>• Холд в кошельке: <b>Мин. 5,000 SLR</b><br>• Время выплаты: <b>от 1 до 24 часов</b>",
+                earnBottomDesc: "• Верификация кошелька: <b>0.05 TON</b><br>• Холд в кошельке: <b>Мин. 5,000 SLR</b><br>• Мин. вывод: <b>20,000 SLR</b> (Комиссия: <b>1,000 SLR</b>)<br>• Время выплаты: <b>от 1 до 24 часов</b>",
                 mainBalShort: "Основной баланс",
                 walletHoldShort: "Холд кошелька",
                 buySlrShort: "🛒 Купить SLR",
@@ -2254,17 +2231,17 @@
                 submitWithdrawBtn: "Withdraw",
                 totalHolding: "Всего HOLDING (Кошелёк)",
                 manageWalletPill: "Кошелёк ⓘ",
-                profileHoldHint: "Мин. холд: <b>5,000 SLR</b> • Мин. вывод: <b>5,000 SLR</b> • Выплата: <b>1–24ч</b>",
+                profileHoldHint: "Мин. холд: <b>5,000 SLR</b> • Мин. вывод: <b>20,000 SLR</b> (Комиссия: <b>1,000 SLR</b>) • Выплата: <b>1–24ч</b>",
                 menuWallet: "💼 Открыть WALLET и подключить Tonkeeper",
                 menuHistory: "🕒 История выводов SLR",
-                menuRules: "📜 Правила SLR (Холд 5,000 • Вывод 5,000)",
+                menuRules: "📜 Правила SLR (Холд 5,000 • Вывод 20,000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
                 dockEarn: "Earn",
                 dockFriends: "Друзья",
                 dockProfile: "Profile",
                 closeBtn: "Закрыть ✕",
-                walletModalSub: "Подключите Tonkeeper, проверьте холд SLR и выводите от 5,000 SLR",
+                walletModalSub: "Верификация, холд 5,000 SLR и вывод от 20,000 SLR (Комиссия 1,000)",
                 verify005Ton: "Подтвердить кошелёк за 0.05 TON",
                 verified005Ton: "✅ Кошелёк подтверждён (0.05 TON)",
                 walletSyncTitle: "Проверка реального холда SLR в блокчейне",
@@ -2274,9 +2251,9 @@
                 lblTxOptional: "Хэш транзакции покупки (необязательно):",
                 txPlaceholder: "Хэш транзакции TON (необязательно)",
                 saveTxBtn: "Записать TX",
-                lblWithdrawAmt: "Сумма вывода (Мин. 5,000 SLR):",
-                withdrawAmtPlaceholder: "например, 5000",
-                withdrawAmtUnlockedPlaceholder: "например, 5000",
+                lblWithdrawAmt: "Сумма вывода (Мин. 20k • Комиссия 1,000 SLR):",
+                withdrawAmtPlaceholder: "Мин. 20,000",
+                withdrawAmtUnlockedPlaceholder: "Мин. 20,000",
                 lblWithdrawAddr: "Адрес подключённого кошелька Tonkeeper:",
                 notConnectedAddr: "Не подключён",
                 payoutTimeNote: "⏱ Выплаты занимают от 1 до 24 часов напрямую на подключённый Tonkeeper.",
@@ -2359,7 +2336,7 @@
                 tile2Title: "每日奖励",
                 dailyTileSub: "领取每日 SLR 奖励",
                 tile3Title: "钱包与持仓",
-                tile3Sub: "持仓 5,000 • 提现 5,000",
+                tile3Sub: "持仓 5,000 • 提现 20,000",
                 tile4Title: "实时 SLR 图表",
                 tile4Sub: "STON.fi 价格与趋势",
                 crewTitle: "你的矿机团队 (SLR 持仓解锁)",
@@ -2382,15 +2359,15 @@
                 chartSyncedPrefix: "STON.fi 实时数据 • ",
                 chartNoPoolNote: "已连接 STON.fi 网络。",
                 earnHeading: "赚取奖励",
-                earnSub: "每日奖励、任务与 5,000 SLR 持仓要求",
+                earnSub: "每日奖励、任务、5,000 持仓与 20,000 SLR 提现",
                 dailyCardTitle: "每日奖励 SLR",
                 streakLabel: "连续天数",
                 dailyClaimBtn: "每日奖励",
                 communityHeading: "社区、X 任务与推荐机器人",
                 onchainHeading: "链上持仓者 (已连接钱包)",
-                onchainSub: "钱包中至少持有 5,000 SLR 才能解锁 5,000 SLR 提现。",
+                onchainSub: "需完成钱包验证、钱包持仓至少 5,000 SLR 且余额达到 20,000 SLR 才能解锁提现。",
                 earnBottomTitle: "📌 SLR 提现与持仓状态",
-                earnBottomDesc: "• 提现最低余额：<b>5,000 SLR</b><br>• 钱包最低持仓：<b>5,000 SLR</b><br>• 到账时间：<b>1 至 24 小时</b>",
+                earnBottomDesc: "• 钱包验证：需 <b>0.05 TON</b><br>• 钱包最低持仓：<b>5,000 SLR</b><br>• 最低提现余额：<b>20,000 SLR</b>（手续费：<b>1,000 SLR</b>）<br>• 到账时间：<b>1 至 24 小时</b>",
                 mainBalShort: "主余额",
                 walletHoldShort: "钱包持仓",
                 buySlrShort: "🛒 购买 SLR",
@@ -2408,17 +2385,17 @@
                 submitWithdrawBtn: "Withdraw",
                 totalHolding: "总持仓 (钱包)",
                 manageWalletPill: "钱包 ⓘ",
-                profileHoldHint: "最低持仓：<b>5,000 SLR</b> • 最低提现：<b>5,000 SLR</b> • 到账：<b>1–24小时</b>",
+                profileHoldHint: "最低持仓：<b>5,000 SLR</b> • 最低提现：<b>20,000 SLR</b>（手续费：<b>1,000 SLR</b>）• 到账：<b>1–24小时</b>",
                 menuWallet: "💼 打开钱包并连接 Tonkeeper",
                 menuHistory: "🕒 SLR 提现记录",
-                menuRules: "📜 SLR 规则 (持仓 5,000 • 提现 5,000)",
+                menuRules: "📜 SLR 规则 (持仓 5,000 • 提现 20,000)",
                 dockUpgrade: "升级",
                 dockChart: "图表",
                 dockEarn: "赚取",
                 dockFriends: "好友",
                 dockProfile: "个人",
                 closeBtn: "关闭 ✕",
-                walletModalSub: "连接 Tonkeeper，检查 SLR 持仓并提现 5,000+ SLR",
+                walletModalSub: "验证钱包、持仓 5,000 SLR 并提现 20,000+ SLR（手续费 1,000）",
                 verify005Ton: "使用 0.05 TON 验证钱包",
                 verified005Ton: "✅ 钱包已验证 (0.05 TON)",
                 walletSyncTitle: "链上真实 SLR 持仓验证",
@@ -2428,9 +2405,9 @@
                 lblTxOptional: "可选购买交易哈希凭证：",
                 txPlaceholder: "TON 交易哈希（可选）",
                 saveTxBtn: "记录 TX",
-                lblWithdrawAmt: "提现数量（最低 5,000 SLR）：",
-                withdrawAmtPlaceholder: "例如 5000",
-                withdrawAmtUnlockedPlaceholder: "例如 5000",
+                lblWithdrawAmt: "提现数量（最低 20k • 手续费 1,000 SLR）：",
+                withdrawAmtPlaceholder: "最低 20,000",
+                withdrawAmtUnlockedPlaceholder: "最低 20,000",
                 lblWithdrawAddr: "已连接的 Tonkeeper 钱包地址：",
                 notConnectedAddr: "未连接",
                 payoutTimeNote: "⏱ 提现将在 1 至 24 小时内直接发放至已连接的 Tonkeeper 钱包。",
@@ -2513,7 +2490,7 @@
                 tile2Title: "दैनिक इनाम",
                 dailyTileSub: "दैनिक SLR बोनस लें",
                 tile3Title: "वॉलेट और होल्ड",
-                tile3Sub: "होल्ड 5,000 • निकासी 5,000",
+                tile3Sub: "होल्ड 5,000 • निकासी 20,000",
                 tile4Title: "लाइव SLR चार्ट",
                 tile4Sub: "STON.fi मूल्य और ट्रेंड",
                 crewTitle: "आपका क्रू (SLR होल्ड यूनिट्स)",
@@ -2536,15 +2513,15 @@
                 chartSyncedPrefix: "STON.fi लाइव फ़ीड • ",
                 chartNoPoolNote: "STON.fi नेटवर्क से जुड़ा हुआ है।",
                 earnHeading: "कमाएं (EARN)",
-                earnSub: "दैनिक इनाम, टास्क और 5,000 SLR होल्ड नियम",
+                earnSub: "दैनिक इनाम, टास्क, 5,000 SLR होल्ड और 20,000 SLR निकासी",
                 dailyCardTitle: "दैनिक इनाम SLR",
                 streakLabel: "लगातार दिन",
                 dailyClaimBtn: "दैनिक इनाम",
                 communityHeading: "कम्युनिटी, X टास्क और बॉट्स",
                 onchainHeading: "ON-CHAIN होल्डर्स (जुड़ा हुआ वॉलेट)",
-                onchainSub: "5,000 SLR निकासी खोलने के लिए वॉलेट में कम से कम 5,000 SLR होल्ड ज़रूरी है।",
+                onchainSub: "निकासी खोलने के लिए वॉलेट सत्यापन, 5,000 SLR होल्ड और 20,000 SLR बैलेंस ज़रूरी है।",
                 earnBottomTitle: "📌 SLR निकासी और होल्ड स्थिति",
-                earnBottomDesc: "• निकासी हेतु न्यूनतम बैलेंस: <b>5,000 SLR</b><br>• वॉलेट में न्यूनतम होल्ड: <b>5,000 SLR</b><br>• भुगतान समय: <b>1 से 24 घंटे</b>",
+                earnBottomDesc: "• वॉलेट सत्यापन: <b>0.05 TON</b> ज़रूरी<br>• वॉलेट में न्यूनतम होल्ड: <b>5,000 SLR</b><br>• न्यूनतम निकासी: <b>20,000 SLR</b> (शुल्क: <b>1,000 SLR</b>)<br>• भुगतान समय: <b>1 से 24 घंटे</b>",
                 mainBalShort: "मुख्य बैलेंस",
                 walletHoldShort: "वॉलेट होल्ड",
                 buySlrShort: "🛒 SLR खरीदें",
@@ -2562,17 +2539,17 @@
                 submitWithdrawBtn: "Withdraw",
                 totalHolding: "कुल होल्डिंग (वॉलेट)",
                 manageWalletPill: "वॉलेट ⓘ",
-                profileHoldHint: "न्यूनतम होल्ड: <b>5,000 SLR</b> • न्यूनतम निकासी: <b>5,000 SLR</b> • भुगतान: <b>1–24 घंटे</b>",
+                profileHoldHint: "न्यूनतम होल्ड: <b>5,000 SLR</b> • न्यूनतम निकासी: <b>20,000 SLR</b> (शुल्क: <b>1,000 SLR</b>) • भुगतान: <b>1–24 घंटे</b>",
                 menuWallet: "💼 वॉलेट खोलें और Tonkeeper जोड़ें",
                 menuHistory: "🕒 SLR निकासी इतिहास",
-                menuRules: "📜 SLR नियम (होल्ड 5,000 • निकासी 5,000)",
+                menuRules: "📜 SLR नियम (होल्ड 5,000 • निकासी 20,000)",
                 dockUpgrade: "अपग्रेड",
                 dockChart: "चार्ट",
                 dockEarn: "कमाएं",
                 dockFriends: "दोस्त",
                 dockProfile: "प्रोफ़ाइल",
                 closeBtn: "बंद करें ✕",
-                walletModalSub: "Tonkeeper जोड़ें, SLR होल्ड जांचें और 5,000+ SLR निकालें",
+                walletModalSub: "वॉलेट सत्यापित करें, 5,000 SLR होल्ड करें और 20,000+ SLR निकालें (शुल्क 1,000)",
                 verify005Ton: "0.05 TON से वॉलेट सत्यापित करें",
                 verified005Ton: "✅ वॉलेट सत्यापित (0.05 TON)",
                 walletSyncTitle: "ब्लॉकचेन पर वास्तविक SLR होल्ड सत्यापन",
@@ -2582,9 +2559,9 @@
                 lblTxOptional: "वैकल्पिक खरीद TX हैश प्रमाण:",
                 txPlaceholder: "TON ट्रांजैक्शन हैश (वैकल्पिक)",
                 saveTxBtn: "TX दर्ज करें",
-                lblWithdrawAmt: "निकासी राशि (न्यूनतम 5,000 SLR):",
-                withdrawAmtPlaceholder: "उदा. 5000",
-                withdrawAmtUnlockedPlaceholder: "उदा. 5000",
+                lblWithdrawAmt: "निकासी राशि (न्यूनतम 20k • शुल्क 1,000 SLR):",
+                withdrawAmtPlaceholder: "न्यूनतम 20,000",
+                withdrawAmtUnlockedPlaceholder: "न्यूनतम 20,000",
                 lblWithdrawAddr: "जुड़ा हुआ Tonkeeper वॉलेट पता:",
                 notConnectedAddr: "जुड़ा नहीं है",
                 payoutTimeNote: "⏱ भुगतान सीधे आपके जुड़े Tonkeeper वॉलेट में 1 से 24 घंटे में आता है।",
@@ -2667,7 +2644,7 @@
                 tile2Title: "Tagesbelohnung",
                 dailyTileSub: "Täglichen SLR-Bonus holen",
                 tile3Title: "WALLET & HOLD",
-                tile3Sub: "Hold 5.000 • Auszahlung 5.000",
+                tile3Sub: "Hold 5.000 • Auszahlung 20.000",
                 tile4Title: "Live SLR-Chart",
                 tile4Sub: "STON.fi Kurs & Trend",
                 crewTitle: "Deine Crew (SLR Hold Einheiten)",
@@ -2690,15 +2667,15 @@
                 chartSyncedPrefix: "STON.fi Live-Feed • ",
                 chartNoPoolNote: "Mit STON.fi-Netzwerk verbunden.",
                 earnHeading: "VERDIENEN",
-                earnSub: "Tagesbelohnungen, Aufgaben & 5.000 SLR Hold-Pflicht",
+                earnSub: "Tagesbelohnungen, Aufgaben, 5.000 Hold & 20.000 SLR Auszahlung",
                 dailyCardTitle: "Tagesbelohnung SLR",
                 streakLabel: "Tage in Folge",
                 dailyClaimBtn: "Tagesbelohnung",
                 communityHeading: "Community, X-Aufgaben & Bots",
                 onchainHeading: "ON-CHAIN Halter (Verbundenes Wallet)",
-                onchainSub: "Mindestens 5.000 SLR im Wallet sind nötig, um 5.000 SLR Auszahlung freizuschalten.",
+                onchainSub: "Wallet-Verifizierung, 5.000 SLR Hold & 20.000 SLR Guthaben sind für Auszahlungen nötig.",
                 earnBottomTitle: "📌 SLR Auszahlungs- & Hold-Status",
-                earnBottomDesc: "• Mindestguthaben für Auszahlung: <b>5.000 SLR</b><br>• Mindest-Hold im Wallet: <b>5.000 SLR</b><br>• Auszahlungsdauer: <b>1 bis 24 Stunden</b>",
+                earnBottomDesc: "• Wallet-Verifizierung: <b>0,05 TON</b> erforderlich<br>• Hold im Wallet: <b>Min. 5.000 SLR</b><br>• Min. Auszahlung: <b>20.000 SLR</b> (Gebühr: <b>1.000 SLR</b>)<br>• Auszahlungsdauer: <b>1 bis 24 Stunden</b>",
                 mainBalShort: "Hauptguthaben",
                 walletHoldShort: "Wallet Hold",
                 buySlrShort: "🛒 SLR kaufen",
@@ -2716,17 +2693,17 @@
                 submitWithdrawBtn: "Withdraw",
                 totalHolding: "Gesamt HOLDING (Wallet)",
                 manageWalletPill: "Wallet ⓘ",
-                profileHoldHint: "Min. Hold: <b>5.000 SLR</b> • Min. Auszahlung: <b>5.000 SLR</b> • Auszahlung: <b>1–24h</b>",
+                profileHoldHint: "Min. Hold: <b>5.000 SLR</b> • Min. Auszahlung: <b>20.000 SLR</b> (Gebühr: <b>1.000 SLR</b>) • Auszahlung: <b>1–24h</b>",
                 menuWallet: "💼 WALLET öffnen & Tonkeeper verbinden",
                 menuHistory: "🕒 SLR Auszahlungsverlauf",
-                menuRules: "📜 SLR Regeln (Hold 5.000 • Auszahlung 5.000)",
+                menuRules: "📜 SLR Regeln (Hold 5.000 • Auszahlung 20.000)",
                 dockUpgrade: "Upgrade",
                 dockChart: "Chart",
                 dockEarn: "Earn",
                 dockFriends: "Freunde",
                 dockProfile: "Profil",
                 closeBtn: "Schließen ✕",
-                walletModalSub: "Tonkeeper verbinden, SLR Hold prüfen & ab 5.000 SLR auszahlen",
+                walletModalSub: "Verifizieren, 5.000 SLR halten & ab 20.000 SLR auszahlen (Gebühr 1.000)",
                 verify005Ton: "Wallet mit 0,05 TON verifizieren",
                 verified005Ton: "✅ Wallet verifiziert (0,05 TON)",
                 walletSyncTitle: "Echte On-Chain SLR Hold-Prüfung",
@@ -2736,9 +2713,9 @@
                 lblTxOptional: "Optionaler Kauf-TX-Hash-Nachweis:",
                 txPlaceholder: "TON Transaktions-Hash (optional)",
                 saveTxBtn: "TX speichern",
-                lblWithdrawAmt: "Auszahlungsbetrag (Min. 5.000 SLR):",
-                withdrawAmtPlaceholder: "z. B. 5000",
-                withdrawAmtUnlockedPlaceholder: "z. B. 5000",
+                lblWithdrawAmt: "Auszahlungsbetrag (Min. 20k • Gebühr 1.000 SLR):",
+                withdrawAmtPlaceholder: "Min. 20.000",
+                withdrawAmtUnlockedPlaceholder: "Min. 20.000",
                 lblWithdrawAddr: "Verbundene Tonkeeper Wallet-Adresse:",
                 notConnectedAddr: "Nicht verbunden",
                 payoutTimeNote: "⏱ Auszahlungen dauern 1 bis 24 Stunden direkt auf dein verbundenes Tonkeeper-Wallet.",
@@ -2950,7 +2927,7 @@
             claimedHoldTiers: [],
             streak: 0,
             lastDailyClaim: 0,
-            lockStartAt: Date.now() - (15 * 24 * 60 * 60 * 1000),
+            lockStartAt: Date.now(),
             lastTick: Date.now(),
             isVerifiedWallet: false,
             telegramId: "1007321991",
@@ -2981,14 +2958,6 @@
         let isCheckingOnchain = false;
         let isRefreshingCardWallet = false;
         let isFetchingMarket = false;
-
-        function getRemainingLockInfo() {
-            return {
-                locked: false,
-                days: 0,
-                hours: 0
-            };
-        }
 
         function getUserReferralCode() {
             const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
@@ -3542,7 +3511,6 @@
             if (!Object.prototype.hasOwnProperty.call(i18n, state.lang)) state.lang = "en-us";
             if (!Array.isArray(state.openedXTasks)) state.openedXTasks = [];
             if (!state.submittedXLinks || typeof state.submittedXLinks !== "object") state.submittedXLinks = {};
-            state.lockStartAt = Date.now() - (15 * 24 * 60 * 60 * 1000);
 
             state.completedTasks = (state.completedTasks || []).filter(id => {
                 if (id === "buy_slr" && state.walletHold < MIN_HOLD_SLR) return false;
@@ -3581,7 +3549,12 @@
         }
 
         function isWithdrawUnlocked() {
-            return !!tonConnectUI.connected;
+            return (
+                !!tonConnectUI.connected &&
+                !!state.isVerifiedWallet &&
+                state.walletHold >= MIN_HOLD_SLR &&
+                state.balance >= MIN_WITHDRAW_SLR
+            );
         }
 
         async function refreshWalletBalanceFromCard() {
@@ -4020,10 +3993,8 @@
             showTransientMessage(state.lang === "fa" ? "✅ پاداش دوست‌ها اضافه شد." : "✅ Referral rewards claimed.");
         }
 
-        function calcWithdrawFee(amount) {
-            if (amount >= 100000) return 1000;
-            if (amount >= 50000) return 500;
-            return 250;
+        function calcWithdrawFee() {
+            return WITHDRAW_FEE_SLR;
         }
 
         function notifyAdminWithdraw(record) {
@@ -4058,13 +4029,37 @@
                 showTransientMessage(state.lang === "fa" ? "⚠️ ابتدا کیف‌پول Tonkeeper خود را وصل کنید." : "⚠️ Please connect your Tonkeeper wallet first.");
                 return;
             }
+            if (!state.isVerifiedWallet) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? "🔒 برداشت قفل است! ابتدا تایید ولت (0.05 TON) را انجام دهید."
+                        : "🔒 Withdrawal is locked! Complete wallet verification (0.05 TON) first."
+                );
+                return;
+            }
+            if (state.walletHold < MIN_HOLD_SLR) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? `🔒 برداشت قفل است! باید حداقل ${MIN_HOLD_SLR.toLocaleString()} SLR در ولت متصل هولد کنید.`
+                        : `🔒 Withdrawal is locked! Hold at least ${MIN_HOLD_SLR.toLocaleString()} SLR in your connected wallet.`
+                );
+                return;
+            }
+            if (state.balance < MIN_WITHDRAW_SLR) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? `🔒 برداشت قفل است! حداقل موجودی برداشت ${MIN_WITHDRAW_SLR.toLocaleString()} SLR است.`
+                        : `🔒 Withdrawal is locked! Minimum balance required is ${MIN_WITHDRAW_SLR.toLocaleString()} SLR.`
+                );
+                return;
+            }
 
             const amount = parseFloat(document.getElementById("withdraw-slr-amount").value) || 0;
             if (amount < MIN_WITHDRAW_SLR) {
                 showTransientMessage(
                     state.lang === "fa"
-                        ? `❌ حداقل برداشت ${MIN_WITHDRAW_SLR.toLocaleString()} SLR است.`
-                        : `❌ Minimum withdrawal is ${MIN_WITHDRAW_SLR.toLocaleString()} SLR.`
+                        ? `❌ حداقل مقدار برداشت ${MIN_WITHDRAW_SLR.toLocaleString()} SLR است.`
+                        : `❌ Minimum withdrawal amount is ${MIN_WITHDRAW_SLR.toLocaleString()} SLR.`
                 );
                 return;
             }
@@ -4073,7 +4068,7 @@
                 return;
             }
 
-            const fee = calcWithdrawFee(amount);
+            const fee = calcWithdrawFee();
             const net = Math.max(0, amount - fee);
             state.balance -= amount;
             const withdrawRecord = {
@@ -4091,8 +4086,8 @@
             closeModal("wallet-modal");
             showTransientMessage(
                 state.lang === "fa"
-                    ? `✅ درخواست برداشت ${amount.toLocaleString()} SLR ثبت شد و پیام ارسال گردید.`
-                    : `✅ Withdrawal of ${amount.toLocaleString()} SLR submitted & sent.`
+                    ? `✅ درخواست برداشت ${amount.toLocaleString()} SLR ثبت شد (کارمزد ${fee.toLocaleString()} SLR).`
+                    : `✅ Withdrawal of ${amount.toLocaleString()} SLR submitted (Fee ${fee.toLocaleString()} SLR).`
             );
         }
 
@@ -4120,14 +4115,14 @@
                 • آدرس قرارداد توکن: <b style="font-family:monospace; font-size:10px;">${slrTokenAddress}</b><br>
                 • تایید ولت برای فعال‌سازی واحد اول و استخراج: <b>0.05 TON</b><br>
                 • فعال‌سازی واحدهای بالاتر با هولد واقعی SLR در ولت: <b>500 / 1,800 / 4,500 / 10,000 / 25,000 SLR</b><br>
-                • حداقل موجودی برای برداشت: <b>5,000 SLR</b> و حداقل هولد <b>5,000 SLR</b><br>
-                • زمان واریز مستقیم به Tonkeeper متصل: <b>1 الی 24 ساعت</b>
+                • شرایط باز شدن قفل برداشت: <b>تایید ولت</b> + <b>هولد 5,000 SLR</b> در ولت + <b>موجودی حداقل 20,000 SLR</b><br>
+                • کارمزد برداشت: <b>1,000 SLR</b> • زمان واریز مستقیم به Tonkeeper متصل: <b>1 الی 24 ساعت</b>
             ` : `
                 • Token contract: <b style="font-family:monospace; font-size:10px;">${slrTokenAddress}</b><br>
                 • Wallet verification for Unit 1 & mining: <b>0.05 TON</b><br>
                 • Higher units unlock by holding SLR in wallet: <b>500 / 1,800 / 4,500 / 10,000 / 25,000 SLR</b><br>
-                • Minimum withdrawal: <b>5,000 SLR</b> (requires <b>5,000 SLR</b> wallet hold)<br>
-                • Payout time to connected Tonkeeper: <b>1 to 24 hours</b>
+                • Withdrawal unlock requirements: <b>Wallet Verified</b> + <b>5,000 SLR Hold</b> + <b>20,000 SLR Balance</b><br>
+                • Withdrawal fee: <b>1,000 SLR</b> • Payout time to connected Tonkeeper: <b>1 to 24 hours</b>
             `;
             document.getElementById("info-modal").style.display = "flex";
         }
@@ -4140,6 +4135,7 @@
             const connectedAddress = tonConnectUI.account?.address || "";
             const mainBal = getMainDisplayBalance();
             const verified = !!state.isVerifiedWallet;
+            const unlocked = isWithdrawUnlocked();
             const activeCount = crewUnits.filter(u => isUnitActive(u)).length;
 
             document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
@@ -4389,9 +4385,9 @@
                 : "";
 
             const amtInput = document.getElementById("withdraw-slr-amount");
-            amtInput.disabled = false;
+            amtInput.disabled = !unlocked;
             document.getElementById("lbl-withdraw-amt").innerText = t("lblWithdrawAmt");
-            amtInput.placeholder = t("withdrawAmtUnlockedPlaceholder");
+            amtInput.placeholder = unlocked ? t("withdrawAmtUnlockedPlaceholder") : t("withdrawAmtPlaceholder");
 
             document.getElementById("lbl-withdraw-addr").innerText = t("lblWithdrawAddr");
             document.getElementById("connected-wallet-display").innerText = (connected && connectedAddress)
@@ -4402,10 +4398,17 @@
             document.getElementById("submit-withdraw-btn").innerText = t("submitWithdrawBtn");
 
             const alertBox = document.getElementById("wallet-rule-alert");
-            alertBox.className = "alert-hold-box ok";
-            alertBox.innerHTML = state.lang === "fa"
-                ? `✅ حالت تست برداشت فعال است • حداقل برداشت: <b>5,000 SLR</b> • موجودی شما: <b>${Math.floor(state.balance).toLocaleString()} SLR</b>.`
-                : `✅ Test withdrawal mode active • Min withdrawal: <b>5,000 SLR</b> • Balance: <b>${Math.floor(state.balance).toLocaleString()} SLR</b>.`;
+            if (unlocked) {
+                alertBox.className = "alert-hold-box ok";
+                alertBox.innerHTML = state.lang === "fa"
+                    ? `✅ قفل برداشت باز شد • تایید ولت انجام شده • هولد: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLR</b> • موجودی: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLR</b>.`
+                    : `✅ Withdrawal unlocked • Wallet verified • Hold: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLR</b> • Balance: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLR</b>.`;
+            } else {
+                alertBox.className = "alert-hold-box";
+                alertBox.innerHTML = state.lang === "fa"
+                    ? `🔒 کادر برداشت قفل است • برای برداشت باید <b>تایید ولت (0.05 TON)</b> انجام شود، <b>5,000 SLR</b> در ولت متصل هولد شود و موجودی برداشت به <b>20,000 SLR</b> برسد • موجودی: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLR</b> • هولد ولت: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLR</b>.`
+                    : `🔒 Withdrawal is locked • Requires <b>0.05 TON wallet verification</b>, <b>5,000 SLR wallet hold</b>, and <b>20,000 SLR balance</b> • Balance: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLR</b> • Hold: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLR</b>.`;
+            }
 
             const vBtn = document.getElementById("verify-wallet-btn");
             if (verified) {
