@@ -1457,7 +1457,7 @@
                 </div>
                 <div class="feature-tile tile-3" onclick="openWalletModal()">
                     <div class="tile-title" id="tile3-title">WALLET & HOLD</div>
-                    <div class="tile-sub" id="tile3-sub">Hold 5,000 • Withdraw 20,000</div>
+                    <div class="tile-sub" id="tile3-sub">Test Withdraw Unlocked</div>
                 </div>
                 <div class="feature-tile tile-4" onclick="switchView('chart')">
                     <div class="tile-title" id="tile4-title">Live SLR Chart</div>
@@ -1544,7 +1544,7 @@
 
         <div id="view-earn" class="view-section">
             <div class="section-heading" id="earn-heading">EARN</div>
-            <div class="section-sub" id="earn-sub">Daily rewards, tasks, 5,000 SLR hold & 20,000 SLR withdrawal</div>
+            <div class="section-sub" id="earn-sub">Daily rewards, tasks & test withdrawal enabled</div>
 
             <div class="daily-gold-card">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1572,7 +1572,7 @@
             <div id="community-tasks-list"></div>
 
             <div style="font-size:15px; font-weight:900; margin:14px 0 4px;" id="onchain-hold-heading">ON-CHAIN Holders (Connected Wallet)</div>
-            <div class="section-sub" id="onchain-hold-sub">Wallet verification + 5,000 SLR hold + 20,000 SLR balance are required to unlock withdrawal.</div>
+            <div class="section-sub" id="onchain-hold-sub">Test withdrawal mode is active right now.</div>
             <div id="onchain-hold-tiers"></div>
 
             <div class="earn-bottom-box">
@@ -1680,7 +1680,7 @@
                 <span>&rsaquo;</span>
             </div>
             <div class="menu-list-item" onclick="openRulesModal()">
-                <span id="menu-rules">📜 SLR Rules (Hold 5,000 • Withdraw 20,000)</span>
+                <span id="menu-rules">📜 SLR Rules (Test Withdraw Active)</span>
                 <span>&rsaquo;</span>
             </div>
         </div>
@@ -1806,7 +1806,6 @@
         const WALLET_VERIFY_TON = 0.05;
         const WITHDRAW_FEE_SLR = 1000;
 
-        // حالت تست برداشت فعال است: بدون نیاز به هولد 5,000 یا موجودی 20,000
         const TEST_WITHDRAW_MODE = true;
         const MIN_TEST_WITHDRAW_SLR = 100;
 
@@ -1843,7 +1842,7 @@
             return out.replace(/\+/g, "-").replace(/\//g, "_");
         }
 
-        function formatTonAddressToUQ(rawOrFriendly) {
+        function normalizeTonAddressToUQ(rawOrFriendly) {
             const addr = String(rawOrFriendly || "").trim();
             if (!addr) return "";
 
@@ -1873,6 +1872,17 @@
             full.set(body, 0);
             full.set(sig, 34);
             return bytesToBase64Url(full);
+        }
+
+        function getActiveConnectedWalletAddress() {
+            const liveRaw = tonConnectUI?.account?.address || "";
+            if (liveRaw) {
+                return normalizeTonAddressToUQ(liveRaw);
+            }
+            if (tonConnectUI?.connected && state.lastWalletAddress) {
+                return normalizeTonAddressToUQ(state.lastWalletAddress);
+            }
+            return state.lastWalletAddress ? normalizeTonAddressToUQ(state.lastWalletAddress) : "";
         }
 
         const twitterFollowUrl = "https://x.com/void_R_walker";
@@ -2066,16 +2076,8 @@
         };
 
         const i18n = {
-            "en-us": {
-                ...baseEnglishPack,
-                flag: "🇺🇸",
-                shortName: "United States"
-            },
-            "en-gb": {
-                ...baseEnglishPack,
-                flag: "🇬🇧",
-                shortName: "United Kingdom"
-            },
+            "en-us": { ...baseEnglishPack, flag: "🇺🇸", shortName: "United States" },
+            "en-gb": { ...baseEnglishPack, flag: "🇬🇧", shortName: "United Kingdom" },
             fa: {
                 dir: "rtl",
                 flag: "🇮🇷",
@@ -2230,26 +2232,10 @@
                     cherry_play: { title: "CHERRY PLAY", desc: "ورود به بازی از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" }
                 }
             },
-            ru: {
-                ...baseEnglishPack,
-                flag: "🇷🇺",
-                shortName: "Russia"
-            },
-            zh: {
-                ...baseEnglishPack,
-                flag: "🇨🇳",
-                shortName: "China"
-            },
-            hi: {
-                ...baseEnglishPack,
-                flag: "🇮🇳",
-                shortName: "India"
-            },
-            de: {
-                ...baseEnglishPack,
-                flag: "🇩🇪",
-                shortName: "Germany"
-            }
+            ru: { ...baseEnglishPack, flag: "🇷🇺", shortName: "Russia" },
+            zh: { ...baseEnglishPack, flag: "🇨🇳", shortName: "China" },
+            hi: { ...baseEnglishPack, flag: "🇮🇳", shortName: "India" },
+            de: { ...baseEnglishPack, flag: "🇩🇪", shortName: "Germany" }
         };
 
         const communityTasks = [
@@ -2449,14 +2435,14 @@
             tonConnectUI.uiOptions = { buttonRootId: "ton-connect-button-container" };
             tonConnectUI.onStatusChange(async (wallet) => {
                 const rawAddr = wallet?.account?.address || "";
-                const nextAddr = formatTonAddressToUQ(rawAddr);
+                const nextAddr = normalizeTonAddressToUQ(rawAddr);
                 if (!wallet || !nextAddr) {
                     state.walletHold = 0;
                     state.lastWalletAddress = "";
                     syncHoldCrewUnlocks();
                     saveState();
                 } else {
-                    if (state.lastWalletAddress && formatTonAddressToUQ(state.lastWalletAddress) !== nextAddr) {
+                    if (state.lastWalletAddress && normalizeTonAddressToUQ(state.lastWalletAddress) !== nextAddr) {
                         state.walletHold = 0;
                     }
                     state.lastWalletAddress = nextAddr;
@@ -2984,7 +2970,7 @@
             if (state.lang === "en") state.lang = "en-us";
             if (!Object.prototype.hasOwnProperty.call(i18n, state.lang)) state.lang = "en-us";
             if (state.lastWalletAddress) {
-                state.lastWalletAddress = formatTonAddressToUQ(state.lastWalletAddress);
+                state.lastWalletAddress = normalizeTonAddressToUQ(state.lastWalletAddress);
             }
             if (!Array.isArray(state.openedXTasks)) state.openedXTasks = [];
             if (!state.submittedXLinks || typeof state.submittedXLinks !== "object") state.submittedXLinks = {};
@@ -3073,7 +3059,7 @@
 
             try {
                 const rawConnectedAddr = tonConnectUI.account.address;
-                const formattedConnectedAddr = formatTonAddressToUQ(rawConnectedAddr);
+                const formattedConnectedAddr = normalizeTonAddressToUQ(rawConnectedAddr);
                 const ownerAddress = encodeURIComponent(rawConnectedAddr);
                 const jettonMaster = encodeURIComponent(slrTokenAddress);
                 const endpoint = `https://tonapi.io/v2/accounts/${ownerAddress}/jettons/${jettonMaster}`;
@@ -3218,6 +3204,11 @@
 
         function openWalletModal() {
             closeLanguageMenu();
+            if (tonConnectUI?.account?.address) {
+                state.lastWalletAddress = normalizeTonAddressToUQ(tonConnectUI.account.address);
+                saveState();
+            }
+            renderAll();
             document.getElementById("wallet-modal").style.display = "flex";
             elevateTonConnectModal();
         }
@@ -3481,7 +3472,7 @@
         function notifyAdminWithdraw(record) {
             if (!ADMIN_WITHDRAW_WEBHOOK_URL) return;
             const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
-            const formattedAddr = formatTonAddressToUQ(record.address);
+            const formattedAddr = normalizeTonAddressToUQ(record.address);
             const payload = {
                 token: "SLR",
                 contractAddress: slrTokenAddress,
@@ -3507,8 +3498,20 @@
         }
 
         function submitSlrWithdraw() {
-            const rawConnected = tonConnectUI.account?.address || state.lastWalletAddress || recipientWalletAddress;
-            const connectedAddress = formatTonAddressToUQ(rawConnected) || recipientWalletAddress;
+            const liveRaw = tonConnectUI?.account?.address || "";
+            if (liveRaw) {
+                state.lastWalletAddress = normalizeTonAddressToUQ(liveRaw);
+            }
+            const connectedAddress = getActiveConnectedWalletAddress();
+
+            if (!connectedAddress) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? "⚠️ ابتدا کیف‌پول Tonkeeper خود را متصل کنید تا آدرس دقیق ولت ثبت شود."
+                        : "⚠️ Connect your Tonkeeper wallet first so your exact wallet address is recorded."
+                );
+                return;
+            }
 
             if (!TEST_WITHDRAW_MODE) {
                 if (!tonConnectUI.connected) {
@@ -3575,8 +3578,8 @@
             closeModal("wallet-modal");
             showTransientMessage(
                 state.lang === "fa"
-                    ? `✅ درخواست برداشت تستی ${amount.toLocaleString()} SLR ارسال شد (خالص: ${net.toLocaleString()} SLR).`
-                    : `✅ Test withdrawal of ${amount.toLocaleString()} SLR sent (Net: ${net.toLocaleString()} SLR).`
+                    ? `✅ درخواست برداشت تستی ${amount.toLocaleString()} SLR روی آدرس ${connectedAddress.slice(0, 6)}...${connectedAddress.slice(-4)} ارسال شد.`
+                    : `✅ Test withdrawal of ${amount.toLocaleString()} SLR sent for ${connectedAddress.slice(0, 6)}...${connectedAddress.slice(-4)}.`
             );
         }
 
@@ -3588,7 +3591,7 @@
                 body.innerHTML = `<div style='color:#6b7280; text-align:center; padding:16px;'>${state.lang === "fa" ? "هنوز برداشتی ثبت نشده است." : "No withdrawals recorded yet."}</div>`;
             } else {
                 body.innerHTML = state.withdrawHistory.map(h => {
-                    const formattedHistAddr = formatTonAddressToUQ(h.address);
+                    const formattedHistAddr = normalizeTonAddressToUQ(h.address);
                     return `
                         <div style="background:#f5f8f3; border-radius:12px; padding:10px; margin-bottom:8px;">
                             <div><b>-${h.amount.toLocaleString()} SLR</b> (${state.lang === "fa" ? "خالص" : "Net"}: ${h.net.toLocaleString()})</div>
@@ -3620,8 +3623,7 @@
             const daily = getDailyRate();
             const lvl = getLevel();
             const connected = !!tonConnectUI.connected;
-            const rawConnectedAddress = tonConnectUI.account?.address || state.lastWalletAddress || recipientWalletAddress;
-            const connectedAddress = formatTonAddressToUQ(rawConnectedAddress);
+            const connectedAddress = getActiveConnectedWalletAddress();
             const mainBal = getMainDisplayBalance();
             const verified = !!state.isVerifiedWallet;
             const unlocked = isWithdrawUnlocked();
