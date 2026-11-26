@@ -33,6 +33,7 @@
             --border-light: #e5e7eb;
             --splash-img: url("./image_11f9a1db.jpg");
             --coin-img: url("./image_1be087b2.jpg");
+            --bank-card-img: url("./image_96fd9f2b.jpg");
         }
 
         body {
@@ -275,142 +276,147 @@
         .mine-hero-card {
             background: var(--card-bg);
             border-radius: 24px;
-            padding: 12px;
+            padding: 10px;
             box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
             margin-bottom: 12px;
         }
 
         .solaris-bank-card {
-            border-radius: 22px;
-            padding: 16px 16px;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            min-height: 255px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
             color: #1c1917;
-            background:
-                radial-gradient(circle at 50% 45%, rgba(254, 249, 195, 0.48), transparent 62%),
-                repeating-radial-gradient(circle at 20% 20%, rgba(120, 53, 15, 0.08) 0px, rgba(120, 53, 15, 0.08) 2px, transparent 2px, transparent 8px),
-                linear-gradient(145deg, #fde047 0%, #eab308 50%, #b45309 100%);
-            border: 1.5px solid rgba(254, 249, 195, 0.95);
+            background-color: #291504;
+            background-image: var(--bank-card-img);
+            background-position: center center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            border: 1.5px solid rgba(254, 249, 195, 0.9);
             box-shadow:
-                0 16px 28px rgba(146, 64, 14, 0.34),
-                inset 0 2px 2px rgba(255, 255, 255, 0.78),
-                inset 0 -4px 10px rgba(120, 53, 15, 0.45);
-            position: relative;
+                0 14px 26px rgba(120, 53, 15, 0.34),
+                inset 0 1px 2px rgba(255, 255, 255, 0.65);
         }
 
-        .card-top-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 4px;
-        }
-
-        .emv-chip {
-            width: 44px;
-            height: 31px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #fef9c3, #d97706, #fef08a);
-            border: 1px solid rgba(120, 53, 15, 0.75);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.85);
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .emv-chip::before {
-            content: "";
+        .card-slot-box {
             position: absolute;
-            inset: 6px;
-            border: 1px solid rgba(120, 53, 15, 0.55);
-            border-radius: 4px;
+            top: 16.5%;
+            height: 15.2%;
+            border-radius: 10px;
+            padding: 3px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .card-slot-box.left-slot {
+            left: 5.5%;
+            width: 34.5%;
+        }
+
+        .card-slot-box.right-slot {
+            right: 5.5%;
+            width: 34.5%;
+        }
+
+        .card-slot-label {
+            font-size: clamp(8.5px, 2.3vw, 10.5px);
+            font-weight: 900;
+            line-height: 1.15;
+            color: #241203;
+            text-shadow: 0 1px 0 rgba(255, 251, 235, 0.7);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .card-slot-value {
+            font-size: clamp(10.5px, 2.9vw, 14.5px);
+            font-weight: 900;
+            line-height: 1.2;
+            letter-spacing: 0.2px;
+            color: #140c05;
+            text-shadow:
+                0 1px 0 rgba(255, 251, 235, 0.85),
+                0 1px 3px rgba(69, 26, 3, 0.35);
+            margin-top: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
 
         @keyframes cardWalletSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         .card-wallet-refresh-btn {
-            width: 34px;
-            height: 34px;
+            position: absolute;
+            top: 52.5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            border: 1px solid rgba(255, 251, 235, 0.85);
-            background: rgba(69, 26, 3, 0.24);
-            color: #fffbeb;
+            border: 1.5px solid rgba(254, 240, 138, 0.9);
+            background: rgba(17, 24, 39, 0.62);
+            color: #fef08a;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 3px 8px rgba(69, 26, 3, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+            box-shadow:
+                0 0 14px rgba(253, 224, 71, 0.55),
+                inset 0 1px 2px rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(4px);
-            flex-shrink: 0;
+            z-index: 5;
             transition: transform 0.15s ease, background 0.2s ease;
         }
 
         .card-wallet-refresh-btn:active {
-            transform: scale(0.92);
+            transform: translate(-50%, -50%) scale(0.92);
         }
 
-        .card-wallet-refresh-btn.spinning svg {
+        .card-wallet-refresh-btn.spinning {
             animation: cardWalletSpin 0.8s linear infinite;
         }
 
-        .card-engraved-stack {
-            padding: 8px 6px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .card-engraved-row {
-            background: rgba(120, 53, 15, 0.14);
-            border: 1px solid rgba(255, 251, 235, 0.45);
-            box-shadow:
-                inset 0 2px 5px rgba(69, 26, 3, 0.35),
-                0 1px 1px rgba(255, 254, 240, 0.65);
-            border-radius: 14px;
-            padding: 8px 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-
-        .card-engraved-label {
-            font-size: 12px;
-            font-weight: 900;
-            letter-spacing: 0.4px;
-            color: #291504;
-            text-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.65),
-                0 -1px 0 rgba(69, 26, 3, 0.35);
-            white-space: nowrap;
-        }
-
-        .card-engraved-value-3d {
-            font-size: 19px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            color: #1c1917;
-            text-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.8),
-                0 2px 3px rgba(69, 26, 3, 0.45),
-                0 4px 8px rgba(120, 53, 15, 0.3);
-            text-align: right;
-        }
-
-        .card-engraved-value-3d.primary {
-            font-size: 22px;
-        }
-
         .card-bottom-buy-btn {
-            width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.92);
-            border-radius: 14px;
-            padding: 11px 14px;
-            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-            color: #111827;
-            font-size: 13px;
+            position: absolute;
+            left: 19%;
+            right: 19%;
+            bottom: 7.2%;
+            height: 12.2%;
+            border: 1px solid rgba(255, 251, 235, 0.75);
+            border-radius: 12px;
+            padding: 0 10px;
+            background: linear-gradient(180deg, rgba(254, 240, 138, 0.92) 0%, rgba(217, 119, 6, 0.94) 100%);
+            color: #1c1917;
+            font-size: clamp(10.5px, 2.8vw, 13px);
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 5px 14px rgba(120, 53, 15, 0.24), inset 0 1px 0 #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            box-shadow:
+                0 4px 12px rgba(24, 12, 2, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.75);
+            z-index: 5;
+        }
+
+        .card-bottom-buy-btn:active {
+            transform: scale(0.98);
         }
 
         .claim-box-center {
@@ -1388,27 +1394,23 @@
         <div id="view-upgrade" class="view-section active">
             <div class="mine-hero-card">
                 <div class="solaris-bank-card">
-                    <div class="card-top-row">
-                        <div class="emv-chip"></div>
-                        <button type="button" class="card-wallet-refresh-btn" id="card-wallet-refresh-btn" onclick="refreshWalletBalanceFromCard()" title="Refresh Wallet Balance" aria-label="Refresh Wallet Balance">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                                <path d="M3 3v5h5"></path>
-                                <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
-                                <path d="M16 16h5v5"></path>
-                            </svg>
-                        </button>
+                    <div class="card-slot-box left-slot">
+                        <span class="card-slot-label" id="lbl-card-wallet-hold">TON wallet Hold</span>
+                        <span class="card-slot-value" id="card-wallet-hold">0 SLR</span>
                     </div>
 
-                    <div class="card-engraved-stack">
-                        <div class="card-engraved-row">
-                            <span class="card-engraved-label" id="lbl-card-wallet-hold">TON wallet Hold</span>
-                            <span class="card-engraved-value-3d primary" id="card-wallet-hold">0 SLR</span>
-                        </div>
-                        <div class="card-engraved-row">
-                            <span class="card-engraved-label" id="lbl-card-inapp-slr">In-app SLR</span>
-                            <span class="card-engraved-value-3d" id="card-inapp-slr">0 SLR</span>
-                        </div>
+                    <button type="button" class="card-wallet-refresh-btn" id="card-wallet-refresh-btn" onclick="refreshWalletBalanceFromCard()" title="Refresh Wallet Balance" aria-label="Refresh Wallet Balance">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                            <path d="M3 3v5h5"></path>
+                            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+                            <path d="M16 16h5v5"></path>
+                        </svg>
+                    </button>
+
+                    <div class="card-slot-box right-slot">
+                        <span class="card-slot-label" id="lbl-card-inapp-slr">In-app SLR</span>
+                        <span class="card-slot-value" id="card-inapp-slr">0 SLR</span>
                     </div>
 
                     <button class="card-bottom-buy-btn" id="card-buy-btn" onclick="copyAndGoBuyToken()">
@@ -1799,6 +1801,7 @@
     <script>
         const SPLASH_IMAGE_URL = "./image_11f9a1db.jpg";
         const COIN_IMAGE_URL = "./image_1be087b2.jpg";
+        const BANK_CARD_IMAGE_URL = "./image_96fd9f2b.jpg";
 
         const slrTokenAddress = "EQB1yCD3HAgcXFJiVqAmnySiTDyYQ90e3KmX_g8xzPtRddfN";
         const slrDecimals = 9;
@@ -2405,6 +2408,7 @@
         window.addEventListener("DOMContentLoaded", () => {
             document.documentElement.style.setProperty("--splash-img", `url("${SPLASH_IMAGE_URL}")`);
             document.documentElement.style.setProperty("--coin-img", `url("${COIN_IMAGE_URL}")`);
+            document.documentElement.style.setProperty("--bank-card-img", `url("${BANK_CARD_IMAGE_URL}")`);
 
             startAutoSplashLoader();
 
