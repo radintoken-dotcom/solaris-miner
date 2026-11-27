@@ -34,8 +34,7 @@
             --splash-img: url("./image_11f9a1db.jpg");
             --coin-img: url("./image_1be087b2.jpg");
             --bank-card-img: url("./image_96fd9f2b.jpg");
-            --wheel-img: url("./image_9204a050.jpg");
-            --pointer-img: url("./image_caf74990-removebg-preview.png");
+            --wheel-img: url("./image_fb082f9f-removebg-preview.png");
         }
 
         body {
@@ -277,11 +276,11 @@
             margin-bottom: 12px;
         }
 
-        /* ===== Wheel Tab Styles (Slightly Larger Cobra Pointer Above Wheel) ===== */
+        /* ===== Wheel Tab Styles (With Pointer & New Wheel) ===== */
         .wheel-stage-card {
             background: radial-gradient(circle at top, #1f2937 0%, #0b1120 78%);
             border-radius: 26px;
-            padding: 48px 14px 20px;
+            padding: 28px 14px 20px;
             box-shadow: 0 12px 28px rgba(15, 23, 42, 0.25);
             margin-bottom: 12px;
             border: 1.5px solid rgba(253, 224, 71, 0.45);
@@ -291,12 +290,40 @@
 
         .wheel-assembly {
             position: relative;
-            width: min(82vw, 316px);
+            width: min(84vw, 320px);
             aspect-ratio: 1 / 1;
-            margin: 34px auto 22px;
+            margin: 12px auto 22px;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .wheel-static-pointer {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            width: 0;
+            height: 0;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-top: 30px solid #fde047;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.75));
+            pointer-events: none;
+        }
+
+        .wheel-static-pointer::after {
+            content: "";
+            position: absolute;
+            top: -32px;
+            left: -7px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ef4444;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
         }
 
         .wheel-disc-wrap {
@@ -305,10 +332,9 @@
             border-radius: 50%;
             position: relative;
             overflow: hidden;
-            box-shadow:
-                0 12px 28px rgba(0, 0, 0, 0.65),
-                0 0 22px rgba(234, 179, 8, 0.35),
-                inset 0 0 10px rgba(0, 0, 0, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transform: rotate(0deg);
             transition: transform 4.6s cubic-bezier(0.14, 0.88, 0.18, 1);
             will-change: transform;
@@ -317,41 +343,9 @@
         .wheel-disc-img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            display: block;
-            transform: scale(1.06);
-            transform-origin: center center;
-            background: #1c1917;
-        }
-
-        .wheel-static-pointer {
-            position: absolute;
-            top: -44px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 84px;
-            height: 94px;
-            z-index: 20;
-            pointer-events: none;
-            transform-origin: 50% 15%;
-            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.75));
-        }
-
-        .wheel-pointer-img {
-            width: 100%;
-            height: 100%;
             object-fit: contain;
             display: block;
-        }
-
-        @keyframes pointerTick {
-            0%, 100% { transform: translateX(-50%) rotate(0deg); }
-            50% { transform: translateX(-50%) rotate(-12deg); }
-        }
-
-        .wheel-static-pointer.ticking {
-            animation: pointerTick 0.16s ease-in-out infinite;
+            filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.65));
         }
 
         .wheel-spin-btn {
@@ -1586,16 +1580,13 @@
             </div>
         </div>
 
-        <!-- ===== SPIN WHEEL VIEW ===== -->
+        <!-- ===== SPIN WHEEL VIEW (With Pointer & New Wheel) ===== -->
         <div id="view-spin" class="view-section">
             <div class="wheel-stage-card">
                 <div class="wheel-assembly">
-                    <div class="wheel-static-pointer" id="wheel-static-pointer">
-                        <img src="./image_caf74990-removebg-preview.png" alt="" class="wheel-pointer-img" onerror="this.style.display='none'">
-                    </div>
-
+                    <div class="wheel-static-pointer" aria-hidden="true"></div>
                     <div class="wheel-disc-wrap" id="wheel-disc-wrap">
-                        <img src="./image_9204a050.jpg" alt="" class="wheel-disc-img" onerror="this.style.background='#291504'">
+                        <img src="./image_fb082f9f-removebg-preview.png" alt="" class="wheel-disc-img" onerror="this.style.background='#291504'">
                     </div>
                 </div>
 
@@ -1924,8 +1915,7 @@
         const SPLASH_IMAGE_URL = "./image_11f9a1db.jpg";
         const COIN_IMAGE_URL = "./image_1be087b2.jpg";
         const BANK_CARD_IMAGE_URL = "./image_96fd9f2b.jpg";
-        const WHEEL_IMAGE_URL = "./image_9204a050.jpg";
-        const POINTER_IMAGE_URL = "./image_caf74990-removebg-preview.png";
+        const WHEEL_IMAGE_URL = "./image_fb082f9f-removebg-preview.png";
 
         const slrTokenAddress = "EQB1yCD3HAgcXFJiVqAmnySiTDyYQ90e3KmX_g8xzPtRddfN";
         const slrDecimals = 9;
@@ -2236,12 +2226,8 @@
                 cardBuyBtn: "🛒 خرید توکن در استون فای",
                 miningStatus: "در حال جمع شدن • استخراج SLR",
                 perDay: "SLR در روز",
-                storageLabel: "Storage SLR",
                 claimMined: "⛏ Claim SLR",
-                statLevel: "LEVEL",
-                statCrew: "CREW",
                 activeUnits: "واحد فعال",
-                statHolding: "HOLDING",
                 minHoldSub: "SLR (حداقل 5,000)",
                 tile1Title: "دنیای سولاریس",
                 tile1Sub: "تسک‌ها و هولد SLR",
@@ -2833,8 +2819,6 @@
             state.wheelRotationDeg = nextRotation;
 
             const discEl = document.getElementById("wheel-disc-wrap");
-            const ptrEl = document.getElementById("wheel-static-pointer");
-            if (ptrEl) ptrEl.classList.add("ticking");
             if (discEl) {
                 discEl.style.transform = `rotate(${nextRotation}deg)`;
             }
@@ -2842,7 +2826,6 @@
             renderSpinView();
 
             setTimeout(() => {
-                if (ptrEl) ptrEl.classList.remove("ticking");
                 state.lastWheelPrizeLabel = outcome.label;
 
                 if (outcome.reward > 0) {
@@ -2934,7 +2917,6 @@
             document.documentElement.style.setProperty("--coin-img", `url("${COIN_IMAGE_URL}")`);
             document.documentElement.style.setProperty("--bank-card-img", `url("${BANK_CARD_IMAGE_URL}")`);
             document.documentElement.style.setProperty("--wheel-img", `url("${WHEEL_IMAGE_URL}")`);
-            document.documentElement.style.setProperty("--pointer-img", `url("${POINTER_IMAGE_URL}")`);
 
             startAutoSplashLoader();
 
