@@ -277,11 +277,11 @@
             margin-bottom: 12px;
         }
 
-        /* ===== Wheel Tab Styles (Transparent Cobra Pointer Positioned Right Above Wheel) ===== */
+        /* ===== Wheel Tab Styles (Slightly Larger Cobra Pointer Above Wheel) ===== */
         .wheel-stage-card {
             background: radial-gradient(circle at top, #1f2937 0%, #0b1120 78%);
             border-radius: 26px;
-            padding: 42px 14px 20px;
+            padding: 48px 14px 20px;
             box-shadow: 0 12px 28px rgba(15, 23, 42, 0.25);
             margin-bottom: 12px;
             border: 1.5px solid rgba(253, 224, 71, 0.45);
@@ -293,7 +293,7 @@
             position: relative;
             width: min(82vw, 316px);
             aspect-ratio: 1 / 1;
-            margin: 28px auto 22px;
+            margin: 34px auto 22px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -327,15 +327,15 @@
 
         .wheel-static-pointer {
             position: absolute;
-            top: -36px;
+            top: -44px;
             left: 50%;
             transform: translateX(-50%);
-            width: 68px;
-            height: 76px;
+            width: 84px;
+            height: 94px;
             z-index: 20;
             pointer-events: none;
             transform-origin: 50% 15%;
-            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.72));
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.75));
         }
 
         .wheel-pointer-img {
@@ -1474,7 +1474,7 @@
     <div class="app-shell">
         <div class="top-user-bar">
             <div class="top-user-left">
-                <img id="top-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=1007321991" class="top-avatar" alt="Avatar" onclick="openProfilePhotoModal()" onerror="handleAvatarError(this)">
+                <img id="top-avatar" src="./image_1be087b2.jpg" class="top-avatar" alt="Avatar" onclick="openProfilePhotoModal()" onerror="handleAvatarError(this)">
                 <div style="min-width: 0;">
                     <div class="top-username" id="top-username">mohammad</div>
                     <div class="top-level-row">
@@ -1755,7 +1755,7 @@
 
         <div id="view-profile" class="view-section">
             <div class="profile-center-head">
-                <img id="profile-big-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=1007321991" class="profile-big-avatar" alt="Profile" onclick="openProfilePhotoModal()" onerror="handleAvatarError(this)">
+                <img id="profile-big-avatar" src="./image_1be087b2.jpg" class="profile-big-avatar" alt="Profile" onclick="openProfilePhotoModal()" onerror="handleAvatarError(this)">
                 <div style="font-size:22px; font-weight:900;" id="profile-name-big">mohammad</div>
                 <div style="font-size:11px; color:var(--text-muted); margin-top:2px;" id="profile-id-sub">ID 1007321991</div>
             </div>
@@ -1939,14 +1939,6 @@
         const WITHDRAW_FEE_SLR = 1000;
         const MAX_DAILY_SPINS = 1;
 
-        /*
-         * Weighted Wheel Pool:
-         * - EMPTY (72%) -> mostly lands on EMPTY slices (index 2 or 5)
-         * - 100 SLR (16%) -> lands on 100 SLR (index 1)
-         * - 500 SLR (9%)  -> lands on 500 SLR (index 0)
-         * - 2000 SLR (2.5%) -> rare bonus reward of 2,000 SLR
-         * - High slices 3000 / 5000 / 6000 / 10000 SLR (0.5% total) -> very rare
-         */
         const wheelWeightedPool = [
             { sliceIndex: 2, label: "EMPTY", reward: 0, weight: 36.0 },
             { sliceIndex: 5, label: "EMPTY", reward: 0, weight: 36.0 },
@@ -1973,36 +1965,33 @@
             return wheelWeightedPool[0];
         }
 
-        function getFallbackAvatarUrl(seed) {
-            const safeSeed = encodeURIComponent(String(seed || "solaris-user"));
-            return `https://api.dicebear.com/7.x/avataaars/svg?seed=${safeSeed}`;
+        function getFallbackAvatarUrl() {
+            return COIN_IMAGE_URL;
         }
 
         function handleAvatarError(imgEl) {
             if (!imgEl) return;
-            const fallback = getFallbackAvatarUrl(state.telegramId || state.userName);
-            if (imgEl.dataset.fallbackApplied === "1") {
-                imgEl.src = "./image_1be087b2.jpg";
-                return;
-            }
             imgEl.dataset.fallbackApplied = "1";
-            imgEl.src = fallback;
+            imgEl.src = COIN_IMAGE_URL;
         }
 
         function applyAvatarToElements(url) {
-            const safeUrl = (url && String(url).trim()) || getFallbackAvatarUrl(state.telegramId || state.userName);
+            const cleanUrl = url && String(url).trim() ? String(url).trim() : "";
+            const finalSrc = cleanUrl && !cleanUrl.includes("dicebear.com") ? cleanUrl : COIN_IMAGE_URL;
             ["top-avatar", "profile-big-avatar"].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
-                    el.dataset.fallbackApplied = safeUrl.includes("dicebear") ? "1" : "0";
-                    el.src = safeUrl;
+                    el.dataset.fallbackApplied = finalSrc === COIN_IMAGE_URL ? "1" : "0";
+                    el.src = finalSrc;
                 }
             });
         }
 
         function openProfilePhotoModal() {
             closeLanguageMenu();
-            const avatarSrc = state.photoUrl || document.getElementById("profile-big-avatar")?.src || getFallbackAvatarUrl(state.telegramId || state.userName);
+            const avatarSrc = (state.photoUrl && !String(state.photoUrl).includes("dicebear.com"))
+                ? state.photoUrl
+                : (document.getElementById("profile-big-avatar")?.src || COIN_IMAGE_URL);
             document.getElementById("info-modal-title").innerText = state.userName || "Profile";
             document.getElementById("info-modal-body").innerHTML = `
                 <div style="text-align:center; padding:6px 0;">
@@ -3467,6 +3456,8 @@
                     state.telegramId = String(tgUser.id || state.telegramId);
                     if (tgUser.photo_url && String(tgUser.photo_url).trim()) {
                         state.photoUrl = String(tgUser.photo_url).trim();
+                    } else {
+                        state.photoUrl = "";
                     }
                 }
                 const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
@@ -3488,6 +3479,9 @@
                     const parsed = JSON.parse(raw);
                     state = { ...state, ...parsed };
                 } catch (e) {}
+            }
+            if (state.photoUrl && String(state.photoUrl).includes("dicebear.com")) {
+                state.photoUrl = "";
             }
             if (state.lang === "en") state.lang = "en-us";
             if (!Object.prototype.hasOwnProperty.call(i18n, state.lang)) state.lang = "en-us";
