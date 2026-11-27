@@ -12,6 +12,17 @@
         window.dispatchEvent(new Event("ton-core-ready"));
     </script>
     <style>
+        @property --neon-angle {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @keyframes solarisNeonOrbit {
+            0% { --neon-angle: 0deg; }
+            100% { --neon-angle: 360deg; }
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -23,14 +34,14 @@
 
         :root {
             --bg-main: #090c12;
-            --card-bg: #ffffff;
-            --card-soft: #f5f8f3;
-            --text-dark: #111827;
-            --text-muted: #6b7280;
+            --card-bg: rgba(14, 11, 6, 0.78);
+            --card-soft: rgba(24, 18, 8, 0.72);
+            --text-dark: #fffbeb;
+            --text-muted: #fde68a;
             --green-main: #84cc16;
             --green-bright: #a3e635;
-            --green-dark: #4d7c0f;
-            --border-light: #e5e7eb;
+            --green-dark: #bef264;
+            --border-light: rgba(250, 204, 21, 0.35);
             --splash-img: url("./image_11f9a1db.jpg");
             --coin-img: url("./image_1be087b2.jpg");
             --bank-card-img: url("./image_96fd9f2b.jpg");
@@ -65,7 +76,7 @@
             position: relative;
         }
 
-        /* پس‌زمینه تمام‌صفحه عکس گیت‌هاب برای ۵ تب غیر گردونه */
+        /* پس‌زمینه تمام‌صفحه گردونه */
         body:not(.spin-bg-active)::before {
             content: "";
             position: fixed;
@@ -110,6 +121,56 @@
         body.splash-locked {
             overflow: hidden;
             height: 100vh;
+        }
+
+        /* استایل شیشه‌ای با همان پس‌زمینه گردونه + حاشیه طلایی نئونی چرخان */
+        .solaris-glass-surface {
+            position: relative;
+            background-color: rgba(14, 10, 4, 0.72) !important;
+            background-image:
+                linear-gradient(180deg, rgba(14, 10, 4, 0.74) 0%, rgba(10, 8, 4, 0.84) 100%),
+                var(--wheel-bg-img) !important;
+            background-position: center center !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            backdrop-filter: blur(9px);
+            -webkit-backdrop-filter: blur(9px);
+            border: 1.5px solid rgba(250, 204, 21, 0.42) !important;
+            box-shadow:
+                0 8px 24px rgba(0, 0, 0, 0.55),
+                0 0 14px rgba(250, 204, 21, 0.22),
+                inset 0 0 12px rgba(253, 224, 71, 0.12) !important;
+            color: #fffbeb;
+        }
+
+        .solaris-glass-surface::after {
+            content: "";
+            position: absolute;
+            inset: -1.5px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: conic-gradient(
+                from var(--neon-angle),
+                transparent 0deg,
+                transparent 240deg,
+                rgba(250, 204, 21, 0.35) 280deg,
+                #fde047 325deg,
+                #ffffff 345deg,
+                #facc15 360deg
+            );
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: solarisNeonOrbit 3.4s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .solaris-glass-surface > * {
+            position: relative;
+            z-index: 3;
         }
 
         .solaris-splash-screen {
@@ -192,7 +253,7 @@
             width: max-content;
             background: rgba(17, 24, 39, 0.94);
             color: #ffffff;
-            border: 1px solid rgba(254, 240, 138, 0.45);
+            border: 1px solid rgba(254, 240, 138, 0.55);
             border-radius: 16px;
             padding: 10px 16px;
             font-size: 12px;
@@ -201,7 +262,7 @@
             z-index: 4000;
             opacity: 0;
             pointer-events: none;
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), 0 0 14px rgba(250, 204, 21, 0.28);
             transition: opacity 0.25s ease, transform 0.25s ease;
         }
 
@@ -219,14 +280,11 @@
         }
 
         .top-user-bar {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(8px);
             border-radius: 22px;
             padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
             margin-bottom: 12px;
             position: sticky;
             top: 8px;
@@ -246,16 +304,18 @@
             height: 38px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--green-bright);
+            border: 2px solid #fde047;
+            box-shadow: 0 0 12px rgba(250, 204, 21, 0.65);
             flex-shrink: 0;
             cursor: pointer;
-            background: #f5f8f3;
+            background: #1a1206;
         }
 
         .top-username {
             font-size: 12.5px;
             font-weight: 800;
-            color: var(--text-dark);
+            color: #fffbeb;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -268,14 +328,14 @@
             gap: 5px;
             margin-top: 2px;
             font-size: 10px;
-            color: var(--text-muted);
+            color: #fde68a;
             font-weight: 700;
         }
 
         .mini-lvl-bar {
             width: 48px;
             height: 5px;
-            background: #e5e7eb;
+            background: rgba(255, 255, 255, 0.16);
             border-radius: 99px;
             overflow: hidden;
         }
@@ -283,7 +343,7 @@
         .mini-lvl-fill {
             width: 65%;
             height: 100%;
-            background: var(--green-main);
+            background: linear-gradient(90deg, #eab308, #a3e635);
         }
 
         .top-right-wrap {
@@ -294,8 +354,8 @@
         }
 
         .top-main-bal {
-            background: #f5f8f3;
-            border: 1px solid #d9f99d;
+            background: rgba(15, 11, 4, 0.72);
+            border: 1px solid rgba(250, 204, 21, 0.45);
             border-radius: 14px;
             padding: 4px 8px;
             text-align: left;
@@ -305,24 +365,25 @@
         .top-main-bal-num {
             font-size: 11px;
             font-weight: 900;
-            color: var(--text-dark);
+            color: #ffffff;
         }
 
         .top-main-bal-sub {
             font-size: 9.5px;
             font-weight: 800;
-            color: var(--green-dark);
+            color: #bef264;
         }
 
         .top-right-badge {
-            background: #ecfccb;
-            color: var(--green-dark);
-            border: 1px solid #bef264;
+            background: rgba(250, 204, 21, 0.16);
+            color: #fef08a;
+            border: 1px solid rgba(250, 204, 21, 0.55);
             border-radius: 14px;
             padding: 5px 8px;
             font-size: 10px;
             font-weight: 900;
             white-space: nowrap;
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.25);
         }
 
         .view-section {
@@ -334,11 +395,8 @@
         }
 
         .white-card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(8px);
             border-radius: 22px;
             padding: 14px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
             margin-bottom: 12px;
         }
 
@@ -415,15 +473,13 @@
             width: auto;
             min-width: 168px;
             max-width: 220px;
-            border: none;
             border-radius: 14px;
             padding: 10px 20px;
-            background: linear-gradient(135deg, #fde047, #eab308, #84cc16);
-            color: #111827;
+            color: #fef08a;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
             font-size: 13px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 6px 16px rgba(234, 179, 8, 0.42);
             letter-spacing: 0.4px;
             white-space: nowrap;
             touch-action: manipulation;
@@ -435,11 +491,8 @@
         }
 
         .mine-hero-card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(8px);
             border-radius: 24px;
             padding: 10px;
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
             margin-bottom: 12px;
         }
 
@@ -459,6 +512,7 @@
             border: 1.5px solid rgba(254, 249, 195, 0.9);
             box-shadow:
                 0 14px 26px rgba(120, 53, 15, 0.34),
+                0 0 18px rgba(250, 204, 21, 0.32),
                 inset 0 1px 2px rgba(255, 255, 255, 0.65);
         }
 
@@ -527,15 +581,15 @@
             width: 34px;
             height: 34px;
             border-radius: 50%;
-            border: 1.5px solid rgba(254, 240, 138, 0.9);
-            background: rgba(17, 24, 39, 0.62);
+            border: 1.5px solid rgba(254, 240, 138, 0.95);
+            background: rgba(17, 24, 39, 0.68);
             color: #fef08a;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             box-shadow:
-                0 0 12px rgba(253, 224, 71, 0.55),
+                0 0 14px rgba(253, 224, 71, 0.75),
                 inset 0 1px 2px rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(4px);
             z-index: 5;
@@ -556,11 +610,10 @@
             right: 19%;
             bottom: 7.2%;
             height: 12.2%;
-            border: 1px solid rgba(255, 251, 235, 0.75);
             border-radius: 12px;
             padding: 0 10px;
-            background: linear-gradient(180deg, rgba(254, 240, 138, 0.92) 0%, rgba(217, 119, 6, 0.94) 100%);
-            color: #1c1917;
+            color: #fef08a;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
             font-size: clamp(10.5px, 2.8vw, 13px);
             font-weight: 900;
             cursor: pointer;
@@ -571,9 +624,6 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            box-shadow:
-                0 4px 12px rgba(24, 12, 2, 0.45),
-                inset 0 1px 0 rgba(255, 255, 255, 0.75);
             z-index: 5;
         }
 
@@ -588,7 +638,7 @@
 
         .claim-status-tag {
             font-size: 11px;
-            color: var(--text-muted);
+            color: #fde68a;
             font-weight: 700;
             margin-bottom: 4px;
         }
@@ -596,14 +646,15 @@
         .claim-big-amount {
             font-size: 30px;
             font-weight: 900;
-            color: var(--text-dark);
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
             letter-spacing: -0.5px;
         }
 
         .claim-daily-sub {
             font-size: 13px;
             font-weight: 800;
-            color: #65a30d;
+            color: #bef264;
             margin-top: 2px;
             margin-bottom: 10px;
         }
@@ -612,7 +663,7 @@
             display: flex;
             justify-content: space-between;
             font-size: 11px;
-            color: var(--text-muted);
+            color: #fde68a;
             font-weight: 700;
             margin-bottom: 6px;
         }
@@ -620,7 +671,7 @@
         .storage-track {
             width: 100%;
             height: 7px;
-            background: #e5e7eb;
+            background: rgba(255, 255, 255, 0.16);
             border-radius: 99px;
             overflow: hidden;
             margin-bottom: 12px;
@@ -628,28 +679,23 @@
 
         .storage-fill {
             height: 100%;
-            background: linear-gradient(90deg, #84cc16, #22c55e);
+            background: linear-gradient(90deg, #eab308, #84cc16, #22c55e);
             width: 35%;
         }
 
         .lime-btn {
             width: 100%;
-            border: none;
             border-radius: 16px;
             padding: 13px 16px;
-            background: linear-gradient(135deg, #bef264, #84cc16);
-            color: #111827;
+            color: #fef08a;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
             font-size: 14px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(132, 204, 22, 0.3);
         }
 
         .lime-btn.secondary {
-            background: var(--card-soft);
-            color: var(--text-dark);
-            border: 1px solid var(--border-light);
-            box-shadow: none;
+            color: #fffbeb;
         }
 
         .summary-3col {
@@ -660,30 +706,27 @@
         }
 
         .summary-mini-card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(8px);
             border-radius: 16px;
             padding: 10px 8px;
             text-align: center;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
         }
 
         .summary-mini-label {
             font-size: 9px;
-            color: var(--text-muted);
+            color: #fde68a;
             font-weight: 800;
         }
 
         .summary-mini-val {
             font-size: 16px;
             font-weight: 900;
-            color: var(--text-dark);
+            color: #ffffff;
             margin: 2px 0;
         }
 
         .summary-mini-sub {
             font-size: 10px;
-            color: var(--text-muted);
+            color: #e5e7eb;
             font-weight: 700;
         }
 
@@ -705,40 +748,64 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            background-color: transparent;
-            background-image: var(--upgrade-tile-img);
+            background-color: rgba(14, 10, 4, 0.65);
+            background-image:
+                linear-gradient(180deg, rgba(10, 8, 4, 0.25) 0%, rgba(10, 8, 4, 0.72) 100%),
+                var(--wheel-bg-img),
+                var(--upgrade-tile-img);
             background-position: center center;
-            background-size: 100% 100%;
+            background-size: cover;
             background-repeat: no-repeat;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+            border: 1.5px solid rgba(250, 204, 21, 0.45);
+            box-shadow:
+                0 6px 18px rgba(0, 0, 0, 0.48),
+                0 0 14px rgba(250, 204, 21, 0.24);
         }
 
-        .feature-tile::before {
+        .feature-tile::after {
             content: "";
             position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 35%, rgba(0, 0, 0, 0.48) 100%);
-            z-index: 0;
+            inset: -1.5px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: conic-gradient(
+                from var(--neon-angle),
+                transparent 0deg,
+                transparent 240deg,
+                rgba(250, 204, 21, 0.35) 280deg,
+                #fde047 325deg,
+                #ffffff 345deg,
+                #facc15 360deg
+            );
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: solarisNeonOrbit 3.4s linear infinite;
             pointer-events: none;
+            z-index: 2;
         }
 
         .feature-tile > * {
             position: relative;
-            z-index: 1;
+            z-index: 3;
         }
 
         .tile-title {
             font-size: 14px;
             font-weight: 900;
             margin-bottom: 3px;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+            color: #fef08a;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
         }
 
         .tile-sub {
             font-size: 10px;
             opacity: 0.98;
             font-weight: 700;
-            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.85);
+            color: #ffffff;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
         }
 
         .crew-grid {
@@ -749,17 +816,52 @@
         }
 
         .crew-card {
-            background: var(--card-soft);
-            border: 1px solid var(--border-light);
+            position: relative;
+            background-color: rgba(16, 12, 5, 0.74);
+            background-image:
+                linear-gradient(180deg, rgba(16, 12, 5, 0.72) 0%, rgba(10, 8, 4, 0.84) 100%),
+                var(--wheel-bg-img);
+            background-position: center center;
+            background-size: cover;
+            border: 1.5px solid rgba(250, 204, 21, 0.36);
             border-radius: 16px;
             padding: 10px 6px;
             text-align: center;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 10px rgba(250, 204, 21, 0.16);
+        }
+
+        .crew-card::after {
+            content: "";
+            position: absolute;
+            inset: -1.5px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: conic-gradient(
+                from var(--neon-angle),
+                transparent 0deg,
+                transparent 250deg,
+                rgba(250, 204, 21, 0.35) 290deg,
+                #fde047 335deg,
+                #facc15 360deg
+            );
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: solarisNeonOrbit 3.8s linear infinite;
+            pointer-events: none;
+        }
+
+        .crew-card > * {
+            position: relative;
+            z-index: 2;
         }
 
         .crew-card.unlocked.wallet-verified {
-            background: #fefce8;
-            border-color: #facc15;
+            border-color: rgba(253, 224, 71, 0.75);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 0 14px rgba(250, 204, 21, 0.32);
         }
 
         .cyber-lock-badge {
@@ -768,19 +870,19 @@
             margin: 0 auto 6px;
             border-radius: 14px;
             background: linear-gradient(145deg, #1e293b, #0f172a);
-            border: 1.5px solid #38bdf8;
-            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.22), inset 0 0 8px rgba(56, 189, 248, 0.25);
+            border: 1.5px solid #facc15;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.35), inset 0 0 8px rgba(250, 204, 21, 0.25);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #7dd3fc;
+            color: #fde047;
         }
 
         .cyber-lock-shackle {
             width: 14px;
             height: 9px;
-            border: 2.2px solid #7dd3fc;
+            border: 2.2px solid #fde047;
             border-bottom: none;
             border-radius: 8px 8px 0 0;
             margin-bottom: 1px;
@@ -790,8 +892,8 @@
             width: 20px;
             height: 14px;
             border-radius: 4px;
-            background: rgba(56, 189, 248, 0.2);
-            border: 1.8px solid #7dd3fc;
+            background: rgba(250, 204, 21, 0.16);
+            border: 1.8px solid #fde047;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -801,7 +903,7 @@
             width: 4px;
             height: 6px;
             border-radius: 2px;
-            background: #e0f2fe;
+            background: #fef9c3;
         }
 
         @keyframes slrGearRingSpin {
@@ -842,76 +944,74 @@
         .crew-name {
             font-size: 11px;
             font-weight: 800;
-            color: var(--text-dark);
+            color: #ffffff;
         }
 
         .crew-speed {
             font-size: 10px;
             font-weight: 700;
-            color: #65a30d;
+            color: #bef264;
             margin-top: 2px;
         }
 
         .crew-hold-req {
             font-size: 9px;
             font-weight: 800;
-            color: #4b5563;
+            color: #fde68a;
             margin-top: 2px;
         }
 
         .crew-buy-btn {
             margin-top: 6px;
             width: 100%;
-            border: none;
+            border: 1px solid rgba(250, 204, 21, 0.45);
             border-radius: 10px;
             padding: 5px 4px;
             font-size: 9.5px;
             font-weight: 800;
-            background: #e5e7eb;
-            color: var(--text-dark);
+            background: rgba(24, 18, 6, 0.82);
+            color: #fef08a;
             cursor: pointer;
+            box-shadow: 0 0 8px rgba(250, 204, 21, 0.22);
         }
 
         .crew-buy-btn.wallet-locked {
-            background: #f3f4f6;
-            color: #6b7280;
-            border: 1px dashed #cbd5e1;
+            background: rgba(15, 23, 42, 0.72);
+            color: #cbd5e1;
+            border: 1px dashed rgba(250, 204, 21, 0.35);
         }
 
         .crew-buy-btn.hold-cta {
-            background: #fef9c3;
-            color: #854d0e;
+            background: rgba(234, 179, 8, 0.22);
+            color: #fef08a;
             border: 1px solid #facc15;
         }
 
         .crew-buy-btn.owned {
-            background: #dcfce7;
-            color: #15803d;
+            background: rgba(132, 204, 22, 0.22);
+            color: #bef264;
+            border-color: #a3e635;
         }
 
         .section-heading {
             font-size: 22px;
             font-weight: 900;
-            color: #ffffff;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+            color: #fef08a;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
             margin-bottom: 4px;
         }
 
         .section-sub {
             font-size: 12px;
             color: #f3f4f6;
-            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
             margin-bottom: 12px;
         }
 
         .daily-gold-card {
-            background: rgba(236, 252, 203, 0.96);
-            backdrop-filter: blur(8px);
-            border: 1px solid #d9f99d;
             border-radius: 22px;
             padding: 16px;
             margin-bottom: 14px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
         }
 
         .streak-row {
@@ -922,31 +1022,28 @@
         }
 
         .streak-pill {
-            background: #ffffff;
+            background: rgba(16, 12, 5, 0.75);
             border-radius: 10px;
             padding: 6px 2px;
             text-align: center;
             font-size: 10px;
             font-weight: 800;
-            color: #4d7c0f;
-            border: 1px solid #d9f99d;
+            color: #fde68a;
+            border: 1px solid rgba(250, 204, 21, 0.42);
             transition: all 0.2s ease;
         }
 
         .streak-pill.claimed {
-            background: #22c55e;
-            border-color: #16a34a;
-            color: #ffffff;
-            box-shadow: 0 3px 8px rgba(34, 197, 94, 0.35);
+            background: rgba(132, 204, 22, 0.28);
+            border-color: #a3e635;
+            color: #bef264;
+            box-shadow: 0 0 10px rgba(163, 230, 53, 0.35);
         }
 
         .task-card-wrapper {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(8px);
             border-radius: 18px;
             padding: 12px 14px;
             margin-bottom: 9px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
         }
 
         .task-row-card {
@@ -971,15 +1068,15 @@
             height: 20px;
             border-radius: 6px;
             background: #111827;
-            color: #ffffff;
+            border: 1px solid rgba(250, 204, 21, 0.5);
+            color: #fef08a;
             flex-shrink: 0;
         }
 
         .x-proof-panel {
             margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed #d1d5db;
-            background: #f8faf5;
+            border-top: 1px dashed rgba(250, 204, 21, 0.35);
+            background: rgba(12, 9, 4, 0.65);
             border-radius: 14px;
             padding: 10px 11px;
         }
@@ -987,7 +1084,7 @@
         .x-proof-guide {
             font-size: 10.5px;
             line-height: 1.6;
-            color: #1f2937;
+            color: #fffbeb;
             font-weight: 700;
             margin-bottom: 8px;
         }
@@ -1001,23 +1098,21 @@
 
         .x-proof-input {
             flex: 1;
-            border: 1px solid #cbd5e1;
+            border: 1px solid rgba(250, 204, 21, 0.45);
             border-radius: 12px;
             padding: 9px 11px;
             font-size: 11.5px;
-            background: #ffffff;
-            color: #111827;
+            background: rgba(10, 8, 4, 0.85);
+            color: #ffffff;
             outline: none;
             user-select: text;
             -webkit-user-select: text;
         }
 
         .x-proof-submit-btn {
-            border: none;
             border-radius: 12px;
             padding: 9px 14px;
-            background: linear-gradient(135deg, #bef264, #84cc16);
-            color: #111827;
+            color: #fef08a;
             font-size: 11px;
             font-weight: 900;
             cursor: pointer;
@@ -1025,9 +1120,6 @@
         }
 
         .task-action-pill {
-            background: var(--card-soft);
-            border: 1px solid #d1d5db;
-            color: var(--text-dark);
             border-radius: 12px;
             padding: 7px 12px;
             font-size: 11px;
@@ -1037,21 +1129,19 @@
         }
 
         .task-action-pill.done {
-            background: #dcfce7;
-            border-color: #86efac;
-            color: #166534;
+            background: rgba(34, 197, 94, 0.24) !important;
+            border-color: #86efac !important;
+            color: #bbf7d0 !important;
         }
 
         .task-action-pill.locked {
-            background: #f3f4f6;
-            border-color: #e5e7eb;
-            color: #9ca3af;
+            opacity: 0.65;
         }
 
         .hold-progress-track {
             width: 100%;
             height: 6px;
-            background: #e5e7eb;
+            background: rgba(255, 255, 255, 0.16);
             border-radius: 99px;
             overflow: hidden;
             margin-top: 6px;
@@ -1059,18 +1149,14 @@
 
         .hold-progress-fill {
             height: 100%;
-            background: #84cc16;
+            background: linear-gradient(90deg, #eab308, #84cc16);
             width: 0%;
         }
 
         .earn-bottom-box {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(8px);
-            border: 2px solid #a3e635;
             border-radius: 22px;
             padding: 15px;
             margin-top: 14px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
         }
 
         .chart-price-header {
@@ -1087,14 +1173,14 @@
             gap: 6px;
             font-size: 11px;
             font-weight: 900;
-            color: var(--text-muted);
+            color: #fde68a;
             letter-spacing: 0.4px;
         }
 
         .chart-refresh-btn {
-            border: 1px solid #d9f99d;
-            background: #f5f8f3;
-            color: var(--green-dark);
+            border: 1px solid rgba(250, 204, 21, 0.5);
+            background: rgba(20, 15, 5, 0.78);
+            color: #fef08a;
             border-radius: 99px;
             padding: 3px 8px;
             font-size: 10px;
@@ -1103,9 +1189,9 @@
         }
 
         .chart-change-badge {
-            background: #ecfccb;
-            color: var(--green-dark);
-            border: 1px solid #bef264;
+            background: rgba(132, 204, 22, 0.2);
+            color: #bef264;
+            border: 1px solid rgba(163, 230, 53, 0.55);
             border-radius: 12px;
             padding: 4px 9px;
             font-size: 11px;
@@ -1114,22 +1200,22 @@
         }
 
         .chart-change-badge.down {
-            background: #fef2f2;
-            color: #b91c1c;
-            border-color: #fecaca;
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border-color: rgba(248, 113, 113, 0.55);
         }
 
         .chart-big-usd {
             font-size: 28px;
             font-weight: 900;
-            color: var(--text-dark);
+            color: #ffffff;
             letter-spacing: -0.4px;
         }
 
         .chart-sub-ton {
             font-size: 13px;
             font-weight: 800;
-            color: #4d7c0f;
+            color: #bef264;
             margin-top: 2px;
             margin-bottom: 12px;
         }
@@ -1141,8 +1227,8 @@
         }
 
         .chart-stat-box {
-            background: var(--card-soft);
-            border: 1px solid var(--border-light);
+            background: rgba(15, 11, 4, 0.65);
+            border: 1px solid rgba(250, 204, 21, 0.35);
             border-radius: 14px;
             padding: 9px 6px;
             text-align: center;
@@ -1150,14 +1236,14 @@
 
         .chart-stat-lbl {
             font-size: 10px;
-            color: var(--text-muted);
+            color: #fde68a;
             font-weight: 800;
         }
 
         .chart-stat-val {
             font-size: 12px;
             font-weight: 900;
-            color: var(--text-dark);
+            color: #ffffff;
             margin-top: 3px;
         }
 
@@ -1173,16 +1259,16 @@
         .tf-group {
             display: flex;
             gap: 4px;
-            background: var(--card-soft);
+            background: rgba(15, 11, 4, 0.72);
             padding: 4px;
             border-radius: 12px;
-            border: 1px solid var(--border-light);
+            border: 1px solid rgba(250, 204, 21, 0.35);
         }
 
         .tf-btn {
             border: none;
             background: transparent;
-            color: var(--text-muted);
+            color: #e5e7eb;
             font-size: 11px;
             font-weight: 900;
             padding: 5px 8px;
@@ -1191,16 +1277,14 @@
         }
 
         .tf-btn.active {
-            background: #ecfccb;
-            color: var(--green-dark);
+            background: rgba(250, 204, 21, 0.24);
+            color: #fef08a;
         }
 
         .live-chart-pill-btn {
-            border: 1px solid #d9f99d;
-            background: #f5f8f3;
-            color: var(--green-dark);
             border-radius: 12px;
             padding: 5px 10px;
+            color: #fef08a;
             font-size: 11px;
             font-weight: 900;
             cursor: pointer;
@@ -1211,8 +1295,8 @@
         }
 
         .chart-canvas-wrap {
-            background: linear-gradient(180deg, #f8faf5 0%, #ffffff 100%);
-            border: 1px solid #e5e7eb;
+            background: rgba(12, 10, 6, 0.78);
+            border: 1px solid rgba(250, 204, 21, 0.38);
             border-radius: 18px;
             padding: 10px 8px 6px;
             position: relative;
@@ -1229,22 +1313,20 @@
             justify-content: space-between;
             font-size: 10px;
             font-weight: 700;
-            color: var(--text-muted);
+            color: #fde68a;
             padding: 4px 4px 2px;
         }
 
         .chart-source-note {
             font-size: 10px;
-            color: var(--text-muted);
+            color: #e5e7eb;
             margin-top: 8px;
             line-height: 1.5;
         }
 
         .profile-center-head {
             text-align: center;
-            padding: 12px 10px 14px;
-            background: rgba(17, 24, 39, 0.55);
-            backdrop-filter: blur(8px);
+            padding: 14px 12px 16px;
             border-radius: 22px;
             margin-bottom: 12px;
             color: #ffffff;
@@ -1252,11 +1334,11 @@
 
         .profile-center-head > div {
             color: #ffffff;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
         }
 
         #profile-id-sub {
-            color: #e5e7eb !important;
+            color: #fde68a !important;
         }
 
         .profile-big-avatar {
@@ -1264,10 +1346,11 @@
             height: 84px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--green-bright);
+            border: 3px solid #fde047;
+            box-shadow: 0 0 18px rgba(250, 204, 21, 0.72);
             margin-bottom: 8px;
             cursor: pointer;
-            background: #f5f8f3;
+            background: #1a1206;
         }
 
         .lang-switch-wrap {
@@ -1275,12 +1358,9 @@
             align-items: center;
             justify-content: space-between;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(8px);
             border-radius: 18px;
             padding: 12px 14px;
             margin-bottom: 12px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
             position: relative;
         }
 
@@ -1289,11 +1369,9 @@
         }
 
         .lang-dropdown-trigger {
-            border: 1px solid #84cc16;
-            background: #ecfccb;
-            color: var(--green-dark);
             border-radius: 13px;
             padding: 7px 12px;
+            color: #fef08a;
             font-size: 12px;
             font-weight: 900;
             cursor: pointer;
@@ -1313,11 +1391,8 @@
             width: min(90vw, 340px);
             max-height: 78vh;
             overflow-y: auto;
-            background: #ffffff;
-            border: 1.5px solid #d9f99d;
             border-radius: 20px;
             padding: 8px;
-            box-shadow: 0 18px 40px rgba(17, 24, 39, 0.28);
             z-index: 2600;
             direction: ltr;
         }
@@ -1330,7 +1405,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(17, 24, 39, 0.35);
+            background: rgba(0, 0, 0, 0.55);
             z-index: 2590;
         }
 
@@ -1350,26 +1425,26 @@
             gap: 12px;
             font-size: 13px;
             font-weight: 800;
-            color: #111827;
+            color: #ffffff;
             cursor: pointer;
             text-align: left;
             direction: ltr;
         }
 
         .lang-menu-item:hover {
-            background: var(--card-soft);
+            background: rgba(250, 204, 21, 0.14);
         }
 
         .lang-menu-item.active {
-            background: #ecfccb;
-            color: var(--green-dark);
+            background: rgba(250, 204, 21, 0.22);
+            color: #fef08a;
         }
 
         .lang-menu-left {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            color: #111827;
+            color: inherit;
             direction: ltr;
         }
 
@@ -1394,12 +1469,9 @@
         }
 
         .dual-balance-box {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(8px);
             border-radius: 18px;
             padding: 12px;
             text-align: center;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
         }
 
         .dual-btn-row {
@@ -1410,8 +1482,6 @@
         }
 
         .menu-list-item {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(8px);
             border-radius: 16px;
             padding: 13px 14px;
             display: flex;
@@ -1420,14 +1490,14 @@
             margin-bottom: 8px;
             font-size: 13px;
             font-weight: 800;
+            color: #ffffff;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
         }
 
         .alert-hold-box {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #991b1b;
+            background: rgba(127, 29, 29, 0.45);
+            border: 1px solid rgba(248, 113, 113, 0.65);
+            color: #fecaca;
             border-radius: 14px;
             padding: 10px 12px;
             font-size: 11px;
@@ -1437,45 +1507,43 @@
         }
 
         .alert-hold-box.ok {
-            background: #f0fdf4;
-            border-color: #bbf7d0;
-            color: #166534;
+            background: rgba(20, 83, 45, 0.45);
+            border-color: rgba(134, 239, 172, 0.65);
+            color: #bbf7d0;
         }
 
         .connected-wallet-box {
-            background: var(--card-soft);
-            border: 1px solid #d1d5db;
+            background: rgba(15, 11, 4, 0.72);
+            border: 1px solid rgba(250, 204, 21, 0.42);
             border-radius: 14px;
             padding: 10px 12px;
             font-size: 11px;
             font-weight: 800;
-            color: var(--text-dark);
+            color: #fef08a;
             margin-top: 6px;
             word-break: break-all;
         }
 
         .clean-input {
             width: 100%;
-            border: 1px solid #d1d5db;
+            border: 1px solid rgba(250, 204, 21, 0.45);
             border-radius: 14px;
             padding: 11px 12px;
             font-size: 12px;
-            background: var(--card-soft);
-            color: var(--text-dark);
+            background: rgba(15, 11, 4, 0.76);
+            color: #ffffff;
             margin-top: 6px;
             outline: none;
         }
 
         .clean-input:disabled {
-            background: #e5e7eb;
-            color: #6b7280;
+            background: rgba(30, 41, 59, 0.65);
+            color: #94a3b8;
             cursor: not-allowed;
         }
 
         .plus-circle-btn {
-            border: none;
-            background: var(--card-soft);
-            color: var(--text-dark);
+            color: #fef08a;
             cursor: pointer;
         }
 
@@ -1497,29 +1565,22 @@
             width: 46px;
             height: 46px;
             border-radius: 50%;
-            border: 3px solid #ffffff;
-            background: linear-gradient(135deg, #bef264, #84cc16);
             font-size: 19px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             pointer-events: auto;
-            box-shadow: 0 6px 18px rgba(101, 163, 13, 0.4);
             flex-shrink: 0;
         }
 
         .floating-nav-pill {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(10px);
-            border: 1px solid #e5e7eb;
             border-radius: 28px;
             padding: 5px 6px;
             display: flex;
             align-items: center;
             gap: 1px;
             pointer-events: auto;
-            box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
         }
 
         .dock-tab {
@@ -1529,21 +1590,22 @@
             border-radius: 20px;
             font-size: 10px;
             font-weight: 800;
-            color: var(--text-muted);
+            color: #e5e7eb;
             cursor: pointer;
             white-space: nowrap;
         }
 
         .dock-tab.active {
-            background: #ecfccb;
-            color: var(--green-dark);
+            background: rgba(250, 204, 21, 0.24);
+            color: #fef08a;
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.35);
         }
 
         .modal-backdrop {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0, 0, 0, 0.72);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -1551,7 +1613,6 @@
         }
 
         .modal-box {
-            background: #ffffff;
             border-radius: 24px;
             padding: 18px;
             width: 100%;
@@ -1560,6 +1621,7 @@
             overflow-y: auto;
             position: relative;
             z-index: 2001;
+            color: #ffffff;
         }
     </style>
 </head>
@@ -1576,7 +1638,7 @@
     <div id="toast-banner" class="toast-banner" role="status" aria-live="polite"></div>
 
     <div class="app-shell">
-        <div class="top-user-bar">
+        <div class="top-user-bar solaris-glass-surface">
             <div class="top-user-left">
                 <img id="top-avatar" src="./image_1be087b2.jpg" class="top-avatar" alt="Avatar" onclick="openProfilePhotoModal()" onerror="handleAvatarError(this)">
                 <div style="min-width: 0;">
@@ -1598,7 +1660,7 @@
         </div>
 
         <div id="view-upgrade" class="view-section active">
-            <div class="mine-hero-card">
+            <div class="mine-hero-card solaris-glass-surface">
                 <div class="solaris-bank-card">
                     <div class="card-slot-box left-slot">
                         <span class="card-slot-label" id="lbl-card-wallet-hold">TON wallet Hold</span>
@@ -1619,7 +1681,7 @@
                         <span class="card-slot-value" id="card-inapp-slr">0 SLR</span>
                     </div>
 
-                    <button class="card-bottom-buy-btn" id="card-buy-btn" onclick="copyAndGoBuyToken()">
+                    <button class="card-bottom-buy-btn solaris-glass-surface" id="card-buy-btn" onclick="copyAndGoBuyToken()">
                         🛒 Buy Token on STON.fi
                     </button>
                 </div>
@@ -1637,22 +1699,22 @@
                         <div class="storage-fill" id="storage-bar"></div>
                     </div>
 
-                    <button class="lime-btn" id="claim-mined-btn" onclick="claimMinedSlr()">⛏ Claim SLR</button>
+                    <button class="lime-btn solaris-glass-surface" id="claim-mined-btn" onclick="claimMinedSlr()">⛏ Claim SLR</button>
                 </div>
             </div>
 
             <div class="summary-3col">
-                <div class="summary-mini-card">
+                <div class="summary-mini-card solaris-glass-surface">
                     <div class="summary-mini-label" id="lbl-stat-level">LEVEL</div>
                     <div class="summary-mini-val" id="stat-level">1</div>
                     <div class="summary-mini-sub">Solaris Rig</div>
                 </div>
-                <div class="summary-mini-card">
+                <div class="summary-mini-card solaris-glass-surface">
                     <div class="summary-mini-label" id="lbl-stat-crew">CREW</div>
                     <div class="summary-mini-val" id="stat-crew">1</div>
                     <div class="summary-mini-sub" id="lbl-active-units">Active Units</div>
                 </div>
-                <div class="summary-mini-card">
+                <div class="summary-mini-card solaris-glass-surface">
                     <div class="summary-mini-label" id="lbl-stat-holding">HOLDING</div>
                     <div class="summary-mini-val" id="stat-holding">0</div>
                     <div class="summary-mini-sub" id="lbl-min-hold-sub">SLR (Min 5,000)</div>
@@ -1678,13 +1740,13 @@
                 </div>
             </div>
 
-            <div class="white-card">
+            <div class="white-card solaris-glass-surface">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div style="font-size:15px; font-weight:900;" id="crew-section-title">Your Crew (SLR Hold Units)</div>
-                        <div style="font-size:11px; color:var(--text-muted);" id="crew-summary-line">1 miner • +120 SLR/day</div>
+                        <div style="font-size:15px; font-weight:900; color:#fef08a;" id="crew-section-title">Your Crew (SLR Hold Units)</div>
+                        <div style="font-size:11px; color:#e5e7eb;" id="crew-summary-line">1 miner • +120 SLR/day</div>
                     </div>
-                    <button class="task-action-pill" id="crew-tasks-btn" onclick="switchView('earn')">SLR Tasks</button>
+                    <button class="task-action-pill solaris-glass-surface" id="crew-tasks-btn" onclick="switchView('earn')">SLR Tasks</button>
                 </div>
                 <div class="crew-grid" id="crew-grid-list"></div>
             </div>
@@ -1699,7 +1761,7 @@
                     </div>
                 </div>
 
-                <button type="button" class="wheel-spin-btn" id="wheel-spin-btn" onclick="spinCobraWheel()">
+                <button type="button" class="wheel-spin-btn solaris-glass-surface" id="wheel-spin-btn" onclick="spinCobraWheel()">
                     SPIN WHEEL
                 </button>
             </div>
@@ -1709,7 +1771,7 @@
             <div class="section-heading" id="chart-heading">SLR Live Chart</div>
             <div class="section-sub" id="chart-sub">Real-time STON.fi pool & price feed for Solaris (SLR)</div>
 
-            <div class="white-card">
+            <div class="white-card solaris-glass-surface">
                 <div class="chart-price-header">
                     <div>
                         <div class="chart-live-label">
@@ -1738,7 +1800,7 @@
                 </div>
             </div>
 
-            <div class="white-card">
+            <div class="white-card solaris-glass-surface">
                 <div class="chart-toolbar">
                     <div class="tf-group" id="chart-tf-group">
                         <button type="button" class="tf-btn" data-tf="1H" onclick="setChartTimeframe('1H')">1H</button>
@@ -1747,7 +1809,7 @@
                         <button type="button" class="tf-btn" data-tf="30D" onclick="setChartTimeframe('30D')">30D</button>
                         <button type="button" class="tf-btn" data-tf="ALL" onclick="setChartTimeframe('ALL')">ALL</button>
                     </div>
-                    <button type="button" class="live-chart-pill-btn" id="live-chart-external-btn" onclick="openBestLiveChart()">
+                    <button type="button" class="live-chart-pill-btn solaris-glass-surface" id="live-chart-external-btn" onclick="openBestLiveChart()">
                         <span id="live-chart-pill-text">Live Chart</span> ↗
                     </button>
                 </div>
@@ -1765,8 +1827,8 @@
             </div>
 
             <div style="display:flex; flex-direction:column; gap:8px;">
-                <button class="lime-btn" id="chart-trade-btn" onclick="copyAndGoBuyToken()">↗ Trade on STON.fi</button>
-                <button class="lime-btn secondary" id="chart-dexscreener-btn" onclick="openPoolOrScreener()">📈 View Pool & Chart on STON.fi</button>
+                <button class="lime-btn solaris-glass-surface" id="chart-trade-btn" onclick="copyAndGoBuyToken()">↗ Trade on STON.fi</button>
+                <button class="lime-btn secondary solaris-glass-surface" id="chart-dexscreener-btn" onclick="openPoolOrScreener()">📈 View Pool & Chart on STON.fi</button>
             </div>
         </div>
 
@@ -1774,11 +1836,11 @@
             <div class="section-heading" id="earn-heading">EARN</div>
             <div class="section-sub" id="earn-sub">Daily rewards, tasks, 5,000 SLR hold & 20,000 SLR withdrawal</div>
 
-            <div class="daily-gold-card">
+            <div class="daily-gold-card solaris-glass-surface">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div style="font-size:18px; font-weight:900;" id="daily-card-title">Daily Reward SLR</div>
-                        <div style="font-size:11px; color:#3f6212; font-weight:700; margin-top:2px;">
+                        <div style="font-size:18px; font-weight:900; color:#fef08a;" id="daily-card-title">Daily Reward SLR</div>
+                        <div style="font-size:11px; color:#bef264; font-weight:700; margin-top:2px;">
                             <span id="streak-label">Streak days</span>: <span id="streak-days">0</span>
                         </div>
                     </div>
@@ -1793,77 +1855,77 @@
                     <div class="streak-pill" data-day="6">+400</div>
                     <div class="streak-pill" data-day="7">+600</div>
                 </div>
-                <button class="lime-btn" id="daily-claim-btn" onclick="claimDailyBonus()">Daily Reward</button>
+                <button class="lime-btn solaris-glass-surface" id="daily-claim-btn" onclick="claimDailyBonus()">Daily Reward</button>
             </div>
 
-            <div style="font-size:15px; font-weight:900; margin-bottom:8px; color:#ffffff; text-shadow:0 2px 6px rgba(0,0,0,0.85);" id="community-tasks-heading">Community, X Tasks & Recommended Bots</div>
+            <div style="font-size:15px; font-weight:900; margin-bottom:8px; color:#fef08a; text-shadow:0 2px 6px rgba(0,0,0,0.9);" id="community-tasks-heading">Community, X Tasks & Recommended Bots</div>
             <div id="community-tasks-list"></div>
 
-            <div style="font-size:15px; font-weight:900; margin:14px 0 4px; color:#ffffff; text-shadow:0 2px 6px rgba(0,0,0,0.85);" id="onchain-hold-heading">ON-CHAIN Holders (Connected Wallet)</div>
+            <div style="font-size:15px; font-weight:900; margin:14px 0 4px; color:#fef08a; text-shadow:0 2px 6px rgba(0,0,0,0.9);" id="onchain-hold-heading">ON-CHAIN Holders (Connected Wallet)</div>
             <div class="section-sub" id="onchain-hold-sub">Wallet verification + 5,000 SLR hold + 20,000 SLR balance are required to unlock withdrawal.</div>
             <div id="onchain-hold-tiers"></div>
 
-            <div class="earn-bottom-box">
-                <div style="font-size:14px; font-weight:900; color:#3f6212; margin-bottom:6px;" id="earn-bottom-title">
+            <div class="earn-bottom-box solaris-glass-surface">
+                <div style="font-size:14px; font-weight:900; color:#fef08a; margin-bottom:6px;" id="earn-bottom-title">
                     📌 SLR Withdrawal & Hold Status
                 </div>
-                <div style="font-size:11px; color:var(--text-dark); line-height:1.6; margin-bottom:10px;" id="earn-bottom-desc"></div>
-                <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800;">
+                <div style="font-size:11px; color:#fffbeb; line-height:1.6; margin-bottom:10px;" id="earn-bottom-desc"></div>
+                <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:#bef264;">
                     <span><span id="lbl-main-bal-short">Main Balance</span>: <span id="bottom-box-balance">0</span> / 20,000 SLR</span>
                     <span><span id="lbl-wallet-hold-short">Wallet Hold</span>: <span id="bottom-box-hold">0</span> / 5,000 SLR</span>
                 </div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
-                    <button class="lime-btn" style="padding:10px; font-size:12px;" id="earn-buy-btn" onclick="copyAndGoBuyToken()">🛒 Buy SLR</button>
-                    <button class="lime-btn secondary" style="padding:10px; font-size:12px;" id="earn-wallet-btn" onclick="openWalletModal()">💼 WALLET</button>
+                    <button class="lime-btn solaris-glass-surface" style="padding:10px; font-size:12px;" id="earn-buy-btn" onclick="copyAndGoBuyToken()">🛒 Buy SLR</button>
+                    <button class="lime-btn secondary solaris-glass-surface" style="padding:10px; font-size:12px;" id="earn-wallet-btn" onclick="openWalletModal()">💼 WALLET</button>
                 </div>
             </div>
         </div>
 
         <div id="view-friends" class="view-section">
-            <div class="white-card" style="text-align:center;">
-                <div style="font-size:18px; font-weight:900; margin-bottom:6px;" id="friends-title">Invite Friends & Earn SLR</div>
-                <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;" id="friends-desc"></div>
-                <div style="font-size:11px; font-weight:800; color:#4d7c0f; margin-bottom:8px;" id="lbl-personal-ref-link">Your Personal Referral Link</div>
+            <div class="white-card solaris-glass-surface" style="text-align:center;">
+                <div style="font-size:18px; font-weight:900; color:#fef08a; margin-bottom:6px;" id="friends-title">Invite Friends & Earn SLR</div>
+                <div style="font-size:12px; color:#e5e7eb; margin-bottom:10px;" id="friends-desc"></div>
+                <div style="font-size:11px; font-weight:800; color:#bef264; margin-bottom:8px;" id="lbl-personal-ref-link">Your Personal Referral Link</div>
                 <div style="display:flex; gap:8px;">
-                    <button class="lime-btn" id="invite-btn" onclick="shareInviteLink()">Invite Friend</button>
-                    <button class="plus-circle-btn" style="border-radius:16px; width:48px; height:auto; font-size:15px;" onclick="copyInviteLink()">📋</button>
+                    <button class="lime-btn solaris-glass-surface" id="invite-btn" onclick="shareInviteLink()">Invite Friend</button>
+                    <button class="plus-circle-btn solaris-glass-surface" style="border-radius:16px; width:48px; height:auto; font-size:15px;" onclick="copyInviteLink()">📋</button>
                 </div>
                 <input type="text" id="ref-link-box" class="clean-input" readonly>
             </div>
 
             <div class="dual-balance-row">
-                <div class="dual-balance-box">
-                    <div style="font-size:11px; color:var(--text-muted); font-weight:700;" id="lbl-friends-count">Friends</div>
-                    <div style="font-size:22px; font-weight:900; margin-top:4px;" id="ref-count-val">0</div>
+                <div class="dual-balance-box solaris-glass-surface">
+                    <div style="font-size:11px; color:#fde68a; font-weight:700;" id="lbl-friends-count">Friends</div>
+                    <div style="font-size:22px; font-weight:900; color:#ffffff; margin-top:4px;" id="ref-count-val">0</div>
                 </div>
-                <div class="dual-balance-box">
-                    <div style="font-size:11px; color:var(--text-muted); font-weight:700;" id="lbl-friends-earned">Friends Earnings</div>
-                    <div style="font-size:22px; font-weight:900; color:#65a30d; margin-top:4px;" id="ref-earned-val">0 SLR</div>
+                <div class="dual-balance-box solaris-glass-surface">
+                    <div style="font-size:11px; color:#fde68a; font-weight:700;" id="lbl-friends-earned">Friends Earnings</div>
+                    <div style="font-size:22px; font-weight:900; color:#bef264; margin-top:4px;" id="ref-earned-val">0 SLR</div>
                 </div>
             </div>
 
-            <div class="white-card">
+            <div class="white-card solaris-glass-surface">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div style="font-size:11px; color:var(--text-muted); font-weight:700;" id="lbl-friends-ready">Ready referral rewards</div>
-                        <div style="font-size:18px; font-weight:900;" id="ref-pending-val">0 SLR</div>
+                        <div style="font-size:11px; color:#fde68a; font-weight:700;" id="lbl-friends-ready">Ready referral rewards</div>
+                        <div style="font-size:18px; font-weight:900; color:#ffffff;" id="ref-pending-val">0 SLR</div>
                     </div>
-                    <button class="lime-btn" style="width:auto; padding:10px 18px;" id="ref-claim-btn" onclick="collectRefBonus()">Claim</button>
+                    <button class="lime-btn solaris-glass-surface" style="width:auto; padding:10px 18px;" id="ref-claim-btn" onclick="collectRefBonus()">Claim</button>
                 </div>
             </div>
         </div>
 
         <div id="view-profile" class="view-section">
-            <div class="profile-center-head">
+            <div class="profile-center-head solaris-glass-surface">
                 <img id="profile-big-avatar" src="./image_1be087b2.jpg" class="profile-big-avatar" alt="Profile" onclick="openProfilePhotoModal()" onerror="handleAvatarError(this)">
                 <div style="font-size:22px; font-weight:900;" id="profile-name-big">mohammad</div>
-                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;" id="profile-id-sub">ID 1007321991</div>
+                <div style="font-size:11px; color:#fde68a; margin-top:2px;" id="profile-id-sub">ID 1007321991</div>
             </div>
 
-            <div class="lang-switch-wrap">
-                <div style="font-size:13px; font-weight:900;" id="lang-label">Language</div>
+            <div class="lang-switch-wrap solaris-glass-surface">
+                <div style="font-size:13px; font-weight:900; color:#fef08a;" id="lang-label">Language</div>
                 <div class="lang-dropdown-box">
-                    <button type="button" class="lang-dropdown-trigger" id="lang-dropdown-trigger" onclick="toggleLanguageMenu(event)">
+                    <button type="button" class="lang-dropdown-trigger solaris-glass-surface" id="lang-dropdown-trigger" onclick="toggleLanguageMenu(event)">
                         <span class="lang-flag" id="current-lang-flag">🇺🇸</span>
                         <span class="lang-country-name" id="current-lang-label">United States</span>
                         <span id="lang-arrow-icon">▼</span>
@@ -1872,50 +1934,50 @@
             </div>
 
             <div class="dual-balance-row">
-                <div class="dual-balance-box">
-                    <div style="font-size:11px; color:var(--text-muted); font-weight:800;" id="lbl-profile-inapp">In-app SLR</div>
-                    <div style="font-size:20px; font-weight:900; margin-top:4px;" id="profile-inapp-slr">0</div>
+                <div class="dual-balance-box solaris-glass-surface">
+                    <div style="font-size:11px; color:#fde68a; font-weight:800;" id="lbl-profile-inapp">In-app SLR</div>
+                    <div style="font-size:20px; font-weight:900; color:#ffffff; margin-top:4px;" id="profile-inapp-slr">0</div>
                 </div>
-                <div class="dual-balance-box" onclick="openWalletModal()" style="cursor:pointer;">
-                    <div style="font-size:11px; color:var(--text-muted); font-weight:800;" id="lbl-profile-wallet">TON wallet Hold</div>
-                    <div style="font-size:20px; font-weight:900; color:#4d7c0f; margin-top:4px;" id="profile-wallet-slr">0</div>
+                <div class="dual-balance-box solaris-glass-surface" onclick="openWalletModal()" style="cursor:pointer;">
+                    <div style="font-size:11px; color:#fde68a; font-weight:800;" id="lbl-profile-wallet">TON wallet Hold</div>
+                    <div style="font-size:20px; font-weight:900; color:#bef264; margin-top:4px;" id="profile-wallet-slr">0</div>
                 </div>
             </div>
 
             <div class="dual-btn-row">
-                <button class="lime-btn" id="profile-withdraw-btn" onclick="openWalletModal()">↓ Withdraw</button>
-                <button class="lime-btn secondary" id="profile-buy-btn" onclick="copyAndGoBuyToken()">🛒 Buy SLR</button>
+                <button class="lime-btn solaris-glass-surface" id="profile-withdraw-btn" onclick="openWalletModal()">↓ Withdraw</button>
+                <button class="lime-btn secondary solaris-glass-surface" id="profile-buy-btn" onclick="copyAndGoBuyToken()">🛒 Buy SLR</button>
             </div>
 
-            <div class="white-card">
+            <div class="white-card solaris-glass-surface">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <span style="font-size:12px; font-weight:800; color:var(--text-muted);" id="lbl-total-holding">Total HOLDING (Wallet)</span>
-                    <span class="task-action-pill" id="manage-wallet-pill" onclick="openWalletModal()">Wallet ⓘ</span>
+                    <span style="font-size:12px; font-weight:800; color:#fde68a;" id="lbl-total-holding">Total HOLDING (Wallet)</span>
+                    <span class="task-action-pill solaris-glass-surface" id="manage-wallet-pill" onclick="openWalletModal()">Wallet ⓘ</span>
                 </div>
-                <div style="font-size:24px; font-weight:900;" id="profile-holding-big">0 SLR</div>
+                <div style="font-size:24px; font-weight:900; color:#ffffff;" id="profile-holding-big">0 SLR</div>
                 <div class="hold-progress-track">
                     <div class="hold-progress-fill" id="profile-hold-bar"></div>
                 </div>
-                <div style="font-size:11px; color:var(--text-muted); margin-top:6px;" id="profile-hold-hint"></div>
+                <div style="font-size:11px; color:#e5e7eb; margin-top:6px;" id="profile-hold-hint"></div>
             </div>
 
-            <div class="menu-list-item" onclick="openWalletModal()">
+            <div class="menu-list-item solaris-glass-surface" onclick="openWalletModal()">
                 <span id="menu-wallet">💼 Open WALLET & Connect Tonkeeper</span>
-                <span>&rsaquo;</span>
+                <span style="color:#fef08a;">&rsaquo;</span>
             </div>
-            <div class="menu-list-item" onclick="openHistoryModal()">
+            <div class="menu-list-item solaris-glass-surface" onclick="openHistoryModal()">
                 <span id="menu-history">🕒 SLR Withdrawal History</span>
-                <span>&rsaquo;</span>
+                <span style="color:#fef08a;">&rsaquo;</span>
             </div>
-            <div class="menu-list-item" onclick="openRulesModal()">
+            <div class="menu-list-item solaris-glass-surface" onclick="openRulesModal()">
                 <span id="menu-rules">📜 SLR Rules (Hold 5,000 • Withdraw 20,000)</span>
-                <span>&rsaquo;</span>
+                <span style="color:#fef08a;">&rsaquo;</span>
             </div>
         </div>
     </div>
 
     <div id="lang-menu-backdrop" class="lang-menu-backdrop" onclick="closeLanguageMenu()"></div>
-    <div id="lang-dropdown-menu" class="lang-dropdown-menu" role="menu">
+    <div id="lang-dropdown-menu" class="lang-dropdown-menu solaris-glass-surface" role="menu">
         <button type="button" class="lang-menu-item active" data-lang="en-us" onclick="selectLanguageFromMenu('en-us')">
             <span class="lang-menu-left"><span class="lang-flag">🇺🇸</span><span class="lang-country-name">United States</span></span>
             <span>✓</span>
@@ -1947,8 +2009,8 @@
     </div>
 
     <div class="floating-dock-wrap">
-        <button class="floating-mine-fab" onclick="switchView('upgrade')" title="Mining">⛏</button>
-        <div class="floating-nav-pill">
+        <button class="floating-mine-fab solaris-glass-surface" onclick="switchView('upgrade')" title="Mining">⛏</button>
+        <div class="floating-nav-pill solaris-glass-surface">
             <button class="dock-tab active" id="dock-upgrade" onclick="switchView('upgrade')">Upgrade</button>
             <button class="dock-tab" id="dock-spin" onclick="switchView('spin')">Spin</button>
             <button class="dock-tab" id="dock-chart" onclick="switchView('chart')">Chart</button>
@@ -1959,64 +2021,64 @@
     </div>
 
     <div id="wallet-modal" class="modal-backdrop">
-        <div class="modal-box">
+        <div class="modal-box solaris-glass-surface">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <div style="font-size:18px; font-weight:900;">WALLET • SLR</div>
-                <button class="task-action-pill" id="close-wallet-btn" onclick="closeModal('wallet-modal')">Close ✕</button>
+                <div style="font-size:18px; font-weight:900; color:#fef08a;">WALLET • SLR</div>
+                <button class="task-action-pill solaris-glass-surface" id="close-wallet-btn" onclick="closeModal('wallet-modal')">Close ✕</button>
             </div>
 
-            <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px;" id="wallet-modal-sub">
+            <div style="font-size:11px; color:#e5e7eb; margin-bottom:10px;" id="wallet-modal-sub">
                 Connect Tonkeeper, verify wallet, hold 5,000 SLR & withdraw 20,000+ SLR
             </div>
 
             <div id="ton-connect-button-container" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
 
-            <button id="verify-wallet-btn" class="lime-btn secondary" style="margin-bottom:12px;" onclick="verifyWalletWith005Ton()">
+            <button id="verify-wallet-btn" class="lime-btn secondary solaris-glass-surface" style="margin-bottom:12px;" onclick="verifyWalletWith005Ton()">
                 Verify Wallet with 0.05 TON
             </button>
 
-            <div class="white-card" style="background:var(--card-soft); margin-bottom:10px;">
-                <div style="font-size:12px; font-weight:800; margin-bottom:4px;" id="wallet-sync-title">Real On-Chain SLR Hold Verification</div>
-                <div style="font-size:10px; color:var(--text-muted); margin-bottom:8px;" id="wallet-sync-desc">
+            <div class="white-card solaris-glass-surface" style="margin-bottom:10px;">
+                <div style="font-size:12px; font-weight:800; color:#fef08a; margin-bottom:4px;" id="wallet-sync-title">Real On-Chain SLR Hold Verification</div>
+                <div style="font-size:10px; color:#e5e7eb; margin-bottom:8px;" id="wallet-sync-desc">
                     Connect your wallet and check your real SLR balance directly on the TON blockchain.
                 </div>
-                <button class="lime-btn" style="padding:10px; font-size:12px;" id="check-onchain-btn" onclick="fetchRealOnchainSlrHold()">
+                <button class="lime-btn solaris-glass-surface" style="padding:10px; font-size:12px;" id="check-onchain-btn" onclick="fetchRealOnchainSlrHold()">
                     🔍 Check Real SLR Hold on Blockchain
                 </button>
-                <div style="margin-top:8px; font-size:10px; color:var(--text-muted);" id="lbl-tx-optional">Optional purchase TX hash proof:</div>
+                <div style="margin-top:8px; font-size:10px; color:#fde68a;" id="lbl-tx-optional">Optional purchase TX hash proof:</div>
                 <div style="display:flex; gap:6px; margin-top:4px;">
                     <input type="text" id="buy-tx-hash-input" class="clean-input" placeholder="TON Transaction Hash (optional)" style="margin-top:0; padding:8px 10px; font-size:11px;">
-                    <button class="task-action-pill" id="save-tx-btn" onclick="savePurchaseTxProof()">Record TX</button>
+                    <button class="task-action-pill solaris-glass-surface" id="save-tx-btn" onclick="savePurchaseTxProof()">Record TX</button>
                 </div>
-                <div id="recorded-tx-note" style="font-size:10px; color:#4d7c0f; font-weight:700; margin-top:5px;"></div>
+                <div id="recorded-tx-note" style="font-size:10px; color:#bef264; font-weight:700; margin-top:5px;"></div>
             </div>
 
             <div id="wallet-rule-alert" class="alert-hold-box"></div>
 
-            <label style="font-size:11px; font-weight:800; color:var(--text-muted);" id="lbl-withdraw-amt">Withdraw amount (Min 20k • Fee 1,000 SLR):</label>
+            <label style="font-size:11px; font-weight:800; color:#fde68a;" id="lbl-withdraw-amt">Withdraw amount (Min 20k • Fee 1,000 SLR):</label>
             <input type="number" id="withdraw-slr-amount" class="clean-input" placeholder="Min 20,000">
 
-            <label style="font-size:11px; font-weight:800; color:var(--text-muted); display:block; margin-top:8px;" id="lbl-withdraw-addr">Connected Tonkeeper Wallet Address:</label>
+            <label style="font-size:11px; font-weight:800; color:#fde68a; display:block; margin-top:8px;" id="lbl-withdraw-addr">Connected Tonkeeper Wallet Address:</label>
             <div class="connected-wallet-box" id="connected-wallet-display">Not connected</div>
 
-            <div style="font-size:10.5px; color:#b45309; font-weight:800; margin-top:8px;" id="payout-time-note">
+            <div style="font-size:10.5px; color:#fde047; font-weight:800; margin-top:8px;" id="payout-time-note">
                 ⏱ Payouts take 1 to 24 hours directly to your connected Tonkeeper wallet.
             </div>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px;">
-                <button class="lime-btn secondary" id="modal-buy-btn" onclick="copyAndGoBuyToken()">خرید SLR</button>
-                <button class="lime-btn" id="submit-withdraw-btn" onclick="submitSlrWithdraw()">Withdraw</button>
+                <button class="lime-btn secondary solaris-glass-surface" id="modal-buy-btn" onclick="copyAndGoBuyToken()">خرید SLR</button>
+                <button class="lime-btn solaris-glass-surface" id="submit-withdraw-btn" onclick="submitSlrWithdraw()">Withdraw</button>
             </div>
         </div>
     </div>
 
     <div id="info-modal" class="modal-backdrop">
-        <div class="modal-box">
+        <div class="modal-box solaris-glass-surface">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <div id="info-modal-title" style="font-size:16px; font-weight:900;">Info</div>
-                <button class="task-action-pill" id="close-info-btn" onclick="closeModal('info-modal')">Close ✕</button>
+                <div id="info-modal-title" style="font-size:16px; font-weight:900; color:#fef08a;">Info</div>
+                <button class="task-action-pill solaris-glass-surface" id="close-info-btn" onclick="closeModal('info-modal')">Close ✕</button>
             </div>
-            <div id="info-modal-body" style="font-size:12px; line-height:1.7; color:var(--text-dark);"></div>
+            <div id="info-modal-body" style="font-size:12px; line-height:1.7; color:#fffbeb;"></div>
         </div>
     </div>
 
@@ -2094,7 +2156,7 @@
             document.getElementById("info-modal-title").innerText = state.userName || "Profile";
             document.getElementById("info-modal-body").innerHTML = `
                 <div style="text-align:center; padding:6px 0;">
-                    <img src="${avatarSrc}" alt="Profile Photo" onerror="handleAvatarError(this)" style="width:100%; max-width:300px; max-height:360px; object-fit:contain; border-radius:18px; border:2px solid #a3e635; background:#f5f8f3;">
+                    <img src="${avatarSrc}" alt="Profile Photo" onerror="handleAvatarError(this)" style="width:100%; max-width:300px; max-height:360px; object-fit:contain; border-radius:18px; border:2px solid #fde047; box-shadow:0 0 16px rgba(250,204,21,0.45); background:rgba(15,11,4,0.75);">
                 </div>
             `;
             document.getElementById("info-modal").style.display = "flex";
@@ -3462,7 +3524,7 @@
                 : buildCleanTrendSeries(marketState.priceUsd, marketState.change24h, marketState.timeframe);
 
             ctx.save();
-            ctx.strokeStyle = "#e5e7eb";
+            ctx.strokeStyle = "rgba(250, 204, 21, 0.16)";
             ctx.lineWidth = 1;
             ctx.setLineDash([4, 4]);
             [34, 88, 142].forEach(yPos => {
@@ -3493,12 +3555,12 @@
             });
 
             const isPositive = prices[prices.length - 1] >= prices[0];
-            const strokeColor = isPositive ? "#65a30d" : "#dc2626";
-            const dotColor = isPositive ? "#84cc16" : "#ef4444";
+            const strokeColor = isPositive ? "#a3e635" : "#f87171";
+            const dotColor = isPositive ? "#fde047" : "#ef4444";
 
             const grad = ctx.createLinearGradient(0, padTop, 0, cssH);
             if (isPositive) {
-                grad.addColorStop(0, "rgba(132, 204, 22, 0.34)");
+                grad.addColorStop(0, "rgba(250, 204, 21, 0.34)");
                 grad.addColorStop(1, "rgba(132, 204, 22, 0.0)");
             } else {
                 grad.addColorStop(0, "rgba(239, 68, 68, 0.28)");
@@ -3530,7 +3592,7 @@
             const last = coords[coords.length - 1];
             ctx.beginPath();
             ctx.arc(last.x, last.y, 8, 0, Math.PI * 2);
-            ctx.fillStyle = isPositive ? "rgba(132, 204, 22, 0.28)" : "rgba(239, 68, 68, 0.28)";
+            ctx.fillStyle = isPositive ? "rgba(250, 204, 21, 0.32)" : "rgba(239, 68, 68, 0.28)";
             ctx.fill();
 
             ctx.beginPath();
@@ -4254,14 +4316,14 @@
             const body = document.getElementById("info-modal-body");
             document.getElementById("info-modal-title").innerText = state.lang === "fa" ? "تاریخچه برداشت SLR" : "SLR Withdrawal History";
             if (!state.withdrawHistory.length) {
-                body.innerHTML = `<div style='color:#6b7280; text-align:center; padding:16px;'>${state.lang === "fa" ? "هنوز برداشتی ثبت نشده است." : "No withdrawals recorded yet."}</div>`;
+                body.innerHTML = `<div style='color:#e5e7eb; text-align:center; padding:16px;'>${state.lang === "fa" ? "هنوز برداشتی ثبت نشده است." : "No withdrawals recorded yet."}</div>`;
             } else {
                 body.innerHTML = state.withdrawHistory.map(h => {
                     const formattedHistAddr = formatTonAddressToUQ(h.address);
                     return `
-                        <div style="background:#f5f8f3; border-radius:12px; padding:10px; margin-bottom:8px;">
+                        <div style="background:rgba(15,11,4,0.72); border:1px solid rgba(250,204,21,0.35); border-radius:12px; padding:10px; margin-bottom:8px;">
                             <div><b>-${h.amount.toLocaleString()} SLR</b> (${state.lang === "fa" ? "خالص" : "Net"}: ${h.net.toLocaleString()})</div>
-                            <div style="font-size:10px; color:#6b7280; word-break:break-all;">${formattedHistAddr} • ${h.date}</div>
+                            <div style="font-size:10px; color:#fde68a; word-break:break-all;">${formattedHistAddr} • ${h.date}</div>
                         </div>
                     `;
                 }).join("");
@@ -4273,13 +4335,13 @@
             closeLanguageMenu();
             document.getElementById("info-modal-title").innerText = state.lang === "fa" ? "شرایط و قوانین SLR" : "SLR Rules";
             document.getElementById("info-modal-body").innerHTML = state.lang === "fa" ? `
-                • آدرس قرارداد توکن: <b style="font-family:monospace; font-size:10px;">${slrTokenAddress}</b><br>
+                • آدرس قرارداد توکن: <b style="font-family:monospace; font-size:10px; color:#fef08a;">${slrTokenAddress}</b><br>
                 • تایید ولت برای فعال‌سازی واحد اول و استخراج: <b>0.05 TON</b><br>
                 • فعال‌سازی واحدهای بالاتر با هولد واقعی SLR در ولت: <b>500 / 1,800 / 4,500 / 10,000 / 25,000 SLR</b><br>
                 • شرایط باز شدن قفل برداشت: <b>تایید ولت</b> + <b>هولد 5,000 SLR</b> در ولت + <b>موجودی حداقل 20,000 SLR</b><br>
                 • کارمزد برداشت: <b>1,000 SLR</b> • زمان واریز مستقیم به Tonkeeper متصل: <b>1 الی 24 ساعت</b>
             ` : `
-                • Token contract: <b style="font-family:monospace; font-size:10px;">${slrTokenAddress}</b><br>
+                • Token contract: <b style="font-family:monospace; font-size:10px; color:#fef08a;">${slrTokenAddress}</b><br>
                 • Wallet verification for Unit 1 & mining: <b>0.05 TON</b><br>
                 • Higher units unlock by holding SLR in wallet: <b>500 / 1,800 / 4,500 / 10,000 / 25,000 SLR</b><br>
                 • Withdrawal unlock requirements: <b>Wallet Verified</b> + <b>5,000 SLR Hold</b> + <b>20,000 SLR Balance</b><br>
@@ -4432,29 +4494,29 @@
                                 placeholder="${taskText.placeholder || "https://x.com/..."}"
                                 value="${savedVal.replace(/"/g, "&quot;")}"
                             >
-                            <button type="button" class="x-proof-submit-btn" onclick="submitXTaskProof('${taskMeta.id}')">
+                            <button type="button" class="x-proof-submit-btn solaris-glass-surface" onclick="submitXTaskProof('${taskMeta.id}')">
                                 ${t("submitProofBtn")}
                             </button>
                         </div>
                     </div>
                 ` : (taskMeta.isXTask && done && savedVal ? `
-                    <div style="font-size:10px; color:#15803d; font-weight:700; margin-top:6px; word-break:break-all;">
+                    <div style="font-size:10px; color:#bbf7d0; font-weight:700; margin-top:6px; word-break:break-all;">
                         ✓ ${savedVal}
                     </div>
                 ` : "");
 
                 return `
-                    <div class="task-card-wrapper">
+                    <div class="task-card-wrapper solaris-glass-surface">
                         <div class="task-row-card">
                             <div>
                                 <div class="task-title-row">
                                     ${badgeHtml}
-                                    <span style="font-size:13px; font-weight:800;">${taskText.title}</span>
+                                    <span style="font-size:13px; font-weight:800; color:#ffffff;">${taskText.title}</span>
                                 </div>
-                                <div style="font-size:10px; color:var(--text-muted); margin-top:2px;">${taskText.desc}</div>
-                                <div style="font-size:11px; font-weight:800; color:#4d7c0f; margin-top:4px;">+${taskMeta.reward.toLocaleString()} SLR</div>
+                                <div style="font-size:10px; color:#e5e7eb; margin-top:2px;">${taskText.desc}</div>
+                                <div style="font-size:11px; font-weight:800; color:#bef264; margin-top:4px;">+${taskMeta.reward.toLocaleString()} SLR</div>
                             </div>
-                            <button class="task-action-pill ${done ? "done" : (isRefLocked ? "locked" : "")}" onclick="runCommunityTask('${taskMeta.id}')">
+                            <button class="task-action-pill solaris-glass-surface ${done ? "done" : (isRefLocked ? "locked" : "")}" onclick="runCommunityTask('${taskMeta.id}')">
                                 ${btnLabel}
                             </button>
                         </div>
@@ -4470,13 +4532,13 @@
                 const claimed = state.claimedHoldTiers.includes(tier.target);
                 const eligible = state.walletHold >= tier.target;
                 return `
-                    <div class="task-card-wrapper" style="display:flex; flex-direction:column; align-items:stretch;">
+                    <div class="task-card-wrapper solaris-glass-surface" style="display:flex; flex-direction:column; align-items:stretch;">
                         <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                             <div>
-                                <div style="font-size:12px; font-weight:800;">${t(tier.key)}</div>
-                                <div style="font-size:11px; font-weight:800; color:#4d7c0f; margin-top:3px;">+${tier.reward.toLocaleString()} SLR</div>
+                                <div style="font-size:12px; font-weight:800; color:#ffffff;">${t(tier.key)}</div>
+                                <div style="font-size:11px; font-weight:800; color:#bef264; margin-top:3px;">+${tier.reward.toLocaleString()} SLR</div>
                             </div>
-                            <button class="task-action-pill ${claimed ? "done" : ""}" onclick="claimHoldTier(${tier.target})">
+                            <button class="task-action-pill solaris-glass-surface ${claimed ? "done" : ""}" onclick="claimHoldTier(${tier.target})">
                                 ${claimed ? t("claimedBadge") : (eligible ? t("claimBtn") : "🔒 " + Math.floor(state.walletHold).toLocaleString() + "/" + tier.target.toLocaleString())}
                             </button>
                         </div>
@@ -4573,10 +4635,10 @@
 
             const vBtn = document.getElementById("verify-wallet-btn");
             if (verified) {
-                vBtn.className = "lime-btn";
+                vBtn.className = "lime-btn solaris-glass-surface";
                 vBtn.innerText = t("verified005Ton");
             } else {
-                vBtn.className = "lime-btn secondary";
+                vBtn.className = "lime-btn secondary solaris-glass-surface";
                 vBtn.innerText = t("verify005Ton");
             }
         }
