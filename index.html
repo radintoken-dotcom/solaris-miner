@@ -39,6 +39,15 @@
             --wheel-bg-img: url("./image_dd6217df.jpg");
         }
 
+        html.spin-screen-locked,
+        body.spin-screen-locked {
+            overflow: hidden !important;
+            height: 100vh !important;
+            max-height: 100vh !important;
+            overscroll-behavior: none !important;
+            touch-action: none !important;
+        }
+
         body {
             background-color: var(--bg-main);
             color: var(--text-dark);
@@ -50,6 +59,7 @@
 
         body.spin-bg-active {
             background-color: #090c12;
+            padding-bottom: 0 !important;
         }
 
         body.spin-bg-active::before {
@@ -65,6 +75,12 @@
             background-repeat: no-repeat;
             z-index: 0;
             pointer-events: none;
+        }
+
+        body.spin-bg-active .app-shell {
+            padding-bottom: 0;
+            height: 100vh;
+            overflow: hidden;
         }
 
         body.splash-locked {
@@ -300,13 +316,13 @@
             margin-bottom: 12px;
         }
 
-        /* ===== Wheel Tab Styles (Full Screen Background + Sealed Disc + Compact Higher Button + 24h Timer) ===== */
+        /* ===== Wheel Tab Styles (Locked Static Screen + Persistent 24h Cooldown) ===== */
         .wheel-stage-card {
             width: 100%;
-            min-height: calc(100vh - 96px);
+            height: calc(100vh - 142px);
             background: transparent;
             border-radius: 0;
-            padding: 36px 14px 48px;
+            padding: 24px 14px 16px;
             box-shadow: none;
             margin-bottom: 0;
             border: none;
@@ -316,17 +332,21 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            gap: 22px;
+            gap: 20px;
+            touch-action: none;
+            overscroll-behavior: none;
+            overflow: hidden;
         }
 
         .wheel-assembly {
             position: relative;
             width: min(74vw, 294px);
             aspect-ratio: 1 / 1;
-            margin: 14px auto 0;
+            margin: 12px auto 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            touch-action: none;
         }
 
         .wheel-static-pointer {
@@ -381,10 +401,11 @@
             box-shadow: 0 6px 16px rgba(234, 179, 8, 0.42);
             letter-spacing: 0.4px;
             white-space: nowrap;
+            touch-action: manipulation;
         }
 
         .wheel-spin-btn:disabled {
-            opacity: 0.72;
+            opacity: 0.8;
             cursor: not-allowed;
         }
 
@@ -1603,7 +1624,7 @@
 
         <!-- ===== SPIN WHEEL VIEW ===== -->
         <div id="view-spin" class="view-section">
-            <div class="wheel-stage-card">
+            <div class="wheel-stage-card" id="wheel-stage-card">
                 <div class="wheel-assembly">
                     <img src="./image_caf74990-removebg-preview.png" alt="" class="wheel-static-pointer" aria-hidden="true">
                     <div class="wheel-disc-wrap" id="wheel-disc-wrap">
@@ -1951,6 +1972,7 @@
         const WALLET_VERIFY_TON = 0.05;
         const WITHDRAW_FEE_SLR = 1000;
         const SPIN_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+        const SPIN_COOLDOWN_STORAGE_KEY = "solaris_spin_cooldown_until_v1";
 
         const wheelWeightedPool = [
             { sliceIndex: 2, label: "EMPTY", reward: 0, weight: 36.0 },
@@ -2707,6 +2729,8 @@
             const el = document.getElementById("solaris-splash-screen");
             if (el) el.classList.add("hidden");
             document.body.classList.remove("splash-locked");
+            syncSpinScreenLockState();
+            renderSpinView();
         }
 
         function elevateTonConnectModal() {
@@ -2788,9 +2812,30 @@
 
         let isSpinningWheel = false;
 
+        function readPersistedSpinCooldownUntil() {
+            let fromKey = 0;
+            try {
+                fromKey = Number(localStorage.getItem(SPIN_COOLDOWN_STORAGE_KEY)) || 0;
+            } catch (e) {}
+            const fromState = Number(state.spinCooldownUntil) || 0;
+            return Math.max(fromKey, fromState);
+        }
+
+        function persistSpinCooldownUntil(untilMs) {
+            const safeUntil = Math.max(0, Number(untilMs) || 0);
+            state.spinCooldownUntil = safeUntil;
+            try {
+                localStorage.setItem(SPIN_COOLDOWN_STORAGE_KEY, String(safeUntil));
+            } catch (e) {}
+        }
+
         function getRemainingSpinCooldownMs() {
-            const until = Number(state.spinCooldownUntil) || 0;
-            return Math.max(0, until - Date.now());
+            const until = readPersistedSpinCooldownUntil();
+            const rem = Math.max(0, until - Date.now());
+            if (rem === 0 && until > 0) {
+                persistSpinCooldownUntil(0);
+            }
+            return rem;
         }
 
         function formatCountdownHHMMSS(ms) {
@@ -2800,6 +2845,27 @@
             const secs = totalSec % 60;
             const pad = n => String(n).padStart(2, "0");
             return `${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+        }
+
+        function isSpinTabCurrentlyActive() {
+            const spinView = document.getElementById("view-spin");
+            return !!(spinView && spinView.classList.contains("active"));
+        }
+
+        function syncSpinScreenLockState() {
+            const active = isSpinTabCurrentlyActive();
+            document.documentElement.classList.toggle("spin-screen-locked", active);
+            document.body.classList.toggle("spin-screen-locked", active);
+            document.body.classList.toggle("spin-bg-active", active);
+            try {
+                if (window.Telegram?.WebApp) {
+                    if (active && typeof window.Telegram.WebApp.disableVerticalSwipes === "function") {
+                        window.Telegram.WebApp.disableVerticalSwipes();
+                    } else if (!active && typeof window.Telegram.WebApp.enableVerticalSwipes === "function") {
+                        window.Telegram.WebApp.enableVerticalSwipes();
+                    }
+                }
+            } catch (e) {}
         }
 
         function spinCobraWheel() {
@@ -2816,7 +2882,7 @@
             }
 
             isSpinningWheel = true;
-            state.spinCooldownUntil = Date.now() + SPIN_COOLDOWN_MS;
+            persistSpinCooldownUntil(Date.now() + SPIN_COOLDOWN_MS);
             saveState();
 
             const outcome = pickWeightedWheelOutcome();
@@ -2865,23 +2931,22 @@
 
         function renderSpinView() {
             const discEl = document.getElementById("wheel-disc-wrap");
-            if (!discEl) return;
+            const spinBtn = document.getElementById("wheel-spin-btn");
+            if (!discEl || !spinBtn) return;
 
             const remainingMs = getRemainingSpinCooldownMs();
             discEl.style.transform = `rotate(${Number(state.wheelRotationDeg) || 0}deg)`;
 
-            const spinBtn = document.getElementById("wheel-spin-btn");
-            if (spinBtn) {
-                if (isSpinningWheel) {
-                    spinBtn.disabled = true;
-                    spinBtn.innerText = t("wheelSpinningText");
-                } else if (remainingMs > 0) {
-                    spinBtn.disabled = true;
-                    spinBtn.innerText = `⏱ ${formatCountdownHHMMSS(remainingMs)}`;
-                } else {
-                    spinBtn.disabled = false;
-                    spinBtn.innerText = t("wheelSpinBtnText");
-                }
+            if (remainingMs > 0) {
+                isSpinningWheel = false;
+                spinBtn.disabled = true;
+                spinBtn.innerText = `⏱ ${formatCountdownHHMMSS(remainingMs)}`;
+            } else if (isSpinningWheel) {
+                spinBtn.disabled = true;
+                spinBtn.innerText = t("wheelSpinningText");
+            } else {
+                spinBtn.disabled = false;
+                spinBtn.innerText = t("wheelSpinBtnText");
             }
         }
 
@@ -2940,6 +3005,12 @@
             document.documentElement.style.setProperty("--wheel-img", `url("${WHEEL_IMAGE_URL}")`);
             document.documentElement.style.setProperty("--pointer-img", `url("${POINTER_IMAGE_URL}")`);
             document.documentElement.style.setProperty("--wheel-bg-img", `url("${WHEEL_BG_IMAGE_URL}")`);
+
+            document.addEventListener("touchmove", (ev) => {
+                if (isSpinTabCurrentlyActive()) {
+                    ev.preventDefault();
+                }
+            }, { passive: false });
 
             startAutoSplashLoader();
 
@@ -3484,6 +3555,10 @@
                     state = { ...state, ...parsed };
                 } catch (e) {}
             }
+            const persistedCooldown = readPersistedSpinCooldownUntil();
+            if (persistedCooldown > 0) {
+                state.spinCooldownUntil = persistedCooldown;
+            }
             if (state.photoUrl && String(state.photoUrl).includes("dicebear.com")) {
                 state.photoUrl = "";
             }
@@ -3513,7 +3588,12 @@
 
         function saveState() {
             state.lastTick = Date.now();
-            localStorage.setItem("solaris_empire_slr_state_v1", JSON.stringify(state));
+            const safeCooldown = readPersistedSpinCooldownUntil();
+            state.spinCooldownUntil = safeCooldown;
+            try {
+                localStorage.setItem(SPIN_COOLDOWN_STORAGE_KEY, String(safeCooldown));
+                localStorage.setItem("solaris_empire_slr_state_v1", JSON.stringify(state));
+            } catch (e) {}
         }
 
         function getDailyRate() {
@@ -3700,11 +3780,11 @@
             closeLanguageMenu();
             document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
             document.querySelectorAll(".dock-tab").forEach(el => el.classList.remove("active"));
-            document.body.classList.toggle("spin-bg-active", name === "spin");
             const target = document.getElementById("view-" + name);
             const dock = document.getElementById("dock-" + name);
             if (target) target.classList.add("active");
             if (dock) dock.classList.add("active");
+            syncSpinScreenLockState();
             if (name === "spin") {
                 renderSpinView();
             }
@@ -3712,7 +3792,7 @@
                 drawChartCanvas();
                 fetchSlrMarketData(true);
             }
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({ top: 0, behavior: "instant" });
         }
 
         function openWalletModal() {
@@ -4141,6 +4221,7 @@
 
         function renderAll() {
             syncHoldCrewUnlocks();
+            syncSpinScreenLockState();
             const daily = getDailyRate();
             const lvl = getLevel();
             const connected = !!tonConnectUI.connected;
@@ -4440,7 +4521,7 @@
                 document.getElementById("storage-bar").style.width = Math.min(100, (state.unclaimed / STORAGE_CAP_SLR) * 100) + "%";
                 saveState();
             }
-            if (!isSpinningWheel && getRemainingSpinCooldownMs() > 0) {
+            if (!isSpinningWheel) {
                 renderSpinView();
             }
         }, 1000);
