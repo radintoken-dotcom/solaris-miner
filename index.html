@@ -35,7 +35,7 @@
             --coin-img: url("./image_1be087b2.jpg");
             --bank-card-img: url("./image_96fd9f2b.jpg");
             --wheel-img: url("./image_9204a050.jpg");
-            --pointer-img: url("./image_caf74990.jpg");
+            --pointer-img: url("./image_caf74990-removebg-preview.png");
         }
 
         body {
@@ -277,11 +277,11 @@
             margin-bottom: 12px;
         }
 
-        /* ===== Wheel Tab Styles (User Pointer Image + Clean Edge) ===== */
+        /* ===== Wheel Tab Styles (Transparent Cobra Pointer Positioned Right Above Wheel) ===== */
         .wheel-stage-card {
             background: radial-gradient(circle at top, #1f2937 0%, #0b1120 78%);
             border-radius: 26px;
-            padding: 36px 14px 20px;
+            padding: 42px 14px 20px;
             box-shadow: 0 12px 28px rgba(15, 23, 42, 0.25);
             margin-bottom: 12px;
             border: 1.5px solid rgba(253, 224, 71, 0.45);
@@ -293,7 +293,7 @@
             position: relative;
             width: min(82vw, 316px);
             aspect-ratio: 1 / 1;
-            margin: 22px auto 24px;
+            margin: 28px auto 22px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -327,28 +327,22 @@
 
         .wheel-static-pointer {
             position: absolute;
-            top: -30px;
+            top: -36px;
             left: 50%;
             transform: translateX(-50%);
-            width: 56px;
-            height: 68px;
-            border-radius: 16px;
-            overflow: hidden;
+            width: 68px;
+            height: 76px;
             z-index: 20;
             pointer-events: none;
-            transform-origin: 50% 18%;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.72), 0 0 12px rgba(234, 179, 8, 0.35);
-            border: 1px solid rgba(254, 240, 138, 0.45);
-            background: #1c1917;
+            transform-origin: 50% 15%;
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.72));
         }
 
         .wheel-pointer-img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
-            transform: scale(1.12);
-            transform-origin: center center;
         }
 
         @keyframes pointerTick {
@@ -1597,7 +1591,7 @@
             <div class="wheel-stage-card">
                 <div class="wheel-assembly">
                     <div class="wheel-static-pointer" id="wheel-static-pointer">
-                        <img src="./image_caf74990.jpg" alt="" class="wheel-pointer-img" onerror="this.style.background='#78350f'">
+                        <img src="./image_caf74990-removebg-preview.png" alt="" class="wheel-pointer-img" onerror="this.style.display='none'">
                     </div>
 
                     <div class="wheel-disc-wrap" id="wheel-disc-wrap">
@@ -1931,7 +1925,7 @@
         const COIN_IMAGE_URL = "./image_1be087b2.jpg";
         const BANK_CARD_IMAGE_URL = "./image_96fd9f2b.jpg";
         const WHEEL_IMAGE_URL = "./image_9204a050.jpg";
-        const POINTER_IMAGE_URL = "./image_caf74990.jpg";
+        const POINTER_IMAGE_URL = "./image_caf74990-removebg-preview.png";
 
         const slrTokenAddress = "EQB1yCD3HAgcXFJiVqAmnySiTDyYQ90e3KmX_g8xzPtRddfN";
         const slrDecimals = 9;
