@@ -277,7 +277,7 @@
             margin-bottom: 12px;
         }
 
-        /* ===== Wheel Tab Styles (Clean Edge & Pointer) ===== */
+        /* ===== Wheel Tab Styles (Clean Edge & Transparent SVG Pointer) ===== */
         .wheel-stage-card {
             background: radial-gradient(circle at top, #1f2937 0%, #0b1120 78%);
             border-radius: 26px;
@@ -325,38 +325,26 @@
             background: #1c1917;
         }
 
-        /* عقربه کبرا بدون کادر سفید در مرکز بالای گردونه */
         .wheel-static-pointer {
             position: absolute;
-            top: -34px;
+            top: -26px;
             left: 50%;
             transform: translateX(-50%);
-            width: 66px;
-            height: 78px;
+            width: 54px;
+            height: 66px;
             z-index: 20;
             pointer-events: none;
-            overflow: hidden;
-            border-radius: 14px;
-            transform-origin: 50% 25%;
+            transform-origin: 50% 18%;
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.75));
         }
 
         @keyframes pointerTick {
             0%, 100% { transform: translateX(-50%) rotate(0deg); }
-            50% { transform: translateX(-50%) rotate(-12deg); }
+            50% { transform: translateX(-50%) rotate(-13deg); }
         }
 
         .wheel-static-pointer.ticking {
             animation: pointerTick 0.16s ease-in-out infinite;
-        }
-
-        .wheel-pointer-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transform: scale(1.88);
-            transform-origin: 50% 48%;
-            filter: contrast(1.22) saturate(1.25) brightness(0.96) drop-shadow(0 5px 8px rgba(0, 0, 0, 0.75));
         }
 
         .wheel-spin-btn {
@@ -1596,7 +1584,33 @@
             <div class="wheel-stage-card">
                 <div class="wheel-assembly">
                     <div class="wheel-static-pointer" id="wheel-static-pointer">
-                        <img src="./image_caf74990.jpg" alt="" class="wheel-pointer-img" onerror="this.style.display='none'">
+                        <svg viewBox="0 0 100 124" width="100%" height="100%" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="cobraGoldGrad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#fef08a"/>
+                                    <stop offset="35%" stop-color="#eab308"/>
+                                    <stop offset="75%" stop-color="#b45309"/>
+                                    <stop offset="100%" stop-color="#78350f"/>
+                                </linearGradient>
+                                <linearGradient id="cobraInnerGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#fde047"/>
+                                    <stop offset="100%" stop-color="#92400e"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M50 8
+                                     C27 8, 12 24, 14 45
+                                     C15 58, 25 66, 33 74
+                                     L21 74 L50 118 L79 74 L67 74
+                                     C75 66, 85 58, 86 45
+                                     C88 24, 73 8, 50 8 Z"
+                                  fill="url(#cobraGoldGrad)" stroke="#451a03" stroke-width="3.5" stroke-linejoin="round"/>
+                            <path d="M50 22 C37 22, 28 32, 30 46 C31 55, 39 63, 44 76 L44 96 L50 106 L56 96 L56 76 C61 63, 69 55, 70 46 C72 32, 63 22, 50 22 Z"
+                                  fill="url(#cobraInnerGrad)" stroke="#78350f" stroke-width="2" opacity="0.92"/>
+                            <ellipse cx="40" cy="31" rx="4.5" ry="2.6" transform="rotate(-14 40 31)" fill="#1c1917"/>
+                            <ellipse cx="60" cy="31" rx="4.5" ry="2.6" transform="rotate(14 60 31)" fill="#1c1917"/>
+                            <circle cx="40.5" cy="30.5" r="1.2" fill="#fef08a"/>
+                            <circle cx="59.5" cy="30.5" r="1.2" fill="#fef08a"/>
+                        </svg>
                     </div>
 
                     <div class="wheel-disc-wrap" id="wheel-disc-wrap">
