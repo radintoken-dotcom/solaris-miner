@@ -34,8 +34,8 @@
             --splash-img: url("./image_11f9a1db.jpg");
             --coin-img: url("./image_1be087b2.jpg");
             --bank-card-img: url("./image_96fd9f2b.jpg");
-            --wheel-img: url("./wheel_cobra.jpg");
-            --pointer-img: url("./wheel_pointer.jpg");
+            --wheel-img: url("./image_9204a050.jpg");
+            --pointer-img: url("./image_caf74990.jpg");
         }
 
         body {
@@ -279,9 +279,9 @@
 
         /* ===== Wheel Tab Styles ===== */
         .wheel-stage-card {
-            background: radial-gradient(circle at top, #1f2937 0%, #0f172a 75%);
+            background: radial-gradient(circle at top, #1f2937 0%, #0b1120 78%);
             border-radius: 26px;
-            padding: 20px 14px 18px;
+            padding: 26px 14px 20px;
             box-shadow: 0 12px 28px rgba(15, 23, 42, 0.25);
             margin-bottom: 12px;
             border: 1.5px solid rgba(253, 224, 71, 0.45);
@@ -289,29 +289,11 @@
             color: #ffffff;
         }
 
-        .wheel-top-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            font-size: 11px;
-            font-weight: 800;
-        }
-
-        .wheel-pill-badge {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(253, 224, 71, 0.35);
-            color: #fef08a;
-            padding: 5px 10px;
-            border-radius: 999px;
-        }
-
         .wheel-assembly {
             position: relative;
             width: min(82vw, 316px);
             aspect-ratio: 1 / 1;
-            margin: 14px auto 16px;
+            margin: 18px auto 22px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -340,18 +322,18 @@
             background: #1c1917;
         }
 
-        /* عقربه ثابت در بالا */
+        /* عقربه ثابت دقیقاً بالای لبه گردونه */
         .wheel-static-pointer {
             position: absolute;
-            top: -18px;
+            top: -24px;
             left: 50%;
             transform: translateX(-50%);
-            width: 66px;
-            height: 78px;
-            z-index: 15;
+            width: 68px;
+            height: 76px;
+            z-index: 20;
             pointer-events: none;
-            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.65));
-            transform-origin: 50% 18%;
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.7));
+            transform-origin: 50% 20%;
         }
 
         @keyframes pointerTick {
@@ -370,21 +352,6 @@
             display: block;
         }
 
-        .wheel-result-banner {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(253, 224, 71, 0.3);
-            border-radius: 16px;
-            padding: 10px 12px;
-            margin-bottom: 12px;
-            min-height: 46px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: 900;
-            color: #fef9c3;
-        }
-
         .wheel-spin-btn {
             width: 100%;
             border: none;
@@ -396,35 +363,12 @@
             font-weight: 900;
             cursor: pointer;
             box-shadow: 0 6px 18px rgba(234, 179, 8, 0.35);
+            letter-spacing: 0.5px;
         }
 
         .wheel-spin-btn:disabled {
             opacity: 0.55;
             cursor: not-allowed;
-        }
-
-        .wheel-slices-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .wheel-slice-chip {
-            background: var(--card-soft);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            padding: 7px 4px;
-            text-align: center;
-            font-size: 10px;
-            font-weight: 800;
-            color: var(--text-dark);
-        }
-
-        .wheel-slice-chip.highlight {
-            background: #ecfccb;
-            border-color: #84cc16;
-            color: var(--green-dark);
         }
 
         .mine-hero-card {
@@ -1642,42 +1586,20 @@
 
         <!-- ===== SPIN WHEEL VIEW ===== -->
         <div id="view-spin" class="view-section">
-            <div class="section-heading" id="spin-heading">Cobra Lucky Wheel</div>
-            <div class="section-sub" id="spin-sub">Spin the wheel and win SLR rewards under the fixed top pointer</div>
-
             <div class="wheel-stage-card">
-                <div class="wheel-top-meta">
-                    <span class="wheel-pill-badge" id="wheel-spins-left-badge">Spins left: 3</span>
-                    <span class="wheel-pill-badge" id="wheel-last-prize-badge">Last: -</span>
-                </div>
-
                 <div class="wheel-assembly">
-                    <!-- عقربه ثابت بالا -->
                     <div class="wheel-static-pointer" id="wheel-static-pointer">
-                        <img src="./wheel_pointer.jpg" alt="Cobra Pointer" class="wheel-pointer-img" onerror="this.style.display='none'">
+                        <img src="./image_caf74990.jpg" alt="" class="wheel-pointer-img" onerror="this.style.display='none'">
                     </div>
 
-                    <!-- گردونه چرخان -->
                     <div class="wheel-disc-wrap" id="wheel-disc-wrap">
-                        <img src="./wheel_cobra.jpg" alt="Cobra Wheel" class="wheel-disc-img" onerror="this.style.background='#291504'">
+                        <img src="./image_9204a050.jpg" alt="" class="wheel-disc-img" onerror="this.style.background='#291504'">
                     </div>
-                </div>
-
-                <div class="wheel-result-banner" id="wheel-result-banner">
-                    Press Spin to test your luck!
                 </div>
 
                 <button type="button" class="wheel-spin-btn" id="wheel-spin-btn" onclick="spinCobraWheel()">
-                    🎡 SPIN WHEEL
+                    SPIN WHEEL
                 </button>
-            </div>
-
-            <div class="white-card">
-                <div style="font-size:13px; font-weight:900; margin-bottom:4px;" id="wheel-slices-title">Wheel Slices (Clockwise from Top Pointer)</div>
-                <div style="font-size:10.5px; color:var(--text-muted); margin-bottom:8px;" id="wheel-slices-desc">
-                    Each slice is 45° around the wheel. Rewards are added directly to your in-app SLR balance.
-                </div>
-                <div class="wheel-slices-grid" id="wheel-slices-grid"></div>
             </div>
         </div>
 
@@ -2000,8 +1922,8 @@
         const SPLASH_IMAGE_URL = "./image_11f9a1db.jpg";
         const COIN_IMAGE_URL = "./image_1be087b2.jpg";
         const BANK_CARD_IMAGE_URL = "./image_96fd9f2b.jpg";
-        const WHEEL_IMAGE_URL = "./wheel_cobra.jpg";
-        const POINTER_IMAGE_URL = "./wheel_pointer.jpg";
+        const WHEEL_IMAGE_URL = "./image_9204a050.jpg";
+        const POINTER_IMAGE_URL = "./image_caf74990.jpg";
 
         const slrTokenAddress = "EQB1yCD3HAgcXFJiVqAmnySiTDyYQ90e3KmX_g8xzPtRddfN";
         const slrDecimals = 9;
@@ -2015,8 +1937,6 @@
         const WITHDRAW_FEE_SLR = 1000;
         const MAX_DAILY_SPINS = 3;
 
-        // ۸ بخش گردونه به ترتیب ساعتگرد از بالا (ساعت ۱۲)
-        // اگر ترتیب بخش‌های عکس شما با این آرایه فرق داشت، کافیست جای مقادیر را تغییر دهید
         const wheelSlices = [
             { id: 0, label: "500 SLR", reward: 500 },
             { id: 1, label: "100 SLR", reward: 100 },
@@ -2163,18 +2083,8 @@
             holdReqPrefix: "Hold",
             buyToHoldBtn: "🛒 Hold",
             verifyFirstBtn: "🔒 Verify",
-            spinHeading: "Cobra Lucky Wheel",
-            spinSub: "Spin the wheel and win SLR rewards under the fixed top pointer",
-            wheelSpinBtnText: "🎡 SPIN WHEEL",
-            wheelSpinningText: "⏳ SPINNING...",
-            wheelReadyBanner: "Press Spin to test your luck!",
-            wheelNoSpinsBanner: "No spins left today! Come back tomorrow.",
-            wheelEmptyPrize: "Empty slice — better luck next spin!",
-            wheelWonPrefix: "You won ",
-            wheelSpinsLeftPrefix: "Spins left: ",
-            wheelLastPrefix: "Last: ",
-            wheelSlicesTitle: "Wheel Slices (Clockwise from Top Pointer)",
-            wheelSlicesDesc: "Each slice is 45° around the wheel. Rewards are added directly to your in-app SLR balance.",
+            wheelSpinBtnText: "SPIN WHEEL",
+            wheelSpinningText: "SPINNING...",
             chartHeading: "SLR Live Chart",
             chartSub: "Real-time STON.fi pool & price feed for Solaris (SLR)",
             chartLiveTitle: "LIVE SLR PRICE",
@@ -2334,18 +2244,8 @@
                 holdReqPrefix: "هولد",
                 buyToHoldBtn: "🛒 خرید و هولد",
                 verifyFirstBtn: "🔒 تایید ولت",
-                spinHeading: "گردونه شانس کبرا",
-                spinSub: "گردونه را بچرخانید و جایزه زیر عقربه ثابت بالا را برنده شوید",
-                wheelSpinBtnText: "🎡 بچرخان (SPIN)",
-                wheelSpinningText: "⏳ در حال چرخش...",
-                wheelReadyBanner: "دکمه چرخش را بزنید تا شانس خود را امتحان کنید!",
-                wheelNoSpinsBanner: "شانس امروز شما تمام شد! فردا دوباره سر بزنید.",
-                wheelEmptyPrize: "پوچ (EMPTY) — چرخش بعدی شانست بیشتره!",
-                wheelWonPrefix: "تبریک! برنده شدید: ",
-                wheelSpinsLeftPrefix: "شانس باقیمانده: ",
-                wheelLastPrefix: "آخرین جایزه: ",
-                wheelSlicesTitle: "بخش‌های گردونه (ساعتگرد از عقربه بالا)",
-                wheelSlicesDesc: "هر بخش ۴۵ درجه است و جوایز نقدی مستقیم به موجودی SLR شما اضافه می‌شوند.",
+                wheelSpinBtnText: "SPIN WHEEL",
+                wheelSpinningText: "SPINNING...",
                 chartHeading: "چارت قیمت آنلاین SLR",
                 chartSub: "اطلاعات زنده استخر STON.fi و قیمت لحظه‌ای سولاریس (SLR)",
                 chartLiveTitle: "قیمت لحظه‌ای SLR",
@@ -2470,10 +2370,238 @@
                     cherry_play: { title: "CHERRY PLAY", desc: "ورود به بازی از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" }
                 }
             },
-            ru: { ...baseEnglishPack, flag: "🇷🇺", shortName: "Russia" },
-            zh: { ...baseEnglishPack, flag: "🇨🇳", shortName: "China" },
-            hi: { ...baseEnglishPack, flag: "🇮🇳", shortName: "India" },
-            de: { ...baseEnglishPack, flag: "🇩🇪", shortName: "Germany" }
+            ru: {
+                ...baseEnglishPack,
+                flag: "🇷🇺",
+                shortName: "Russia",
+                cardWalletHold: "Холд в TON кошельке",
+                cardInappSlr: "SLR в боте",
+                cardBuyBtn: "🛒 Купить на STON.fi",
+                miningStatus: "Майнинг • Добыча SLR",
+                perDay: "SLR в день",
+                claimMined: "⛏ Забрать SLR",
+                activeUnits: "Активные модули",
+                minHoldSub: "SLR (Мин 5,000)",
+                tile1Title: "Мир Solaris",
+                tile1Sub: "Задания и холд SLR",
+                tile2Title: "Ежедневный бонус",
+                dailyTileSub: "Забрать бонус SLR",
+                tile3Title: "КОШЕЛЁК И ХОЛД",
+                tile3Sub: "Холд 5,000 • Вывод 20,000",
+                tile4Title: "График SLR",
+                tile4Sub: "Цена на STON.fi",
+                crewTitle: "Ваша команда (Холд SLR)",
+                crewTasksBtn: "Задания SLR",
+                minerWord: "модуль",
+                activeBadge: "Активен ✓",
+                holdReqPrefix: "Холд",
+                buyToHoldBtn: "🛒 Холд",
+                verifyFirstBtn: "🔒 Подтв.",
+                earnHeading: "ЗАРАБОТОК",
+                earnSub: "Бонусы, задания, холд 5,000 и вывод от 20,000 SLR",
+                dailyCardTitle: "Ежедневный бонус SLR",
+                streakLabel: "Серия дней",
+                dailyClaimBtn: "Забрать бонус",
+                communityHeading: "Сообщество, задания X и боты",
+                onchainHeading: "Держатели ON-CHAIN",
+                friendsTitle: "Приглашайте друзей и получайте SLR",
+                friendsDesc: "Получайте <b>15%</b> от майнинга друзей и <b>+100 SLR</b> за каждого приглашённого.",
+                personalRefLink: "Ваша реферальная ссылка",
+                inviteBtn: "Пригласить",
+                friendsCount: "Друзья",
+                friendsEarned: "Доход от друзей",
+                friendsReady: "Доступные реф. награды",
+                claimBtn: "Забрать",
+                langLabel: "Язык",
+                withdrawBtn: "↓ Вывод",
+                submitWithdrawBtn: "Вывести",
+                totalHolding: "Всего ХОЛД (Кошелёк)",
+                manageWalletPill: "Кошелёк ⓘ",
+                menuWallet: "💼 Открыть КОШЕЛЁК и Tonkeeper",
+                menuHistory: "🕒 История выводов SLR",
+                menuRules: "📜 Правила SLR (Холд 5,000 • Вывод 20,000)",
+                dockUpgrade: "Апгрейд",
+                dockSpin: "Рулетка",
+                dockChart: "График",
+                dockEarn: "Заработок",
+                dockFriends: "Друзья",
+                dockProfile: "Профиль",
+                closeBtn: "Закрыть ✕"
+            },
+            zh: {
+                ...baseEnglishPack,
+                flag: "🇨🇳",
+                shortName: "China",
+                cardWalletHold: "TON钱包持仓",
+                cardInappSlr: "应用内 SLR",
+                cardBuyBtn: "🛒 在 STON.fi 购买",
+                miningStatus: "挖矿中 • 提取 SLR",
+                perDay: "SLR / 天",
+                claimMined: "⛏ 领取 SLR",
+                activeUnits: "激活节点",
+                minHoldSub: "SLR (最低 5,000)",
+                tile1Title: "Solaris 世界",
+                tile1Sub: "任务与 SLR 持仓",
+                tile2Title: "每日奖励",
+                dailyTileSub: "领取每日 SLR 奖励",
+                tile3Title: "钱包与持仓",
+                tile3Sub: "持仓 5,000 • 提现 20,000",
+                tile4Title: "SLR 实时行情",
+                tile4Sub: "STON.fi 价格趋势",
+                crewTitle: "你的矿机团队 (SLR 持仓)",
+                crewTasksBtn: "SLR 任务",
+                minerWord: "矿机",
+                activeBadge: "已激活 ✓",
+                holdReqPrefix: "持仓",
+                buyToHoldBtn: "🛒 持仓",
+                verifyFirstBtn: "🔒 验证",
+                earnHeading: "赚取奖励",
+                earnSub: "每日奖励、任务、持仓 5,000 与提现 20,000 SLR",
+                dailyCardTitle: "每日 SLR 奖励",
+                streakLabel: "连续签到",
+                dailyClaimBtn: "领取每日奖励",
+                communityHeading: "社区、X 任务与推荐机器人",
+                onchainHeading: "链上持仓者 (已连接钱包)",
+                friendsTitle: "邀请好友赚取 SLR",
+                friendsDesc: "获得好友挖矿收益的 <b>15%</b>，每邀请一位好友奖励 <b>+100 SLR</b>。",
+                personalRefLink: "你的专属邀请链接",
+                inviteBtn: "邀请好友",
+                friendsCount: "好友数",
+                friendsEarned: "好友收益",
+                friendsReady: "可领取邀请奖励",
+                claimBtn: "领取",
+                langLabel: "语言",
+                withdrawBtn: "↓ 提现",
+                submitWithdrawBtn: "提现",
+                totalHolding: "钱包总持仓",
+                manageWalletPill: "钱包 ⓘ",
+                menuWallet: "💼 打开钱包并连接 Tonkeeper",
+                menuHistory: "🕒 SLR 提现记录",
+                menuRules: "📜 SLR 规则 (持仓 5,000 • 提现 20,000)",
+                dockUpgrade: "升级",
+                dockSpin: "转盘",
+                dockChart: "行情",
+                dockEarn: "任务",
+                dockFriends: "好友",
+                dockProfile: "我的",
+                closeBtn: "关闭 ✕"
+            },
+            hi: {
+                ...baseEnglishPack,
+                flag: "🇮🇳",
+                shortName: "India",
+                cardWalletHold: "TON वॉलेट होल्ड",
+                cardInappSlr: "इन-ऐप SLR",
+                cardBuyBtn: "🛒 STON.fi पर खरीदें",
+                miningStatus: "माइनिंग • SLR निकालें",
+                perDay: "SLR प्रति दिन",
+                claimMined: "⛏ SLR क्लेम करें",
+                activeUnits: "सक्रिय यूनिट",
+                minHoldSub: "SLR (न्यूनतम 5,000)",
+                tile1Title: "Solaris वर्ल्ड",
+                tile1Sub: "टास्क और SLR होल्ड",
+                tile2Title: "दैनिक इनाम",
+                dailyTileSub: "दैनिक SLR बोनस लें",
+                tile3Title: "वॉलेट और होल्ड",
+                tile3Sub: "होल्ड 5,000 • निकासी 20,000",
+                tile4Title: "लाइव SLR चार्ट",
+                tile4Sub: "STON.fi कीमत और ट्रेंड",
+                crewTitle: "आपकी टीम (SLR होल्ड यूनिट)",
+                crewTasksBtn: "SLR टास्क",
+                minerWord: "यूनिट",
+                activeBadge: "सक्रिय ✓",
+                holdReqPrefix: "होल्ड",
+                buyToHoldBtn: "🛒 होल्ड",
+                verifyFirstBtn: "🔒 सत्यापित करें",
+                earnHeading: "कमाई",
+                earnSub: "दैनिक इनाम, टास्क, 5,000 SLR होल्ड और 20,000 SLR निकासी",
+                dailyCardTitle: "दैनिक SLR इनाम",
+                streakLabel: "लगातार दिन",
+                dailyClaimBtn: "दैनिक इनाम लें",
+                communityHeading: "कम्युनिटी, X टास्क और बॉट्स",
+                onchainHeading: "ON-CHAIN होल्डर्स",
+                friendsTitle: "दोस्तों को बुलाएं और SLR कमाएं",
+                friendsDesc: "दोस्तों की माइनिंग से <b>15%</b> पाएं और हर रेफरल पर <b>+100 SLR</b> कमाएं।",
+                personalRefLink: "आपका रेफरल लिंक",
+                inviteBtn: "दोस्त बुलाएं",
+                friendsCount: "दोस्त",
+                friendsEarned: "दोस्तों से कमाई",
+                friendsReady: "तैयार रेफरल इनाम",
+                claimBtn: "क्लेम",
+                langLabel: "भाषा",
+                withdrawBtn: "↓ निकासी",
+                submitWithdrawBtn: "निकासी करें",
+                totalHolding: "कुल होल्डिंग (वॉलेट)",
+                manageWalletPill: "वॉलेट ⓘ",
+                menuWallet: "💼 वॉलेट खोलें और Tonkeeper जोड़ें",
+                menuHistory: "🕒 SLR निकासी इतिहास",
+                menuRules: "📜 SLR नियम (होल्ड 5,000 • निकासी 20,000)",
+                dockUpgrade: "अपग्रेड",
+                dockSpin: "स्पिन",
+                dockChart: "चार्ट",
+                dockEarn: "कमाई",
+                dockFriends: "दोस्त",
+                dockProfile: "प्रोफ़ाइल",
+                closeBtn: "बंद करें ✕"
+            },
+            de: {
+                ...baseEnglishPack,
+                flag: "🇩🇪",
+                shortName: "Germany",
+                cardWalletHold: "TON-Wallet Hold",
+                cardInappSlr: "In-App SLR",
+                cardBuyBtn: "🛒 Auf STON.fi kaufen",
+                miningStatus: "Mining • SLR-Abbau",
+                perDay: "SLR pro Tag",
+                claimMined: "⛏ SLR abholen",
+                activeUnits: "Aktive Einheiten",
+                minHoldSub: "SLR (Min. 5.000)",
+                tile1Title: "Solaris Welt",
+                tile1Sub: "Aufgaben & SLR Hold",
+                tile2Title: "Tagesbonus",
+                dailyTileSub: "Täglichen SLR-Bonus holen",
+                tile3Title: "WALLET & HOLD",
+                tile3Sub: "Hold 5.000 • Auszahlung 20.000",
+                tile4Title: "Live SLR-Chart",
+                tile4Sub: "STON.fi Kurs & Trend",
+                crewTitle: "Deine Crew (SLR Hold-Einheiten)",
+                crewTasksBtn: "SLR-Aufgaben",
+                minerWord: "Einheit",
+                activeBadge: "Aktiv ✓",
+                holdReqPrefix: "Hold",
+                buyToHoldBtn: "🛒 Hold",
+                verifyFirstBtn: "🔒 Prüfen",
+                earnHeading: "VERDIENEN",
+                earnSub: "Tagesboni, Aufgaben, 5.000 SLR Hold & 20.000 SLR Auszahlung",
+                dailyCardTitle: "Tagesbonus SLR",
+                streakLabel: "Tagessträhne",
+                dailyClaimBtn: "Tagesbonus holen",
+                communityHeading: "Community, X-Aufgaben & Bots",
+                onchainHeading: "ON-CHAIN Halter (Verbundenes Wallet)",
+                friendsTitle: "Freunde einladen & SLR verdienen",
+                friendsDesc: "Erhalte <b>15%</b> vom Mining deiner Freunde und <b>+100 SLR</b> pro Einladung.",
+                personalRefLink: "Dein persönlicher Einladungslink",
+                inviteBtn: "Freund einladen",
+                friendsCount: "Freunde",
+                friendsEarned: "Freunde-Verdienst",
+                friendsReady: "Bereite Empfehlungsboni",
+                claimBtn: "Abholen",
+                langLabel: "Sprache",
+                withdrawBtn: "↓ Auszahlen",
+                submitWithdrawBtn: "Auszahlen",
+                totalHolding: "Gesamt-HOLDING (Wallet)",
+                manageWalletPill: "Wallet ⓘ",
+                menuWallet: "💼 WALLET öffnen & Tonkeeper verbinden",
+                menuHistory: "🕒 SLR-Auszahlungsverlauf",
+                menuRules: "📜 SLR-Regeln (Hold 5.000 • Auszahlung 20.000)",
+                dockUpgrade: "Upgrade",
+                dockSpin: "Glücksrad",
+                dockChart: "Chart",
+                dockEarn: "Verdienen",
+                dockFriends: "Freunde",
+                dockProfile: "Profil",
+                closeBtn: "Schließen ✕"
+            }
         };
 
         const communityTasks = [
@@ -2646,7 +2774,6 @@
         };
 
         let isSpinningWheel = false;
-        let lastWonSliceIndex = -1;
 
         function syncDailySpinQuota() {
             const today = getTodayDateKey();
@@ -2678,25 +2805,22 @@
             isSpinningWheel = true;
             state.spinsUsedToday = (Number(state.spinsUsedToday) || 0) + 1;
 
-            const sliceAngle = 360 / wheelSlices.length; // 45 deg
+            const sliceAngle = 360 / wheelSlices.length;
             const targetIndex = Math.floor(Math.random() * wheelSlices.length);
-            const sliceCenterAngle = targetIndex * sliceAngle; // 0, 45, 90...
-            // برای اینکه مرکز بخش targetIndex دقیقاً زیر عقربه ثابت بالا (0deg) قرار گیرد:
+            const sliceCenterAngle = targetIndex * sliceAngle;
             const desiredMod = (360 - sliceCenterAngle) % 360;
             const currentMod = ((Number(state.wheelRotationDeg) || 0) % 360 + 360) % 360;
             let delta = desiredMod - currentMod;
             if (delta < 0) delta += 360;
 
             const extraSpins = 5 * 360;
-            const jitter = (Math.random() * 14 - 7); // کمی تنوع طبیعی داخل اسلایس
+            const jitter = (Math.random() * 14 - 7);
             const nextRotation = (Number(state.wheelRotationDeg) || 0) + extraSpins + delta + jitter;
             state.wheelRotationDeg = nextRotation;
 
             const discEl = document.getElementById("wheel-disc-wrap");
             const ptrEl = document.getElementById("wheel-static-pointer");
-            const bannerEl = document.getElementById("wheel-result-banner");
             if (ptrEl) ptrEl.classList.add("ticking");
-            if (bannerEl) bannerEl.innerText = t("wheelSpinningText");
             if (discEl) {
                 discEl.style.transform = `rotate(${nextRotation}deg)`;
             }
@@ -2706,20 +2830,21 @@
             setTimeout(() => {
                 if (ptrEl) ptrEl.classList.remove("ticking");
                 const wonSlice = wheelSlices[targetIndex];
-                lastWonSliceIndex = targetIndex;
                 state.lastWheelPrizeLabel = wonSlice.label;
 
                 if (wonSlice.reward > 0) {
                     state.balance += wonSlice.reward;
-                    if (bannerEl) bannerEl.innerText = `${t("wheelWonPrefix")}${wonSlice.label}!`;
                     showTransientMessage(
                         state.lang === "fa"
                             ? `🎉 ${wonSlice.label} به موجودی SLR اضافه شد!`
                             : `🎉 +${wonSlice.label} added to your SLR balance!`
                     );
                 } else {
-                    if (bannerEl) bannerEl.innerText = t("wheelEmptyPrize");
-                    showTransientMessage(t("wheelEmptyPrize"));
+                    showTransientMessage(
+                        state.lang === "fa"
+                            ? "پوچ (EMPTY) — چرخش بعدی شانست بیشتره!"
+                            : "Empty slice — better luck next spin!"
+                    );
                 }
 
                 saveState();
@@ -2729,49 +2854,17 @@
         }
 
         function renderSpinView() {
-            const headingEl = document.getElementById("spin-heading");
-            if (!headingEl) return;
+            const discEl = document.getElementById("wheel-disc-wrap");
+            if (!discEl) return;
 
             syncDailySpinQuota();
             const remaining = getRemainingSpins();
-
-            headingEl.innerText = t("spinHeading");
-            document.getElementById("spin-sub").innerText = t("spinSub");
-            document.getElementById("wheel-spins-left-badge").innerText = `${t("wheelSpinsLeftPrefix")}${remaining}/${MAX_DAILY_SPINS}`;
-            document.getElementById("wheel-last-prize-badge").innerText = `${t("wheelLastPrefix")}${state.lastWheelPrizeLabel || "-"}`;
-            document.getElementById("wheel-slices-title").innerText = t("wheelSlicesTitle");
-            document.getElementById("wheel-slices-desc").innerText = t("wheelSlicesDesc");
-
-            const discEl = document.getElementById("wheel-disc-wrap");
-            if (discEl) {
-                discEl.style.transform = `rotate(${Number(state.wheelRotationDeg) || 0}deg)`;
-            }
+            discEl.style.transform = `rotate(${Number(state.wheelRotationDeg) || 0}deg)`;
 
             const spinBtn = document.getElementById("wheel-spin-btn");
             if (spinBtn) {
                 spinBtn.disabled = isSpinningWheel || remaining <= 0;
                 spinBtn.innerText = isSpinningWheel ? t("wheelSpinningText") : t("wheelSpinBtnText");
-            }
-
-            const bannerEl = document.getElementById("wheel-result-banner");
-            if (bannerEl && !isSpinningWheel) {
-                if (state.lastWheelPrizeLabel) {
-                    const isEmpty = state.lastWheelPrizeLabel.toUpperCase() === "EMPTY";
-                    bannerEl.innerText = isEmpty ? t("wheelEmptyPrize") : `${t("wheelWonPrefix")}${state.lastWheelPrizeLabel}`;
-                } else if (remaining <= 0) {
-                    bannerEl.innerText = t("wheelNoSpinsBanner");
-                } else {
-                    bannerEl.innerText = t("wheelReadyBanner");
-                }
-            }
-
-            const gridEl = document.getElementById("wheel-slices-grid");
-            if (gridEl) {
-                gridEl.innerHTML = wheelSlices.map((s, idx) => `
-                    <div class="wheel-slice-chip ${idx === lastWonSliceIndex ? "highlight" : ""}">
-                        ${s.label}
-                    </div>
-                `).join("");
             }
         }
 
