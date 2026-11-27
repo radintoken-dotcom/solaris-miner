@@ -278,16 +278,17 @@
             margin-bottom: 12px;
         }
 
-        /* ===== Wheel Tab Styles (Full Tab Background + Balanced Wheel & Pointer) ===== */
+        /* ===== Wheel Tab Styles (Full Tab Background + Sealed Disc + Compact Higher Button + 24h Timer) ===== */
         .wheel-stage-card {
+            width: 100%;
+            min-height: calc(100vh - 152px);
             background-color: #090c12;
             background-image: var(--wheel-bg-img);
             background-position: center center;
-            background-size: 100% 100%;
+            background-size: cover;
             background-repeat: no-repeat;
             border-radius: 24px;
-            min-height: calc(100vh - 165px);
-            padding: 54px 18px 26px;
+            padding: 46px 14px 36px;
             box-shadow: 0 12px 28px rgba(15, 23, 42, 0.32);
             margin-bottom: 12px;
             border: 1.5px solid rgba(253, 224, 71, 0.65);
@@ -296,15 +297,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            gap: 28px;
+            justify-content: flex-start;
+            gap: 22px;
         }
 
         .wheel-assembly {
             position: relative;
-            width: min(74vw, 296px);
+            width: min(74vw, 294px);
             aspect-ratio: 1 / 1;
-            margin: 12px auto 4px;
+            margin: 14px auto 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -312,12 +313,12 @@
 
         .wheel-static-pointer {
             position: absolute;
-            top: -28px;
+            top: -26px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 25;
-            width: 58px;
-            height: 62px;
+            width: 56px;
+            height: 60px;
             object-fit: contain;
             filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
             pointer-events: none;
@@ -336,33 +337,36 @@
             transition: transform 4.6s cubic-bezier(0.14, 0.88, 0.18, 1);
             will-change: transform;
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.65);
+            background: #1a1206;
         }
 
         .wheel-disc-img {
-            width: 106%;
-            height: 106%;
-            max-width: none;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
             object-fit: cover;
             display: block;
         }
 
         .wheel-spin-btn {
-            width: 100%;
-            max-width: 310px;
+            width: auto;
+            min-width: 168px;
+            max-width: 220px;
             border: none;
-            border-radius: 16px;
-            padding: 14px 16px;
+            border-radius: 14px;
+            padding: 10px 20px;
             background: linear-gradient(135deg, #fde047, #eab308, #84cc16);
             color: #111827;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 6px 18px rgba(234, 179, 8, 0.42);
-            letter-spacing: 0.5px;
+            box-shadow: 0 6px 16px rgba(234, 179, 8, 0.42);
+            letter-spacing: 0.4px;
+            white-space: nowrap;
         }
 
         .wheel-spin-btn:disabled {
-            opacity: 0.55;
+            opacity: 0.72;
             cursor: not-allowed;
         }
 
@@ -1928,7 +1932,7 @@
         const ADMIN_WITHDRAW_WEBHOOK_URL = "https://raspy-forest-4081.radintoken.workers.dev";
         const WALLET_VERIFY_TON = 0.05;
         const WITHDRAW_FEE_SLR = 1000;
-        const MAX_DAILY_SPINS = 1;
+        const SPIN_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 
         const wheelWeightedPool = [
             { sliceIndex: 2, label: "EMPTY", reward: 0, weight: 36.0 },
@@ -1954,10 +1958,6 @@
                 roll -= item.weight;
             }
             return wheelWeightedPool[0];
-        }
-
-        function getFallbackAvatarUrl() {
-            return COIN_IMAGE_URL;
         }
 
         function handleAvatarError(imgEl) {
@@ -2738,11 +2738,6 @@
             setLanguage(langCode);
         }
 
-        function getTodayDateKey() {
-            const d = new Date();
-            return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
-        }
-
         let state = {
             lang: "en-us",
             balance: 0,
@@ -2768,43 +2763,43 @@
             refEarned: 0,
             refPending: 0,
             withdrawHistory: [],
-            spinDateKey: getTodayDateKey(),
-            spinsUsedToday: 0,
+            spinCooldownUntil: 0,
             wheelRotationDeg: 0,
             lastWheelPrizeLabel: ""
         };
 
         let isSpinningWheel = false;
 
-        function syncDailySpinQuota() {
-            const today = getTodayDateKey();
-            if (state.spinDateKey !== today) {
-                state.spinDateKey = today;
-                state.spinsUsedToday = 0;
-            }
+        function getRemainingSpinCooldownMs() {
+            const until = Number(state.spinCooldownUntil) || 0;
+            return Math.max(0, until - Date.now());
         }
 
-        function getRemainingSpins() {
-            syncDailySpinQuota();
-            return Math.max(0, MAX_DAILY_SPINS - (Number(state.spinsUsedToday) || 0));
+        function formatCountdownHHMMSS(ms) {
+            const totalSec = Math.max(0, Math.floor(ms / 1000));
+            const hours = Math.floor(totalSec / 3600);
+            const mins = Math.floor((totalSec % 3600) / 60);
+            const secs = totalSec % 60;
+            const pad = n => String(n).padStart(2, "0");
+            return `${pad(hours)}:${pad(mins)}:${pad(secs)}`;
         }
 
         function spinCobraWheel() {
             if (isSpinningWheel) return;
-            syncDailySpinQuota();
-            const remaining = getRemainingSpins();
-            if (remaining <= 0) {
+            const remainingMs = getRemainingSpinCooldownMs();
+            if (remainingMs > 0) {
                 showTransientMessage(
                     state.lang === "fa"
-                        ? "⚠️ شانس چرخش امروز تمام شد! روزی فقط ۱ بار امکان چرخش وجود دارد."
-                        : "⚠️ Daily spin used! You can spin once per day."
+                        ? `⏳ تایمر ۲۴ ساعته فعاله! زمان باقی‌مانده: ${formatCountdownHHMMSS(remainingMs)}`
+                        : `⏳ 24h cooldown active! Remaining: ${formatCountdownHHMMSS(remainingMs)}`
                 );
                 renderSpinView();
                 return;
             }
 
             isSpinningWheel = true;
-            state.spinsUsedToday = (Number(state.spinsUsedToday) || 0) + 1;
+            state.spinCooldownUntil = Date.now() + SPIN_COOLDOWN_MS;
+            saveState();
 
             const outcome = pickWeightedWheelOutcome();
             const sliceAngle = 360 / TOTAL_WHEEL_SLICES;
@@ -2839,8 +2834,8 @@
                 } else {
                     showTransientMessage(
                         state.lang === "fa"
-                            ? "پوچ (EMPTY) — شانس بعدی شما فرداست!"
-                            : "EMPTY — try again tomorrow!"
+                            ? "پوچ (EMPTY) — تایمر ۲۴ ساعته شروع شد!"
+                            : "EMPTY — 24h timer started!"
                     );
                 }
 
@@ -2854,14 +2849,21 @@
             const discEl = document.getElementById("wheel-disc-wrap");
             if (!discEl) return;
 
-            syncDailySpinQuota();
-            const remaining = getRemainingSpins();
+            const remainingMs = getRemainingSpinCooldownMs();
             discEl.style.transform = `rotate(${Number(state.wheelRotationDeg) || 0}deg)`;
 
             const spinBtn = document.getElementById("wheel-spin-btn");
             if (spinBtn) {
-                spinBtn.disabled = isSpinningWheel || remaining <= 0;
-                spinBtn.innerText = isSpinningWheel ? t("wheelSpinningText") : t("wheelSpinBtnText");
+                if (isSpinningWheel) {
+                    spinBtn.disabled = true;
+                    spinBtn.innerText = t("wheelSpinningText");
+                } else if (remainingMs > 0) {
+                    spinBtn.disabled = true;
+                    spinBtn.innerText = `⏱ ${formatCountdownHHMMSS(remainingMs)}`;
+                } else {
+                    spinBtn.disabled = false;
+                    spinBtn.innerText = t("wheelSpinBtnText");
+                }
             }
         }
 
@@ -2949,7 +2951,6 @@
 
             initTelegramData();
             loadState();
-            syncDailySpinQuota();
             reNormalizeAllSavedAddresses();
             syncHoldCrewUnlocks();
             applyLanguageDirection();
@@ -4419,6 +4420,9 @@
                 document.getElementById("storage-text").innerText = `${Math.floor(state.unclaimed).toLocaleString()} / ${STORAGE_CAP_SLR.toLocaleString()} SLR`;
                 document.getElementById("storage-bar").style.width = Math.min(100, (state.unclaimed / STORAGE_CAP_SLR) * 100) + "%";
                 saveState();
+            }
+            if (!isSpinningWheel && getRemainingSpinCooldownMs() > 0) {
+                renderSpinView();
             }
         }, 1000);
     </script>
