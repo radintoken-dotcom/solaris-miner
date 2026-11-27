@@ -183,6 +183,7 @@
             border: 2px solid var(--green-bright);
             flex-shrink: 0;
             cursor: pointer;
+            background: #f5f8f3;
         }
 
         .top-username {
@@ -1067,6 +1068,7 @@
             border: 3px solid var(--green-bright);
             margin-bottom: 8px;
             cursor: pointer;
+            background: #f5f8f3;
         }
 
         .lang-switch-wrap {
@@ -1335,15 +1337,6 @@
             color: var(--green-dark);
         }
 
-        .dock-tab.token-locked-tab {
-            opacity: 0.72;
-            color: #6b7280;
-        }
-
-        .token-lock-btn {
-            opacity: 0.85;
-        }
-
         .modal-backdrop {
             display: none;
             position: fixed;
@@ -1383,7 +1376,7 @@
     <div class="app-shell">
         <div class="top-user-bar">
             <div class="top-user-left">
-                <img id="top-avatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="top-avatar" alt="Avatar" onclick="openProfilePhotoModal()">
+                <img id="top-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=1007321991" class="top-avatar" alt="Avatar" onclick="openProfilePhotoModal()" onerror="handleAvatarError(this)">
                 <div style="min-width: 0;">
                     <div class="top-username" id="top-username">mohammad</div>
                     <div class="top-level-row">
@@ -1424,8 +1417,8 @@
                         <span class="card-slot-value" id="card-inapp-slr">0 SLR</span>
                     </div>
 
-                    <button class="card-bottom-buy-btn token-lock-btn" id="card-buy-btn" onclick="copyAndGoBuyToken()">
-                        🔒 🛒 Buy Token on STON.fi
+                    <button class="card-bottom-buy-btn" id="card-buy-btn" onclick="copyAndGoBuyToken()">
+                        🛒 Buy Token on STON.fi
                     </button>
                 </div>
 
@@ -1478,7 +1471,7 @@
                     <div class="tile-sub" id="tile3-sub">Hold 5,000 • Withdraw 20,000</div>
                 </div>
                 <div class="feature-tile tile-4" onclick="switchView('chart')">
-                    <div class="tile-title" id="tile4-title">🔒 Live SLR Chart</div>
+                    <div class="tile-title" id="tile4-title">Live SLR Chart</div>
                     <div class="tile-sub" id="tile4-sub">STON.fi price & trend</div>
                 </div>
             </div>
@@ -1555,8 +1548,8 @@
             </div>
 
             <div style="display:flex; flex-direction:column; gap:8px;">
-                <button class="lime-btn token-lock-btn" id="chart-trade-btn" onclick="copyAndGoBuyToken()">🔒 ↗ Trade on STON.fi</button>
-                <button class="lime-btn secondary token-lock-btn" id="chart-dexscreener-btn" onclick="openPoolOrScreener()">🔒 📈 View Pool & Chart on STON.fi</button>
+                <button class="lime-btn" id="chart-trade-btn" onclick="copyAndGoBuyToken()">↗ Trade on STON.fi</button>
+                <button class="lime-btn secondary" id="chart-dexscreener-btn" onclick="openPoolOrScreener()">📈 View Pool & Chart on STON.fi</button>
             </div>
         </div>
 
@@ -1603,7 +1596,7 @@
                     <span><span id="lbl-wallet-hold-short">Wallet Hold</span>: <span id="bottom-box-hold">0</span> / 5,000 SLR</span>
                 </div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
-                    <button class="lime-btn token-lock-btn" style="padding:10px; font-size:12px;" id="earn-buy-btn" onclick="copyAndGoBuyToken()">🔒 🛒 Buy SLR</button>
+                    <button class="lime-btn" style="padding:10px; font-size:12px;" id="earn-buy-btn" onclick="copyAndGoBuyToken()">🛒 Buy SLR</button>
                     <button class="lime-btn secondary" style="padding:10px; font-size:12px;" id="earn-wallet-btn" onclick="openWalletModal()">💼 WALLET</button>
                 </div>
             </div>
@@ -1645,7 +1638,7 @@
 
         <div id="view-profile" class="view-section">
             <div class="profile-center-head">
-                <img id="profile-big-avatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-big-avatar" alt="Profile" onclick="openProfilePhotoModal()">
+                <img id="profile-big-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=1007321991" class="profile-big-avatar" alt="Profile" onclick="openProfilePhotoModal()" onerror="handleAvatarError(this)">
                 <div style="font-size:22px; font-weight:900;" id="profile-name-big">mohammad</div>
                 <div style="font-size:11px; color:var(--text-muted); margin-top:2px;" id="profile-id-sub">ID 1007321991</div>
             </div>
@@ -1674,7 +1667,7 @@
 
             <div class="dual-btn-row">
                 <button class="lime-btn" id="profile-withdraw-btn" onclick="openWalletModal()">↓ Withdraw</button>
-                <button class="lime-btn secondary token-lock-btn" id="profile-buy-btn" onclick="copyAndGoBuyToken()">🔒 🛒 Buy SLR</button>
+                <button class="lime-btn secondary" id="profile-buy-btn" onclick="copyAndGoBuyToken()">🛒 Buy SLR</button>
             </div>
 
             <div class="white-card">
@@ -1740,7 +1733,7 @@
         <button class="floating-mine-fab" onclick="switchView('upgrade')" title="Mining">⛏</button>
         <div class="floating-nav-pill">
             <button class="dock-tab active" id="dock-upgrade" onclick="switchView('upgrade')">Upgrade</button>
-            <button class="dock-tab token-locked-tab" id="dock-chart" onclick="switchView('chart')">🔒 Chart</button>
+            <button class="dock-tab" id="dock-chart" onclick="switchView('chart')">Chart</button>
             <button class="dock-tab" id="dock-earn" onclick="switchView('earn')">Earn</button>
             <button class="dock-tab" id="dock-friends" onclick="switchView('friends')">Friends</button>
             <button class="dock-tab" id="dock-profile" onclick="switchView('profile')">Profile</button>
@@ -1793,7 +1786,7 @@
             </div>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px;">
-                <button class="lime-btn secondary token-lock-btn" id="modal-buy-btn" onclick="copyAndGoBuyToken()">🔒 خرید SLR</button>
+                <button class="lime-btn secondary" id="modal-buy-btn" onclick="copyAndGoBuyToken()">خرید SLR</button>
                 <button class="lime-btn" id="submit-withdraw-btn" onclick="submitSlrWithdraw()">Withdraw</button>
             </div>
         </div>
@@ -1825,19 +1818,40 @@
         const WALLET_VERIFY_TON = 0.05;
         const WITHDRAW_FEE_SLR = 1000;
 
-        const TOKEN_PREP_MSG = "توکن در حال آماده سازی";
+        function getFallbackAvatarUrl(seed) {
+            const safeSeed = encodeURIComponent(String(seed || "solaris-user"));
+            return `https://api.dicebear.com/7.x/avataaars/svg?seed=${safeSeed}`;
+        }
 
-        function showTokenPreparingMessage() {
-            showTransientMessage(TOKEN_PREP_MSG, 2400);
+        function handleAvatarError(imgEl) {
+            if (!imgEl) return;
+            const fallback = getFallbackAvatarUrl(state.telegramId || state.userName);
+            if (imgEl.dataset.fallbackApplied === "1") {
+                imgEl.src = "./image_1be087b2.jpg";
+                return;
+            }
+            imgEl.dataset.fallbackApplied = "1";
+            imgEl.src = fallback;
+        }
+
+        function applyAvatarToElements(url) {
+            const safeUrl = (url && String(url).trim()) || getFallbackAvatarUrl(state.telegramId || state.userName);
+            ["top-avatar", "profile-big-avatar"].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.dataset.fallbackApplied = safeUrl.includes("dicebear") ? "1" : "0";
+                    el.src = safeUrl;
+                }
+            });
         }
 
         function openProfilePhotoModal() {
             closeLanguageMenu();
-            const avatarSrc = state.photoUrl || document.getElementById("profile-big-avatar")?.src || document.getElementById("top-avatar")?.src || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+            const avatarSrc = state.photoUrl || document.getElementById("profile-big-avatar")?.src || getFallbackAvatarUrl(state.telegramId || state.userName);
             document.getElementById("info-modal-title").innerText = state.userName || "Profile";
             document.getElementById("info-modal-body").innerHTML = `
                 <div style="text-align:center; padding:6px 0;">
-                    <img src="${avatarSrc}" alt="Profile Photo" style="width:100%; max-width:300px; max-height:360px; object-fit:contain; border-radius:18px; border:2px solid #a3e635; background:#f5f8f3;">
+                    <img src="${avatarSrc}" alt="Profile Photo" onerror="handleAvatarError(this)" style="width:100%; max-width:300px; max-height:360px; object-fit:contain; border-radius:18px; border:2px solid #a3e635; background:#f5f8f3;">
                 </div>
             `;
             document.getElementById("info-modal").style.display = "flex";
@@ -1914,7 +1928,7 @@
             shortName: "United States",
             cardWalletHold: "TON wallet Hold",
             cardInappSlr: "In-app SLR",
-            cardBuyBtn: "🔒 🛒 Buy Token on STON.fi",
+            cardBuyBtn: "🛒 Buy Token on STON.fi",
             miningStatus: "Mining • SLR Extraction",
             perDay: "SLR per day",
             storageLabel: "Storage SLR",
@@ -1930,14 +1944,14 @@
             dailyTileSub: "Claim daily SLR bonus",
             tile3Title: "WALLET & HOLD",
             tile3Sub: "Hold 5,000 • Withdraw 20,000",
-            tile4Title: "🔒 Live SLR Chart",
+            tile4Title: "Live SLR Chart",
             tile4Sub: "STON.fi price & trend",
             crewTitle: "Your Crew (SLR Hold Units)",
             crewTasksBtn: "SLR Tasks",
             minerWord: "miner",
             activeBadge: "Active ✓",
             holdReqPrefix: "Hold",
-            buyToHoldBtn: "🔒 🛒 Hold",
+            buyToHoldBtn: "🛒 Hold",
             verifyFirstBtn: "🔒 Verify",
             chartHeading: "SLR Live Chart",
             chartSub: "Real-time STON.fi pool & price feed for Solaris (SLR)",
@@ -1946,8 +1960,8 @@
             chartLiq: "Liquidity",
             chartDex: "Primary DEX",
             liveChartPillText: "Live Chart",
-            chartTradeBtn: "🔒 ↗ Trade on STON.fi",
-            chartDexBtn: "🔒 📈 View Pool & Chart on STON.fi",
+            chartTradeBtn: "↗ Trade on STON.fi",
+            chartDexBtn: "📈 View Pool & Chart on STON.fi",
             chartSyncing: "Syncing live STON.fi SLR pool data...",
             chartSyncedPrefix: "Live STON.fi feed • ",
             chartNoPoolNote: "Connected to STON.fi pool feed • Trade or add swaps on STON.fi to record new candles.",
@@ -1963,7 +1977,7 @@
             earnBottomDesc: "• Wallet verification: <b>0.05 TON</b> required<br>• Held in connected wallet: <b>Min 5,000 SLR</b><br>• Min withdrawal balance: <b>20,000 SLR</b> (Fee: <b>1,000 SLR</b>)<br>• Payout time: <b>1 to 24 hours</b>",
             mainBalShort: "Main Balance",
             walletHoldShort: "Wallet Hold",
-            buySlrShort: "🔒 🛒 Buy SLR",
+            buySlrShort: "🛒 Buy SLR",
             walletShort: "💼 WALLET",
             friendsTitle: "Invite Friends & Earn SLR",
             friendsDesc: "Earn <b>15%</b> from your friends' mining and get <b>+100 SLR</b> for every referral.",
@@ -1983,7 +1997,7 @@
             menuHistory: "🕒 SLR Withdrawal History",
             menuRules: "📜 SLR Rules (Hold 5,000 • Withdraw 20,000)",
             dockUpgrade: "Upgrade",
-            dockChart: "🔒 Chart",
+            dockChart: "Chart",
             dockEarn: "Earn",
             dockFriends: "Friends",
             dockProfile: "Profile",
@@ -2004,7 +2018,7 @@
             lblWithdrawAddr: "Connected Tonkeeper Wallet Address:",
             notConnectedAddr: "Not connected",
             payoutTimeNote: "⏱ Payouts take 1 to 24 hours directly to your connected Tonkeeper wallet.",
-            buyBtnPlain: "🔒 خرید SLR",
+            buyBtnPlain: "خرید SLR",
             taskDone: "Done ✓",
             taskNotInvited: "Not invited",
             taskPendingBuy: "Pending buy",
@@ -2014,7 +2028,7 @@
             holdLabel3: "Hold ON-CHAIN at 25,000 SLR",
             claimedBadge: "Claimed ✓",
             toastVerifyRequired: "⚠️ Verify your wallet (0.05 TON) first to activate mining units!",
-            toastGoBuyToHold: TOKEN_PREP_MSG,
+            toastGoBuyToHold: "📋 SLR contract copied! Buy at least 5,000 SLR on STON.fi, then verify hold.",
             toastClaimNotVerified: "⚠️ Complete wallet verification (0.05 TON) first to extract and claim SLR.",
             toastNothingToClaim: "No mined SLR ready to claim yet.",
             toastClaimSuccess: "✅ Mined SLR added to main balance.",
@@ -2052,7 +2066,7 @@
                     guide: "1. Like, comment & share/repost Post 2 on X.\n2. Paste the link to your shared post or comment below.\n3. Tap Submit to receive +500 SLR.",
                     placeholder: "https://x.com/your_username/status/..."
                 },
-                buy_slr: { title: "Buy SLR on STON.fi", desc: "Buy SLR on STON.fi and verify real on-chain hold (5,000+ SLR)", action: "🔒 Buy" },
+                buy_slr: { title: "Buy SLR on STON.fi", desc: "Buy SLR on STON.fi and verify real on-chain hold (5,000+ SLR)", action: "Buy" },
                 invite_friends_task: { title: "Real Friend Invites", desc: "Unlocks only after a friend joins via your invite link", action: "Invite" },
                 vortex_bot: { title: "VORTEX BOT", desc: "Open bot via dedicated button and claim reward", action: "Open" },
                 zombie_miner: { title: "ZOMBIE MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
@@ -2072,7 +2086,7 @@
                 shortName: "Iran",
                 cardWalletHold: "هولد ولت TON",
                 cardInappSlr: "موجودی درون‌رباتی SLR",
-                cardBuyBtn: "🔒 🛒 خرید توکن در استون فای",
+                cardBuyBtn: "🛒 خرید توکن در استون فای",
                 miningStatus: "در حال جمع شدن • استخراج SLR",
                 perDay: "SLR در روز",
                 storageLabel: "Storage SLR",
@@ -2088,14 +2102,14 @@
                 dailyTileSub: "دریافت جایزه روزانه SLR",
                 tile3Title: "WALLET & HOLD",
                 tile3Sub: "هولد 5,000 • برداشت 20,000",
-                tile4Title: "🔒 چارت زنده SLR",
+                tile4Title: "چارت زنده SLR",
                 tile4Sub: "قیمت و روند در STON.fi",
                 crewTitle: "Crew تو (فعال‌سازی با هولد SLR)",
                 crewTasksBtn: "تسک‌های SLR",
                 minerWord: "واحد",
                 activeBadge: "فعال ✓",
                 holdReqPrefix: "هولد",
-                buyToHoldBtn: "🔒 🛒 خرید و هولد",
+                buyToHoldBtn: "🛒 خرید و هولد",
                 verifyFirstBtn: "🔒 تایید ولت",
                 chartHeading: "چارت قیمت آنلاین SLR",
                 chartSub: "اطلاعات زنده استخر STON.fi و قیمت لحظه‌ای سولاریس (SLR)",
@@ -2104,8 +2118,8 @@
                 chartLiq: "نقدینگی استخر",
                 chartDex: "صرافی اصلی",
                 liveChartPillText: "Live Chart",
-                chartTradeBtn: "🔒 ↗ معامله در STON.fi",
-                chartDexBtn: "🔒 📈 مشاهده چارت و استخر در STON.fi",
+                chartTradeBtn: "↗ معامله در STON.fi",
+                chartDexBtn: "📈 مشاهده چارت و استخر در STON.fi",
                 chartSyncing: "در حال دریافت اطلاعات زنده استخر SLR از STON.fi...",
                 chartSyncedPrefix: "به‌روزرسانی زنده STON.fi • ",
                 chartNoPoolNote: "متصل به شبکه STON.fi • با انجام معامله روی استخر، کندل‌های جدید ثبت می‌شوند.",
@@ -2121,7 +2135,7 @@
                 earnBottomDesc: "• تایید ولت: <b>0.05 TON</b> الزامی است<br>• هولد واقعی در کیف‌پول متصل: <b>حداقل 5,000 SLR</b><br>• حداقل موجودی برداشت: <b>20,000 SLR</b> (کارمزد: <b>1,000 SLR</b>)<br>• زمان واریزها: <b>1 الی 24 ساعت</b>",
                 mainBalShort: "موجودی اصلی",
                 walletHoldShort: "هولد ولت",
-                buySlrShort: "🔒 🛒 خرید SLR",
+                buySlrShort: "🛒 خرید SLR",
                 walletShort: "💼 بخش WALLET",
                 friendsTitle: "دوست‌هات رو دعوت کن و SLR بگیر",
                 friendsDesc: "از استخراج دوست‌هات <b>15%</b> پاداش بگیر و برای هر دعوت <b>+100 SLR</b> دریافت کن.",
@@ -2141,7 +2155,7 @@
                 menuHistory: "🕒 فعالیت و تاریخچه برداشت SLR",
                 menuRules: "📜 شرایط و قوانین SLR (هولد 5,000 • برداشت 20,000)",
                 dockUpgrade: "Upgrade",
-                dockChart: "🔒 Chart",
+                dockChart: "Chart",
                 dockEarn: "Earn",
                 dockFriends: "دوست‌ها",
                 dockProfile: "Profile",
@@ -2162,7 +2176,7 @@
                 lblWithdrawAddr: "آدرس کیف‌پول Tonkeeper متصل (واریز مستقیم):",
                 notConnectedAddr: "متصل نیست",
                 payoutTimeNote: "⏱ واریزی‌ها 1 الی 24 ساعت زمان می‌برد و مستقیم به Tonkeeper متصل واریز می‌شود.",
-                buyBtnPlain: "🔒 خرید SLR",
+                buyBtnPlain: "خرید SLR",
                 taskDone: "انجام شد ✓",
                 taskNotInvited: "دعوت نشده",
                 taskPendingBuy: "در انتظار خرید",
@@ -2172,7 +2186,7 @@
                 holdLabel3: "نگه دار ON-CHAIN رو 25,000 SLR",
                 claimedBadge: "دریافت شد ✓",
                 toastVerifyRequired: "⚠️ ابتدا تایید ولت را انجام دهید تا واحدهای استخراج فعال شوند!",
-                toastGoBuyToHold: TOKEN_PREP_MSG,
+                toastGoBuyToHold: "📋 قرارداد SLR کپی شد! حداقل 5,000 SLR بخرید و در ولت هولد کنید.",
                 toastClaimNotVerified: "⚠️ برای دریافت استخراج، حتماً تایید ولت انجام بشه!",
                 toastNothingToClaim: "هنوز SLR استخراج‌شده‌ای برای دریافت آماده نیست.",
                 toastClaimSuccess: "✅ پاداش استخراج SLR به موجودی اصلی اضافه شد.",
@@ -2210,7 +2224,7 @@
                         guide: "۱. پست دوم را در توییتر (X) لایک، کامنت و بازنشر/منتشر کنید.\n۲. لینک پست منتشرشده یا کامنت خود را در کادر زیر پیست کنید.\n۳. دکمه «ثبت» را بزنید تا +۵۰۰ SLR فعال شود.",
                         placeholder: "لینک پست یا کامنت خود را اینجا پیست کنید (x.com/...)"
                     },
-                    buy_slr: { title: "خرید SLR در استون فای", desc: "خرید SLR در استون فای و تایید هولد واقعی حداقل 5,000 تا در ولت", action: "🔒 خرید" },
+                    buy_slr: { title: "خرید SLR در استون فای", desc: "خرید SLR در استون فای و تایید هولد واقعی حداقل 5,000 تا در ولت", action: "خرید" },
                     invite_friends_task: { title: "دعوت واقعی از دوستان", desc: "فقط پس از ورود دوست با لینک دعوت شما فعال و قابل دریافت است", action: "دعوت" },
                     vortex_bot: { title: "VORTEX BOT", desc: "ورود به ربات از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
                     zombie_miner: { title: "ZOMBIE MINER", desc: "ورود به مینی‌اپ از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
@@ -2751,11 +2765,12 @@
         }
 
         function openBestLiveChart() {
-            showTokenPreparingMessage();
+            const targetUrl = marketState.dsPairUrl || getDirectStonfiPoolOrSwapUrl();
+            openExternalUrl(targetUrl);
         }
 
         function openPoolOrScreener() {
-            showTokenPreparingMessage();
+            openExternalUrl(getDirectStonfiPoolOrSwapUrl());
         }
 
         function renderChartView() {
@@ -2955,7 +2970,9 @@
                     const fullName = (tgUser.first_name || "User") + (tgUser.last_name ? " " + tgUser.last_name : "");
                     state.userName = fullName;
                     state.telegramId = String(tgUser.id || state.telegramId);
-                    if (tgUser.photo_url) state.photoUrl = tgUser.photo_url;
+                    if (tgUser.photo_url && String(tgUser.photo_url).trim()) {
+                        state.photoUrl = String(tgUser.photo_url).trim();
+                    }
                 }
                 const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
                 if (startParam && !localStorage.getItem("solaris_empire_ref_done")) {
@@ -2965,6 +2982,7 @@
                     localStorage.setItem("solaris_empire_ref_done", "1");
                 }
             }
+            applyAvatarToElements(state.photoUrl);
             document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
         }
 
@@ -2996,6 +3014,7 @@
             if (state.lastTxHash) {
                 document.getElementById("buy-tx-hash-input").value = state.lastTxHash;
             }
+            applyAvatarToElements(state.photoUrl);
             document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
         }
 
@@ -3176,14 +3195,15 @@
         }
 
         function copyAndGoBuyToken() {
-            showTokenPreparingMessage();
+            copyContractAddressSilent();
+            state.pendingBuyVerify = true;
+            saveState();
+            renderAll();
+            showTransientMessage(t("toastGoBuyToHold"), 3000);
+            openExternalUrl(stonfiSwapTokenUrl);
         }
 
         function switchView(name) {
-            if (name === "chart") {
-                showTokenPreparingMessage();
-                return;
-            }
             closeLanguageMenu();
             document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
             document.querySelectorAll(".dock-tab").forEach(el => el.classList.remove("active"));
@@ -3191,6 +3211,10 @@
             const dock = document.getElementById("dock-" + name);
             if (target) target.classList.add("active");
             if (dock) dock.classList.add("active");
+            if (name === "chart") {
+                drawChartCanvas();
+                fetchSlrMarketData(true);
+            }
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
@@ -3273,7 +3297,7 @@
                 return;
             }
 
-            showTokenPreparingMessage();
+            copyAndGoBuyToken();
         }
 
         function claimDailyBonus() {
@@ -3362,7 +3386,7 @@
             }
 
             if (taskMeta.isBuy) {
-                showTokenPreparingMessage();
+                copyAndGoBuyToken();
                 return;
             }
 
@@ -3638,10 +3662,7 @@
             document.getElementById("top-daily-rate").innerText = "+" + daily.toLocaleString() + "/d";
             document.getElementById("top-tonkeeper-status").innerText = connected ? "Tonkeeper ✓" : "Tonkeeper";
 
-            if (state.photoUrl) {
-                document.getElementById("top-avatar").src = state.photoUrl;
-                document.getElementById("profile-big-avatar").src = state.photoUrl;
-            }
+            applyAvatarToElements(state.photoUrl);
 
             document.getElementById("lbl-card-wallet-hold").innerText = t("cardWalletHold");
             document.getElementById("lbl-card-inapp-slr").innerText = t("cardInappSlr");
