@@ -278,33 +278,33 @@
             margin-bottom: 12px;
         }
 
-        /* ===== Wheel Tab Styles (Full-Cover Background + Larger Wheel & Pointer) ===== */
+        /* ===== Wheel Tab Styles (Full Tab Background + Balanced Wheel & Pointer) ===== */
         .wheel-stage-card {
             background-color: #090c12;
             background-image: var(--wheel-bg-img);
             background-position: center center;
-            background-size: cover;
+            background-size: 100% 100%;
             background-repeat: no-repeat;
-            border-radius: 26px;
+            border-radius: 24px;
             min-height: calc(100vh - 165px);
-            padding: 46px 12px 24px;
-            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.3);
+            padding: 54px 18px 26px;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.32);
             margin-bottom: 12px;
-            border: 1.5px solid rgba(253, 224, 71, 0.5);
+            border: 1.5px solid rgba(253, 224, 71, 0.65);
             text-align: center;
             color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            gap: 24px;
+            gap: 28px;
         }
 
         .wheel-assembly {
             position: relative;
-            width: min(92vw, 372px);
+            width: min(74vw, 296px);
             aspect-ratio: 1 / 1;
-            margin: 18px auto 8px;
+            margin: 12px auto 4px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -312,14 +312,14 @@
 
         .wheel-static-pointer {
             position: absolute;
-            top: -34px;
+            top: -28px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 25;
-            width: 74px;
-            height: 78px;
+            width: 58px;
+            height: 62px;
             object-fit: contain;
-            filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.85));
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
             pointer-events: none;
         }
 
@@ -335,20 +335,20 @@
             transform: rotate(0deg);
             transition: transform 4.6s cubic-bezier(0.14, 0.88, 0.18, 1);
             will-change: transform;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.65);
         }
 
         .wheel-disc-img {
-            width: 105%;
-            height: 105%;
+            width: 106%;
+            height: 106%;
             max-width: none;
             object-fit: cover;
             display: block;
-            filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.72));
         }
 
         .wheel-spin-btn {
             width: 100%;
-            max-width: 372px;
+            max-width: 310px;
             border: none;
             border-radius: 16px;
             padding: 14px 16px;
@@ -357,7 +357,7 @@
             font-size: 15px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 6px 18px rgba(234, 179, 8, 0.4);
+            box-shadow: 0 6px 18px rgba(234, 179, 8, 0.42);
             letter-spacing: 0.5px;
         }
 
