@@ -37,6 +37,7 @@
             --wheel-img: url("./image_fb082f9f-removebg-preview.png");
             --pointer-img: url("./image_caf74990-removebg-preview.png");
             --wheel-bg-img: url("./image_dd6217df.jpg");
+            --upgrade-tile-img: url("./image_6593ceae-removebg-preview.png");
         }
 
         html.spin-screen-locked,
@@ -667,6 +668,7 @@
             margin-bottom: 14px;
         }
 
+        /* ===== فقط داخل ۴ کارت رنگی تب Upgrade عکس قرار می‌گیرد ===== */
         .feature-tile {
             border-radius: 20px;
             padding: 14px;
@@ -676,24 +678,42 @@
             flex-direction: column;
             justify-content: flex-end;
             cursor: pointer;
-            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+            position: relative;
+            overflow: hidden;
+            background-color: #18140c;
+            background-image: var(--upgrade-tile-img);
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.16);
         }
 
-        .tile-1 { background: linear-gradient(135deg, #c2410c, #f59e0b); }
-        .tile-2 { background: linear-gradient(135deg, #1d4ed8, #0ea5e9); }
-        .tile-3 { background: linear-gradient(135deg, #374151, #111827); }
-        .tile-4 { background: linear-gradient(135deg, #6d28d9, #d97706); }
+        .feature-tile::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10, 12, 16, 0.18) 0%, rgba(10, 12, 16, 0.68) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .feature-tile > * {
+            position: relative;
+            z-index: 1;
+        }
 
         .tile-title {
             font-size: 14px;
             font-weight: 900;
             margin-bottom: 3px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
         }
 
         .tile-sub {
             font-size: 10px;
-            opacity: 0.94;
+            opacity: 0.96;
             font-weight: 600;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
         }
 
         .crew-grid {
@@ -1960,6 +1980,7 @@
         const WHEEL_IMAGE_URL = "./image_fb082f9f-removebg-preview.png";
         const POINTER_IMAGE_URL = "./image_caf74990-removebg-preview.png";
         const WHEEL_BG_IMAGE_URL = "./image_dd6217df.jpg";
+        const UPGRADE_TILE_IMAGE_URL = "./image_6593ceae-removebg-preview.png";
 
         const slrTokenAddress = "EQB1yCD3HAgcXFJiVqAmnySiTDyYQ90e3KmX_g8xzPtRddfN";
         const slrDecimals = 9;
@@ -3005,6 +3026,7 @@
             document.documentElement.style.setProperty("--wheel-img", `url("${WHEEL_IMAGE_URL}")`);
             document.documentElement.style.setProperty("--pointer-img", `url("${POINTER_IMAGE_URL}")`);
             document.documentElement.style.setProperty("--wheel-bg-img", `url("${WHEEL_BG_IMAGE_URL}")`);
+            document.documentElement.style.setProperty("--upgrade-tile-img", `url("${UPGRADE_TILE_IMAGE_URL}")`);
 
             document.addEventListener("touchmove", (ev) => {
                 if (isSpinTabCurrentlyActive()) {
