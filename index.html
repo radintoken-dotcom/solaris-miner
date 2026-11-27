@@ -45,6 +45,26 @@
             min-height: 100vh;
             padding-bottom: 96px;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body.spin-bg-active {
+            background-color: #090c12;
+        }
+
+        body.spin-bg-active::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #090c12;
+            background-image: var(--wheel-bg-img);
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 0;
+            pointer-events: none;
         }
 
         body.splash-locked {
@@ -151,6 +171,8 @@
         }
 
         .app-shell {
+            position: relative;
+            z-index: 1;
             max-width: 460px;
             margin: 0 auto;
             padding: 12px 14px 24px;
@@ -278,20 +300,16 @@
             margin-bottom: 12px;
         }
 
-        /* ===== Wheel Tab Styles (Full Tab Background + Sealed Disc + Compact Higher Button + 24h Timer) ===== */
+        /* ===== Wheel Tab Styles (Full Screen Background + Sealed Disc + Compact Higher Button + 24h Timer) ===== */
         .wheel-stage-card {
             width: 100%;
-            min-height: calc(100vh - 152px);
-            background-color: #090c12;
-            background-image: var(--wheel-bg-img);
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            border-radius: 24px;
-            padding: 46px 14px 36px;
-            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.32);
-            margin-bottom: 12px;
-            border: 1.5px solid rgba(253, 224, 71, 0.65);
+            min-height: calc(100vh - 96px);
+            background: transparent;
+            border-radius: 0;
+            padding: 36px 14px 48px;
+            box-shadow: none;
+            margin-bottom: 0;
+            border: none;
             text-align: center;
             color: #ffffff;
             display: flex;
@@ -2642,7 +2660,7 @@
                     <rect x="9.5" y="9.5" width="6" height="7" rx="1.5" transform="rotate(-45 12.5 13)"/>
                     <rect x="48.5" y="47.5" width="6" height="7" rx="1.5" transform="rotate(-45 51.5 51)"/>
                     <rect x="48.5" y="9.5" width="6" height="7" rx="1.5" transform="rotate(45 51.5 13)"/>
-                    <rect x="9.5" y="47.5" width="6" height="7" rx="1.5" transform="rotate(45 12.5 51)"/>
+                    <rect x="47.5" y="48.5" width="6" height="7" rx="1.5" transform="rotate(45 51.5 51)"/>
                 </g>
                 <circle cx="32" cy="32" r="24" fill="none" stroke="url(#slrGearGrad)" stroke-width="4.5"/>
                 <circle cx="32" cy="32" r="21.5" fill="none" stroke="#fef9c3" stroke-width="0.9" opacity="0.7"/>
@@ -3682,6 +3700,7 @@
             closeLanguageMenu();
             document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
             document.querySelectorAll(".dock-tab").forEach(el => el.classList.remove("active"));
+            document.body.classList.toggle("spin-bg-active", name === "spin");
             const target = document.getElementById("view-" + name);
             const dock = document.getElementById("dock-" + name);
             if (target) target.classList.add("active");
