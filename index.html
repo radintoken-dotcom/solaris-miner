@@ -317,7 +317,6 @@
             margin-bottom: 12px;
         }
 
-        /* ===== Wheel Tab Styles (Locked Static Screen + Persistent 24h Cooldown) ===== */
         .wheel-stage-card {
             width: 100%;
             height: calc(100vh - 142px);
@@ -668,31 +667,31 @@
             margin-bottom: 14px;
         }
 
-        /* ===== فقط داخل ۴ کارت رنگی تب Upgrade عکس قرار می‌گیرد ===== */
+        /* ===== عکس کاملاً فیت و هم‌اندازه داخل ۴ کارت رنگی تب Upgrade ===== */
         .feature-tile {
             border-radius: 20px;
             padding: 14px;
             color: #ffffff;
-            min-height: 112px;
+            min-height: 116px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            background-color: #18140c;
+            background-color: transparent;
             background-image: var(--upgrade-tile-img);
             background-position: center center;
-            background-size: cover;
+            background-size: 100% 100%;
             background-repeat: no-repeat;
-            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.16);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.14);
         }
 
         .feature-tile::before {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(10, 12, 16, 0.18) 0%, rgba(10, 12, 16, 0.68) 100%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 35%, rgba(0, 0, 0, 0.48) 100%);
             z-index: 0;
             pointer-events: none;
         }
@@ -706,14 +705,14 @@
             font-size: 14px;
             font-weight: 900;
             margin-bottom: 3px;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
         }
 
         .tile-sub {
             font-size: 10px;
-            opacity: 0.96;
-            font-weight: 600;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
+            opacity: 0.98;
+            font-weight: 700;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.85);
         }
 
         .crew-grid {
@@ -1642,7 +1641,6 @@
             </div>
         </div>
 
-        <!-- ===== SPIN WHEEL VIEW ===== -->
         <div id="view-spin" class="view-section">
             <div class="wheel-stage-card" id="wheel-stage-card">
                 <div class="wheel-assembly">
