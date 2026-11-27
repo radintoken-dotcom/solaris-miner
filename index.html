@@ -34,6 +34,8 @@
             --splash-img: url("./image_11f9a1db.jpg");
             --coin-img: url("./image_1be087b2.jpg");
             --bank-card-img: url("./image_96fd9f2b.jpg");
+            --wheel-img: url("./wheel_cobra.jpg");
+            --pointer-img: url("./wheel_pointer.jpg");
         }
 
         body {
@@ -273,6 +275,156 @@
             padding: 14px;
             box-shadow: 0 4px 14px rgba(17, 24, 39, 0.05);
             margin-bottom: 12px;
+        }
+
+        /* ===== Wheel Tab Styles ===== */
+        .wheel-stage-card {
+            background: radial-gradient(circle at top, #1f2937 0%, #0f172a 75%);
+            border-radius: 26px;
+            padding: 20px 14px 18px;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.25);
+            margin-bottom: 12px;
+            border: 1.5px solid rgba(253, 224, 71, 0.45);
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .wheel-top-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .wheel-pill-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(253, 224, 71, 0.35);
+            color: #fef08a;
+            padding: 5px 10px;
+            border-radius: 999px;
+        }
+
+        .wheel-assembly {
+            position: relative;
+            width: min(82vw, 316px);
+            aspect-ratio: 1 / 1;
+            margin: 14px auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wheel-disc-wrap {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 12px 28px rgba(0, 0, 0, 0.55),
+                0 0 22px rgba(234, 179, 8, 0.35);
+            transform: rotate(0deg);
+            transition: transform 4.6s cubic-bezier(0.14, 0.88, 0.18, 1);
+            will-change: transform;
+        }
+
+        .wheel-disc-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            background: #1c1917;
+        }
+
+        /* عقربه ثابت در بالا */
+        .wheel-static-pointer {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 66px;
+            height: 78px;
+            z-index: 15;
+            pointer-events: none;
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.65));
+            transform-origin: 50% 18%;
+        }
+
+        @keyframes pointerTick {
+            0%, 100% { transform: translateX(-50%) rotate(0deg); }
+            50% { transform: translateX(-50%) rotate(-12deg); }
+        }
+
+        .wheel-static-pointer.ticking {
+            animation: pointerTick 0.16s ease-in-out infinite;
+        }
+
+        .wheel-pointer-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .wheel-result-banner {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(253, 224, 71, 0.3);
+            border-radius: 16px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            min-height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 900;
+            color: #fef9c3;
+        }
+
+        .wheel-spin-btn {
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, #fde047, #eab308, #84cc16);
+            color: #111827;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(234, 179, 8, 0.35);
+        }
+
+        .wheel-spin-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .wheel-slices-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .wheel-slice-chip {
+            background: var(--card-soft);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 7px 4px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .wheel-slice-chip.highlight {
+            background: #ecfccb;
+            border-color: #84cc16;
+            color: var(--green-dark);
         }
 
         .mine-hero-card {
@@ -1285,19 +1437,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
-            padding: 0 10px;
+            gap: 6px;
+            padding: 0 8px;
             z-index: 900;
             pointer-events: none;
         }
 
         .floating-mine-fab {
-            width: 50px;
-            height: 50px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
             border: 3px solid #ffffff;
             background: linear-gradient(135deg, #bef264, #84cc16);
-            font-size: 20px;
+            font-size: 19px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1312,10 +1464,10 @@
             backdrop-filter: blur(10px);
             border: 1px solid #e5e7eb;
             border-radius: 28px;
-            padding: 5px 8px;
+            padding: 5px 6px;
             display: flex;
             align-items: center;
-            gap: 2px;
+            gap: 1px;
             pointer-events: auto;
             box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
         }
@@ -1323,9 +1475,9 @@
         .dock-tab {
             border: none;
             background: transparent;
-            padding: 6px 9px;
+            padding: 6px 7.5px;
             border-radius: 20px;
-            font-size: 10.5px;
+            font-size: 10px;
             font-weight: 800;
             color: var(--text-muted);
             cursor: pointer;
@@ -1485,6 +1637,47 @@
                     <button class="task-action-pill" id="crew-tasks-btn" onclick="switchView('earn')">SLR Tasks</button>
                 </div>
                 <div class="crew-grid" id="crew-grid-list"></div>
+            </div>
+        </div>
+
+        <!-- ===== SPIN WHEEL VIEW ===== -->
+        <div id="view-spin" class="view-section">
+            <div class="section-heading" id="spin-heading">Cobra Lucky Wheel</div>
+            <div class="section-sub" id="spin-sub">Spin the wheel and win SLR rewards under the fixed top pointer</div>
+
+            <div class="wheel-stage-card">
+                <div class="wheel-top-meta">
+                    <span class="wheel-pill-badge" id="wheel-spins-left-badge">Spins left: 3</span>
+                    <span class="wheel-pill-badge" id="wheel-last-prize-badge">Last: -</span>
+                </div>
+
+                <div class="wheel-assembly">
+                    <!-- عقربه ثابت بالا -->
+                    <div class="wheel-static-pointer" id="wheel-static-pointer">
+                        <img src="./wheel_pointer.jpg" alt="Cobra Pointer" class="wheel-pointer-img" onerror="this.style.display='none'">
+                    </div>
+
+                    <!-- گردونه چرخان -->
+                    <div class="wheel-disc-wrap" id="wheel-disc-wrap">
+                        <img src="./wheel_cobra.jpg" alt="Cobra Wheel" class="wheel-disc-img" onerror="this.style.background='#291504'">
+                    </div>
+                </div>
+
+                <div class="wheel-result-banner" id="wheel-result-banner">
+                    Press Spin to test your luck!
+                </div>
+
+                <button type="button" class="wheel-spin-btn" id="wheel-spin-btn" onclick="spinCobraWheel()">
+                    🎡 SPIN WHEEL
+                </button>
+            </div>
+
+            <div class="white-card">
+                <div style="font-size:13px; font-weight:900; margin-bottom:4px;" id="wheel-slices-title">Wheel Slices (Clockwise from Top Pointer)</div>
+                <div style="font-size:10.5px; color:var(--text-muted); margin-bottom:8px;" id="wheel-slices-desc">
+                    Each slice is 45° around the wheel. Rewards are added directly to your in-app SLR balance.
+                </div>
+                <div class="wheel-slices-grid" id="wheel-slices-grid"></div>
             </div>
         </div>
 
@@ -1733,6 +1926,7 @@
         <button class="floating-mine-fab" onclick="switchView('upgrade')" title="Mining">⛏</button>
         <div class="floating-nav-pill">
             <button class="dock-tab active" id="dock-upgrade" onclick="switchView('upgrade')">Upgrade</button>
+            <button class="dock-tab" id="dock-spin" onclick="switchView('spin')">Spin</button>
             <button class="dock-tab" id="dock-chart" onclick="switchView('chart')">Chart</button>
             <button class="dock-tab" id="dock-earn" onclick="switchView('earn')">Earn</button>
             <button class="dock-tab" id="dock-friends" onclick="switchView('friends')">Friends</button>
@@ -1806,6 +2000,8 @@
         const SPLASH_IMAGE_URL = "./image_11f9a1db.jpg";
         const COIN_IMAGE_URL = "./image_1be087b2.jpg";
         const BANK_CARD_IMAGE_URL = "./image_96fd9f2b.jpg";
+        const WHEEL_IMAGE_URL = "./wheel_cobra.jpg";
+        const POINTER_IMAGE_URL = "./wheel_pointer.jpg";
 
         const slrTokenAddress = "EQB1yCD3HAgcXFJiVqAmnySiTDyYQ90e3KmX_g8xzPtRddfN";
         const slrDecimals = 9;
@@ -1817,6 +2013,20 @@
         const ADMIN_WITHDRAW_WEBHOOK_URL = "https://raspy-forest-4081.radintoken.workers.dev";
         const WALLET_VERIFY_TON = 0.05;
         const WITHDRAW_FEE_SLR = 1000;
+        const MAX_DAILY_SPINS = 3;
+
+        // ۸ بخش گردونه به ترتیب ساعتگرد از بالا (ساعت ۱۲)
+        // اگر ترتیب بخش‌های عکس شما با این آرایه فرق داشت، کافیست جای مقادیر را تغییر دهید
+        const wheelSlices = [
+            { id: 0, label: "500 SLR", reward: 500 },
+            { id: 1, label: "100 SLR", reward: 100 },
+            { id: 2, label: "EMPTY", reward: 0 },
+            { id: 3, label: "3000 SLR", reward: 3000 },
+            { id: 4, label: "5000 SLR", reward: 5000 },
+            { id: 5, label: "EMPTY", reward: 0 },
+            { id: 6, label: "10000 SLR", reward: 10000 },
+            { id: 7, label: "6000 SLR", reward: 6000 }
+        ];
 
         function getFallbackAvatarUrl(seed) {
             const safeSeed = encodeURIComponent(String(seed || "solaris-user"));
@@ -1953,6 +2163,18 @@
             holdReqPrefix: "Hold",
             buyToHoldBtn: "🛒 Hold",
             verifyFirstBtn: "🔒 Verify",
+            spinHeading: "Cobra Lucky Wheel",
+            spinSub: "Spin the wheel and win SLR rewards under the fixed top pointer",
+            wheelSpinBtnText: "🎡 SPIN WHEEL",
+            wheelSpinningText: "⏳ SPINNING...",
+            wheelReadyBanner: "Press Spin to test your luck!",
+            wheelNoSpinsBanner: "No spins left today! Come back tomorrow.",
+            wheelEmptyPrize: "Empty slice — better luck next spin!",
+            wheelWonPrefix: "You won ",
+            wheelSpinsLeftPrefix: "Spins left: ",
+            wheelLastPrefix: "Last: ",
+            wheelSlicesTitle: "Wheel Slices (Clockwise from Top Pointer)",
+            wheelSlicesDesc: "Each slice is 45° around the wheel. Rewards are added directly to your in-app SLR balance.",
             chartHeading: "SLR Live Chart",
             chartSub: "Real-time STON.fi pool & price feed for Solaris (SLR)",
             chartLiveTitle: "LIVE SLR PRICE",
@@ -1997,6 +2219,7 @@
             menuHistory: "🕒 SLR Withdrawal History",
             menuRules: "📜 SLR Rules (Hold 5,000 • Withdraw 20,000)",
             dockUpgrade: "Upgrade",
+            dockSpin: "Spin",
             dockChart: "Chart",
             dockEarn: "Earn",
             dockFriends: "Friends",
@@ -2111,6 +2334,18 @@
                 holdReqPrefix: "هولد",
                 buyToHoldBtn: "🛒 خرید و هولد",
                 verifyFirstBtn: "🔒 تایید ولت",
+                spinHeading: "گردونه شانس کبرا",
+                spinSub: "گردونه را بچرخانید و جایزه زیر عقربه ثابت بالا را برنده شوید",
+                wheelSpinBtnText: "🎡 بچرخان (SPIN)",
+                wheelSpinningText: "⏳ در حال چرخش...",
+                wheelReadyBanner: "دکمه چرخش را بزنید تا شانس خود را امتحان کنید!",
+                wheelNoSpinsBanner: "شانس امروز شما تمام شد! فردا دوباره سر بزنید.",
+                wheelEmptyPrize: "پوچ (EMPTY) — چرخش بعدی شانست بیشتره!",
+                wheelWonPrefix: "تبریک! برنده شدید: ",
+                wheelSpinsLeftPrefix: "شانس باقیمانده: ",
+                wheelLastPrefix: "آخرین جایزه: ",
+                wheelSlicesTitle: "بخش‌های گردونه (ساعتگرد از عقربه بالا)",
+                wheelSlicesDesc: "هر بخش ۴۵ درجه است و جوایز نقدی مستقیم به موجودی SLR شما اضافه می‌شوند.",
                 chartHeading: "چارت قیمت آنلاین SLR",
                 chartSub: "اطلاعات زنده استخر STON.fi و قیمت لحظه‌ای سولاریس (SLR)",
                 chartLiveTitle: "قیمت لحظه‌ای SLR",
@@ -2155,6 +2390,7 @@
                 menuHistory: "🕒 فعالیت و تاریخچه برداشت SLR",
                 menuRules: "📜 شرایط و قوانین SLR (هولد 5,000 • برداشت 20,000)",
                 dockUpgrade: "Upgrade",
+                dockSpin: "گردونه",
                 dockChart: "Chart",
                 dockEarn: "Earn",
                 dockFriends: "دوست‌ها",
@@ -2373,6 +2609,11 @@
             setLanguage(langCode);
         }
 
+        function getTodayDateKey() {
+            const d = new Date();
+            return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+        }
+
         let state = {
             lang: "en-us",
             balance: 0,
@@ -2397,8 +2638,142 @@
             refCount: 0,
             refEarned: 0,
             refPending: 0,
-            withdrawHistory: []
+            withdrawHistory: [],
+            spinDateKey: getTodayDateKey(),
+            spinsUsedToday: 0,
+            wheelRotationDeg: 0,
+            lastWheelPrizeLabel: ""
         };
+
+        let isSpinningWheel = false;
+        let lastWonSliceIndex = -1;
+
+        function syncDailySpinQuota() {
+            const today = getTodayDateKey();
+            if (state.spinDateKey !== today) {
+                state.spinDateKey = today;
+                state.spinsUsedToday = 0;
+            }
+        }
+
+        function getRemainingSpins() {
+            syncDailySpinQuota();
+            return Math.max(0, MAX_DAILY_SPINS - (Number(state.spinsUsedToday) || 0));
+        }
+
+        function spinCobraWheel() {
+            if (isSpinningWheel) return;
+            syncDailySpinQuota();
+            const remaining = getRemainingSpins();
+            if (remaining <= 0) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? "⚠️ شانس چرخش امروز تمام شد! فردا دوباره بیا."
+                        : "⚠️ No spins left today! Come back tomorrow."
+                );
+                renderSpinView();
+                return;
+            }
+
+            isSpinningWheel = true;
+            state.spinsUsedToday = (Number(state.spinsUsedToday) || 0) + 1;
+
+            const sliceAngle = 360 / wheelSlices.length; // 45 deg
+            const targetIndex = Math.floor(Math.random() * wheelSlices.length);
+            const sliceCenterAngle = targetIndex * sliceAngle; // 0, 45, 90...
+            // برای اینکه مرکز بخش targetIndex دقیقاً زیر عقربه ثابت بالا (0deg) قرار گیرد:
+            const desiredMod = (360 - sliceCenterAngle) % 360;
+            const currentMod = ((Number(state.wheelRotationDeg) || 0) % 360 + 360) % 360;
+            let delta = desiredMod - currentMod;
+            if (delta < 0) delta += 360;
+
+            const extraSpins = 5 * 360;
+            const jitter = (Math.random() * 14 - 7); // کمی تنوع طبیعی داخل اسلایس
+            const nextRotation = (Number(state.wheelRotationDeg) || 0) + extraSpins + delta + jitter;
+            state.wheelRotationDeg = nextRotation;
+
+            const discEl = document.getElementById("wheel-disc-wrap");
+            const ptrEl = document.getElementById("wheel-static-pointer");
+            const bannerEl = document.getElementById("wheel-result-banner");
+            if (ptrEl) ptrEl.classList.add("ticking");
+            if (bannerEl) bannerEl.innerText = t("wheelSpinningText");
+            if (discEl) {
+                discEl.style.transform = `rotate(${nextRotation}deg)`;
+            }
+
+            renderSpinView();
+
+            setTimeout(() => {
+                if (ptrEl) ptrEl.classList.remove("ticking");
+                const wonSlice = wheelSlices[targetIndex];
+                lastWonSliceIndex = targetIndex;
+                state.lastWheelPrizeLabel = wonSlice.label;
+
+                if (wonSlice.reward > 0) {
+                    state.balance += wonSlice.reward;
+                    if (bannerEl) bannerEl.innerText = `${t("wheelWonPrefix")}${wonSlice.label}!`;
+                    showTransientMessage(
+                        state.lang === "fa"
+                            ? `🎉 ${wonSlice.label} به موجودی SLR اضافه شد!`
+                            : `🎉 +${wonSlice.label} added to your SLR balance!`
+                    );
+                } else {
+                    if (bannerEl) bannerEl.innerText = t("wheelEmptyPrize");
+                    showTransientMessage(t("wheelEmptyPrize"));
+                }
+
+                saveState();
+                isSpinningWheel = false;
+                renderAll();
+            }, 4650);
+        }
+
+        function renderSpinView() {
+            const headingEl = document.getElementById("spin-heading");
+            if (!headingEl) return;
+
+            syncDailySpinQuota();
+            const remaining = getRemainingSpins();
+
+            headingEl.innerText = t("spinHeading");
+            document.getElementById("spin-sub").innerText = t("spinSub");
+            document.getElementById("wheel-spins-left-badge").innerText = `${t("wheelSpinsLeftPrefix")}${remaining}/${MAX_DAILY_SPINS}`;
+            document.getElementById("wheel-last-prize-badge").innerText = `${t("wheelLastPrefix")}${state.lastWheelPrizeLabel || "-"}`;
+            document.getElementById("wheel-slices-title").innerText = t("wheelSlicesTitle");
+            document.getElementById("wheel-slices-desc").innerText = t("wheelSlicesDesc");
+
+            const discEl = document.getElementById("wheel-disc-wrap");
+            if (discEl) {
+                discEl.style.transform = `rotate(${Number(state.wheelRotationDeg) || 0}deg)`;
+            }
+
+            const spinBtn = document.getElementById("wheel-spin-btn");
+            if (spinBtn) {
+                spinBtn.disabled = isSpinningWheel || remaining <= 0;
+                spinBtn.innerText = isSpinningWheel ? t("wheelSpinningText") : t("wheelSpinBtnText");
+            }
+
+            const bannerEl = document.getElementById("wheel-result-banner");
+            if (bannerEl && !isSpinningWheel) {
+                if (state.lastWheelPrizeLabel) {
+                    const isEmpty = state.lastWheelPrizeLabel.toUpperCase() === "EMPTY";
+                    bannerEl.innerText = isEmpty ? t("wheelEmptyPrize") : `${t("wheelWonPrefix")}${state.lastWheelPrizeLabel}`;
+                } else if (remaining <= 0) {
+                    bannerEl.innerText = t("wheelNoSpinsBanner");
+                } else {
+                    bannerEl.innerText = t("wheelReadyBanner");
+                }
+            }
+
+            const gridEl = document.getElementById("wheel-slices-grid");
+            if (gridEl) {
+                gridEl.innerHTML = wheelSlices.map((s, idx) => `
+                    <div class="wheel-slice-chip ${idx === lastWonSliceIndex ? "highlight" : ""}">
+                        ${s.label}
+                    </div>
+                `).join("");
+            }
+        }
 
         let marketState = {
             priceUsd: 0,
@@ -2452,6 +2827,8 @@
             document.documentElement.style.setProperty("--splash-img", `url("${SPLASH_IMAGE_URL}")`);
             document.documentElement.style.setProperty("--coin-img", `url("${COIN_IMAGE_URL}")`);
             document.documentElement.style.setProperty("--bank-card-img", `url("${BANK_CARD_IMAGE_URL}")`);
+            document.documentElement.style.setProperty("--wheel-img", `url("${WHEEL_IMAGE_URL}")`);
+            document.documentElement.style.setProperty("--pointer-img", `url("${POINTER_IMAGE_URL}")`);
 
             startAutoSplashLoader();
 
@@ -2481,6 +2858,7 @@
 
             initTelegramData();
             loadState();
+            syncDailySpinQuota();
             reNormalizeAllSavedAddresses();
             syncHoldCrewUnlocks();
             applyLanguageDirection();
@@ -3211,6 +3589,9 @@
             const dock = document.getElementById("dock-" + name);
             if (target) target.classList.add("active");
             if (dock) dock.classList.add("active");
+            if (name === "spin") {
+                renderSpinView();
+            }
             if (name === "chart") {
                 drawChartCanvas();
                 fetchSlrMarketData(true);
@@ -3741,6 +4122,7 @@
                 `;
             }).join("");
 
+            renderSpinView();
             renderChartView();
 
             document.getElementById("earn-heading").innerText = t("earnHeading");
@@ -3877,6 +4259,7 @@
             document.getElementById("menu-rules").innerText = t("menuRules");
 
             document.getElementById("dock-upgrade").innerText = t("dockUpgrade");
+            document.getElementById("dock-spin").innerText = t("dockSpin");
             document.getElementById("dock-chart").innerText = t("dockChart");
             document.getElementById("dock-earn").innerText = t("dockEarn");
             document.getElementById("dock-friends").innerText = t("dockFriends");
