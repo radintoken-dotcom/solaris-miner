@@ -23,11 +23,6 @@
             100% { --neon-angle: 360deg; }
         }
 
-        @keyframes solarisNeonSpinFallback {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -47,7 +42,7 @@
             --green-bright: #a3e635;
             --green-dark: #bef264;
             --border-light: rgba(250, 204, 21, 0.35);
-            --splash-img: url("./image_dd6217df.jpg");
+            --splash-img: url("./image_11f9a1db.jpg");
             --coin-img: url("./image_1be087b2.jpg");
             --bank-card-img: url("./image_96fd9f2b.jpg");
             --wheel-img: url("./image_fb082f9f-removebg-preview.png");
@@ -112,51 +107,51 @@
             height: 100vh;
         }
 
-        /* سطح شیشه‌ای سبک و سریع با نور طلایی نئونی چرخان دور کادرها */
+        /* سطح شیشه‌ای سبک و سریع با پس‌زمینه گردونه + حاشیه طلایی نئونی چرخان */
         .solaris-glass-surface {
             position: relative;
-            background-color: rgba(14, 10, 4, 0.86);
+            background-color: rgba(14, 10, 4, 0.84) !important;
             background-image:
-                linear-gradient(180deg, rgba(16, 12, 5, 0.84) 0%, rgba(10, 8, 4, 0.92) 100%),
-                var(--wheel-bg-img);
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            border: 1.5px solid rgba(250, 204, 21, 0.52);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.48), 0 0 12px rgba(250, 204, 21, 0.16);
+                linear-gradient(180deg, rgba(14, 10, 4, 0.82) 0%, rgba(10, 8, 4, 0.90) 100%),
+                var(--wheel-bg-img) !important;
+            background-position: center center !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            border: 1.5px solid rgba(250, 204, 21, 0.44) !important;
+            box-shadow:
+                0 6px 18px rgba(0, 0, 0, 0.45),
+                0 0 10px rgba(250, 204, 21, 0.18) !important;
             color: #fffbeb;
-            isolation: isolate;
         }
 
-        .solaris-glass-surface::before {
+        .solaris-glass-surface::after {
             content: "";
             position: absolute;
             inset: -1.5px;
             border-radius: inherit;
             padding: 1.5px;
             background: conic-gradient(
-                from var(--neon-angle, 0deg),
+                from var(--neon-angle),
                 transparent 0deg,
-                rgba(250, 204, 21, 0.15) 60deg,
-                #fde047 125deg,
-                #fef08a 155deg,
-                #f59e0b 195deg,
-                transparent 255deg,
-                transparent 360deg
+                transparent 245deg,
+                rgba(250, 204, 21, 0.35) 285deg,
+                #fde047 328deg,
+                #ffffff 346deg,
+                #facc15 360deg
             );
             -webkit-mask:
-                linear-gradient(#fff 0 0) content-box,
-                linear-gradient(#fff 0 0);
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            pointer-events: none;
-            z-index: 1;
             animation: solarisNeonOrbit 4.2s linear infinite;
+            pointer-events: none;
+            z-index: 2;
         }
 
         .solaris-glass-surface > * {
             position: relative;
-            z-index: 2;
+            z-index: 3;
         }
 
         .solaris-splash-screen {
@@ -203,6 +198,7 @@
             border-radius: 999px;
             background: rgba(255, 255, 255, 0.22);
             overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
         }
 
         .solaris-line-fill {
@@ -210,6 +206,7 @@
             width: 0%;
             border-radius: 999px;
             background: linear-gradient(90deg, #eab308, #fde047, #a3e635);
+            box-shadow: 0 0 10px rgba(253, 224, 71, 0.75);
             animation: solarisLineFill 5s linear forwards;
         }
 
@@ -235,7 +232,7 @@
             transform: translateX(-50%) translateY(-10px);
             max-width: 92%;
             width: max-content;
-            background: rgba(17, 24, 39, 0.96);
+            background: rgba(17, 24, 39, 0.95);
             color: #ffffff;
             border: 1px solid rgba(254, 240, 138, 0.55);
             border-radius: 16px;
@@ -246,8 +243,8 @@
             z-index: 4000;
             opacity: 0;
             pointer-events: none;
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-            transition: opacity 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), 0 0 14px rgba(250, 204, 21, 0.28);
+            transition: opacity 0.22s ease, transform 0.22s ease;
         }
 
         .toast-banner.show {
@@ -289,6 +286,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #fde047;
+            box-shadow: 0 0 12px rgba(250, 204, 21, 0.65);
             flex-shrink: 0;
             cursor: pointer;
             background: #1a1206;
@@ -298,6 +296,7 @@
             font-size: 12.5px;
             font-weight: 800;
             color: #fffbeb;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -365,6 +364,7 @@
             font-size: 10px;
             font-weight: 900;
             white-space: nowrap;
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.25);
         }
 
         .view-section {
@@ -387,6 +387,7 @@
             background: transparent;
             border-radius: 0;
             padding: 24px 14px 16px;
+            box-shadow: none;
             margin-bottom: 0;
             border: none;
             text-align: center;
@@ -421,6 +422,7 @@
             width: 56px;
             height: 60px;
             object-fit: contain;
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
             pointer-events: none;
         }
 
@@ -490,100 +492,10 @@
             background-size: 100% 100%;
             background-repeat: no-repeat;
             border: 1.5px solid rgba(254, 249, 195, 0.9);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
-        }
-
-        /* انیمیشن زنده و واقعی روی خود مار کبرای بالای کادر طلایی */
-        @keyframes cobraHeadSway {
-            0%, 100% {
-                transform: translateX(-50%) rotate(0deg) scale(1);
-            }
-            25% {
-                transform: translateX(-53%) rotate(-4.5deg) scale(1.015);
-            }
-            50% {
-                transform: translateX(-50%) rotate(0.8deg) scale(1.02);
-            }
-            75% {
-                transform: translateX(-47%) rotate(4.5deg) scale(1.015);
-            }
-        }
-
-        @keyframes cobraJawCycle {
-            0%, 42%, 58%, 100% {
-                transform: scaleY(1) translateY(0);
-            }
-            48%, 52% {
-                transform: scaleY(0.84) translateY(1.5px);
-            }
-        }
-
-        @keyframes cobraTongueFlick {
-            0%, 62%, 100% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-4px) scaleY(0.2);
-            }
-            68% {
-                opacity: 0.95;
-                transform: translateX(-50%) translateY(3px) scaleY(1);
-            }
-            74% {
-                opacity: 0.3;
-                transform: translateX(-50%) translateY(0px) scaleY(0.5);
-            }
-            80% {
-                opacity: 1;
-                transform: translateX(-50%) translateY(5px) scaleY(1.15);
-            }
-            86% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-2px) scaleY(0.3);
-            }
-        }
-
-        .cobra-live-head-overlay {
-            position: absolute;
-            top: 4%;
-            left: 50%;
-            width: 34%;
-            height: 36%;
-            transform-origin: 50% 88%;
-            transform: translateX(-50%);
-            overflow: hidden;
-            border-radius: 50% 50% 35% 35%;
-            pointer-events: none;
-            z-index: 3;
-            will-change: transform;
-            animation: cobraHeadSway 4.8s ease-in-out infinite;
-        }
-
-        .cobra-head-crop-img {
-            position: absolute;
-            top: -11%;
-            left: -147%;
-            width: 394%;
-            height: 315%;
-            max-width: none;
-            object-fit: cover;
-            transform-origin: 50% 24%;
-            will-change: transform;
-            animation: cobraJawCycle 4.8s ease-in-out infinite;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
-        }
-
-        .cobra-forked-tongue {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            width: 4px;
-            height: 16px;
-            transform: translateX(-50%);
-            transform-origin: top center;
-            pointer-events: none;
-            z-index: 4;
-            opacity: 0;
-            will-change: transform, opacity;
-            animation: cobraTongueFlick 4.8s ease-in-out infinite;
+            box-shadow:
+                0 14px 26px rgba(120, 53, 15, 0.34),
+                0 0 18px rgba(250, 204, 21, 0.32),
+                inset 0 1px 2px rgba(255, 255, 255, 0.65);
         }
 
         .card-slot-box {
@@ -598,7 +510,6 @@
             justify-content: center;
             text-align: center;
             overflow: hidden;
-            z-index: 5;
         }
 
         .card-slot-box.left-slot {
@@ -629,7 +540,9 @@
             line-height: 1.2;
             letter-spacing: 0.2px;
             color: #140c05;
-            text-shadow: 0 1px 0 rgba(255, 251, 235, 0.85);
+            text-shadow:
+                0 1px 0 rgba(255, 251, 235, 0.85),
+                0 1px 3px rgba(69, 26, 3, 0.35);
             margin-top: 1px;
             white-space: nowrap;
             overflow: hidden;
@@ -644,7 +557,7 @@
 
         .card-wallet-refresh-btn {
             position: absolute;
-            top: 24%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 34px;
@@ -657,8 +570,11 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 6;
-            transition: transform 0.15s ease;
+            box-shadow:
+                0 0 14px rgba(253, 224, 71, 0.75),
+                inset 0 1px 2px rgba(255, 255, 255, 0.35);
+            z-index: 5;
+            transition: transform 0.15s ease, background 0.2s ease;
         }
 
         .card-wallet-refresh-btn:active {
@@ -669,30 +585,28 @@
             animation: cardWalletSpin 0.8s linear infinite;
         }
 
-        /* دکمه خرید استون‌فای دقیقاً وسط کادر طلایی و کمی پایین‌تر */
+        /* دکمه خرید زیر دکمه استون‌فای درون خود کادر بزرگ طلایی */
         .card-bottom-buy-btn {
             position: absolute;
-            left: 22%;
-            right: 22%;
-            top: 56%;
-            height: 12.5%;
-            border: 1.5px solid rgba(254, 240, 138, 0.92);
-            background: linear-gradient(180deg, rgba(28, 17, 4, 0.88) 0%, rgba(15, 9, 2, 0.95) 100%);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.65), 0 0 12px rgba(250, 204, 21, 0.35);
+            left: 20%;
+            right: 20%;
+            bottom: 6.2%;
+            height: 11.5%;
             border-radius: 12px;
-            padding: 0 12px;
+            padding: 0 10px;
             color: #fef08a;
             text-shadow: 0 1px 5px rgba(0, 0, 0, 0.95);
-            font-size: clamp(10.5px, 2.8vw, 13px);
+            font-size: clamp(10px, 2.7vw, 12.5px);
             font-weight: 900;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 4px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            z-index: 6;
+            z-index: 5;
         }
 
         .card-bottom-buy-btn:active {
@@ -798,6 +712,84 @@
             font-weight: 700;
         }
 
+        .feature-grid-2x2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .feature-tile {
+            border-radius: 20px;
+            padding: 14px;
+            color: #ffffff;
+            min-height: 116px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(14, 10, 4, 0.72);
+            background-image:
+                linear-gradient(180deg, rgba(10, 8, 4, 0.30) 0%, rgba(10, 8, 4, 0.76) 100%),
+                var(--wheel-bg-img),
+                var(--upgrade-tile-img);
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: 1.5px solid rgba(250, 204, 21, 0.45);
+            box-shadow:
+                0 6px 18px rgba(0, 0, 0, 0.48),
+                0 0 12px rgba(250, 204, 21, 0.22);
+        }
+
+        .feature-tile::after {
+            content: "";
+            position: absolute;
+            inset: -1.5px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: conic-gradient(
+                from var(--neon-angle),
+                transparent 0deg,
+                transparent 240deg,
+                rgba(250, 204, 21, 0.35) 280deg,
+                #fde047 325deg,
+                #ffffff 345deg,
+                #facc15 360deg
+            );
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: solarisNeonOrbit 4.2s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .feature-tile > * {
+            position: relative;
+            z-index: 3;
+        }
+
+        .tile-title {
+            font-size: 14px;
+            font-weight: 900;
+            margin-bottom: 3px;
+            color: #fef08a;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+        }
+
+        .tile-sub {
+            font-size: 10px;
+            opacity: 0.98;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
+        }
+
         .crew-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -807,43 +799,41 @@
 
         .crew-card {
             position: relative;
-            background-color: rgba(16, 12, 5, 0.84);
+            background-color: rgba(16, 12, 5, 0.80);
             background-image:
-                linear-gradient(180deg, rgba(16, 12, 5, 0.78) 0%, rgba(10, 8, 4, 0.90) 100%),
+                linear-gradient(180deg, rgba(16, 12, 5, 0.76) 0%, rgba(10, 8, 4, 0.88) 100%),
                 var(--wheel-bg-img);
             background-position: center center;
             background-size: cover;
-            border: 1.5px solid rgba(250, 204, 21, 0.50);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 0 10px rgba(250, 204, 21, 0.14);
+            border: 1.5px solid rgba(250, 204, 21, 0.36);
             border-radius: 16px;
             padding: 10px 6px;
             text-align: center;
-            isolation: isolate;
+            transition: transform 0.15s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 10px rgba(250, 204, 21, 0.16);
         }
 
-        .crew-card::before {
+        .crew-card::after {
             content: "";
             position: absolute;
             inset: -1.5px;
             border-radius: inherit;
             padding: 1.5px;
             background: conic-gradient(
-                from var(--neon-angle, 0deg),
+                from var(--neon-angle),
                 transparent 0deg,
-                rgba(250, 204, 21, 0.15) 65deg,
-                #fde047 130deg,
-                #f59e0b 185deg,
-                transparent 245deg,
-                transparent 360deg
+                transparent 250deg,
+                rgba(250, 204, 21, 0.35) 290deg,
+                #fde047 335deg,
+                #facc15 360deg
             );
             -webkit-mask:
-                linear-gradient(#fff 0 0) content-box,
-                linear-gradient(#fff 0 0);
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
+            animation: solarisNeonOrbit 4.4s linear infinite;
             pointer-events: none;
-            z-index: 1;
-            animation: solarisNeonOrbit 4.5s linear infinite;
         }
 
         .crew-card > * {
@@ -853,6 +843,7 @@
 
         .crew-card.unlocked.wallet-verified {
             border-color: rgba(253, 224, 71, 0.75);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 0 14px rgba(250, 204, 21, 0.32);
         }
 
         .cyber-lock-badge {
@@ -862,6 +853,7 @@
             border-radius: 14px;
             background: linear-gradient(145deg, #1e293b, #0f172a);
             border: 1.5px solid #facc15;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.35), inset 0 0 8px rgba(250, 204, 21, 0.25);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -917,7 +909,7 @@
             width: 56px;
             height: 56px;
             pointer-events: none;
-            animation: slrGearRingSpin 6s linear infinite;
+            animation: slrGearRingSpin 5s linear infinite;
         }
 
         .slr-static-coin-center {
@@ -928,6 +920,7 @@
             border-radius: 50%;
             background: var(--coin-img) center center / cover no-repeat;
             border: 1.5px solid #fef08a;
+            box-shadow: 0 3px 8px rgba(120, 53, 15, 0.45);
         }
 
         .crew-name {
@@ -958,9 +951,10 @@
             padding: 5px 4px;
             font-size: 9.5px;
             font-weight: 800;
-            background: rgba(24, 18, 6, 0.88);
+            background: rgba(24, 18, 6, 0.86);
             color: #fef08a;
             cursor: pointer;
+            box-shadow: 0 0 8px rgba(250, 204, 21, 0.22);
         }
 
         .crew-buy-btn.wallet-locked {
@@ -996,6 +990,7 @@
             margin-bottom: 12px;
         }
 
+        /* استایل تب Swap */
         .swap-box-card {
             border-radius: 20px;
             padding: 14px;
@@ -1428,6 +1423,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #fde047;
+            box-shadow: 0 0 18px rgba(250, 204, 21, 0.72);
             margin-bottom: 8px;
             cursor: pointer;
             background: #1a1206;
@@ -1702,6 +1698,7 @@
         .dock-tab.active {
             background: rgba(250, 204, 21, 0.24);
             color: #fef08a;
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.35);
         }
 
         .modal-backdrop {
@@ -1765,14 +1762,6 @@
         <div id="view-upgrade" class="view-section active">
             <div class="mine-hero-card solaris-glass-surface">
                 <div class="solaris-bank-card">
-                    <!-- حرکت واقعی سر، دهان و زبان روی خود مار کبرای بالای کادر طلایی -->
-                    <div class="cobra-live-head-overlay" aria-hidden="true">
-                        <img src="./image_96fd9f2b.jpg" alt="" class="cobra-head-crop-img">
-                        <svg class="cobra-forked-tongue" viewBox="0 0 8 24" fill="none">
-                            <path d="M4 0V14M4 14L1.2 22.5M4 14L6.8 22.5" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-
                     <div class="card-slot-box left-slot">
                         <span class="card-slot-label" id="lbl-card-wallet-hold">TON wallet Hold</span>
                         <span class="card-slot-value" id="card-wallet-hold">0 SLR</span>
@@ -1792,8 +1781,8 @@
                         <span class="card-slot-value" id="card-inapp-slr">0 SLR</span>
                     </div>
 
-                    <!-- دکمه خرید استون‌فای درست وسط کادر طلایی و کمی پایین‌تر -->
-                    <button type="button" class="card-bottom-buy-btn" id="card-buy-btn" onclick="copyAndGoBuyToken()">
+                    <!-- دکمه خرید زیر دکمه استون‌فای در خود کادر بزرگ طلایی -->
+                    <button class="card-bottom-buy-btn solaris-glass-surface" id="card-buy-btn" onclick="copyAndGoBuyToken()">
                         Buy Token on STON.fi
                     </button>
                 </div>
@@ -1833,6 +1822,25 @@
                 </div>
             </div>
 
+            <div class="feature-grid-2x2">
+                <div class="feature-tile tile-1" onclick="switchView('earn')">
+                    <div class="tile-title" id="tile1-title">Solaris World</div>
+                    <div class="tile-sub" id="tile1-sub">Tasks & SLR Hold</div>
+                </div>
+                <div class="feature-tile tile-2" onclick="claimDailyBonus()">
+                    <div class="tile-title" id="tile2-title">Daily Reward</div>
+                    <div class="tile-sub" id="daily-tile-sub">Claim daily SLR bonus</div>
+                </div>
+                <div class="feature-tile tile-3" onclick="openWalletModal()">
+                    <div class="tile-title" id="tile3-title">WALLET & HOLD</div>
+                    <div class="tile-sub" id="tile3-sub">Hold 5,000 • Withdraw 20,000</div>
+                </div>
+                <div class="feature-tile tile-4" onclick="switchView('chart')">
+                    <div class="tile-title" id="tile4-title">Live SLR Chart</div>
+                    <div class="tile-sub" id="tile4-sub">STON.fi price & trend</div>
+                </div>
+            </div>
+
             <div class="white-card solaris-glass-surface">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
@@ -1860,6 +1868,7 @@
             </div>
         </div>
 
+        <!-- تب Swap -->
         <div id="view-swap" class="view-section">
             <div class="section-heading" id="swap-heading">SLR Swap</div>
             <div class="section-sub" id="swap-sub">Buy in-app SLR using TON from your connected Tonkeeper wallet</div>
@@ -2234,7 +2243,7 @@
     </div>
 
     <script>
-        const SPLASH_IMAGE_URL = "./image_dd6217df.jpg";
+        const SPLASH_IMAGE_URL = "./image_11f9a1db.jpg";
         const COIN_IMAGE_URL = "./image_1be087b2.jpg";
         const BANK_CARD_IMAGE_URL = "./image_96fd9f2b.jpg";
         const WHEEL_IMAGE_URL = "./image_fb082f9f-removebg-preview.png";
@@ -2256,7 +2265,6 @@
         const WITHDRAW_FEE_SLR = 1000;
         const SPIN_COOLDOWN_MS = 24 * 60 * 60 * 1000;
         const SPIN_COOLDOWN_STORAGE_KEY = "solaris_spin_cooldown_until_v1";
-        const DAILY_CLAIM_KEY_PREFIX = "solaris_daily_claim_day_v1_";
 
         const wheelWeightedPool = [
             { sliceIndex: 2, label: "EMPTY", reward: 0, weight: 36.0 },
@@ -2310,7 +2318,7 @@
             document.getElementById("info-modal-title").innerText = state.userName || "Profile";
             document.getElementById("info-modal-body").innerHTML = `
                 <div style="text-align:center; padding:6px 0;">
-                    <img src="${avatarSrc}" alt="Profile Photo" onerror="handleAvatarError(this)" style="width:100%; max-width:300px; max-height:360px; object-fit:contain; border-radius:18px; border:2px solid #fde047; background:rgba(15,11,4,0.75);">
+                    <img src="${avatarSrc}" alt="Profile Photo" onerror="handleAvatarError(this)" style="width:100%; max-width:300px; max-height:360px; object-fit:contain; border-radius:18px; border:2px solid #fde047; box-shadow:0 0 16px rgba(250,204,21,0.45); background:rgba(15,11,4,0.75);">
                 </div>
             `;
             document.getElementById("info-modal").style.display = "flex";
@@ -2375,7 +2383,12 @@
         const twitterPost2Url = "https://x.com/void_R_walker/status/2125391906381205739?a=ExDtqXN5TlFEYYkInrM&s=19";
 
         const externalBotUrls = {
-            mmix: "https://hub.mmix.io/points?referral_code=3DZ5RW3D"
+            vortex_bot: "https://t.me/VRX_Vortex_bot?start=fB8OZoy",
+            zombie_miner: "https://t.me/ZOMBIE_MINER_bot/app?startapp=ref_1007321991",
+            orx_miner: "https://t.me/OrxMinerBot/app?startapp=boSiVBPPuXF",
+            mmix: "https://hub.mmix.io/points?referral_code=3DZ5RW3D",
+            victors_company: "https://t.me/Victors_Company_bot/app?startapp=ref_542338CCB6",
+            cherry_play: "https://t.me/CherryPlayBot/play?startapp=rdz1r2sxmd"
         };
 
         const MIN_HOLD_SLR = 5000;
@@ -2416,6 +2429,14 @@
             activeUnits: "Active Units",
             statHolding: "HOLDING",
             minHoldSub: "SLR (Min 5,000)",
+            tile1Title: "Solaris World",
+            tile1Sub: "Tasks & SLR Hold",
+            tile2Title: "Daily Reward",
+            dailyTileSub: "Claim daily SLR bonus",
+            tile3Title: "WALLET & HOLD",
+            tile3Sub: "Hold 5,000 • Withdraw 20,000",
+            tile4Title: "Live SLR Chart",
+            tile4Sub: "STON.fi price & trend",
             crewTitle: "Your Crew (SLR Hold Units)",
             crewTasksBtn: "SLR Tasks",
             minerWord: "miner",
@@ -2448,8 +2469,7 @@
             dailyCardTitle: "Daily Reward SLR",
             streakLabel: "Streak days",
             dailyClaimBtn: "Daily Reward",
-            dailyClaimedTodayBtn: "Claimed Today ✓",
-            communityHeading: "Community & X Tasks",
+            communityHeading: "Community, X Tasks & Recommended Bots",
             onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
             onchainSub: "Wallet verification + 5,000 SLR hold + 20,000 SLR balance are required to unlock withdrawal.",
             earnBottomTitle: "📌 SLR Withdrawal & Hold Status",
@@ -2550,7 +2570,12 @@
                 },
                 buy_slr: { title: "Buy SLR on STON.fi", desc: "Buy SLR on STON.fi and verify real on-chain hold (5,000+ SLR)", action: "Buy" },
                 invite_friends_task: { title: "Real Friend Invites", desc: "Unlocks only after a friend joins via your invite link", action: "Invite" },
-                mmix: { title: "MMIX", desc: "Open project via dedicated button and claim reward", action: "Open" }
+                vortex_bot: { title: "VORTEX BOT", desc: "Open bot via dedicated button and claim reward", action: "Open" },
+                zombie_miner: { title: "ZOMBIE MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
+                orx_miner: { title: "ORX MINER", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
+                mmix: { title: "MMIX", desc: "Open project via dedicated button and claim reward", action: "Open" },
+                victors_company: { title: "VICTORS COMPANY", desc: "Open mini-app via dedicated button and claim reward", action: "Open" },
+                cherry_play: { title: "CHERRY PLAY", desc: "Open game via dedicated button and claim reward", action: "Open" }
             }
         };
 
@@ -2569,6 +2594,14 @@
                 claimMined: "⛏ Claim SLR",
                 activeUnits: "واحد فعال",
                 minHoldSub: "SLR (حداقل 5,000)",
+                tile1Title: "دنیای سولاریس",
+                tile1Sub: "تسک‌ها و هولد SLR",
+                tile2Title: "پاداش روزانه",
+                dailyTileSub: "دریافت جایزه روزانه SLR",
+                tile3Title: "WALLET & HOLD",
+                tile3Sub: "هولد 5,000 • برداشت 20,000",
+                tile4Title: "چارت زنده SLR",
+                tile4Sub: "قیمت و روند در STON.fi",
                 crewTitle: "Crew تو (فعال‌سازی با هولد SLR)",
                 crewTasksBtn: "تسک‌های SLR",
                 minerWord: "واحد",
@@ -2601,8 +2634,7 @@
                 dailyCardTitle: "پاداش روزانه SLR",
                 streakLabel: "روز پشت سر هم",
                 dailyClaimBtn: "دریافت پاداش روزانه",
-                dailyClaimedTodayBtn: "امروز دریافت شد ✓",
-                communityHeading: "تسک‌های توییتر (X) و کامیونیتی",
+                communityHeading: "تسک‌های توییتر (X)، کامیونیتی و ربات‌ها",
                 onchainHeading: "هولدرهای ON-CHAIN (کیف‌پول متصل)",
                 onchainSub: "برای باز شدن قفل برداشت باید تایید ولت انجام شود، 5,000 SLR در ولت هولد شود و موجودی برداشت به 20,000 SLR برسد.",
                 earnBottomTitle: "📌 وضعیت برداشت و هولد SLR",
@@ -2703,7 +2735,12 @@
                     },
                     buy_slr: { title: "خرید SLR در استون فای", desc: "خرید SLR در استون فای و تایید هولد واقعی حداقل 5,000 تا در ولت", action: "خرید" },
                     invite_friends_task: { title: "دعوت واقعی از دوستان", desc: "فقط پس از ورود دوست با لینک دعوت شما فعال و قابل دریافت است", action: "دعوت" },
-                    mmix: { title: "MMIX", desc: "ورود به پروژه از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" }
+                    vortex_bot: { title: "VORTEX BOT", desc: "ورود به ربات از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
+                    zombie_miner: { title: "ZOMBIE MINER", desc: "ورود به مینی‌اپ از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
+                    orx_miner: { title: "ORX MINER", desc: "ورود به مینی‌اپ از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
+                    mmix: { title: "MMIX", desc: "ورود به پروژه از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
+                    victors_company: { title: "VICTORS COMPANY", desc: "ورود به مینی‌اپ از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" },
+                    cherry_play: { title: "CHERRY PLAY", desc: "ورود به بازی از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" }
                 }
             },
             ru: {
@@ -2718,6 +2755,14 @@
                 claimMined: "⛏ Забрать SLR",
                 activeUnits: "Активные модули",
                 minHoldSub: "SLR (Мин 5,000)",
+                tile1Title: "Мир Solaris",
+                tile1Sub: "Задания и холд SLR",
+                tile2Title: "Ежедневный бонус",
+                dailyTileSub: "Забрать бонус SLR",
+                tile3Title: "КОШЕЛЁК И ХОЛД",
+                tile3Sub: "Холд 5,000 • Вывод 20,000",
+                tile4Title: "График SLR",
+                tile4Sub: "Цена на STON.fi",
                 crewTitle: "Ваша команда (Холд SLR)",
                 crewTasksBtn: "Задания SLR",
                 minerWord: "модуль",
@@ -2736,8 +2781,7 @@
                 dailyCardTitle: "Ежедневный бонус SLR",
                 streakLabel: "Серия дней",
                 dailyClaimBtn: "Забрать бонус",
-                dailyClaimedTodayBtn: "Сегодня получено ✓",
-                communityHeading: "Сообщество и задания X",
+                communityHeading: "Сообщество, задания X и боты",
                 onchainHeading: "Держатели ON-CHAIN",
                 friendsTitle: "Приглашайте друзей и получайте SLR",
                 friendsDesc: "Получайте <b>15%</b> от майнинга друзей и <b>+100 SLR</b> за каждого приглашённого.",
@@ -2776,6 +2820,14 @@
                 claimMined: "⛏ 领取 SLR",
                 activeUnits: "激活节点",
                 minHoldSub: "SLR (最低 5,000)",
+                tile1Title: "Solaris 世界",
+                tile1Sub: "任务与 SLR 持仓",
+                tile2Title: "每日奖励",
+                dailyTileSub: "领取每日 SLR 奖励",
+                tile3Title: "钱包与持仓",
+                tile3Sub: "持仓 5,000 • 提现 20,000",
+                tile4Title: "SLR 实时行情",
+                tile4Sub: "STON.fi 价格趋势",
                 crewTitle: "你的矿机团队 (SLR 持仓)",
                 crewTasksBtn: "SLR 任务",
                 minerWord: "矿机",
@@ -2794,8 +2846,7 @@
                 dailyCardTitle: "每日 SLR 奖励",
                 streakLabel: "连续签到",
                 dailyClaimBtn: "领取每日奖励",
-                dailyClaimedTodayBtn: "今日已领取 ✓",
-                communityHeading: "社区与 X 任务",
+                communityHeading: "社区、X 任务与推荐机器人",
                 onchainHeading: "链上持仓者 (已连接钱包)",
                 friendsTitle: "邀请好友赚取 SLR",
                 friendsDesc: "获得好友挖矿收益的 <b>15%</b>，每邀请一位好友奖励 <b>+100 SLR</b>。",
@@ -2834,6 +2885,14 @@
                 claimMined: "⛏ SLR क्लेम करें",
                 activeUnits: "सक्रिय यूनिट",
                 minHoldSub: "SLR (न्यूनतम 5,000)",
+                tile1Title: "Solaris वर्ल्ड",
+                tile1Sub: "टास्क और SLR होल्ड",
+                tile2Title: "दैनिक इनाम",
+                dailyTileSub: "दैनिक SLR बोनस लें",
+                tile3Title: "वॉलेट और होल्ड",
+                tile3Sub: "होल्ड 5,000 • निकासी 20,000",
+                tile4Title: "लाइव SLR चार्ट",
+                tile4Sub: "STON.fi कीमत और ट्रेंड",
                 crewTitle: "आपकी टीम (SLR होल्ड यूनिट)",
                 crewTasksBtn: "SLR टास्क",
                 minerWord: "यूनिट",
@@ -2852,8 +2911,7 @@
                 dailyCardTitle: "दैनिक SLR इनाम",
                 streakLabel: "लगातार दिन",
                 dailyClaimBtn: "दैनिक इनाम लें",
-                dailyClaimedTodayBtn: "आज मिल गया ✓",
-                communityHeading: "कम्युनिटी और X टास्क",
+                communityHeading: "कम्युनिटी, X टास्क और बॉट्स",
                 onchainHeading: "ON-CHAIN होल्डर्स",
                 friendsTitle: "दोस्तों को बुलाएं और SLR कमाएं",
                 friendsDesc: "दोस्तों की माइनिंग से <b>15%</b> पाएं और हर रेफरल पर <b>+100 SLR</b> कमाएं।",
@@ -2892,6 +2950,14 @@
                 claimMined: "⛏ SLR abholen",
                 activeUnits: "Aktive Einheiten",
                 minHoldSub: "SLR (Min. 5.000)",
+                tile1Title: "Solaris Welt",
+                tile1Sub: "Aufgaben & SLR Hold",
+                tile2Title: "Tagesbonus",
+                dailyTileSub: "Täglichen SLR-Bonus holen",
+                tile3Title: "WALLET & HOLD",
+                tile3Sub: "Hold 5.000 • Auszahlung 20.000",
+                tile4Title: "Live SLR-Chart",
+                tile4Sub: "STON.fi Kurs & Trend",
                 crewTitle: "Deine Crew (SLR Hold-Einheiten)",
                 crewTasksBtn: "SLR-Aufgaben",
                 minerWord: "Einheit",
@@ -2910,8 +2976,7 @@
                 dailyCardTitle: "Tagesbonus SLR",
                 streakLabel: "Tagessträhne",
                 dailyClaimBtn: "Tagesbonus holen",
-                dailyClaimedTodayBtn: "Heute geholt ✓",
-                communityHeading: "Community & X-Aufgaben",
+                communityHeading: "Community, X-Aufgaben & Bots",
                 onchainHeading: "ON-CHAIN Halter (Verbundenes Wallet)",
                 friendsTitle: "Freunde einladen & SLR verdienen",
                 friendsDesc: "Erhalte <b>15%</b> vom Mining deiner Freunde und <b>+100 SLR</b> pro Einladung.",
@@ -2946,7 +3011,12 @@
             { id: "x_engage_post_2", reward: 500, isXTask: true, targetUrl: twitterPost2Url },
             { id: "buy_slr", reward: 500, isBuy: true },
             { id: "invite_friends_task", reward: 300, requiresRef: true },
-            { id: "mmix", reward: 250, externalKey: "mmix" }
+            { id: "vortex_bot", reward: 150, externalKey: "vortex_bot" },
+            { id: "zombie_miner", reward: 150, externalKey: "zombie_miner" },
+            { id: "orx_miner", reward: 250, externalKey: "orx_miner" },
+            { id: "mmix", reward: 250, externalKey: "mmix" },
+            { id: "victors_company", reward: 250, externalKey: "victors_company" },
+            { id: "cherry_play", reward: 150, externalKey: "cherry_play" }
         ];
 
         const holdTiers = [
@@ -3086,7 +3156,6 @@
             claimedHoldTiers: [],
             streak: 0,
             lastDailyClaim: 0,
-            lastDailyClaimDayKey: "",
             lockStartAt: Date.now(),
             lastTick: Date.now(),
             isVerifiedWallet: false,
@@ -3104,51 +3173,6 @@
 
         let isSpinningWheel = false;
         let isSwappingTon = false;
-
-        function getCurrentCalendarDayKey(ts = Date.now()) {
-            const d = new Date(ts);
-            const y = d.getFullYear();
-            const m = String(d.getMonth() + 1).padStart(2, "0");
-            const day = String(d.getDate()).padStart(2, "0");
-            return `${y}-${m}-${day}`;
-        }
-
-        function getDailyClaimStorageKey() {
-            return DAILY_CLAIM_KEY_PREFIX + String(state.telegramId || "1007321991");
-        }
-
-        function readPersistedDailyClaimDayKey() {
-            let fromStorage = "";
-            try {
-                fromStorage = localStorage.getItem(getDailyClaimStorageKey()) || "";
-            } catch (e) {}
-            const fromState = String(state.lastDailyClaimDayKey || "");
-            if (fromStorage && fromState) {
-                return fromStorage > fromState ? fromStorage : fromState;
-            }
-            return fromStorage || fromState;
-        }
-
-        function persistDailyClaimDayKey(dayKey, claimTs) {
-            state.lastDailyClaimDayKey = dayKey;
-            state.lastDailyClaim = claimTs;
-            try {
-                localStorage.setItem(getDailyClaimStorageKey(), dayKey);
-            } catch (e) {}
-        }
-
-        function hasClaimedDailyRewardToday() {
-            const todayKey = getCurrentCalendarDayKey();
-            const persistedKey = readPersistedDailyClaimDayKey();
-            if (persistedKey && persistedKey === todayKey) {
-                return true;
-            }
-            const oneDay = 24 * 60 * 60 * 1000;
-            if (state.lastDailyClaim > 0 && (Date.now() - state.lastDailyClaim) < oneDay && !persistedKey) {
-                return true;
-            }
-            return false;
-        }
 
         function readPersistedSpinCooldownUntil() {
             let fromKey = 0;
@@ -4026,12 +4050,6 @@
             if (persistedCooldown > 0) {
                 state.spinCooldownUntil = persistedCooldown;
             }
-            const persistedDayKey = readPersistedDailyClaimDayKey();
-            if (persistedDayKey) {
-                state.lastDailyClaimDayKey = persistedDayKey;
-            } else if (Number(state.lastDailyClaim) > 0) {
-                state.lastDailyClaimDayKey = getCurrentCalendarDayKey(Number(state.lastDailyClaim));
-            }
             if (state.photoUrl && String(state.photoUrl).includes("dicebear.com")) {
                 state.photoUrl = "";
             }
@@ -4063,15 +4081,8 @@
             state.lastTick = Date.now();
             const safeCooldown = readPersistedSpinCooldownUntil();
             state.spinCooldownUntil = safeCooldown;
-            const safeDayKey = readPersistedDailyClaimDayKey();
-            if (safeDayKey) {
-                state.lastDailyClaimDayKey = safeDayKey;
-            }
             try {
                 localStorage.setItem(SPIN_COOLDOWN_STORAGE_KEY, String(safeCooldown));
-                if (safeDayKey) {
-                    localStorage.setItem(getDailyClaimStorageKey(), safeDayKey);
-                }
                 localStorage.setItem("solaris_empire_slr_state_v1", JSON.stringify(state));
             } catch (e) {}
         }
@@ -4371,28 +4382,19 @@
 
         function claimDailyBonus() {
             const now = Date.now();
-            if (hasClaimedDailyRewardToday()) {
-                showTransientMessage(
-                    state.lang === "fa"
-                        ? "⏳ پاداش امروز قبلاً دریافت شده است؛ فردا دوباره سر بزنید!"
-                        : "⏳ Today's daily reward has already been claimed; come back tomorrow!"
-                );
-                renderAll();
+            const oneDay = 24 * 60 * 60 * 1000;
+            if (now - state.lastDailyClaim < oneDay && state.lastDailyClaim !== 0) {
+                showTransientMessage(state.lang === "fa" ? "⏳ پاداش امروز قبلاً دریافت شده است." : "⏳ Today's reward has already been claimed.");
                 return;
             }
-            const nextIndex = Math.min(dailyRewards.length - 1, Math.max(0, Number(state.streak) || 0));
+            const nextIndex = Math.min(dailyRewards.length - 1, state.streak);
             const bonus = dailyRewards[nextIndex];
-            const todayKey = getCurrentCalendarDayKey(now);
             state.balance += bonus;
-            state.streak = Math.min(dailyRewards.length, (Number(state.streak) || 0) + 1);
-            persistDailyClaimDayKey(todayKey, now);
+            state.streak = Math.min(dailyRewards.length, state.streak + 1);
+            state.lastDailyClaim = now;
             saveState();
             renderAll();
-            showTransientMessage(
-                state.lang === "fa"
-                    ? `✅ +${bonus} SLR پاداش روزانه اضافه شد!`
-                    : `✅ +${bonus} SLR daily reward added!`
-            );
+            showTransientMessage(state.lang === "fa" ? `✅ +${bonus} SLR پاداش روزانه اضافه شد!` : `✅ +${bonus} SLR daily reward added!`);
         }
 
         function isValidXPostOrCommentUrl(rawUrl) {
@@ -4768,6 +4770,15 @@
             document.getElementById("stat-holding").innerText = Math.floor(state.walletHold).toLocaleString();
             document.getElementById("lbl-min-hold-sub").innerText = t("minHoldSub");
 
+            document.getElementById("tile1-title").innerText = t("tile1Title");
+            document.getElementById("tile1-sub").innerText = t("tile1Sub");
+            document.getElementById("tile2-title").innerText = t("tile2Title");
+            document.getElementById("daily-tile-sub").innerText = t("dailyTileSub");
+            document.getElementById("tile3-title").innerText = t("tile3Title");
+            document.getElementById("tile3-sub").innerText = t("tile3Sub");
+            document.getElementById("tile4-title").innerText = t("tile4Title");
+            document.getElementById("tile4-sub").innerText = t("tile4Sub");
+
             document.getElementById("crew-section-title").innerText = t("crewTitle");
             document.getElementById("crew-tasks-btn").innerText = t("crewTasksBtn");
             document.getElementById("crew-summary-line").innerText = `${activeCount} ${t("minerWord")} • +${daily.toLocaleString()} SLR/day`;
@@ -4818,14 +4829,10 @@
             document.getElementById("earn-heading").innerText = t("earnHeading");
             document.getElementById("earn-sub").innerText = t("earnSub");
 
-            const claimedToday = hasClaimedDailyRewardToday();
             document.getElementById("daily-card-title").innerText = t("dailyCardTitle");
             document.getElementById("streak-label").innerText = t("streakLabel");
             document.getElementById("streak-days").innerText = state.streak;
-            const dailyBtn = document.getElementById("daily-claim-btn");
-            dailyBtn.innerText = claimedToday ? t("dailyClaimedTodayBtn") : t("dailyClaimBtn");
-            dailyBtn.disabled = claimedToday;
-            dailyBtn.style.opacity = claimedToday ? "0.75" : "1";
+            document.getElementById("daily-claim-btn").innerText = t("dailyClaimBtn");
 
             document.querySelectorAll("#streak-days-row .streak-pill").forEach((pill, idx) => {
                 if (idx < state.streak) {
