@@ -23,6 +23,11 @@
             100% { --neon-angle: 360deg; }
         }
 
+        @keyframes solarisNeonSpinFallback {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -42,7 +47,7 @@
             --green-bright: #a3e635;
             --green-dark: #bef264;
             --border-light: rgba(250, 204, 21, 0.35);
-            --splash-img: url("./image_11f9a1db.jpg");
+            --splash-img: url("./image_dd6217df.jpg");
             --coin-img: url("./image_1be087b2.jpg");
             --bank-card-img: url("./image_96fd9f2b.jpg");
             --wheel-img: url("./image_fb082f9f-removebg-preview.png");
@@ -107,7 +112,7 @@
             height: 100vh;
         }
 
-        /* سطح شیشه‌ای سبک و سریع */
+        /* سطح شیشه‌ای سبک و سریع با نور طلایی نئونی چرخان دور کادرها */
         .solaris-glass-surface {
             position: relative;
             background-color: rgba(14, 10, 4, 0.86);
@@ -117,9 +122,36 @@
             background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
-            border: 1.5px solid rgba(250, 204, 21, 0.44);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.42);
+            border: 1.5px solid rgba(250, 204, 21, 0.52);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.48), 0 0 12px rgba(250, 204, 21, 0.16);
             color: #fffbeb;
+            isolation: isolate;
+        }
+
+        .solaris-glass-surface::before {
+            content: "";
+            position: absolute;
+            inset: -1.5px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: conic-gradient(
+                from var(--neon-angle, 0deg),
+                transparent 0deg,
+                rgba(250, 204, 21, 0.15) 60deg,
+                #fde047 125deg,
+                #fef08a 155deg,
+                #f59e0b 195deg,
+                transparent 255deg,
+                transparent 360deg
+            );
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 1;
+            animation: solarisNeonOrbit 4.2s linear infinite;
         }
 
         .solaris-glass-surface > * {
@@ -612,7 +644,7 @@
 
         .card-wallet-refresh-btn {
             position: absolute;
-            top: 50%;
+            top: 24%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 34px;
@@ -637,20 +669,21 @@
             animation: cardWalletSpin 0.8s linear infinite;
         }
 
-        /* دکمه نامرئی و دقیق روی خود دکمه طلاییِ تصویر کارت */
+        /* دکمه خرید استون‌فای دقیقاً وسط کادر طلایی و کمی پایین‌تر */
         .card-bottom-buy-btn {
             position: absolute;
-            left: 20%;
-            right: 20%;
-            bottom: 6.2%;
-            height: 11.5%;
-            border: none;
-            background: transparent;
+            left: 22%;
+            right: 22%;
+            top: 56%;
+            height: 12.5%;
+            border: 1.5px solid rgba(254, 240, 138, 0.92);
+            background: linear-gradient(180deg, rgba(28, 17, 4, 0.88) 0%, rgba(15, 9, 2, 0.95) 100%);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.65), 0 0 12px rgba(250, 204, 21, 0.35);
             border-radius: 12px;
-            padding: 0 10px;
+            padding: 0 12px;
             color: #fef08a;
             text-shadow: 0 1px 5px rgba(0, 0, 0, 0.95);
-            font-size: clamp(10px, 2.7vw, 12.5px);
+            font-size: clamp(10.5px, 2.8vw, 13px);
             font-weight: 900;
             cursor: pointer;
             display: flex;
@@ -780,10 +813,37 @@
                 var(--wheel-bg-img);
             background-position: center center;
             background-size: cover;
-            border: 1.5px solid rgba(250, 204, 21, 0.36);
+            border: 1.5px solid rgba(250, 204, 21, 0.50);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 0 10px rgba(250, 204, 21, 0.14);
             border-radius: 16px;
             padding: 10px 6px;
             text-align: center;
+            isolation: isolate;
+        }
+
+        .crew-card::before {
+            content: "";
+            position: absolute;
+            inset: -1.5px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: conic-gradient(
+                from var(--neon-angle, 0deg),
+                transparent 0deg,
+                rgba(250, 204, 21, 0.15) 65deg,
+                #fde047 130deg,
+                #f59e0b 185deg,
+                transparent 245deg,
+                transparent 360deg
+            );
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 1;
+            animation: solarisNeonOrbit 4.5s linear infinite;
         }
 
         .crew-card > * {
@@ -1732,7 +1792,7 @@
                         <span class="card-slot-value" id="card-inapp-slr">0 SLR</span>
                     </div>
 
-                    <!-- تبدیل خود دکمه طلایی تصویر کارت به دکمه خرید استون‌فای -->
+                    <!-- دکمه خرید استون‌فای درست وسط کادر طلایی و کمی پایین‌تر -->
                     <button type="button" class="card-bottom-buy-btn" id="card-buy-btn" onclick="copyAndGoBuyToken()">
                         Buy Token on STON.fi
                     </button>
@@ -2174,7 +2234,7 @@
     </div>
 
     <script>
-        const SPLASH_IMAGE_URL = "./image_11f9a1db.jpg";
+        const SPLASH_IMAGE_URL = "./image_dd6217df.jpg";
         const COIN_IMAGE_URL = "./image_1be087b2.jpg";
         const BANK_CARD_IMAGE_URL = "./image_96fd9f2b.jpg";
         const WHEEL_IMAGE_URL = "./image_fb082f9f-removebg-preview.png";
@@ -2196,6 +2256,7 @@
         const WITHDRAW_FEE_SLR = 1000;
         const SPIN_COOLDOWN_MS = 24 * 60 * 60 * 1000;
         const SPIN_COOLDOWN_STORAGE_KEY = "solaris_spin_cooldown_until_v1";
+        const DAILY_CLAIM_KEY_PREFIX = "solaris_daily_claim_day_v1_";
 
         const wheelWeightedPool = [
             { sliceIndex: 2, label: "EMPTY", reward: 0, weight: 36.0 },
@@ -2387,6 +2448,7 @@
             dailyCardTitle: "Daily Reward SLR",
             streakLabel: "Streak days",
             dailyClaimBtn: "Daily Reward",
+            dailyClaimedTodayBtn: "Claimed Today ✓",
             communityHeading: "Community & X Tasks",
             onchainHeading: "ON-CHAIN Holders (Connected Wallet)",
             onchainSub: "Wallet verification + 5,000 SLR hold + 20,000 SLR balance are required to unlock withdrawal.",
@@ -2539,6 +2601,7 @@
                 dailyCardTitle: "پاداش روزانه SLR",
                 streakLabel: "روز پشت سر هم",
                 dailyClaimBtn: "دریافت پاداش روزانه",
+                dailyClaimedTodayBtn: "امروز دریافت شد ✓",
                 communityHeading: "تسک‌های توییتر (X) و کامیونیتی",
                 onchainHeading: "هولدرهای ON-CHAIN (کیف‌پول متصل)",
                 onchainSub: "برای باز شدن قفل برداشت باید تایید ولت انجام شود، 5,000 SLR در ولت هولد شود و موجودی برداشت به 20,000 SLR برسد.",
@@ -2673,6 +2736,7 @@
                 dailyCardTitle: "Ежедневный бонус SLR",
                 streakLabel: "Серия дней",
                 dailyClaimBtn: "Забрать бонус",
+                dailyClaimedTodayBtn: "Сегодня получено ✓",
                 communityHeading: "Сообщество и задания X",
                 onchainHeading: "Держатели ON-CHAIN",
                 friendsTitle: "Приглашайте друзей и получайте SLR",
@@ -2730,6 +2794,7 @@
                 dailyCardTitle: "每日 SLR 奖励",
                 streakLabel: "连续签到",
                 dailyClaimBtn: "领取每日奖励",
+                dailyClaimedTodayBtn: "今日已领取 ✓",
                 communityHeading: "社区与 X 任务",
                 onchainHeading: "链上持仓者 (已连接钱包)",
                 friendsTitle: "邀请好友赚取 SLR",
@@ -2787,6 +2852,7 @@
                 dailyCardTitle: "दैनिक SLR इनाम",
                 streakLabel: "लगातार दिन",
                 dailyClaimBtn: "दैनिक इनाम लें",
+                dailyClaimedTodayBtn: "आज मिल गया ✓",
                 communityHeading: "कम्युनिटी और X टास्क",
                 onchainHeading: "ON-CHAIN होल्डर्स",
                 friendsTitle: "दोस्तों को बुलाएं और SLR कमाएं",
@@ -2844,6 +2910,7 @@
                 dailyCardTitle: "Tagesbonus SLR",
                 streakLabel: "Tagessträhne",
                 dailyClaimBtn: "Tagesbonus holen",
+                dailyClaimedTodayBtn: "Heute geholt ✓",
                 communityHeading: "Community & X-Aufgaben",
                 onchainHeading: "ON-CHAIN Halter (Verbundenes Wallet)",
                 friendsTitle: "Freunde einladen & SLR verdienen",
@@ -3019,6 +3086,7 @@
             claimedHoldTiers: [],
             streak: 0,
             lastDailyClaim: 0,
+            lastDailyClaimDayKey: "",
             lockStartAt: Date.now(),
             lastTick: Date.now(),
             isVerifiedWallet: false,
@@ -3036,6 +3104,51 @@
 
         let isSpinningWheel = false;
         let isSwappingTon = false;
+
+        function getCurrentCalendarDayKey(ts = Date.now()) {
+            const d = new Date(ts);
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, "0");
+            const day = String(d.getDate()).padStart(2, "0");
+            return `${y}-${m}-${day}`;
+        }
+
+        function getDailyClaimStorageKey() {
+            return DAILY_CLAIM_KEY_PREFIX + String(state.telegramId || "1007321991");
+        }
+
+        function readPersistedDailyClaimDayKey() {
+            let fromStorage = "";
+            try {
+                fromStorage = localStorage.getItem(getDailyClaimStorageKey()) || "";
+            } catch (e) {}
+            const fromState = String(state.lastDailyClaimDayKey || "");
+            if (fromStorage && fromState) {
+                return fromStorage > fromState ? fromStorage : fromState;
+            }
+            return fromStorage || fromState;
+        }
+
+        function persistDailyClaimDayKey(dayKey, claimTs) {
+            state.lastDailyClaimDayKey = dayKey;
+            state.lastDailyClaim = claimTs;
+            try {
+                localStorage.setItem(getDailyClaimStorageKey(), dayKey);
+            } catch (e) {}
+        }
+
+        function hasClaimedDailyRewardToday() {
+            const todayKey = getCurrentCalendarDayKey();
+            const persistedKey = readPersistedDailyClaimDayKey();
+            if (persistedKey && persistedKey === todayKey) {
+                return true;
+            }
+            const oneDay = 24 * 60 * 60 * 1000;
+            if (state.lastDailyClaim > 0 && (Date.now() - state.lastDailyClaim) < oneDay && !persistedKey) {
+                return true;
+            }
+            return false;
+        }
 
         function readPersistedSpinCooldownUntil() {
             let fromKey = 0;
@@ -3913,6 +4026,12 @@
             if (persistedCooldown > 0) {
                 state.spinCooldownUntil = persistedCooldown;
             }
+            const persistedDayKey = readPersistedDailyClaimDayKey();
+            if (persistedDayKey) {
+                state.lastDailyClaimDayKey = persistedDayKey;
+            } else if (Number(state.lastDailyClaim) > 0) {
+                state.lastDailyClaimDayKey = getCurrentCalendarDayKey(Number(state.lastDailyClaim));
+            }
             if (state.photoUrl && String(state.photoUrl).includes("dicebear.com")) {
                 state.photoUrl = "";
             }
@@ -3944,8 +4063,15 @@
             state.lastTick = Date.now();
             const safeCooldown = readPersistedSpinCooldownUntil();
             state.spinCooldownUntil = safeCooldown;
+            const safeDayKey = readPersistedDailyClaimDayKey();
+            if (safeDayKey) {
+                state.lastDailyClaimDayKey = safeDayKey;
+            }
             try {
                 localStorage.setItem(SPIN_COOLDOWN_STORAGE_KEY, String(safeCooldown));
+                if (safeDayKey) {
+                    localStorage.setItem(getDailyClaimStorageKey(), safeDayKey);
+                }
                 localStorage.setItem("solaris_empire_slr_state_v1", JSON.stringify(state));
             } catch (e) {}
         }
@@ -4245,19 +4371,28 @@
 
         function claimDailyBonus() {
             const now = Date.now();
-            const oneDay = 24 * 60 * 60 * 1000;
-            if (now - state.lastDailyClaim < oneDay && state.lastDailyClaim !== 0) {
-                showTransientMessage(state.lang === "fa" ? "⏳ پاداش امروز قبلاً دریافت شده است." : "⏳ Today's reward has already been claimed.");
+            if (hasClaimedDailyRewardToday()) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? "⏳ پاداش امروز قبلاً دریافت شده است؛ فردا دوباره سر بزنید!"
+                        : "⏳ Today's daily reward has already been claimed; come back tomorrow!"
+                );
+                renderAll();
                 return;
             }
-            const nextIndex = Math.min(dailyRewards.length - 1, state.streak);
+            const nextIndex = Math.min(dailyRewards.length - 1, Math.max(0, Number(state.streak) || 0));
             const bonus = dailyRewards[nextIndex];
+            const todayKey = getCurrentCalendarDayKey(now);
             state.balance += bonus;
-            state.streak = Math.min(dailyRewards.length, state.streak + 1);
-            state.lastDailyClaim = now;
+            state.streak = Math.min(dailyRewards.length, (Number(state.streak) || 0) + 1);
+            persistDailyClaimDayKey(todayKey, now);
             saveState();
             renderAll();
-            showTransientMessage(state.lang === "fa" ? `✅ +${bonus} SLR پاداش روزانه اضافه شد!` : `✅ +${bonus} SLR daily reward added!`);
+            showTransientMessage(
+                state.lang === "fa"
+                    ? `✅ +${bonus} SLR پاداش روزانه اضافه شد!`
+                    : `✅ +${bonus} SLR daily reward added!`
+            );
         }
 
         function isValidXPostOrCommentUrl(rawUrl) {
@@ -4683,10 +4818,14 @@
             document.getElementById("earn-heading").innerText = t("earnHeading");
             document.getElementById("earn-sub").innerText = t("earnSub");
 
+            const claimedToday = hasClaimedDailyRewardToday();
             document.getElementById("daily-card-title").innerText = t("dailyCardTitle");
             document.getElementById("streak-label").innerText = t("streakLabel");
             document.getElementById("streak-days").innerText = state.streak;
-            document.getElementById("daily-claim-btn").innerText = t("dailyClaimBtn");
+            const dailyBtn = document.getElementById("daily-claim-btn");
+            dailyBtn.innerText = claimedToday ? t("dailyClaimedTodayBtn") : t("dailyClaimBtn");
+            dailyBtn.disabled = claimedToday;
+            dailyBtn.style.opacity = claimedToday ? "0.75" : "1";
 
             document.querySelectorAll("#streak-days-row .streak-pill").forEach((pill, idx) => {
                 if (idx < state.streak) {
