@@ -23,6 +23,33 @@
             100% { --neon-angle: 360deg; }
         }
 
+        /* رفت و برگشت نور طلایی نئونی از حرف S تا حرف R */
+        @keyframes solarisBeamPingPong {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes solarisGlowPingPong {
+            0%, 100% {
+                filter:
+                    drop-shadow(0 2px 0 #78350f)
+                    drop-shadow(0 5px 0 #451a03)
+                    drop-shadow(-10px 0 18px rgba(255, 255, 255, 0.95))
+                    drop-shadow(-6px 0 14px rgba(250, 204, 21, 0.85));
+            }
+            50% {
+                filter:
+                    drop-shadow(0 2px 0 #78350f)
+                    drop-shadow(0 5px 0 #451a03)
+                    drop-shadow(10px 0 18px rgba(255, 255, 255, 0.95))
+                    drop-shadow(6px 0 14px rgba(250, 204, 21, 0.85));
+            }
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -113,9 +140,7 @@
         /* قفل مطلق در زمان فعال شدن لاک ۵۰ درصدی لودینگ */
         body.prelaunch-hard-locked .app-shell,
         body.prelaunch-hard-locked .floating-dock-wrap,
-        body.prelaunch-hard-locked .modal-backdrop,
-        body.prelaunch-hard-locked #lang-dropdown-menu,
-        body.prelaunch-hard-locked #lang-menu-backdrop {
+        body.prelaunch-hard-locked .modal-backdrop {
             display: none !important;
             visibility: hidden !important;
             pointer-events: none !important;
@@ -186,7 +211,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(9, 11, 15, 0.52) 0%, rgba(5, 7, 11, 0.88) 100%);
+            background: radial-gradient(circle at center, rgba(9, 11, 15, 0.56) 0%, rgba(5, 7, 11, 0.90) 100%);
             pointer-events: none;
         }
 
@@ -199,13 +224,13 @@
         .splash-bottom-loader {
             position: fixed;
             left: 50%;
-            bottom: 34px;
+            bottom: 24px;
             transform: translateX(-50%);
             width: min(82%, 330px);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             pointer-events: none;
             z-index: 100001;
         }
@@ -230,9 +255,9 @@
         }
 
         .solaris-loader-text {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 900;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.4px;
             color: #fef9c3;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
         }
@@ -243,25 +268,102 @@
             inset: 0;
             z-index: 100000;
             display: none;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 18px 16px 112px;
-            background: rgba(5, 7, 12, 0.66);
+            justify-content: flex-start;
+            padding: 14px 16px 86px;
+            background: rgba(5, 7, 12, 0.68);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
+            overflow-y: auto;
         }
 
         .mid-load-lock-overlay.active {
             display: flex;
         }
 
+        /* نوار کشویی انتخاب زبان در بالای صفحه قفل (انگلیسی با پرچم ۶ کشور) */
+        .lock-top-lang-bar {
+            width: 100%;
+            max-width: 390px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border-radius: 18px;
+            padding: 8px 12px;
+            margin-bottom: 14px;
+            direction: ltr;
+            position: relative;
+            z-index: 100020;
+        }
+
+        .lock-lang-title {
+            font-size: 12px;
+            font-weight: 900;
+            color: #fef08a;
+            letter-spacing: 0.3px;
+            direction: ltr;
+        }
+
+        .lock-lang-select-btn {
+            border-radius: 12px;
+            padding: 6px 11px;
+            font-size: 12px;
+            font-weight: 900;
+            color: #ffffff;
+            background: rgba(24, 18, 6, 0.92);
+            border: 1px solid rgba(253, 224, 71, 0.7);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            direction: ltr;
+            white-space: nowrap;
+        }
+
+        /* متن سه‌بعدی Solaris $ SLR با نور طلایی نئونی رفت‌وبرگشتی از S تا R */
+        .solaris-3d-neon-brand {
+            margin-top: 8px;
+            margin-bottom: 14px;
+            font-size: clamp(26px, 7.2vw, 34px);
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            line-height: 1.15;
+            text-align: center;
+            direction: ltr;
+            background: linear-gradient(
+                90deg,
+                #b45309 0%,
+                #facc15 16%,
+                #ffffff 26%,
+                #fde047 38%,
+                #ca8a04 50%,
+                #fde047 62%,
+                #ffffff 74%,
+                #facc15 84%,
+                #b45309 100%
+            );
+            background-size: 240% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation:
+                solarisBeamPingPong 2.6s ease-in-out infinite,
+                solarisGlowPingPong 2.6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 100005;
+        }
+
+        /* کمی پایین‌تر آوردن کادر قفل نسبت به قبل */
         .mid-load-lock-card {
             width: 100%;
             max-width: 390px;
+            margin-top: 12px;
             border-radius: 26px;
-            padding: 20px 16px;
+            padding: 18px 16px;
             text-align: center;
-            direction: rtl;
             color: #fffbeb;
             animation: lockCardPopIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
@@ -287,20 +389,20 @@
         }
 
         .lock-main-title {
-            font-size: 18px;
+            font-size: 15.5px;
             font-weight: 900;
-            line-height: 1.55;
+            line-height: 1.5;
             color: #fef08a;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
-            margin-bottom: 14px;
+            margin-bottom: 13px;
         }
 
         .lock-timer-box {
             background: rgba(10, 8, 4, 0.86);
             border: 1.5px solid rgba(250, 204, 21, 0.55);
             border-radius: 20px;
-            padding: 12px 10px;
-            margin-bottom: 14px;
+            padding: 11px 10px;
+            margin-bottom: 13px;
             box-shadow: inset 0 0 18px rgba(250, 204, 21, 0.12), 0 8px 20px rgba(0, 0, 0, 0.45);
         }
 
@@ -326,7 +428,7 @@
         }
 
         .lock-time-num {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 900;
             color: #bef264;
             text-shadow: 0 0 10px rgba(163, 230, 53, 0.35);
@@ -344,8 +446,7 @@
             background: rgba(12, 9, 4, 0.82);
             border: 1px solid rgba(250, 204, 21, 0.42);
             border-radius: 18px;
-            padding: 12px;
-            text-align: right;
+            padding: 11px 12px;
         }
 
         .lock-ref-label {
@@ -356,6 +457,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 6px;
         }
 
         .lock-ref-link-text {
@@ -413,7 +515,7 @@
             font-size: 12px;
             font-weight: 800;
             text-align: center;
-            z-index: 100005;
+            z-index: 100050;
             opacity: 0;
             pointer-events: none;
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45), 0 0 14px rgba(250, 204, 21, 0.32);
@@ -1579,12 +1681,12 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            width: min(90vw, 340px);
+            width: min(90vw, 330px);
             max-height: 78vh;
             overflow-y: auto;
             border-radius: 20px;
             padding: 8px;
-            z-index: 2600;
+            z-index: 100040;
             direction: ltr;
         }
 
@@ -1596,8 +1698,8 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.55);
-            z-index: 2590;
+            background: rgba(0, 0, 0, 0.58);
+            z-index: 100030;
         }
 
         .lang-menu-backdrop.open {
@@ -1844,48 +1946,62 @@
     <div id="solaris-splash-screen" class="solaris-splash-screen">
         <!-- پنل قفل که دقیقاً وقتی لودینگ به 50% می‌رسد روی صفحه ظاهر می‌شود -->
         <div id="mid-load-lock-overlay" class="mid-load-lock-overlay" aria-live="polite">
-            <div class="mid-load-lock-card solaris-glass-surface">
-                <div class="lock-status-pill">🔒 قفل دسترسی • 50% LOADED</div>
-                <div class="lock-main-title">
-                    بزودی درحال بروز رسانی و آماده سازی توکن SLR
+            <!-- نوار کشویی انتخاب زبان بالا (انگلیسی با ۶ کشور و پرچم) -->
+            <div class="lock-top-lang-bar solaris-glass-surface">
+                <span class="lock-lang-title" id="lock-top-lang-heading">Language</span>
+                <button type="button" class="lock-lang-select-btn" id="lock-lang-trigger" onclick="toggleLanguageMenu(event)">
+                    <span id="lock-current-flag">🇺🇸</span>
+                    <span id="lock-current-name">United States</span>
+                    <span>▼</span>
+                </button>
+            </div>
+
+            <!-- متن سه‌بعدی Solaris $ SLR با رنگ طلایی نئونی و نور رفت‌وبرگشتی از S تا R -->
+            <div class="solaris-3d-neon-brand" aria-label="Solaris $ SLR">Solaris $ SLR</div>
+
+            <!-- کادر قفل با تایمر 20 روزه و متن به‌روزرسانی + لیست STON.fi -->
+            <div class="mid-load-lock-card solaris-glass-surface" id="mid-load-lock-card">
+                <div class="lock-status-pill" id="lock-status-pill">🔒 ACCESS LOCKED • 50% LOADED</div>
+                <div class="lock-main-title" id="lock-main-title">
+                    Coming Soon: Under Update &amp; Listing Solaris $ SLR on STON.fi
                 </div>
 
                 <div class="lock-timer-box">
-                    <div class="lock-timer-caption">⏳ شمارش معکوس آماده‌سازی توکن SLR</div>
+                    <div class="lock-timer-caption" id="lock-timer-caption">⏳ Solaris $ SLR Countdown (20 Days)</div>
                     <div class="lock-timer-grid">
                         <div class="lock-time-unit">
-                            <div class="lock-time-num" id="lock-days">03</div>
-                            <div class="lock-time-lbl">روز</div>
+                            <div class="lock-time-num" id="lock-days">20</div>
+                            <div class="lock-time-lbl" id="lock-lbl-days">Days</div>
                         </div>
                         <div class="lock-time-unit">
-                            <div class="lock-time-num" id="lock-hours">14</div>
-                            <div class="lock-time-lbl">ساعت</div>
+                            <div class="lock-time-num" id="lock-hours">00</div>
+                            <div class="lock-time-lbl" id="lock-lbl-hours">Hours</div>
                         </div>
                         <div class="lock-time-unit">
-                            <div class="lock-time-num" id="lock-mins">28</div>
-                            <div class="lock-time-lbl">دقیقه</div>
+                            <div class="lock-time-num" id="lock-mins">00</div>
+                            <div class="lock-time-lbl" id="lock-lbl-mins">Minutes</div>
                         </div>
                         <div class="lock-time-unit">
                             <div class="lock-time-num" id="lock-secs">00</div>
-                            <div class="lock-time-lbl">ثانیه</div>
+                            <div class="lock-time-lbl" id="lock-lbl-secs">Seconds</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="lock-ref-box">
                     <div class="lock-ref-label">
-                        <span>🔗 لینک دعوت اختصاصی شما</span>
-                        <span style="color:#bef264; font-size:10px;">+100 SLR / دوست</span>
+                        <span id="lock-ref-title">🔗 Your Personal Referral Link</span>
+                        <span id="lock-ref-bonus-badge" style="color:#bef264; font-size:10px;">+100 SLR / Friend</span>
                     </div>
                     <div class="lock-ref-link-text" id="lock-personal-ref-link">
                         https://t.me/SolarisMiner_bot?start=1007321991
                     </div>
                     <div class="lock-ref-actions">
-                        <button type="button" class="lock-action-btn solaris-glass-surface" onclick="copyLockReferralLink()">
-                            📋 کپی لینک
+                        <button type="button" class="lock-action-btn solaris-glass-surface" id="lock-copy-btn" onclick="copyLockReferralLink()">
+                            📋 Copy Link
                         </button>
-                        <button type="button" class="lock-action-btn solaris-glass-surface" onclick="shareLockReferralLink()">
-                            🚀 اشتراک‌گذاری
+                        <button type="button" class="lock-action-btn solaris-glass-surface" id="lock-share-btn" onclick="shareLockReferralLink()">
+                            🚀 Share
                         </button>
                     </div>
                 </div>
@@ -1898,6 +2014,35 @@
             </div>
             <div class="solaris-loader-text" id="solaris-loader-text">LOADING SOLARIS... 0%</div>
         </div>
+    </div>
+
+    <!-- منوی کشویی ۶ زبان به ترتیب درخواستی: آمریکا، روسیه، چین، آلمان، هند، ایران -->
+    <div id="lang-menu-backdrop" class="lang-menu-backdrop" onclick="closeLanguageMenu()"></div>
+    <div id="lang-dropdown-menu" class="lang-dropdown-menu solaris-glass-surface" role="menu">
+        <button type="button" class="lang-menu-item active" data-lang="en-us" onclick="selectLanguageFromMenu('en-us')">
+            <span class="lang-menu-left"><span class="lang-flag">🇺🇸</span><span class="lang-country-name">United States</span></span>
+            <span>✓</span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="ru" onclick="selectLanguageFromMenu('ru')">
+            <span class="lang-menu-left"><span class="lang-flag">🇷🇺</span><span class="lang-country-name">Russia</span></span>
+            <span></span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="zh" onclick="selectLanguageFromMenu('zh')">
+            <span class="lang-menu-left"><span class="lang-flag">🇨🇳</span><span class="lang-country-name">China</span></span>
+            <span></span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="de" onclick="selectLanguageFromMenu('de')">
+            <span class="lang-menu-left"><span class="lang-flag">🇩🇪</span><span class="lang-country-name">Germany</span></span>
+            <span></span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="hi" onclick="selectLanguageFromMenu('hi')">
+            <span class="lang-menu-left"><span class="lang-flag">🇮🇳</span><span class="lang-country-name">India</span></span>
+            <span></span>
+        </button>
+        <button type="button" class="lang-menu-item" data-lang="fa" onclick="selectLanguageFromMenu('fa')">
+            <span class="lang-menu-left"><span class="lang-flag">🇮🇷</span><span class="lang-country-name">Iran</span></span>
+            <span></span>
+        </button>
     </div>
 
     <div id="toast-banner" class="toast-banner" role="status" aria-live="polite"></div>
@@ -2279,38 +2424,6 @@
         </div>
     </div>
 
-    <div id="lang-menu-backdrop" class="lang-menu-backdrop" onclick="closeLanguageMenu()"></div>
-    <div id="lang-dropdown-menu" class="lang-dropdown-menu solaris-glass-surface" role="menu">
-        <button type="button" class="lang-menu-item active" data-lang="en-us" onclick="selectLanguageFromMenu('en-us')">
-            <span class="lang-menu-left"><span class="lang-flag">🇺🇸</span><span class="lang-country-name">United States</span></span>
-            <span>✓</span>
-        </button>
-        <button type="button" class="lang-menu-item" data-lang="en-gb" onclick="selectLanguageFromMenu('en-gb')">
-            <span class="lang-menu-left"><span class="lang-flag">🇬🇧</span><span class="lang-country-name">United Kingdom</span></span>
-            <span></span>
-        </button>
-        <button type="button" class="lang-menu-item" data-lang="fa" onclick="selectLanguageFromMenu('fa')">
-            <span class="lang-menu-left"><span class="lang-flag">🇮🇷</span><span class="lang-country-name">Iran</span></span>
-            <span></span>
-        </button>
-        <button type="button" class="lang-menu-item" data-lang="ru" onclick="selectLanguageFromMenu('ru')">
-            <span class="lang-menu-left"><span class="lang-flag">🇷🇺</span><span class="lang-country-name">Russia</span></span>
-            <span></span>
-        </button>
-        <button type="button" class="lang-menu-item" data-lang="zh" onclick="selectLanguageFromMenu('zh')">
-            <span class="lang-menu-left"><span class="lang-flag">🇨🇳</span><span class="lang-country-name">China</span></span>
-            <span></span>
-        </button>
-        <button type="button" class="lang-menu-item" data-lang="hi" onclick="selectLanguageFromMenu('hi')">
-            <span class="lang-menu-left"><span class="lang-flag">🇮🇳</span><span class="lang-country-name">India</span></span>
-            <span></span>
-        </button>
-        <button type="button" class="lang-menu-item" data-lang="de" onclick="selectLanguageFromMenu('de')">
-            <span class="lang-menu-left"><span class="lang-flag">🇩🇪</span><span class="lang-country-name">Germany</span></span>
-            <span></span>
-        </button>
-    </div>
-
     <div class="floating-dock-wrap">
         <button class="floating-mine-fab solaris-glass-surface" onclick="switchView('upgrade')" title="Mining">⛏</button>
         <div class="floating-nav-pill solaris-glass-surface">
@@ -2411,15 +2524,157 @@
         const SPIN_COOLDOWN_MS = 24 * 60 * 60 * 1000;
         const SPIN_COOLDOWN_STORAGE_KEY = "solaris_spin_cooldown_until_v1";
         const DAILY_REWARD_STORAGE_KEY = "solaris_daily_reward_v1";
-        const MID_LOAD_TARGET_END_KEY = "solaris_mid_load_countdown_end_v1";
-        const MID_LOAD_DURATION_MS = (3 * 86400 + 14 * 3600 + 28 * 60) * 1000;
+
+        /* تایمر قفل ۲۰ روزه */
+        const LOCK_DAYS_COUNT = 20;
+        const MID_LOAD_TARGET_END_KEY = "solaris_mid_load_countdown_end_v20d";
+        const MID_LOAD_DURATION_MS = LOCK_DAYS_COUNT * ONE_DAY_MS;
 
         /* قفل همیشگی از لحظه ۵۰٪ لودینگ تا زمانی که بخواهید از کد بردارید */
         const PRELAUNCH_LOCK_ACTIVE = true;
 
+        const lockScreenTexts = {
+            "en-us": {
+                dir: "ltr",
+                langHeading: "Language",
+                pill: "🔒 ACCESS LOCKED • 50% LOADED",
+                title: "Coming Soon: Under Update & Listing Solaris $ SLR on STON.fi",
+                timerCaption: "⏳ Solaris $ SLR Countdown (20 Days)",
+                days: "Days",
+                hours: "Hours",
+                mins: "Minutes",
+                secs: "Seconds",
+                refTitle: "🔗 Your Personal Referral Link",
+                refBonus: "+100 SLR / Friend",
+                copyBtn: "📋 Copy Link",
+                shareBtn: "🚀 Share",
+                copiedMsg: "✅ Your personal referral link has been copied!",
+                shareText: "☀️ Coming Soon: Under Update & Listing Solaris $ SLR on STON.fi!\nJoin with my personal referral link:\n"
+            },
+            ru: {
+                dir: "ltr",
+                langHeading: "Language",
+                pill: "🔒 ДОСТУП ЗАКРЫТ • 50% LOADED",
+                title: "Скоро: идёт обновление и листинг Solaris $ SLR на STON.fi",
+                timerCaption: "⏳ Обратный отсчёт Solaris $ SLR (20 дней)",
+                days: "Days",
+                hours: "Hours",
+                mins: "Minutes",
+                secs: "Seconds",
+                refTitle: "🔗 Your Personal Referral Link",
+                refBonus: "+100 SLR / Friend",
+                copyBtn: "📋 Copy Link",
+                shareBtn: "🚀 Share",
+                copiedMsg: "✅ Реферальная ссылка скопирована!",
+                shareText: "☀️ Скоро: обновление и листинг Solaris $ SLR на STON.fi!\nПрисоединяйтесь по моей ссылке:\n"
+            },
+            zh: {
+                dir: "ltr",
+                langHeading: "Language",
+                pill: "🔒 访问已锁定 • 50% LOADED",
+                title: "即将推出：正在更新并在 STON.fi 上架 Solaris $ SLR",
+                timerCaption: "⏳ Solaris $ SLR 倒计时（20 天）",
+                days: "Days",
+                hours: "Hours",
+                mins: "Minutes",
+                secs: "Seconds",
+                refTitle: "🔗 Your Personal Referral Link",
+                refBonus: "+100 SLR / Friend",
+                copyBtn: "📋 Copy Link",
+                shareBtn: "🚀 Share",
+                copiedMsg: "✅ 专属邀请链接已复制！",
+                shareText: "☀️ 即将推出：正在更新并在 STON.fi 上架 Solaris $ SLR！\n通过我的邀请链接加入：\n"
+            },
+            de: {
+                dir: "ltr",
+                langHeading: "Language",
+                pill: "🔒 ZUGRIFF GESPERRT • 50% LOADED",
+                title: "Demnächst: Update läuft & Listing von Solaris $ SLR auf STON.fi",
+                timerCaption: "⏳ Solaris $ SLR Countdown (20 Tage)",
+                days: "Days",
+                hours: "Hours",
+                mins: "Minutes",
+                secs: "Seconds",
+                refTitle: "🔗 Your Personal Referral Link",
+                refBonus: "+100 SLR / Friend",
+                copyBtn: "📋 Copy Link",
+                shareBtn: "🚀 Share",
+                copiedMsg: "✅ Dein persönlicher Einladungslink wurde kopiert!",
+                shareText: "☀️ Demnächst: Update & Listing von Solaris $ SLR auf STON.fi!\nTritt über meinen Einladungslink bei:\n"
+            },
+            hi: {
+                dir: "ltr",
+                langHeading: "Language",
+                pill: "🔒 एक्सेस लॉक • 50% LOADED",
+                title: "जल्द आ रहा है: अपडेट जारी और STON.fi पर Solaris $ SLR की लिस्टिंग",
+                timerCaption: "⏳ Solaris $ SLR काउंटडाउन (20 दिन)",
+                days: "Days",
+                hours: "Hours",
+                mins: "Minutes",
+                secs: "Seconds",
+                refTitle: "🔗 Your Personal Referral Link",
+                refBonus: "+100 SLR / Friend",
+                copyBtn: "📋 Copy Link",
+                shareBtn: "🚀 Share",
+                copiedMsg: "✅ आपका रेफरल लिंक कॉपी हो गया!",
+                shareText: "☀️ जल्द आ रहा है: अपडेट और STON.fi पर Solaris $ SLR की लिस्टिंग!\nमेरे लिंक से जुड़ें:\n"
+            },
+            fa: {
+                dir: "rtl",
+                langHeading: "Language",
+                pill: "🔒 قفل دسترسی • 50% LOADED",
+                title: "بزودی در حال بروز رسانی و لیست توکن Solaris $ SLR در STON.fi",
+                timerCaption: "⏳ شمارش معکوس ۲۰ روزه Solaris $ SLR",
+                days: "Days",
+                hours: "Hours",
+                mins: "Minutes",
+                secs: "Seconds",
+                refTitle: "🔗 Your Personal Referral Link",
+                refBonus: "+100 SLR / Friend",
+                copyBtn: "📋 Copy Link",
+                shareBtn: "🚀 Share",
+                copiedMsg: "✅ لینک دعوت اختصاصی شما کپی شد!",
+                shareText: "☀️ بزودی در حال بروز رسانی و لیست توکن Solaris $ SLR در STON.fi!\nبا لینک اختصاصی من وارد شو:\n"
+            }
+        };
+
         let splashProgressInterval = null;
         let lockCountdownInterval = null;
         let midLoadLockTriggered = false;
+
+        function getLockPack() {
+            return lockScreenTexts[state.lang] || lockScreenTexts["en-us"];
+        }
+
+        function renderLockScreenLanguage() {
+            const lPack = getLockPack();
+            const langMeta = i18n[state.lang] || i18n["en-us"];
+
+            const flagEl = document.getElementById("lock-current-flag");
+            const nameEl = document.getElementById("lock-current-name");
+            const headingEl = document.getElementById("lock-top-lang-heading");
+            if (flagEl) flagEl.innerText = langMeta.flag || "🇺🇸";
+            if (nameEl) nameEl.innerText = langMeta.shortName || "United States";
+            if (headingEl) headingEl.innerText = lPack.langHeading;
+
+            const pillEl = document.getElementById("lock-status-pill");
+            const titleEl = document.getElementById("lock-main-title");
+            const capEl = document.getElementById("lock-timer-caption");
+            const refTitleEl = document.getElementById("lock-ref-title");
+            const refBonusEl = document.getElementById("lock-ref-bonus-badge");
+            const copyBtnEl = document.getElementById("lock-copy-btn");
+            const shareBtnEl = document.getElementById("lock-share-btn");
+            const cardEl = document.getElementById("mid-load-lock-card");
+
+            if (pillEl) pillEl.innerText = lPack.pill;
+            if (titleEl) titleEl.innerText = lPack.title;
+            if (capEl) capEl.innerText = lPack.timerCaption;
+            if (refTitleEl) refTitleEl.innerText = lPack.refTitle;
+            if (refBonusEl) refBonusEl.innerText = lPack.refBonus;
+            if (copyBtnEl) copyBtnEl.innerText = lPack.copyBtn;
+            if (shareBtnEl) shareBtnEl.innerText = lPack.shareBtn;
+            if (cardEl) cardEl.style.direction = lPack.dir;
+        }
 
         function getMidLoadCountdownTargetMs() {
             let target = 0;
@@ -2481,14 +2736,12 @@
                     document.body.removeChild(tmp);
                 } catch (e) {}
             }
-            showTransientMessage("✅ لینک دعوت اختصاصی شما کپی شد!");
+            showTransientMessage(getLockPack().copiedMsg);
         }
 
         function shareLockReferralLink() {
             const link = syncPersonalRefInLockCard();
-            const txt = encodeURIComponent(
-                "☀️ بزودی درحال بروز رسانی و آماده سازی توکن SLR!\nبا لینک اختصاصی من وارد شو:\n" + link
-            );
+            const txt = encodeURIComponent(getLockPack().shareText + link);
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
                 window.Telegram.WebApp.openTelegramLink(
                     `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${txt}`
@@ -2508,6 +2761,7 @@
                 overlay.classList.add("active");
             }
             syncPersonalRefInLockCard();
+            renderLockScreenLanguage();
             updateMidLoadCountdownDisplay();
 
             if (!lockCountdownInterval) {
@@ -2860,7 +3114,234 @@
 
         const i18n = {
             "en-us": { ...baseEnglishPack, flag: "🇺🇸", shortName: "United States" },
-            "en-gb": { ...baseEnglishPack, flag: "🇬🇧", shortName: "United Kingdom" },
+            ru: {
+                ...baseEnglishPack,
+                flag: "🇷🇺",
+                shortName: "Russia",
+                cardWalletHold: "Холд в TON кошельке",
+                cardInappSlr: "SLR в боте",
+                cardBuyBtn: "Buy Token on STON.fi",
+                miningStatus: "Майнинг • Добыча SLR",
+                perDay: "SLR в день",
+                claimMined: "⛏ Забрать SLR",
+                activeUnits: "Активные модули",
+                minHoldSub: "SLR (Мин 5,000)",
+                crewTitle: "Ваша команда (Холд SLR)",
+                crewTasksBtn: "Задания SLR",
+                minerWord: "модуль",
+                activeBadge: "Активен ✓",
+                holdReqPrefix: "Холд",
+                buyToHoldBtn: "🛒 Холд",
+                verifyFirstBtn: "🔒 Подтв.",
+                swapHeading: "Обмен (Swap) SLR",
+                swapSub: "Покупка внутриигровых SLR за TON из подключённого кошелька",
+                swapFromLabel: "Из кошелька (TON)",
+                swapToLabel: "Получите SLR в боте",
+                swapBtnText: "🔄 Обменять TON на SLR",
+                swapFeeLabel: "Комиссия обмена",
+                earnHeading: "ЗАРАБОТОК",
+                earnSub: "Бонусы, задания, холд 5,000 и вывод от 20,000 SLR",
+                dailyCardTitle: "Ежедневный бонус SLR",
+                streakLabel: "Серия дней",
+                dailyClaimBtn: "Забрать бонус",
+                communityHeading: "Сообщество, задания X и MMIX",
+                onchainHeading: "Держатели ON-CHAIN",
+                friendsTitle: "Приглашайте друзей и получайте SLR",
+                friendsDesc: "Получайте <b>15%</b> от майнинга друзей и <b>+100 SLR</b> за каждого приглашённого.",
+                personalRefLink: "Ваша реферальная ссылка",
+                inviteBtn: "Пригласить",
+                friendsCount: "Друзья",
+                friendsEarned: "Доход от друзей",
+                friendsReady: "Доступные реф. награды",
+                claimBtn: "Забрать",
+                langLabel: "Язык",
+                withdrawBtn: "↓ Вывод",
+                submitWithdrawBtn: "Вывести",
+                totalHolding: "Всего ХОЛД (Кошелёк)",
+                manageWalletPill: "Кошелёк ⓘ",
+                menuWallet: "💼 Открыть КОШЕЛЁК и Tonkeeper",
+                menuHistory: "🕒 История выводов SLR",
+                menuRules: "📜 Правила SLR (Холд 5,000 • Вывод 20,000)",
+                dockUpgrade: "Апгрейд",
+                dockSpin: "Рулетка",
+                dockSwap: "Swap",
+                dockChart: "График",
+                dockEarn: "Заработок",
+                dockFriends: "Друзья",
+                dockProfile: "Профиль",
+                closeBtn: "Закрыть ✕"
+            },
+            zh: {
+                ...baseEnglishPack,
+                flag: "🇨🇳",
+                shortName: "China",
+                cardWalletHold: "TON钱包持仓",
+                cardInappSlr: "应用内 SLR",
+                cardBuyBtn: "Buy Token on STON.fi",
+                miningStatus: "挖矿中 • 提取 SLR",
+                perDay: "SLR / 天",
+                claimMined: "⛏ 领取 SLR",
+                activeUnits: "激活节点",
+                minHoldSub: "SLR (最低 5,000)",
+                crewTitle: "你的矿机团队 (SLR 持仓)",
+                crewTasksBtn: "SLR 任务",
+                minerWord: "矿机",
+                activeBadge: "已激活 ✓",
+                holdReqPrefix: "持仓",
+                buyToHoldBtn: "🛒 持仓",
+                verifyFirstBtn: "🔒 验证",
+                swapHeading: "SLR 兑换 (Swap)",
+                swapSub: "使用已连接钱包中的 TON 兑换应用内 SLR",
+                swapFromLabel: "支付 (TON 钱包)",
+                swapToLabel: "获得 (应用内 SLR)",
+                swapBtnText: "🔄 兑换 TON 为 SLR",
+                swapFeeLabel: "兑换手续费",
+                earnHeading: "赚取奖励",
+                earnSub: "每日奖励、任务、持仓 5,000 与提现 20,000 SLR",
+                dailyCardTitle: "每日 SLR 奖励",
+                streakLabel: "连续签到",
+                dailyClaimBtn: "领取每日奖励",
+                communityHeading: "社区、X 任务与 MMIX",
+                onchainHeading: "链上持仓者 (已连接钱包)",
+                friendsTitle: "邀请好友赚取 SLR",
+                friendsDesc: "获得好友挖矿收益的 <b>15%</b>，每邀请一位好友奖励 <b>+100 SLR</b>。",
+                personalRefLink: "你的专属邀请链接",
+                inviteBtn: "邀请好友",
+                friendsCount: "好友数",
+                friendsEarned: "好友收益",
+                friendsReady: "可领取邀请奖励",
+                claimBtn: "领取",
+                langLabel: "语言",
+                withdrawBtn: "↓ 提现",
+                submitWithdrawBtn: "提现",
+                totalHolding: "钱包总持仓",
+                manageWalletPill: "钱包 ⓘ",
+                menuWallet: "💼 打开钱包并连接 Tonkeeper",
+                menuHistory: "🕒 SLR 提现记录",
+                menuRules: "📜 SLR 规则 (持仓 5,000 • 提现 20,000)",
+                dockUpgrade: "升级",
+                dockSpin: "转盘",
+                dockSwap: "Swap",
+                dockChart: "行情",
+                dockEarn: "任务",
+                dockFriends: "好友",
+                dockProfile: "我的",
+                closeBtn: "关闭 ✕"
+            },
+            de: {
+                ...baseEnglishPack,
+                flag: "🇩🇪",
+                shortName: "Germany",
+                cardWalletHold: "TON-Wallet Hold",
+                cardInappSlr: "In-App SLR",
+                cardBuyBtn: "Buy Token on STON.fi",
+                miningStatus: "Mining • SLR-Abbau",
+                perDay: "SLR pro Tag",
+                claimMined: "⛏ SLR abholen",
+                activeUnits: "Aktive Einheiten",
+                minHoldSub: "SLR (Min. 5.000)",
+                crewTitle: "Deine Crew (SLR Hold-Einheiten)",
+                crewTasksBtn: "SLR-Aufgaben",
+                minerWord: "Einheit",
+                activeBadge: "Aktiv ✓",
+                holdReqPrefix: "Hold",
+                buyToHoldBtn: "🛒 Hold",
+                verifyFirstBtn: "🔒 Prüfen",
+                swapHeading: "SLR Swap",
+                swapSub: "In-App SLR mit TON aus deinem verbundenen Wallet kaufen",
+                swapFromLabel: "Von (TON Wallet)",
+                swapToLabel: "Zu (In-App SLR)",
+                swapBtnText: "🔄 TON zu SLR tauschen",
+                swapFeeLabel: "Swap-Gebühr",
+                earnHeading: "VERDIENEN",
+                earnSub: "Tagesboni, Aufgaben, 5.000 SLR Hold & 20.000 SLR Auszahlung",
+                dailyCardTitle: "Tagesbonus SLR",
+                streakLabel: "Tagessträhne",
+                dailyClaimBtn: "Tagesbonus holen",
+                communityHeading: "Community, X-Aufgaben & MMIX",
+                onchainHeading: "ON-CHAIN Halter (Verbundenes Wallet)",
+                friendsTitle: "Freunde einladen & SLR verdienen",
+                friendsDesc: "Erhalte <b>15%</b> vom Mining deiner Freunde und <b>+100 SLR</b> pro Einladung.",
+                personalRefLink: "Dein persönlicher Einladungslink",
+                inviteBtn: "Freund einladen",
+                friendsCount: "Freunde",
+                friendsEarned: "Freunde-Verdienst",
+                friendsReady: "Bereite Empfehlungsboni",
+                claimBtn: "Abholen",
+                langLabel: "Sprache",
+                withdrawBtn: "↓ Auszahlen",
+                submitWithdrawBtn: "Auszahlen",
+                totalHolding: "Gesamt-HOLDING (Wallet)",
+                manageWalletPill: "Wallet ⓘ",
+                menuWallet: "💼 WALLET öffnen & Tonkeeper verbinden",
+                menuHistory: "🕒 SLR-Auszahlungsverlauf",
+                menuRules: "📜 SLR-Regeln (Hold 5.000 • Auszahlung 20.000)",
+                dockUpgrade: "Upgrade",
+                dockSpin: "Glücksrad",
+                dockSwap: "Swap",
+                dockChart: "Chart",
+                dockEarn: "Verdienen",
+                dockFriends: "Freunde",
+                dockProfile: "Profil",
+                closeBtn: "Schließen ✕"
+            },
+            hi: {
+                ...baseEnglishPack,
+                flag: "🇮🇳",
+                shortName: "India",
+                cardWalletHold: "TON वॉलेट होल्ड",
+                cardInappSlr: "इन-ऐप SLR",
+                cardBuyBtn: "Buy Token on STON.fi",
+                miningStatus: "माइनिंग • SLR निकालें",
+                perDay: "SLR प्रति दिन",
+                claimMined: "⛏ SLR क्लेम करें",
+                activeUnits: "सक्रिय यूनिट",
+                minHoldSub: "SLR (न्यूनतम 5,000)",
+                crewTitle: "आपकी टीम (SLR होल्ड यूनिट)",
+                crewTasksBtn: "SLR टास्क",
+                minerWord: "यूनिट",
+                activeBadge: "सक्रिय ✓",
+                holdReqPrefix: "होल्ड",
+                buyToHoldBtn: "🛒 होल्ड",
+                verifyFirstBtn: "🔒 सत्यापित करें",
+                swapHeading: "SLR स्वैप (Swap)",
+                swapSub: "कनेक्टेड वॉलेट के TON से इन-ऐप SLR खरीदें",
+                swapFromLabel: "से (TON वॉलेट)",
+                swapToLabel: "को (इन-ऐप SLR)",
+                swapBtnText: "🔄 TON से SLR स्वैप करें",
+                swapFeeLabel: "स्वैप शुल्क",
+                earnHeading: "कमाई",
+                earnSub: "दैनिक इनाम, टास्क, 5,000 SLR होल्ड और 20,000 SLR निकासी",
+                dailyCardTitle: "दैनिक SLR इनाम",
+                streakLabel: "लगातार दिन",
+                dailyClaimBtn: "दैनिक इनाम लें",
+                communityHeading: "कम्युनिटी, X टास्क और MMIX",
+                onchainHeading: "ON-CHAIN होल्डर्स",
+                friendsTitle: "दोस्तों को बुलाएं और SLR कमाएं",
+                friendsDesc: "दोस्तों की माइनिंग से <b>15%</b> पाएं और हर रेफरल पर <b>+100 SLR</b> कमाएं।",
+                personalRefLink: "आपका रेफरल लिंक",
+                inviteBtn: "दोस्त बुलाएं",
+                friendsCount: "दोस्त",
+                friendsEarned: "दोस्तों से कमाई",
+                friendsReady: "तैयार रेफरल इनाम",
+                claimBtn: "क्लेम",
+                langLabel: "भाषा",
+                withdrawBtn: "↓ निकासी",
+                submitWithdrawBtn: "निकासी करें",
+                totalHolding: "कुल होल्डिंग (वॉलेट)",
+                manageWalletPill: "वॉलेट ⓘ",
+                menuWallet: "💼 वॉलेट खोलें और Tonkeeper जोड़ें",
+                menuHistory: "🕒 SLR निकासी इतिहास",
+                menuRules: "📜 SLR नियम (होल्ड 5,000 • निकासी 20,000)",
+                dockUpgrade: "अपग्रेड",
+                dockSpin: "स्पिन",
+                dockSwap: "Swap",
+                dockChart: "चार्ट",
+                dockEarn: "कमाई",
+                dockFriends: "दोस्त",
+                dockProfile: "प्रोफ़ाइल",
+                closeBtn: "बंद करें ✕"
+            },
             fa: {
                 dir: "rtl",
                 flag: "🇮🇷",
@@ -3008,234 +3489,6 @@
                     invite_friends_task: { title: "دعوت واقعی از دوستان", desc: "فقط پس از ورود دوست با لینک دعوت شما فعال و قابل دریافت است", action: "دعوت" },
                     mmix: { title: "MMIX", desc: "ورود به پروژه از طریق دکمه اختصاصی و دریافت پاداش", action: "ورود" }
                 }
-            },
-            ru: {
-                ...baseEnglishPack,
-                flag: "🇷🇺",
-                shortName: "Russia",
-                cardWalletHold: "Холд в TON кошельке",
-                cardInappSlr: "SLR в боте",
-                cardBuyBtn: "Buy Token on STON.fi",
-                miningStatus: "Майнинг • Добыча SLR",
-                perDay: "SLR в день",
-                claimMined: "⛏ Забрать SLR",
-                activeUnits: "Активные модули",
-                minHoldSub: "SLR (Мин 5,000)",
-                crewTitle: "Ваша команда (Холд SLR)",
-                crewTasksBtn: "Задания SLR",
-                minerWord: "модуль",
-                activeBadge: "Активен ✓",
-                holdReqPrefix: "Холд",
-                buyToHoldBtn: "🛒 Холд",
-                verifyFirstBtn: "🔒 Подтв.",
-                swapHeading: "Обмен (Swap) SLR",
-                swapSub: "Покупка внутриигровых SLR за TON из подключённого кошелька",
-                swapFromLabel: "Из кошелька (TON)",
-                swapToLabel: "Получите SLR в боте",
-                swapBtnText: "🔄 Обменять TON на SLR",
-                swapFeeLabel: "Комиссия обмена",
-                earnHeading: "ЗАРАБОТОК",
-                earnSub: "Бонусы, задания, холд 5,000 и вывод от 20,000 SLR",
-                dailyCardTitle: "Ежедневный бонус SLR",
-                streakLabel: "Серия дней",
-                dailyClaimBtn: "Забрать бонус",
-                communityHeading: "Сообщество, задания X и MMIX",
-                onchainHeading: "Держатели ON-CHAIN",
-                friendsTitle: "Приглашайте друзей и получайте SLR",
-                friendsDesc: "Получайте <b>15%</b> от майнинга друзей и <b>+100 SLR</b> за каждого приглашённого.",
-                personalRefLink: "Ваша реферальная ссылка",
-                inviteBtn: "Пригласить",
-                friendsCount: "Друзья",
-                friendsEarned: "Доход от друзей",
-                friendsReady: "Доступные реф. награды",
-                claimBtn: "Забрать",
-                langLabel: "Язык",
-                withdrawBtn: "↓ Вывод",
-                submitWithdrawBtn: "Вывести",
-                totalHolding: "Всего ХОЛД (Кошелёк)",
-                manageWalletPill: "Кошелёк ⓘ",
-                menuWallet: "💼 Открыть КОШЕЛЁК и Tonkeeper",
-                menuHistory: "🕒 История выводов SLR",
-                menuRules: "📜 Правила SLR (Холд 5,000 • Вывод 20,000)",
-                dockUpgrade: "Апгрейд",
-                dockSpin: "Рулетка",
-                dockSwap: "Swap",
-                dockChart: "График",
-                dockEarn: "Заработок",
-                dockFriends: "Друзья",
-                dockProfile: "Профиль",
-                closeBtn: "Закрыть ✕"
-            },
-            zh: {
-                ...baseEnglishPack,
-                flag: "🇨🇳",
-                shortName: "China",
-                cardWalletHold: "TON钱包持仓",
-                cardInappSlr: "应用内 SLR",
-                cardBuyBtn: "Buy Token on STON.fi",
-                miningStatus: "挖矿中 • 提取 SLR",
-                perDay: "SLR / 天",
-                claimMined: "⛏ 领取 SLR",
-                activeUnits: "激活节点",
-                minHoldSub: "SLR (最低 5,000)",
-                crewTitle: "你的矿机团队 (SLR 持仓)",
-                crewTasksBtn: "SLR 任务",
-                minerWord: "矿机",
-                activeBadge: "已激活 ✓",
-                holdReqPrefix: "持仓",
-                buyToHoldBtn: "🛒 持仓",
-                verifyFirstBtn: "🔒 验证",
-                swapHeading: "SLR 兑换 (Swap)",
-                swapSub: "使用已连接钱包中的 TON 兑换应用内 SLR",
-                swapFromLabel: "支付 (TON 钱包)",
-                swapToLabel: "获得 (应用内 SLR)",
-                swapBtnText: "🔄 兑换 TON 为 SLR",
-                swapFeeLabel: "兑换手续费",
-                earnHeading: "赚取奖励",
-                earnSub: "每日奖励、任务、持仓 5,000 与提现 20,000 SLR",
-                dailyCardTitle: "每日 SLR 奖励",
-                streakLabel: "连续签到",
-                dailyClaimBtn: "领取每日奖励",
-                communityHeading: "社区、X 任务与 MMIX",
-                onchainHeading: "链上持仓者 (已连接钱包)",
-                friendsTitle: "邀请好友赚取 SLR",
-                friendsDesc: "获得好友挖矿收益的 <b>15%</b>，每邀请一位好友奖励 <b>+100 SLR</b>。",
-                personalRefLink: "你的专属邀请链接",
-                inviteBtn: "邀请好友",
-                friendsCount: "好友数",
-                friendsEarned: "好友收益",
-                friendsReady: "可领取邀请奖励",
-                claimBtn: "领取",
-                langLabel: "语言",
-                withdrawBtn: "↓ 提现",
-                submitWithdrawBtn: "提现",
-                totalHolding: "钱包总持仓",
-                manageWalletPill: "钱包 ⓘ",
-                menuWallet: "💼 打开钱包并连接 Tonkeeper",
-                menuHistory: "🕒 SLR 提现记录",
-                menuRules: "📜 SLR 规则 (持仓 5,000 • 提现 20,000)",
-                dockUpgrade: "升级",
-                dockSpin: "转盘",
-                dockSwap: "Swap",
-                dockChart: "行情",
-                dockEarn: "任务",
-                dockFriends: "好友",
-                dockProfile: "我的",
-                closeBtn: "关闭 ✕"
-            },
-            hi: {
-                ...baseEnglishPack,
-                flag: "🇮🇳",
-                shortName: "India",
-                cardWalletHold: "TON वॉलेट होल्ड",
-                cardInappSlr: "इन-ऐप SLR",
-                cardBuyBtn: "Buy Token on STON.fi",
-                miningStatus: "माइनिंग • SLR निकालें",
-                perDay: "SLR प्रति दिन",
-                claimMined: "⛏ SLR क्लेम करें",
-                activeUnits: "सक्रिय यूनिट",
-                minHoldSub: "SLR (न्यूनतम 5,000)",
-                crewTitle: "आपकी टीम (SLR होल्ड यूनिट)",
-                crewTasksBtn: "SLR टास्क",
-                minerWord: "यूनिट",
-                activeBadge: "सक्रिय ✓",
-                holdReqPrefix: "होल्ड",
-                buyToHoldBtn: "🛒 होल्ड",
-                verifyFirstBtn: "🔒 सत्यापित करें",
-                swapHeading: "SLR स्वैप (Swap)",
-                swapSub: "कनेक्टेड वॉलेट के TON से इन-ऐप SLR खरीदें",
-                swapFromLabel: "से (TON वॉलेट)",
-                swapToLabel: "को (इन-ऐप SLR)",
-                swapBtnText: "🔄 TON से SLR स्वैप करें",
-                swapFeeLabel: "स्वैप शुल्क",
-                earnHeading: "कमाई",
-                earnSub: "दैनिक इनाम, टास्क, 5,000 SLR होल्ड और 20,000 SLR निकासी",
-                dailyCardTitle: "दैनिक SLR इनाम",
-                streakLabel: "लगातार दिन",
-                dailyClaimBtn: "दैनिक इनाम लें",
-                communityHeading: "कम्युनिटी, X टास्क और MMIX",
-                onchainHeading: "ON-CHAIN होल्डर्स",
-                friendsTitle: "दोस्तों को बुलाएं और SLR कमाएं",
-                friendsDesc: "दोस्तों की माइनिंग से <b>15%</b> पाएं और हर रेफरल पर <b>+100 SLR</b> कमाएं।",
-                personalRefLink: "आपका रेफरल लिंक",
-                inviteBtn: "दोस्त बुलाएं",
-                friendsCount: "दोस्त",
-                friendsEarned: "दोस्तों से कमाई",
-                friendsReady: "तैयार रेफरल इनाम",
-                claimBtn: "क्लेम",
-                langLabel: "भाषा",
-                withdrawBtn: "↓ निकासी",
-                submitWithdrawBtn: "निकासी करें",
-                totalHolding: "कुल होल्डिंग (वॉलेट)",
-                manageWalletPill: "वॉलेट ⓘ",
-                menuWallet: "💼 वॉलेट खोलें और Tonkeeper जोड़ें",
-                menuHistory: "🕒 SLR निकासी इतिहास",
-                menuRules: "📜 SLR नियम (होल्ड 5,000 • निकासी 20,000)",
-                dockUpgrade: "अपग्रेड",
-                dockSpin: "स्पिन",
-                dockSwap: "Swap",
-                dockChart: "चार्ट",
-                dockEarn: "कमाई",
-                dockFriends: "दोस्त",
-                dockProfile: "प्रोफ़ाइल",
-                closeBtn: "बंद करें ✕"
-            },
-            de: {
-                ...baseEnglishPack,
-                flag: "🇩🇪",
-                shortName: "Germany",
-                cardWalletHold: "TON-Wallet Hold",
-                cardInappSlr: "In-App SLR",
-                cardBuyBtn: "Buy Token on STON.fi",
-                miningStatus: "Mining • SLR-Abbau",
-                perDay: "SLR pro Tag",
-                claimMined: "⛏ SLR abholen",
-                activeUnits: "Aktive Einheiten",
-                minHoldSub: "SLR (Min. 5.000)",
-                crewTitle: "Deine Crew (SLR Hold-Einheiten)",
-                crewTasksBtn: "SLR-Aufgaben",
-                minerWord: "Einheit",
-                activeBadge: "Aktiv ✓",
-                holdReqPrefix: "Hold",
-                buyToHoldBtn: "🛒 Hold",
-                verifyFirstBtn: "🔒 Prüfen",
-                swapHeading: "SLR Swap",
-                swapSub: "In-App SLR mit TON aus deinem verbundenen Wallet kaufen",
-                swapFromLabel: "Von (TON Wallet)",
-                swapToLabel: "Zu (In-App SLR)",
-                swapBtnText: "🔄 TON zu SLR tauschen",
-                swapFeeLabel: "Swap-Gebühr",
-                earnHeading: "VERDIENEN",
-                earnSub: "Tagesboni, Aufgaben, 5.000 SLR Hold & 20.000 SLR Auszahlung",
-                dailyCardTitle: "Tagesbonus SLR",
-                streakLabel: "Tagessträhne",
-                dailyClaimBtn: "Tagesbonus holen",
-                communityHeading: "Community, X-Aufgaben & MMIX",
-                onchainHeading: "ON-CHAIN Halter (Verbundenes Wallet)",
-                friendsTitle: "Freunde einladen & SLR verdienen",
-                friendsDesc: "Erhalte <b>15%</b> vom Mining deiner Freunde und <b>+100 SLR</b> pro Einladung.",
-                personalRefLink: "Dein persönlicher Einladungslink",
-                inviteBtn: "Freund einladen",
-                friendsCount: "Freunde",
-                friendsEarned: "Freunde-Verdienst",
-                friendsReady: "Bereite Empfehlungsboni",
-                claimBtn: "Abholen",
-                langLabel: "Sprache",
-                withdrawBtn: "↓ Auszahlen",
-                submitWithdrawBtn: "Auszahlen",
-                totalHolding: "Gesamt-HOLDING (Wallet)",
-                manageWalletPill: "Wallet ⓘ",
-                menuWallet: "💼 WALLET öffnen & Tonkeeper verbinden",
-                menuHistory: "🕒 SLR-Auszahlungsverlauf",
-                menuRules: "📜 SLR-Regeln (Hold 5.000 • Auszahlung 20.000)",
-                dockUpgrade: "Upgrade",
-                dockSpin: "Glücksrad",
-                dockSwap: "Swap",
-                dockChart: "Chart",
-                dockEarn: "Verdienen",
-                dockFriends: "Freunde",
-                dockProfile: "Profil",
-                closeBtn: "Schließen ✕"
             }
         };
 
@@ -3328,7 +3581,6 @@
         }
 
         function toggleLanguageMenu(e) {
-            if (PRELAUNCH_LOCK_ACTIVE) return;
             if (e) e.stopPropagation();
             const menu = document.getElementById("lang-dropdown-menu");
             const backdrop = document.getElementById("lang-menu-backdrop");
@@ -3471,9 +3723,7 @@
                     : `⏱ ${formatCountdownHHMMSS(remMs)} until next reward`;
             } else {
                 claimBtn.disabled = false;
-                claimBtn.innerText = state.lang === "fa"
-                    ? `${t("dailyClaimBtn")} (+${nextRewardAmt} SLR)`
-                    : `${t("dailyClaimBtn")} (+${nextRewardAmt} SLR)`;
+                claimBtn.innerText = `${t("dailyClaimBtn")} (+${nextRewardAmt} SLR)`;
             }
         }
 
@@ -4298,6 +4548,7 @@
             if (!Object.prototype.hasOwnProperty.call(i18n, lang)) return;
             state.lang = lang;
             applyLanguageDirection();
+            renderLockScreenLanguage();
             saveState();
             renderAll();
             drawChartCanvas();
@@ -4371,7 +4622,7 @@
             if (state.photoUrl && String(state.photoUrl).includes("dicebear.com")) {
                 state.photoUrl = "";
             }
-            if (state.lang === "en") state.lang = "en-us";
+            if (state.lang === "en" || state.lang === "en-gb") state.lang = "en-us";
             if (!Object.prototype.hasOwnProperty.call(i18n, state.lang)) state.lang = "en-us";
             reNormalizeAllSavedAddresses();
             if (!Array.isArray(state.openedXTasks)) state.openedXTasks = [];
@@ -4393,6 +4644,7 @@
             }
             applyAvatarToElements(state.photoUrl);
             syncPersonalRefInLockCard();
+            renderLockScreenLanguage();
         }
 
         function saveState() {
@@ -5079,6 +5331,7 @@
             syncHoldCrewUnlocks();
             syncSpinScreenLockState();
             syncPersonalRefInLockCard();
+            renderLockScreenLanguage();
             const daily = getDailyRate();
             const lvl = getLevel();
             const connected = !!tonConnectUI.connected;
@@ -5212,15 +5465,15 @@
                 return `
                     <div class="task-card-wrapper solaris-glass-surface">
                         <div class="task-row-card">
-                            <div>
+                            <div style="flex:1; min-width:0;">
                                 <div class="task-title-row">
                                     ${badgeHtml}
                                     <span style="font-size:13px; font-weight:800; color:#ffffff;">${taskText.title}</span>
                                 </div>
-                                <div style="font-size:10px; color:#e5e7eb; margin-top:2px;">${taskText.desc}</div>
-                                <div style="font-size:11px; font-weight:800; color:#bef264; margin-top:4px;">+${taskMeta.reward.toLocaleString()} SLR</div>
+                                <div style="font-size:11px; color:#e5e7eb; margin-top:2px;">${taskText.desc}</div>
+                                <div style="font-size:11px; color:#bef264; font-weight:800; margin-top:3px;">+${taskMeta.reward} SLR</div>
                             </div>
-                            <button class="task-action-pill solaris-glass-surface ${done ? "done" : (isRefLocked ? "locked" : "")}" onclick="runCommunityTask('${taskMeta.id}')">
+                            <button type="button" class="task-action-pill solaris-glass-surface ${done ? "done" : ""} ${isRefLocked ? "locked" : ""}" onclick="runCommunityTask('${taskMeta.id}')">
                                 ${btnLabel}
                             </button>
                         </div>
@@ -5232,21 +5485,21 @@
             document.getElementById("onchain-hold-heading").innerText = t("onchainHeading");
             document.getElementById("onchain-hold-sub").innerText = t("onchainSub");
             document.getElementById("onchain-hold-tiers").innerHTML = holdTiers.map(tier => {
-                const pct = Math.min(100, (state.walletHold / tier.target) * 100);
-                const claimed = state.claimedHoldTiers.includes(tier.target);
                 const eligible = state.walletHold >= tier.target;
+                const claimed = state.claimedHoldTiers.includes(tier.target);
+                const pct = Math.min(100, (state.walletHold / tier.target) * 100);
                 return `
-                    <div class="task-card-wrapper solaris-glass-surface" style="display:flex; flex-direction:column; align-items:stretch;">
+                    <div class="white-card solaris-glass-surface" style="margin-bottom:8px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-                            <div>
+                            <div style="flex:1;">
                                 <div style="font-size:12px; font-weight:800; color:#ffffff;">${t(tier.key)}</div>
-                                <div style="font-size:11px; font-weight:800; color:#bef264; margin-top:3px;">+${tier.reward.toLocaleString()} SLR</div>
+                                <div style="font-size:11px; color:#bef264; font-weight:800; margin-top:2px;">+${tier.reward.toLocaleString()} SLR</div>
+                                <div class="hold-progress-track"><div class="hold-progress-fill" style="width:${pct}%"></div></div>
                             </div>
-                            <button class="task-action-pill solaris-glass-surface ${claimed ? "done" : ""}" onclick="claimHoldTier(${tier.target})">
-                                ${claimed ? t("claimedBadge") : (eligible ? t("claimBtn") : "🔒 " + Math.floor(state.walletHold).toLocaleString() + "/" + tier.target.toLocaleString())}
+                            <button type="button" class="task-action-pill solaris-glass-surface ${claimed ? "done" : ""}" onclick="claimHoldTier(${tier.target})">
+                                ${claimed ? t("claimedBadge") : (eligible ? t("claimBtn") : `${Math.floor(state.walletHold).toLocaleString()}/${tier.target.toLocaleString()}`)}
                             </button>
                         </div>
-                        <div class="hold-progress-track"><div class="hold-progress-fill" style="width:${pct}%;"></div></div>
                     </div>
                 `;
             }).join("");
@@ -5289,7 +5542,6 @@
             document.getElementById("menu-wallet").innerText = t("menuWallet");
             document.getElementById("menu-history").innerText = t("menuHistory");
             document.getElementById("menu-rules").innerText = t("menuRules");
-            document.getElementById("menu-privacy").innerText = t("menuPrivacy");
 
             document.getElementById("dock-upgrade").innerText = t("dockUpgrade");
             document.getElementById("dock-spin").innerText = t("dockSpin");
@@ -5302,76 +5554,78 @@
             document.getElementById("close-wallet-btn").innerText = t("closeBtn");
             document.getElementById("close-info-btn").innerText = t("closeBtn");
             document.getElementById("wallet-modal-sub").innerText = t("walletModalSub");
-
+            document.getElementById("verify-wallet-btn").innerText = verified ? t("verified005Ton") : t("verify005Ton");
             document.getElementById("wallet-sync-title").innerText = t("walletSyncTitle");
             document.getElementById("wallet-sync-desc").innerText = t("walletSyncDesc");
             document.getElementById("check-onchain-btn").innerText = isCheckingOnchain ? t("checkingOnchainBtn") : t("checkOnchainBtn");
             document.getElementById("lbl-tx-optional").innerText = t("lblTxOptional");
             document.getElementById("buy-tx-hash-input").placeholder = t("txPlaceholder");
             document.getElementById("save-tx-btn").innerText = t("saveTxBtn");
-            document.getElementById("recorded-tx-note").innerText = state.lastTxHash
-                ? (state.lang === "fa" ? `هش ثبت‌شده: ${state.lastTxHash.slice(0, 14)}...` : `Recorded TX: ${state.lastTxHash.slice(0, 14)}...`)
-                : "";
-
-            const amtInput = document.getElementById("withdraw-slr-amount");
-            amtInput.disabled = !unlocked;
             document.getElementById("lbl-withdraw-amt").innerText = t("lblWithdrawAmt");
-            amtInput.placeholder = unlocked ? t("withdrawAmtUnlockedPlaceholder") : t("withdrawAmtPlaceholder");
-
             document.getElementById("lbl-withdraw-addr").innerText = t("lblWithdrawAddr");
-            document.getElementById("connected-wallet-display").innerText = (connected && connectedAddress)
-                ? connectedAddress
-                : t("notConnectedAddr");
             document.getElementById("payout-time-note").innerText = t("payoutTimeNote");
             document.getElementById("modal-buy-btn").innerText = t("buyBtnPlain");
             document.getElementById("submit-withdraw-btn").innerText = t("submitWithdrawBtn");
 
+            document.getElementById("recorded-tx-note").innerText = state.lastTxHash
+                ? (state.lang === "fa"
+                    ? `هش ثبت‌شده: ${state.lastTxHash.slice(0, 12)}...${state.lastTxHash.slice(-8)}`
+                    : `Recorded TX: ${state.lastTxHash.slice(0, 12)}...${state.lastTxHash.slice(-8)}`)
+                : "";
+
+            const addrBox = document.getElementById("connected-wallet-display");
+            const amtInput = document.getElementById("withdraw-slr-amount");
             const alertBox = document.getElementById("wallet-rule-alert");
+
+            if (connected && connectedAddress) {
+                addrBox.innerText = connectedAddress;
+            } else if (state.lastWalletAddress) {
+                addrBox.innerText = `${formatTonAddressToUQ(state.lastWalletAddress)} (${t("notConnectedAddr")})`;
+            } else {
+                addrBox.innerText = t("notConnectedAddr");
+            }
+
             if (unlocked) {
                 alertBox.className = "alert-hold-box ok";
                 alertBox.innerHTML = state.lang === "fa"
-                    ? `✅ قفل برداشت باز شد • تایید ولت انجام شده • هولد: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLR</b> • موجودی: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLR</b>.`
-                    : `✅ Withdrawal unlocked • Wallet verified • Hold: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLR</b> • Balance: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLR</b>.`;
+                    ? `✅ شرایط برداشت کامل است: ولت تایید شد، <b>${Math.floor(state.walletHold).toLocaleString()} SLR</b> هولد دارید و موجودی شما حداقل <b>20,000 SLR</b> است (کارمزد: <b>1,000 SLR</b>).`
+                    : `✅ Withdrawal unlocked: Wallet verified, <b>${Math.floor(state.walletHold).toLocaleString()} SLR</b> held & balance ≥ <b>20,000 SLR</b> (Fee: <b>1,000 SLR</b>).`;
+                amtInput.disabled = false;
+                amtInput.placeholder = t("withdrawAmtUnlockedPlaceholder");
             } else {
                 alertBox.className = "alert-hold-box";
+                const missing = [];
+                if (!connected) missing.push(state.lang === "fa" ? "اتصال Tonkeeper" : "Connect Tonkeeper");
+                if (!verified) missing.push(state.lang === "fa" ? "تایید ولت (0.05 TON)" : "Verify wallet (0.05 TON)");
+                if (state.walletHold < MIN_HOLD_SLR) {
+                    missing.push(
+                        state.lang === "fa"
+                            ? `هولد حداقل 5,000 SLR در ولت (فعلی: ${Math.floor(state.walletHold).toLocaleString()})`
+                            : `Hold ≥ 5,000 SLR in wallet (Current: ${Math.floor(state.walletHold).toLocaleString()})`
+                    );
+                }
+                if (state.balance < MIN_WITHDRAW_SLR) {
+                    missing.push(
+                        state.lang === "fa"
+                            ? `موجودی حداقل 20,000 SLR (فعلی: ${Math.floor(state.balance).toLocaleString()})`
+                            : `Balance ≥ 20,000 SLR (Current: ${Math.floor(state.balance).toLocaleString()})`
+                    );
+                }
                 alertBox.innerHTML = state.lang === "fa"
-                    ? `🔒 کادر برداشت قفل است • برای برداشت باید <b>تایید ولت (0.05 TON)</b> انجام شود، <b>5,000 SLR</b> در ولت متصل هولد شود و موجودی برداشت به <b>20,000 SLR</b> برسد • موجودی: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLR</b> • هولد ولت: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLR</b>.`
-                    : `🔒 Withdrawal is locked • Requires <b>0.05 TON wallet verification</b>, <b>5,000 SLR wallet hold</b>, and <b>20,000 SLR balance</b> • Balance: <b>${Math.floor(state.balance).toLocaleString()} / 20,000 SLR</b> • Hold: <b>${Math.floor(state.walletHold).toLocaleString()} / 5,000 SLR</b>.`;
-            }
-
-            const vBtn = document.getElementById("verify-wallet-btn");
-            if (verified) {
-                vBtn.className = "lime-btn solaris-glass-surface";
-                vBtn.innerText = t("verified005Ton");
-            } else {
-                vBtn.className = "lime-btn secondary solaris-glass-surface";
-                vBtn.innerText = t("verify005Ton");
+                    ? `🔒 برداشت قفل است! موارد باقی‌مانده: <b>${missing.join(" • ")}</b>`
+                    : `🔒 Withdrawal locked! Required: <b>${missing.join(" • ")}</b>`;
+                amtInput.disabled = true;
+                amtInput.value = "";
+                amtInput.placeholder = t("withdrawAmtPlaceholder");
             }
         }
 
-        let secCounter = 0;
         setInterval(() => {
-            secCounter += 1;
-            if (PRELAUNCH_LOCK_ACTIVE) {
-                updateMidLoadCountdownDisplay();
-                return;
-            }
             if (state.isVerifiedWallet) {
                 state.unclaimed = Math.min(STORAGE_CAP_SLR, state.unclaimed + getDailyRate() / 86400);
-                const el = document.getElementById("claimable-slr");
-                if (el) el.innerText = state.unclaimed.toFixed(4);
-                document.getElementById("storage-text").innerText = `${Math.floor(state.unclaimed).toLocaleString()} / ${STORAGE_CAP_SLR.toLocaleString()} SLR`;
-                document.getElementById("storage-bar").style.width = Math.min(100, (state.unclaimed / STORAGE_CAP_SLR) * 100) + "%";
-                if (secCounter % 5 === 0) {
-                    saveState();
-                }
             }
-            if (!isSpinningWheel && isSpinTabCurrentlyActive()) {
-                renderSpinView();
-            }
-            if (isEarnTabCurrentlyActive()) {
-                renderDailyRewardCard();
-            }
+            saveState();
+            renderAll();
         }, 1000);
     </script>
 </body>
