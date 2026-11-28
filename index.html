@@ -102,9 +102,23 @@
             overflow: hidden;
         }
 
-        body.splash-locked {
-            overflow: hidden;
-            height: 100vh;
+        body.splash-locked,
+        body.prelaunch-hard-locked {
+            overflow: hidden !important;
+            height: 100vh !important;
+            max-height: 100vh !important;
+            touch-action: none !important;
+        }
+
+        /* قفل مطلق در زمان فعال شدن لاک ۵۰ درصدی لودینگ */
+        body.prelaunch-hard-locked .app-shell,
+        body.prelaunch-hard-locked .floating-dock-wrap,
+        body.prelaunch-hard-locked .modal-backdrop,
+        body.prelaunch-hard-locked #lang-dropdown-menu,
+        body.prelaunch-hard-locked #lang-menu-backdrop {
+            display: none !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
         }
 
         /* سطح شیشه‌ای سبک و سریع با پس‌زمینه گردونه + حاشیه طلایی نئونی چرخان */
@@ -168,37 +182,42 @@
             transition: opacity 0.45s ease, visibility 0.45s ease;
         }
 
+        .solaris-splash-screen::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(9, 11, 15, 0.52) 0%, rgba(5, 7, 11, 0.88) 100%);
+            pointer-events: none;
+        }
+
         .solaris-splash-screen.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
 
-        @keyframes solarisLineFill {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
         .splash-bottom-loader {
             position: fixed;
             left: 50%;
-            bottom: 44px;
+            bottom: 34px;
             transform: translateX(-50%);
-            width: min(76%, 300px);
+            width: min(82%, 330px);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
             pointer-events: none;
+            z-index: 100001;
         }
 
         .solaris-line-track {
             width: 100%;
-            height: 4px;
+            height: 6px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.2);
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(250, 204, 21, 0.35);
         }
 
         .solaris-line-fill {
@@ -206,16 +225,170 @@
             width: 0%;
             border-radius: 999px;
             background: linear-gradient(90deg, #eab308, #fde047, #a3e635);
-            box-shadow: 0 0 10px rgba(253, 224, 71, 0.75);
-            animation: solarisLineFill 5s linear forwards;
+            box-shadow: 0 0 12px rgba(253, 224, 71, 0.85);
+            transition: width 0.08s linear;
         }
 
         .solaris-loader-text {
             font-size: 12px;
             font-weight: 900;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             color: #fef9c3;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+        }
+
+        /* پنل قفل وسط لودینگ که روی ۵۰٪ ظاهر می‌شود */
+        .mid-load-lock-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 16px 112px;
+            background: rgba(5, 7, 12, 0.66);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .mid-load-lock-overlay.active {
+            display: flex;
+        }
+
+        .mid-load-lock-card {
+            width: 100%;
+            max-width: 390px;
+            border-radius: 26px;
+            padding: 20px 16px;
+            text-align: center;
+            direction: rtl;
+            color: #fffbeb;
+            animation: lockCardPopIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes lockCardPopIn {
+            0% { opacity: 0; transform: scale(0.92) translateY(14px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .lock-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 999px;
+            background: rgba(250, 204, 21, 0.16);
+            border: 1px solid rgba(253, 224, 71, 0.65);
+            color: #fef08a;
+            font-size: 11px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            box-shadow: 0 0 14px rgba(250, 204, 21, 0.25);
+        }
+
+        .lock-main-title {
+            font-size: 18px;
+            font-weight: 900;
+            line-height: 1.55;
+            color: #fef08a;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+            margin-bottom: 14px;
+        }
+
+        .lock-timer-box {
+            background: rgba(10, 8, 4, 0.86);
+            border: 1.5px solid rgba(250, 204, 21, 0.55);
+            border-radius: 20px;
+            padding: 12px 10px;
+            margin-bottom: 14px;
+            box-shadow: inset 0 0 18px rgba(250, 204, 21, 0.12), 0 8px 20px rgba(0, 0, 0, 0.45);
+        }
+
+        .lock-timer-caption {
+            font-size: 11px;
+            font-weight: 800;
+            color: #fde68a;
+            margin-bottom: 8px;
+        }
+
+        .lock-timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 7px;
+            direction: ltr;
+        }
+
+        .lock-time-unit {
+            background: rgba(24, 18, 6, 0.92);
+            border: 1px solid rgba(250, 204, 21, 0.36);
+            border-radius: 14px;
+            padding: 8px 4px;
+        }
+
+        .lock-time-num {
+            font-size: 20px;
+            font-weight: 900;
+            color: #bef264;
+            text-shadow: 0 0 10px rgba(163, 230, 53, 0.35);
+            line-height: 1.15;
+        }
+
+        .lock-time-lbl {
+            font-size: 9.5px;
+            font-weight: 800;
+            color: #fde68a;
+            margin-top: 3px;
+        }
+
+        .lock-ref-box {
+            background: rgba(12, 9, 4, 0.82);
+            border: 1px solid rgba(250, 204, 21, 0.42);
+            border-radius: 18px;
+            padding: 12px;
+            text-align: right;
+        }
+
+        .lock-ref-label {
+            font-size: 11.5px;
+            font-weight: 900;
+            color: #fef08a;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .lock-ref-link-text {
+            width: 100%;
+            background: rgba(8, 6, 3, 0.92);
+            border: 1px solid rgba(190, 242, 100, 0.35);
+            border-radius: 12px;
+            padding: 9px 10px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #bef264;
+            direction: ltr;
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 10px;
+        }
+
+        .lock-ref-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .lock-action-btn {
+            border-radius: 14px;
+            padding: 10px 10px;
+            font-size: 12px;
+            font-weight: 900;
+            color: #fef08a;
+            cursor: pointer;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
         }
 
         tc-root,
@@ -232,18 +405,18 @@
             transform: translateX(-50%) translateY(-10px);
             max-width: 92%;
             width: max-content;
-            background: rgba(17, 24, 39, 0.95);
+            background: rgba(17, 24, 39, 0.96);
             color: #ffffff;
-            border: 1px solid rgba(254, 240, 138, 0.55);
+            border: 1px solid rgba(254, 240, 138, 0.65);
             border-radius: 16px;
             padding: 10px 16px;
             font-size: 12px;
             font-weight: 800;
             text-align: center;
-            z-index: 4000;
+            z-index: 100005;
             opacity: 0;
             pointer-events: none;
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), 0 0 14px rgba(250, 204, 21, 0.28);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45), 0 0 14px rgba(250, 204, 21, 0.32);
             transition: opacity 0.22s ease, transform 0.22s ease;
         }
 
@@ -477,7 +650,6 @@
             margin-bottom: 12px;
         }
 
-        /* کادر بزرگ طلایی */
         .solaris-bank-card {
             width: 100%;
             aspect-ratio: 4 / 3;
@@ -585,7 +757,6 @@
             animation: cardWalletSpin 0.8s linear infinite;
         }
 
-        /* دکمه خرید: دقیقاً وسط کادر پایین، رنگ طلایی برجسته/حکاکی‌شده و کاملاً درون کادر */
         .card-bottom-buy-btn {
             position: absolute;
             left: 18.5%;
@@ -928,7 +1099,6 @@
             margin-bottom: 12px;
         }
 
-        /* استایل تب Swap */
         .swap-box-card {
             border-radius: 20px;
             padding: 14px;
@@ -1670,13 +1840,63 @@
         }
     </style>
 </head>
-<body class="splash-locked">
+<body class="splash-locked prelaunch-hard-locked">
     <div id="solaris-splash-screen" class="solaris-splash-screen">
+        <!-- پنل قفل که دقیقاً وقتی لودینگ به 50% می‌رسد روی صفحه ظاهر می‌شود -->
+        <div id="mid-load-lock-overlay" class="mid-load-lock-overlay" aria-live="polite">
+            <div class="mid-load-lock-card solaris-glass-surface">
+                <div class="lock-status-pill">🔒 قفل دسترسی • 50% LOADED</div>
+                <div class="lock-main-title">
+                    بزودی درحال بروز رسانی و آماده سازی توکن SLR
+                </div>
+
+                <div class="lock-timer-box">
+                    <div class="lock-timer-caption">⏳ شمارش معکوس آماده‌سازی توکن SLR</div>
+                    <div class="lock-timer-grid">
+                        <div class="lock-time-unit">
+                            <div class="lock-time-num" id="lock-days">03</div>
+                            <div class="lock-time-lbl">روز</div>
+                        </div>
+                        <div class="lock-time-unit">
+                            <div class="lock-time-num" id="lock-hours">14</div>
+                            <div class="lock-time-lbl">ساعت</div>
+                        </div>
+                        <div class="lock-time-unit">
+                            <div class="lock-time-num" id="lock-mins">28</div>
+                            <div class="lock-time-lbl">دقیقه</div>
+                        </div>
+                        <div class="lock-time-unit">
+                            <div class="lock-time-num" id="lock-secs">00</div>
+                            <div class="lock-time-lbl">ثانیه</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lock-ref-box">
+                    <div class="lock-ref-label">
+                        <span>🔗 لینک دعوت اختصاصی شما</span>
+                        <span style="color:#bef264; font-size:10px;">+100 SLR / دوست</span>
+                    </div>
+                    <div class="lock-ref-link-text" id="lock-personal-ref-link">
+                        https://t.me/SolarisMiner_bot?start=1007321991
+                    </div>
+                    <div class="lock-ref-actions">
+                        <button type="button" class="lock-action-btn solaris-glass-surface" onclick="copyLockReferralLink()">
+                            📋 کپی لینک
+                        </button>
+                        <button type="button" class="lock-action-btn solaris-glass-surface" onclick="shareLockReferralLink()">
+                            🚀 اشتراک‌گذاری
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="splash-bottom-loader">
             <div class="solaris-line-track">
-                <div class="solaris-line-fill"></div>
+                <div class="solaris-line-fill" id="solaris-line-fill"></div>
             </div>
-            <div class="solaris-loader-text">LOADING SOLARIS...</div>
+            <div class="solaris-loader-text" id="solaris-loader-text">LOADING SOLARIS... 0%</div>
         </div>
     </div>
 
@@ -1726,7 +1946,6 @@
                         <span class="card-slot-value" id="card-inapp-slr">0 SLR</span>
                     </div>
 
-                    <!-- دکمه خرید: دقیقاً وسط کادر طلایی پایین، رنگ طلایی برجسته و درون کادر -->
                     <button type="button" class="card-bottom-buy-btn" id="card-buy-btn" onclick="copyAndGoBuyToken()">
                         Buy Token on STON.fi
                     </button>
@@ -1794,7 +2013,6 @@
             </div>
         </div>
 
-        <!-- تب Swap -->
         <div id="view-swap" class="view-section">
             <div class="section-heading" id="swap-heading">SLR Swap</div>
             <div class="section-sub" id="swap-sub">Buy in-app SLR using TON from your connected Tonkeeper wallet</div>
@@ -2193,6 +2411,155 @@
         const SPIN_COOLDOWN_MS = 24 * 60 * 60 * 1000;
         const SPIN_COOLDOWN_STORAGE_KEY = "solaris_spin_cooldown_until_v1";
         const DAILY_REWARD_STORAGE_KEY = "solaris_daily_reward_v1";
+        const MID_LOAD_TARGET_END_KEY = "solaris_mid_load_countdown_end_v1";
+        const MID_LOAD_DURATION_MS = (3 * 86400 + 14 * 3600 + 28 * 60) * 1000;
+
+        /* قفل همیشگی از لحظه ۵۰٪ لودینگ تا زمانی که بخواهید از کد بردارید */
+        const PRELAUNCH_LOCK_ACTIVE = true;
+
+        let splashProgressInterval = null;
+        let lockCountdownInterval = null;
+        let midLoadLockTriggered = false;
+
+        function getMidLoadCountdownTargetMs() {
+            let target = 0;
+            try {
+                target = Number(localStorage.getItem(MID_LOAD_TARGET_END_KEY)) || 0;
+            } catch (e) {}
+            const now = Date.now();
+            if (!target || target <= now) {
+                target = now + MID_LOAD_DURATION_MS;
+                try {
+                    localStorage.setItem(MID_LOAD_TARGET_END_KEY, String(target));
+                } catch (e) {}
+            }
+            return target;
+        }
+
+        function updateMidLoadCountdownDisplay() {
+            const target = getMidLoadCountdownTargetMs();
+            const diffSec = Math.max(0, Math.floor((target - Date.now()) / 1000));
+            const days = Math.floor(diffSec / 86400);
+            const hours = Math.floor((diffSec % 86400) / 3600);
+            const mins = Math.floor((diffSec % 3600) / 60);
+            const secs = diffSec % 60;
+            const pad2 = n => String(n).padStart(2, "0");
+
+            const dEl = document.getElementById("lock-days");
+            const hEl = document.getElementById("lock-hours");
+            const mEl = document.getElementById("lock-mins");
+            const sEl = document.getElementById("lock-secs");
+
+            if (dEl) dEl.innerText = pad2(days);
+            if (hEl) hEl.innerText = pad2(hours);
+            if (mEl) mEl.innerText = pad2(mins);
+            if (sEl) sEl.innerText = pad2(secs);
+        }
+
+        function syncPersonalRefInLockCard() {
+            const link = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
+            const lockRefEl = document.getElementById("lock-personal-ref-link");
+            const mainRefEl = document.getElementById("ref-link-box");
+            if (lockRefEl) lockRefEl.innerText = link;
+            if (mainRefEl) mainRefEl.value = link;
+            return link;
+        }
+
+        function copyLockReferralLink() {
+            const link = syncPersonalRefInLockCard();
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(link).catch(() => {});
+            } else {
+                try {
+                    const tmp = document.createElement("textarea");
+                    tmp.value = link;
+                    tmp.style.position = "fixed";
+                    tmp.style.opacity = "0";
+                    document.body.appendChild(tmp);
+                    tmp.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(tmp);
+                } catch (e) {}
+            }
+            showTransientMessage("✅ لینک دعوت اختصاصی شما کپی شد!");
+        }
+
+        function shareLockReferralLink() {
+            const link = syncPersonalRefInLockCard();
+            const txt = encodeURIComponent(
+                "☀️ بزودی درحال بروز رسانی و آماده سازی توکن SLR!\nبا لینک اختصاصی من وارد شو:\n" + link
+            );
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
+                window.Telegram.WebApp.openTelegramLink(
+                    `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${txt}`
+                );
+            } else {
+                copyLockReferralLink();
+            }
+        }
+
+        function activateMidLoadLockOverlay() {
+            if (!PRELAUNCH_LOCK_ACTIVE) return;
+            midLoadLockTriggered = true;
+            document.body.classList.add("prelaunch-hard-locked");
+
+            const overlay = document.getElementById("mid-load-lock-overlay");
+            if (overlay) {
+                overlay.classList.add("active");
+            }
+            syncPersonalRefInLockCard();
+            updateMidLoadCountdownDisplay();
+
+            if (!lockCountdownInterval) {
+                lockCountdownInterval = setInterval(updateMidLoadCountdownDisplay, 1000);
+            }
+        }
+
+        function startAutoSplashLoader() {
+            let pct = 0;
+            const fillEl = document.getElementById("solaris-line-fill");
+            const textEl = document.getElementById("solaris-loader-text");
+
+            updateMidLoadCountdownDisplay();
+            syncPersonalRefInLockCard();
+
+            splashProgressInterval = setInterval(() => {
+                pct += 2;
+                if (pct > 100) pct = 100;
+
+                if (fillEl) fillEl.style.width = pct + "%";
+                if (textEl) {
+                    textEl.innerText = pct >= 50 && PRELAUNCH_LOCK_ACTIVE
+                        ? `LOADING SOLARIS... ${pct}% • LOCKED`
+                        : `LOADING SOLARIS... ${pct}%`;
+                }
+
+                /* دقیقاً وقتی لودینگ به 50% می‌رسد، قفل و تایمر و لینک اختصاصی ظاهر می‌شوند */
+                if (pct >= 50 && !midLoadLockTriggered) {
+                    activateMidLoadLockOverlay();
+                }
+
+                if (pct >= 100) {
+                    clearInterval(splashProgressInterval);
+                    splashProgressInterval = null;
+                    if (!PRELAUNCH_LOCK_ACTIVE) {
+                        dismissSplashScreen();
+                    }
+                }
+            }, 60);
+        }
+
+        function dismissSplashScreen() {
+            if (PRELAUNCH_LOCK_ACTIVE) {
+                activateMidLoadLockOverlay();
+                return;
+            }
+            const el = document.getElementById("solaris-splash-screen");
+            if (el) el.classList.add("hidden");
+            document.body.classList.remove("splash-locked");
+            syncSpinScreenLockState();
+            renderSpinView();
+        }
 
         const wheelWeightedPool = [
             { sliceIndex: 2, label: "EMPTY", reward: 0, weight: 36.0 },
@@ -2239,6 +2606,7 @@
         }
 
         function openProfilePhotoModal() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             closeLanguageMenu();
             const avatarSrc = (state.photoUrl && !String(state.photoUrl).includes("dicebear.com"))
                 ? state.photoUrl
@@ -2253,6 +2621,7 @@
         }
 
         function openPrivacyModal() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             closeLanguageMenu();
             document.getElementById("info-modal-title").innerText = "حریم خصوصی";
             document.getElementById("info-modal-body").innerHTML = `
@@ -2933,26 +3302,6 @@
             }, duration);
         }
 
-        let splashAutoHideTimer = null;
-        let splashDismissed = false;
-
-        function startAutoSplashLoader() {
-            splashAutoHideTimer = setTimeout(() => {
-                dismissSplashScreen();
-            }, 5000);
-        }
-
-        function dismissSplashScreen() {
-            if (splashDismissed) return;
-            splashDismissed = true;
-            if (splashAutoHideTimer) clearTimeout(splashAutoHideTimer);
-            const el = document.getElementById("solaris-splash-screen");
-            if (el) el.classList.add("hidden");
-            document.body.classList.remove("splash-locked");
-            syncSpinScreenLockState();
-            renderSpinView();
-        }
-
         function elevateTonConnectModal() {
             const selectors = [
                 "tc-root",
@@ -2979,6 +3328,7 @@
         }
 
         function toggleLanguageMenu(e) {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             if (e) e.stopPropagation();
             const menu = document.getElementById("lang-dropdown-menu");
             const backdrop = document.getElementById("lang-menu-backdrop");
@@ -3180,7 +3530,7 @@
         }
 
         function spinCobraWheel() {
-            if (isSpinningWheel) return;
+            if (PRELAUNCH_LOCK_ACTIVE || isSpinningWheel) return;
             const remainingMs = getRemainingSpinCooldownMs();
             if (remainingMs > 0) {
                 showTransientMessage(
@@ -3340,7 +3690,7 @@
         }
 
         async function executeTonToSlrSwap() {
-            if (isSwappingTon) return;
+            if (PRELAUNCH_LOCK_ACTIVE || isSwappingTon) return;
             if (!tonConnectUI.connected || !tonConnectUI.account?.address) {
                 showTransientMessage(t("toastConnectWalletFirst"));
                 return;
@@ -3458,12 +3808,19 @@
             document.documentElement.style.setProperty("--upgrade-tile-img", `url("${UPGRADE_TILE_IMAGE_URL}")`);
 
             document.addEventListener("touchmove", (ev) => {
-                if (isSpinTabCurrentlyActive()) {
+                if (PRELAUNCH_LOCK_ACTIVE || isSpinTabCurrentlyActive()) {
                     ev.preventDefault();
                 }
             }, { passive: false });
 
+            initTelegramData();
+            loadState();
+            syncPersonalRefInLockCard();
             startAutoSplashLoader();
+
+            if (PRELAUNCH_LOCK_ACTIVE) {
+                activateMidLoadLockOverlay();
+            }
 
             tonConnectUI.uiOptions = { buttonRootId: "ton-connect-button-container" };
             tonConnectUI.onStatusChange(async (wallet) => {
@@ -3491,8 +3848,6 @@
                 elevateTonConnectModal();
             });
 
-            initTelegramData();
-            loadState();
             reNormalizeAllSavedAddresses();
             syncHoldCrewUnlocks();
             applyLanguageDirection();
@@ -3993,7 +4348,7 @@
                 }
             }
             applyAvatarToElements(state.photoUrl);
-            document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
+            syncPersonalRefInLockCard();
         }
 
         function loadState() {
@@ -4037,7 +4392,7 @@
                 document.getElementById("buy-tx-hash-input").value = state.lastTxHash;
             }
             applyAvatarToElements(state.photoUrl);
-            document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
+            syncPersonalRefInLockCard();
         }
 
         function saveState() {
@@ -4081,6 +4436,7 @@
         }
 
         async function refreshWalletBalanceFromCard() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             if (!tonConnectUI.connected || !tonConnectUI.account?.address) {
                 showTransientMessage(t("toastConnectWalletFirst"));
                 return;
@@ -4195,6 +4551,7 @@
         }
 
         function savePurchaseTxProof() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             const tx = document.getElementById("buy-tx-hash-input").value.trim();
             if (!tx || tx.length < 16) {
                 showTransientMessage(state.lang === "fa" ? "❌ لطفاً هش تراکنش معتبر وارد کنید." : "❌ Please enter a valid transaction hash.");
@@ -4232,6 +4589,7 @@
         }
 
         function copyAndGoBuyToken() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             copyContractAddressSilent();
             state.pendingBuyVerify = true;
             saveState();
@@ -4241,6 +4599,7 @@
         }
 
         function switchView(name) {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             closeLanguageMenu();
             document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
             document.querySelectorAll(".dock-tab").forEach(el => el.classList.remove("active"));
@@ -4269,6 +4628,7 @@
         }
 
         function openWalletModal() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             closeLanguageMenu();
             reNormalizeAllSavedAddresses();
             renderAll();
@@ -4284,6 +4644,7 @@
         }
 
         async function verifyWalletWith005Ton() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             if (!tonConnectUI.connected) {
                 showTransientMessage(t("toastConnectWalletFirst"));
                 return;
@@ -4316,6 +4677,7 @@
         }
 
         function claimMinedSlr() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             if (!state.isVerifiedWallet) {
                 showTransientMessage(t("toastClaimNotVerified"), 3000);
                 return;
@@ -4332,6 +4694,7 @@
         }
 
         function handleCrewButtonClick(id) {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             const unit = crewUnits.find(u => u.id === id);
             if (!unit) return;
             const unitName = t("crewNames")[id] || ("Unit " + id);
@@ -4354,6 +4717,7 @@
         }
 
         function claimDailyBonus() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             const { streak } = syncDailyStreakProgress();
             const remMs = getRemainingDailyCooldownMs();
             if (remMs > 0) {
@@ -4396,6 +4760,7 @@
         }
 
         function submitXTaskProof(taskId) {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             const taskMeta = communityTasks.find(x => x.id === taskId);
             if (!taskMeta || !taskMeta.isXTask) return;
             if (state.completedTasks.includes(taskId)) return;
@@ -4430,6 +4795,7 @@
         }
 
         function runCommunityTask(taskId) {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             const taskMeta = communityTasks.find(x => x.id === taskId);
             const taskText = t("tasks")[taskId];
             if (!taskMeta || !taskText) return;
@@ -4483,6 +4849,7 @@
         }
 
         function claimHoldTier(target) {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             const tier = holdTiers.find(x => x.target === target);
             if (!tier) return;
             if (state.walletHold < tier.target) {
@@ -4502,8 +4869,7 @@
         }
 
         function shareInviteLink() {
-            const link = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
-            document.getElementById("ref-link-box").value = link;
+            const link = syncPersonalRefInLockCard();
             const txt = encodeURIComponent("☀️ Mine SLR in Solaris Miner!\nBot link:\n" + link);
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
                 window.Telegram.WebApp.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${txt}`);
@@ -4514,13 +4880,13 @@
         }
 
         function copyInviteLink() {
-            const link = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
-            document.getElementById("ref-link-box").value = link;
+            const link = syncPersonalRefInLockCard();
             navigator.clipboard.writeText(link);
             showTransientMessage(state.lang === "fa" ? "✅ لینک اختصاصی شما کپی شد." : "✅ Your personal invite link copied.");
         }
 
         function collectRefBonus() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             if (state.refPending <= 0) {
                 showTransientMessage(state.lang === "fa" ? "پاداش آماده دریافتی وجود ندارد." : "No pending referral rewards.");
                 return;
@@ -4599,6 +4965,7 @@
         }
 
         function submitSlrWithdraw() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             const connectedAddress = formatTonAddressToUQ(getExactConnectedWalletAddress()) || t("notConnectedAddr");
             if (!tonConnectUI.connected) {
                 showTransientMessage(state.lang === "fa" ? "⚠️ ابتدا کیف‌پول Tonkeeper خود را وصل کنید." : "⚠️ Please connect your Tonkeeper wallet first.");
@@ -4668,6 +5035,7 @@
         }
 
         function openHistoryModal() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             closeLanguageMenu();
             const body = document.getElementById("info-modal-body");
             document.getElementById("info-modal-title").innerText = state.lang === "fa" ? "تاریخچه برداشت SLR" : "SLR Withdrawal History";
@@ -4688,6 +5056,7 @@
         }
 
         function openRulesModal() {
+            if (PRELAUNCH_LOCK_ACTIVE) return;
             closeLanguageMenu();
             document.getElementById("info-modal-title").innerText = state.lang === "fa" ? "شرایط و قوانین SLR" : "SLR Rules";
             document.getElementById("info-modal-body").innerHTML = state.lang === "fa" ? `
@@ -4709,6 +5078,7 @@
         function renderAll() {
             syncHoldCrewUnlocks();
             syncSpinScreenLockState();
+            syncPersonalRefInLockCard();
             const daily = getDailyRate();
             const lvl = getLevel();
             const connected = !!tonConnectUI.connected;
@@ -4717,8 +5087,6 @@
             const verified = !!state.isVerifiedWallet;
             const unlocked = isWithdrawUnlocked();
             const activeCount = crewUnits.filter(u => isUnitActive(u)).length;
-
-            document.getElementById("ref-link-box").value = `https://t.me/${botUsername}?start=${getUserReferralCode()}`;
 
             document.getElementById("top-username").innerText = state.userName;
             document.getElementById("top-lvl-label").innerText = "Lv " + lvl;
@@ -4984,6 +5352,10 @@
         let secCounter = 0;
         setInterval(() => {
             secCounter += 1;
+            if (PRELAUNCH_LOCK_ACTIVE) {
+                updateMidLoadCountdownDisplay();
+                return;
+            }
             if (state.isVerifiedWallet) {
                 state.unclaimed = Math.min(STORAGE_CAP_SLR, state.unclaimed + getDailyRate() / 86400);
                 const el = document.getElementById("claimable-slr");
