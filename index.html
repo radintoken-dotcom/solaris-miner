@@ -585,29 +585,33 @@
             animation: cardWalletSpin 0.8s linear infinite;
         }
 
-        /* دکمه خرید بدون کادر مشکی و دقیقاً درون قاب طلایی پایین کارت */
+        /* دکمه خرید: دقیقاً وسط کادر پایین، رنگ طلایی برجسته/حکاکی‌شده و کاملاً درون کادر */
         .card-bottom-buy-btn {
             position: absolute;
-            left: 17%;
-            right: 17%;
-            bottom: 5.5%;
-            height: 12.5%;
+            left: 18.5%;
+            right: 18.5%;
+            bottom: 6.2%;
+            height: 11.4%;
             background: transparent;
             border: none;
-            border-radius: 12px;
-            padding: 0 10px;
-            color: #241203;
-            text-shadow:
-                0 1px 0 rgba(255, 251, 235, 0.88),
-                0 1px 3px rgba(69, 26, 3, 0.35);
-            font-size: clamp(11px, 2.9vw, 13.5px);
+            border-radius: 10px;
+            padding: 0 6px;
+            color: #ffe875;
+            font-size: clamp(10.5px, 2.75vw, 13px);
             font-weight: 900;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.35px;
+            line-height: 1;
+            text-align: center;
+            text-shadow:
+                0 -1px 0 rgba(255, 253, 224, 0.72),
+                0 1px 0 rgba(120, 53, 15, 0.95),
+                0 2px 2px rgba(36, 14, 2, 0.92),
+                0 3px 6px rgba(0, 0, 0, 0.72),
+                0 0 8px rgba(250, 204, 21, 0.38);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -616,8 +620,8 @@
         }
 
         .card-bottom-buy-btn:active {
-            transform: scale(0.96);
-            filter: brightness(1.08);
+            transform: scale(0.97) translateY(1px);
+            filter: brightness(1.12);
         }
 
         .claim-box-center {
@@ -681,6 +685,11 @@
             font-size: 14px;
             font-weight: 900;
             cursor: pointer;
+        }
+
+        .lime-btn:disabled {
+            opacity: 0.78;
+            cursor: not-allowed;
         }
 
         .lime-btn.secondary {
@@ -1037,12 +1046,19 @@
             font-weight: 800;
             color: #fde68a;
             border: 1px solid rgba(250, 204, 21, 0.42);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
 
         .streak-pill.claimed {
             background: rgba(132, 204, 22, 0.28);
             border-color: #a3e635;
             color: #bef264;
+        }
+
+        .streak-pill.next-day {
+            border-color: #fde047;
+            box-shadow: 0 0 10px rgba(253, 224, 71, 0.45);
+            color: #fef08a;
         }
 
         .task-card-wrapper {
@@ -1710,7 +1726,7 @@
                         <span class="card-slot-value" id="card-inapp-slr">0 SLR</span>
                     </div>
 
-                    <!-- دکمه خرید مستقیم روی کادر طلایی پایین کارت بدون کادر مشکی اضافه -->
+                    <!-- دکمه خرید: دقیقاً وسط کادر طلایی پایین، رنگ طلایی برجسته و درون کادر -->
                     <button type="button" class="card-bottom-buy-btn" id="card-buy-btn" onclick="copyAndGoBuyToken()">
                         Buy Token on STON.fi
                     </button>
@@ -2173,8 +2189,10 @@
         const SWAP_FEE_TON = 0.05;
         const DEFAULT_SWAP_SLR_PER_TON = 1000;
         const WITHDRAW_FEE_SLR = 1000;
+        const ONE_DAY_MS = 24 * 60 * 60 * 1000;
         const SPIN_COOLDOWN_MS = 24 * 60 * 60 * 1000;
         const SPIN_COOLDOWN_STORAGE_KEY = "solaris_spin_cooldown_until_v1";
+        const DAILY_REWARD_STORAGE_KEY = "solaris_daily_reward_v1";
 
         const wheelWeightedPool = [
             { sliceIndex: 2, label: "EMPTY", reward: 0, weight: 36.0 },
@@ -3016,6 +3034,99 @@
         let isSpinningWheel = false;
         let isSwappingTon = false;
 
+        function readPersistedDailyReward() {
+            let parsed = null;
+            try {
+                const raw = localStorage.getItem(DAILY_REWARD_STORAGE_KEY);
+                if (raw) parsed = JSON.parse(raw);
+            } catch (e) {}
+            const streakFromKey = Math.max(0, Math.min(dailyRewards.length, Number(parsed?.streak) || 0));
+            const lastFromKey = Math.max(0, Number(parsed?.lastDailyClaim) || 0);
+            const streakFromState = Math.max(0, Math.min(dailyRewards.length, Number(state.streak) || 0));
+            const lastFromState = Math.max(0, Number(state.lastDailyClaim) || 0);
+
+            if (lastFromKey > lastFromState) {
+                return { streak: streakFromKey, lastDailyClaim: lastFromKey };
+            }
+            if (lastFromState > lastFromKey) {
+                return { streak: streakFromState, lastDailyClaim: lastFromState };
+            }
+            return {
+                streak: Math.max(streakFromKey, streakFromState),
+                lastDailyClaim: Math.max(lastFromKey, lastFromState)
+            };
+        }
+
+        function persistDailyReward(streakVal, lastClaimTs) {
+            const safeStreak = Math.max(0, Math.min(dailyRewards.length, Number(streakVal) || 0));
+            const safeLast = Math.max(0, Number(lastClaimTs) || 0);
+            state.streak = safeStreak;
+            state.lastDailyClaim = safeLast;
+            try {
+                localStorage.setItem(DAILY_REWARD_STORAGE_KEY, JSON.stringify({
+                    streak: safeStreak,
+                    lastDailyClaim: safeLast
+                }));
+            } catch (e) {}
+        }
+
+        function syncDailyStreakProgress() {
+            const info = readPersistedDailyReward();
+            let streak = info.streak;
+            const lastClaim = info.lastDailyClaim;
+            const now = Date.now();
+
+            if (lastClaim > 0 && now - lastClaim >= ONE_DAY_MS * 2) {
+                streak = 0;
+            }
+            if (streak >= dailyRewards.length && lastClaim > 0 && now - lastClaim >= ONE_DAY_MS) {
+                streak = 0;
+            }
+            persistDailyReward(streak, lastClaim);
+            return { streak, lastDailyClaim: lastClaim };
+        }
+
+        function getRemainingDailyCooldownMs() {
+            const { streak, lastDailyClaim } = syncDailyStreakProgress();
+            if (!lastDailyClaim || streak === 0) return 0;
+            const elapsed = Date.now() - lastDailyClaim;
+            if (elapsed < ONE_DAY_MS) {
+                return ONE_DAY_MS - elapsed;
+            }
+            return 0;
+        }
+
+        function renderDailyRewardCard() {
+            const { streak } = syncDailyStreakProgress();
+            const remMs = getRemainingDailyCooldownMs();
+            const isCoolingDown = remMs > 0;
+            const nextStepIndex = Math.min(dailyRewards.length - 1, streak);
+            const nextRewardAmt = dailyRewards[nextStepIndex];
+
+            document.getElementById("daily-card-title").innerText = t("dailyCardTitle");
+            document.getElementById("streak-label").innerText = t("streakLabel");
+            document.getElementById("streak-days").innerText = streak;
+
+            document.querySelectorAll("#streak-days-row .streak-pill").forEach((pill, idx) => {
+                pill.classList.toggle("claimed", idx < streak);
+                pill.classList.toggle("next-day", !isCoolingDown && idx === nextStepIndex);
+            });
+
+            const claimBtn = document.getElementById("daily-claim-btn");
+            if (!claimBtn) return;
+            if (isCoolingDown) {
+                claimBtn.disabled = true;
+                claimBtn.innerText = state.lang === "fa"
+                    ? `⏱ ${formatCountdownHHMMSS(remMs)} تا پاداش بعدی`
+                    : `⏱ ${formatCountdownHHMMSS(remMs)} until next reward`;
+            } else {
+                claimBtn.disabled = false;
+                claimBtn.innerText = state.lang === "fa"
+                    ? `${t("dailyClaimBtn")} (+${nextRewardAmt} SLR)`
+                    : `${t("dailyClaimBtn")} (+${nextRewardAmt} SLR)`;
+            }
+        }
+
         function readPersistedSpinCooldownUntil() {
             let fromKey = 0;
             try {
@@ -3054,6 +3165,11 @@
         function isSpinTabCurrentlyActive() {
             const spinView = document.getElementById("view-spin");
             return !!(spinView && spinView.classList.contains("active"));
+        }
+
+        function isEarnTabCurrentlyActive() {
+            const earnView = document.getElementById("view-earn");
+            return !!(earnView && earnView.classList.contains("active"));
         }
 
         function syncSpinScreenLockState() {
@@ -3892,6 +4008,11 @@
             if (persistedCooldown > 0) {
                 state.spinCooldownUntil = persistedCooldown;
             }
+            const dailyInfo = readPersistedDailyReward();
+            state.streak = dailyInfo.streak;
+            state.lastDailyClaim = dailyInfo.lastDailyClaim;
+            syncDailyStreakProgress();
+
             if (state.photoUrl && String(state.photoUrl).includes("dicebear.com")) {
                 state.photoUrl = "";
             }
@@ -3923,8 +4044,15 @@
             state.lastTick = Date.now();
             const safeCooldown = readPersistedSpinCooldownUntil();
             state.spinCooldownUntil = safeCooldown;
+            const dailyInfo = readPersistedDailyReward();
+            state.streak = dailyInfo.streak;
+            state.lastDailyClaim = dailyInfo.lastDailyClaim;
             try {
                 localStorage.setItem(SPIN_COOLDOWN_STORAGE_KEY, String(safeCooldown));
+                localStorage.setItem(DAILY_REWARD_STORAGE_KEY, JSON.stringify({
+                    streak: dailyInfo.streak,
+                    lastDailyClaim: dailyInfo.lastDailyClaim
+                }));
                 localStorage.setItem("solaris_empire_slr_state_v1", JSON.stringify(state));
             } catch (e) {}
         }
@@ -4124,6 +4252,9 @@
             if (name === "spin") {
                 renderSpinView();
             }
+            if (name === "earn") {
+                renderDailyRewardCard();
+            }
             if (name === "swap") {
                 renderSwapView();
                 if (tonConnectUI.connected && tonConnectUI.account?.address) {
@@ -4223,20 +4354,31 @@
         }
 
         function claimDailyBonus() {
-            const now = Date.now();
-            const oneDay = 24 * 60 * 60 * 1000;
-            if (now - state.lastDailyClaim < oneDay && state.lastDailyClaim !== 0) {
-                showTransientMessage(state.lang === "fa" ? "⏳ پاداش امروز قبلاً دریافت شده است." : "⏳ Today's reward has already been claimed.");
+            const { streak } = syncDailyStreakProgress();
+            const remMs = getRemainingDailyCooldownMs();
+            if (remMs > 0) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? `⏳ پاداش امروز قبلاً دریافت شده است! زمان باقی‌مانده: ${formatCountdownHHMMSS(remMs)}`
+                        : `⏳ Today's reward already claimed! Remaining: ${formatCountdownHHMMSS(remMs)}`
+                );
+                renderDailyRewardCard();
                 return;
             }
-            const nextIndex = Math.min(dailyRewards.length - 1, state.streak);
-            const bonus = dailyRewards[nextIndex];
+            const now = Date.now();
+            const stepIndex = Math.min(dailyRewards.length - 1, streak);
+            const bonus = dailyRewards[stepIndex];
+            const nextStreak = Math.min(dailyRewards.length, streak + 1);
+
             state.balance += bonus;
-            state.streak = Math.min(dailyRewards.length, state.streak + 1);
-            state.lastDailyClaim = now;
+            persistDailyReward(nextStreak, now);
             saveState();
             renderAll();
-            showTransientMessage(state.lang === "fa" ? `✅ +${bonus} SLR پاداش روزانه اضافه شد!` : `✅ +${bonus} SLR daily reward added!`);
+            showTransientMessage(
+                state.lang === "fa"
+                    ? `✅ +${bonus} SLR پاداش روزانه (روز ${nextStreak}) اضافه شد! پاداش بعدی ۲۴ ساعت دیگر.`
+                    : `✅ +${bonus} SLR daily reward (Day ${nextStreak}) added! Next in 24h.`
+            );
         }
 
         function isValidXPostOrCommentUrl(rawUrl) {
@@ -4661,19 +4803,7 @@
 
             document.getElementById("earn-heading").innerText = t("earnHeading");
             document.getElementById("earn-sub").innerText = t("earnSub");
-
-            document.getElementById("daily-card-title").innerText = t("dailyCardTitle");
-            document.getElementById("streak-label").innerText = t("streakLabel");
-            document.getElementById("streak-days").innerText = state.streak;
-            document.getElementById("daily-claim-btn").innerText = t("dailyClaimBtn");
-
-            document.querySelectorAll("#streak-days-row .streak-pill").forEach((pill, idx) => {
-                if (idx < state.streak) {
-                    pill.classList.add("claimed");
-                } else {
-                    pill.classList.remove("claimed");
-                }
-            });
+            renderDailyRewardCard();
 
             document.getElementById("community-tasks-heading").innerText = t("communityHeading");
             document.getElementById("community-tasks-list").innerHTML = communityTasks.map(taskMeta => {
@@ -4866,6 +4996,9 @@
             }
             if (!isSpinningWheel && isSpinTabCurrentlyActive()) {
                 renderSpinView();
+            }
+            if (isEarnTabCurrentlyActive()) {
+                renderDailyRewardCard();
             }
         }, 1000);
     </script>
