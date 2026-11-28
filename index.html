@@ -34,8 +34,8 @@
 
         :root {
             --bg-main: #090c12;
-            --card-bg: rgba(14, 11, 6, 0.78);
-            --card-soft: rgba(24, 18, 8, 0.72);
+            --card-bg: rgba(14, 11, 6, 0.84);
+            --card-soft: rgba(24, 18, 8, 0.78);
             --text-dark: #fffbeb;
             --text-muted: #fde68a;
             --green-main: #84cc16;
@@ -76,8 +76,7 @@
             position: relative;
         }
 
-        /* پس‌زمینه تمام‌صفحه گردونه */
-        body:not(.spin-bg-active)::before {
+        body::before {
             content: "";
             position: fixed;
             inset: 0;
@@ -97,21 +96,6 @@
             padding-bottom: 0 !important;
         }
 
-        body.spin-bg-active::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #090c12;
-            background-image: var(--wheel-bg-img);
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            z-index: 0;
-            pointer-events: none;
-        }
-
         body.spin-bg-active .app-shell {
             padding-bottom: 0;
             height: 100vh;
@@ -123,23 +107,20 @@
             height: 100vh;
         }
 
-        /* استایل شیشه‌ای با همان پس‌زمینه گردونه + حاشیه طلایی نئونی چرخان */
+        /* سطح شیشه‌ای سبک و سریع با پس‌زمینه گردونه + حاشیه طلایی نئونی چرخان */
         .solaris-glass-surface {
             position: relative;
-            background-color: rgba(14, 10, 4, 0.72) !important;
+            background-color: rgba(14, 10, 4, 0.84) !important;
             background-image:
-                linear-gradient(180deg, rgba(14, 10, 4, 0.74) 0%, rgba(10, 8, 4, 0.84) 100%),
+                linear-gradient(180deg, rgba(14, 10, 4, 0.82) 0%, rgba(10, 8, 4, 0.90) 100%),
                 var(--wheel-bg-img) !important;
             background-position: center center !important;
             background-size: cover !important;
             background-repeat: no-repeat !important;
-            backdrop-filter: blur(9px);
-            -webkit-backdrop-filter: blur(9px);
-            border: 1.5px solid rgba(250, 204, 21, 0.42) !important;
+            border: 1.5px solid rgba(250, 204, 21, 0.44) !important;
             box-shadow:
-                0 8px 24px rgba(0, 0, 0, 0.55),
-                0 0 14px rgba(250, 204, 21, 0.22),
-                inset 0 0 12px rgba(253, 224, 71, 0.12) !important;
+                0 6px 18px rgba(0, 0, 0, 0.45),
+                0 0 10px rgba(250, 204, 21, 0.18) !important;
             color: #fffbeb;
         }
 
@@ -152,10 +133,10 @@
             background: conic-gradient(
                 from var(--neon-angle),
                 transparent 0deg,
-                transparent 240deg,
-                rgba(250, 204, 21, 0.35) 280deg,
-                #fde047 325deg,
-                #ffffff 345deg,
+                transparent 245deg,
+                rgba(250, 204, 21, 0.35) 285deg,
+                #fde047 328deg,
+                #ffffff 346deg,
                 #facc15 360deg
             );
             -webkit-mask:
@@ -163,7 +144,7 @@
                 linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            animation: solarisNeonOrbit 3.4s linear infinite;
+            animation: solarisNeonOrbit 4.2s linear infinite;
             pointer-events: none;
             z-index: 2;
         }
@@ -184,7 +165,7 @@
             background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.45s ease, visibility 0.45s ease;
         }
 
         .solaris-splash-screen.hidden {
@@ -251,7 +232,7 @@
             transform: translateX(-50%) translateY(-10px);
             max-width: 92%;
             width: max-content;
-            background: rgba(17, 24, 39, 0.94);
+            background: rgba(17, 24, 39, 0.95);
             color: #ffffff;
             border: 1px solid rgba(254, 240, 138, 0.55);
             border-radius: 16px;
@@ -263,7 +244,7 @@
             opacity: 0;
             pointer-events: none;
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), 0 0 14px rgba(250, 204, 21, 0.28);
-            transition: opacity 0.25s ease, transform 0.25s ease;
+            transition: opacity 0.22s ease, transform 0.22s ease;
         }
 
         .toast-banner.show {
@@ -354,7 +335,7 @@
         }
 
         .top-main-bal {
-            background: rgba(15, 11, 4, 0.72);
+            background: rgba(15, 11, 4, 0.78);
             border: 1px solid rgba(250, 204, 21, 0.45);
             border-radius: 14px;
             padding: 4px 8px;
@@ -496,6 +477,7 @@
             margin-bottom: 12px;
         }
 
+        /* کادر بزرگ طلایی */
         .solaris-bank-card {
             width: 100%;
             aspect-ratio: 4 / 3;
@@ -591,7 +573,6 @@
             box-shadow:
                 0 0 14px rgba(253, 224, 71, 0.75),
                 inset 0 1px 2px rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(4px);
             z-index: 5;
             transition: transform 0.15s ease, background 0.2s ease;
         }
@@ -604,17 +585,18 @@
             animation: cardWalletSpin 0.8s linear infinite;
         }
 
+        /* دکمه خرید زیر دکمه استون‌فای درون خود کادر بزرگ طلایی */
         .card-bottom-buy-btn {
             position: absolute;
-            left: 19%;
-            right: 19%;
-            bottom: 7.2%;
-            height: 12.2%;
+            left: 20%;
+            right: 20%;
+            bottom: 6.2%;
+            height: 11.5%;
             border-radius: 12px;
             padding: 0 10px;
             color: #fef08a;
-            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
-            font-size: clamp(10.5px, 2.8vw, 13px);
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.95);
+            font-size: clamp(10px, 2.7vw, 12.5px);
             font-weight: 900;
             cursor: pointer;
             display: flex;
@@ -748,9 +730,9 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            background-color: rgba(14, 10, 4, 0.65);
+            background-color: rgba(14, 10, 4, 0.72);
             background-image:
-                linear-gradient(180deg, rgba(10, 8, 4, 0.25) 0%, rgba(10, 8, 4, 0.72) 100%),
+                linear-gradient(180deg, rgba(10, 8, 4, 0.30) 0%, rgba(10, 8, 4, 0.76) 100%),
                 var(--wheel-bg-img),
                 var(--upgrade-tile-img);
             background-position: center center;
@@ -759,7 +741,7 @@
             border: 1.5px solid rgba(250, 204, 21, 0.45);
             box-shadow:
                 0 6px 18px rgba(0, 0, 0, 0.48),
-                0 0 14px rgba(250, 204, 21, 0.24);
+                0 0 12px rgba(250, 204, 21, 0.22);
         }
 
         .feature-tile::after {
@@ -782,7 +764,7 @@
                 linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            animation: solarisNeonOrbit 3.4s linear infinite;
+            animation: solarisNeonOrbit 4.2s linear infinite;
             pointer-events: none;
             z-index: 2;
         }
@@ -817,9 +799,9 @@
 
         .crew-card {
             position: relative;
-            background-color: rgba(16, 12, 5, 0.74);
+            background-color: rgba(16, 12, 5, 0.80);
             background-image:
-                linear-gradient(180deg, rgba(16, 12, 5, 0.72) 0%, rgba(10, 8, 4, 0.84) 100%),
+                linear-gradient(180deg, rgba(16, 12, 5, 0.76) 0%, rgba(10, 8, 4, 0.88) 100%),
                 var(--wheel-bg-img);
             background-position: center center;
             background-size: cover;
@@ -827,7 +809,7 @@
             border-radius: 16px;
             padding: 10px 6px;
             text-align: center;
-            transition: all 0.2s ease;
+            transition: transform 0.15s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 10px rgba(250, 204, 21, 0.16);
         }
 
@@ -850,7 +832,7 @@
                 linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            animation: solarisNeonOrbit 3.8s linear infinite;
+            animation: solarisNeonOrbit 4.4s linear infinite;
             pointer-events: none;
         }
 
@@ -927,7 +909,7 @@
             width: 56px;
             height: 56px;
             pointer-events: none;
-            animation: slrGearRingSpin 4.5s linear infinite;
+            animation: slrGearRingSpin 5s linear infinite;
         }
 
         .slr-static-coin-center {
@@ -969,14 +951,14 @@
             padding: 5px 4px;
             font-size: 9.5px;
             font-weight: 800;
-            background: rgba(24, 18, 6, 0.82);
+            background: rgba(24, 18, 6, 0.86);
             color: #fef08a;
             cursor: pointer;
             box-shadow: 0 0 8px rgba(250, 204, 21, 0.22);
         }
 
         .crew-buy-btn.wallet-locked {
-            background: rgba(15, 23, 42, 0.72);
+            background: rgba(15, 23, 42, 0.78);
             color: #cbd5e1;
             border: 1px dashed rgba(250, 204, 21, 0.35);
         }
@@ -1008,6 +990,102 @@
             margin-bottom: 12px;
         }
 
+        /* استایل تب Swap */
+        .swap-box-card {
+            border-radius: 20px;
+            padding: 14px;
+            margin-bottom: 4px;
+        }
+
+        .swap-box-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: #fde68a;
+            margin-bottom: 8px;
+        }
+
+        .swap-balance-clickable {
+            color: #bef264;
+            cursor: pointer;
+        }
+
+        .swap-input-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .swap-num-input {
+            width: 100%;
+            background: rgba(10, 8, 4, 0.78);
+            border: 1px solid rgba(250, 204, 21, 0.42);
+            border-radius: 14px;
+            padding: 11px 12px;
+            font-size: 16px;
+            font-weight: 900;
+            color: #ffffff;
+            outline: none;
+        }
+
+        .swap-out-display {
+            width: 100%;
+            background: rgba(10, 8, 4, 0.78);
+            border: 1px solid rgba(163, 230, 53, 0.45);
+            border-radius: 14px;
+            padding: 11px 12px;
+            font-size: 16px;
+            font-weight: 900;
+            color: #bef264;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .swap-token-pill {
+            background: rgba(250, 204, 21, 0.16);
+            border: 1px solid rgba(250, 204, 21, 0.55);
+            border-radius: 14px;
+            padding: 9px 12px;
+            font-size: 12px;
+            font-weight: 900;
+            color: #fef08a;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .swap-spear-arrow-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 6px 0;
+        }
+
+        .swap-spear-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fef08a;
+        }
+
+        .swap-fee-footer {
+            margin-top: 10px;
+            border-radius: 16px;
+            padding: 11px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: #fde68a;
+        }
+
         .daily-gold-card {
             border-radius: 22px;
             padding: 16px;
@@ -1022,7 +1100,7 @@
         }
 
         .streak-pill {
-            background: rgba(16, 12, 5, 0.75);
+            background: rgba(16, 12, 5, 0.80);
             border-radius: 10px;
             padding: 6px 2px;
             text-align: center;
@@ -1030,14 +1108,12 @@
             font-weight: 800;
             color: #fde68a;
             border: 1px solid rgba(250, 204, 21, 0.42);
-            transition: all 0.2s ease;
         }
 
         .streak-pill.claimed {
             background: rgba(132, 204, 22, 0.28);
             border-color: #a3e635;
             color: #bef264;
-            box-shadow: 0 0 10px rgba(163, 230, 53, 0.35);
         }
 
         .task-card-wrapper {
@@ -1076,7 +1152,7 @@
         .x-proof-panel {
             margin-top: 10px;
             border-top: 1px dashed rgba(250, 204, 21, 0.35);
-            background: rgba(12, 9, 4, 0.65);
+            background: rgba(12, 9, 4, 0.72);
             border-radius: 14px;
             padding: 10px 11px;
         }
@@ -1102,7 +1178,7 @@
             border-radius: 12px;
             padding: 9px 11px;
             font-size: 11.5px;
-            background: rgba(10, 8, 4, 0.85);
+            background: rgba(10, 8, 4, 0.88);
             color: #ffffff;
             outline: none;
             user-select: text;
@@ -1179,7 +1255,7 @@
 
         .chart-refresh-btn {
             border: 1px solid rgba(250, 204, 21, 0.5);
-            background: rgba(20, 15, 5, 0.78);
+            background: rgba(20, 15, 5, 0.82);
             color: #fef08a;
             border-radius: 99px;
             padding: 3px 8px;
@@ -1227,7 +1303,7 @@
         }
 
         .chart-stat-box {
-            background: rgba(15, 11, 4, 0.65);
+            background: rgba(15, 11, 4, 0.72);
             border: 1px solid rgba(250, 204, 21, 0.35);
             border-radius: 14px;
             padding: 9px 6px;
@@ -1259,7 +1335,7 @@
         .tf-group {
             display: flex;
             gap: 4px;
-            background: rgba(15, 11, 4, 0.72);
+            background: rgba(15, 11, 4, 0.78);
             padding: 4px;
             border-radius: 12px;
             border: 1px solid rgba(250, 204, 21, 0.35);
@@ -1295,7 +1371,7 @@
         }
 
         .chart-canvas-wrap {
-            background: rgba(12, 10, 6, 0.78);
+            background: rgba(12, 10, 6, 0.84);
             border: 1px solid rgba(250, 204, 21, 0.38);
             border-radius: 18px;
             padding: 10px 8px 6px;
@@ -1494,8 +1570,32 @@
             cursor: pointer;
         }
 
+        .privacy-modal-block {
+            background: rgba(15, 11, 4, 0.72);
+            border: 1px solid rgba(250, 204, 21, 0.34);
+            border-radius: 14px;
+            padding: 10px 12px;
+            margin-bottom: 9px;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .privacy-modal-heading {
+            font-size: 12.5px;
+            font-weight: 900;
+            color: #fef08a;
+            margin-bottom: 4px;
+        }
+
+        .privacy-modal-text {
+            font-size: 11.5px;
+            line-height: 1.65;
+            color: #fffbeb;
+            font-weight: 700;
+        }
+
         .alert-hold-box {
-            background: rgba(127, 29, 29, 0.45);
+            background: rgba(127, 29, 29, 0.52);
             border: 1px solid rgba(248, 113, 113, 0.65);
             color: #fecaca;
             border-radius: 14px;
@@ -1507,13 +1607,13 @@
         }
 
         .alert-hold-box.ok {
-            background: rgba(20, 83, 45, 0.45);
+            background: rgba(20, 83, 45, 0.52);
             border-color: rgba(134, 239, 172, 0.65);
             color: #bbf7d0;
         }
 
         .connected-wallet-box {
-            background: rgba(15, 11, 4, 0.72);
+            background: rgba(15, 11, 4, 0.78);
             border: 1px solid rgba(250, 204, 21, 0.42);
             border-radius: 14px;
             padding: 10px 12px;
@@ -1530,7 +1630,7 @@
             border-radius: 14px;
             padding: 11px 12px;
             font-size: 12px;
-            background: rgba(15, 11, 4, 0.76);
+            background: rgba(15, 11, 4, 0.82);
             color: #ffffff;
             margin-top: 6px;
             outline: none;
@@ -1555,17 +1655,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 6px;
-            padding: 0 8px;
+            gap: 5px;
+            padding: 0 6px;
             z-index: 900;
             pointer-events: none;
         }
 
         .floating-mine-fab {
-            width: 46px;
-            height: 46px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            font-size: 19px;
+            font-size: 17px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1576,19 +1676,19 @@
 
         .floating-nav-pill {
             border-radius: 28px;
-            padding: 5px 6px;
+            padding: 4px 5px;
             display: flex;
             align-items: center;
-            gap: 1px;
+            gap: 0px;
             pointer-events: auto;
         }
 
         .dock-tab {
             border: none;
             background: transparent;
-            padding: 6px 7.5px;
-            border-radius: 20px;
-            font-size: 10px;
+            padding: 6px 6px;
+            border-radius: 18px;
+            font-size: 9.5px;
             font-weight: 800;
             color: #e5e7eb;
             cursor: pointer;
@@ -1681,8 +1781,9 @@
                         <span class="card-slot-value" id="card-inapp-slr">0 SLR</span>
                     </div>
 
+                    <!-- دکمه خرید زیر دکمه استون‌فای در خود کادر بزرگ طلایی -->
                     <button class="card-bottom-buy-btn solaris-glass-surface" id="card-buy-btn" onclick="copyAndGoBuyToken()">
-                        🛒 Buy Token on STON.fi
+                        Buy Token on STON.fi
                     </button>
                 </div>
 
@@ -1764,6 +1865,60 @@
                 <button type="button" class="wheel-spin-btn solaris-glass-surface" id="wheel-spin-btn" onclick="spinCobraWheel()">
                     SPIN WHEEL
                 </button>
+            </div>
+        </div>
+
+        <!-- تب Swap -->
+        <div id="view-swap" class="view-section">
+            <div class="section-heading" id="swap-heading">SLR Swap</div>
+            <div class="section-sub" id="swap-sub">Buy in-app SLR using TON from your connected Tonkeeper wallet</div>
+
+            <div class="swap-box-card solaris-glass-surface">
+                <div class="swap-box-top">
+                    <span id="lbl-swap-from">From (TON Wallet)</span>
+                    <span class="swap-balance-clickable" id="swap-ton-balance-display" onclick="fillMaxSwapTon()">Wallet TON: 0.0000 TON</span>
+                </div>
+                <div class="swap-input-row">
+                    <input
+                        type="number"
+                        step="any"
+                        min="0"
+                        id="swap-ton-input"
+                        class="swap-num-input"
+                        placeholder="0.00"
+                        oninput="updateSwapOutputPreview()"
+                    >
+                    <div class="swap-token-pill">TON</div>
+                </div>
+            </div>
+
+            <div class="swap-spear-arrow-wrap">
+                <div class="swap-spear-badge solaris-glass-surface" aria-hidden="true">
+                    <svg width="22" height="26" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="2" x2="12" y2="23"></line>
+                        <polyline points="5 16 12 25 19 16"></polyline>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="swap-box-card solaris-glass-surface" style="margin-bottom: 12px;">
+                <div class="swap-box-top">
+                    <span id="lbl-swap-to">To (In-app SLR)</span>
+                    <span id="swap-rate-label">1 TON = 1,000 SLR</span>
+                </div>
+                <div class="swap-input-row">
+                    <div class="swap-out-display" id="swap-slr-output">0 SLR</div>
+                    <div class="swap-token-pill">SLR</div>
+                </div>
+            </div>
+
+            <button type="button" class="lime-btn solaris-glass-surface" id="execute-swap-btn" onclick="executeTonToSlrSwap()">
+                🔄 Swap TON to SLR
+            </button>
+
+            <div class="swap-fee-footer solaris-glass-surface">
+                <span id="lbl-swap-fee">Swap Fee</span>
+                <span style="color:#bef264; font-weight:900;">0.05 TON</span>
             </div>
         </div>
 
@@ -1973,6 +2128,10 @@
                 <span id="menu-rules">📜 SLR Rules (Hold 5,000 • Withdraw 20,000)</span>
                 <span style="color:#fef08a;">&rsaquo;</span>
             </div>
+            <div class="menu-list-item solaris-glass-surface" onclick="openPrivacyModal()">
+                <span id="menu-privacy">🛡️ حریم خصوصی</span>
+                <span style="color:#fef08a;">&rsaquo;</span>
+            </div>
         </div>
     </div>
 
@@ -2013,6 +2172,7 @@
         <div class="floating-nav-pill solaris-glass-surface">
             <button class="dock-tab active" id="dock-upgrade" onclick="switchView('upgrade')">Upgrade</button>
             <button class="dock-tab" id="dock-spin" onclick="switchView('spin')">Spin</button>
+            <button class="dock-tab" id="dock-swap" onclick="switchView('swap')">Swap</button>
             <button class="dock-tab" id="dock-chart" onclick="switchView('chart')">Chart</button>
             <button class="dock-tab" id="dock-earn" onclick="switchView('earn')">Earn</button>
             <button class="dock-tab" id="dock-friends" onclick="switchView('friends')">Friends</button>
@@ -2100,6 +2260,8 @@
         const botUsername = "SolarisMiner_bot";
         const ADMIN_WITHDRAW_WEBHOOK_URL = "https://raspy-forest-4081.radintoken.workers.dev";
         const WALLET_VERIFY_TON = 0.05;
+        const SWAP_FEE_TON = 0.05;
+        const DEFAULT_SWAP_SLR_PER_TON = 1000;
         const WITHDRAW_FEE_SLR = 1000;
         const SPIN_COOLDOWN_MS = 24 * 60 * 60 * 1000;
         const SPIN_COOLDOWN_STORAGE_KEY = "solaris_spin_cooldown_until_v1";
@@ -2141,7 +2303,7 @@
             const finalSrc = cleanUrl && !cleanUrl.includes("dicebear.com") ? cleanUrl : COIN_IMAGE_URL;
             ["top-avatar", "profile-big-avatar"].forEach(id => {
                 const el = document.getElementById(id);
-                if (el) {
+                if (el && el.getAttribute("src") !== finalSrc) {
                     el.dataset.fallbackApplied = finalSrc === COIN_IMAGE_URL ? "1" : "0";
                     el.src = finalSrc;
                 }
@@ -2157,6 +2319,30 @@
             document.getElementById("info-modal-body").innerHTML = `
                 <div style="text-align:center; padding:6px 0;">
                     <img src="${avatarSrc}" alt="Profile Photo" onerror="handleAvatarError(this)" style="width:100%; max-width:300px; max-height:360px; object-fit:contain; border-radius:18px; border:2px solid #fde047; box-shadow:0 0 16px rgba(250,204,21,0.45); background:rgba(15,11,4,0.75);">
+                </div>
+            `;
+            document.getElementById("info-modal").style.display = "flex";
+        }
+
+        function openPrivacyModal() {
+            closeLanguageMenu();
+            document.getElementById("info-modal-title").innerText = "حریم خصوصی";
+            document.getElementById("info-modal-body").innerHTML = `
+                <div class="privacy-modal-block">
+                    <div class="privacy-modal-heading">1. داده‌هایی که جمع‌آوری می‌کنیم</div>
+                    <div class="privacy-modal-text">نام کاربری، شناسه Telegram، زبان، فعالیت درون‌برنامه‌ای و نشانی کیف پولی که متصل می‌کنید.</div>
+                </div>
+                <div class="privacy-modal-block">
+                    <div class="privacy-modal-heading">2. نحوه استفاده از آن‌ها</div>
+                    <div class="privacy-modal-text">برای اجرای بازی، افزودن پاداش‌ها، جلوگیری از ربات‌ها و تقلب و پردازش خریدها.</div>
+                </div>
+                <div class="privacy-modal-block">
+                    <div class="privacy-modal-heading">3. کارهایی که هرگز نمی‌کنیم</div>
+                    <div class="privacy-modal-text">هرگز عبارت بازیابی یا کلیدهای خصوصی شما را نمی‌خواهیم و هرگز داده‌های شخصی شما را نمی‌فروشیم.</div>
+                </div>
+                <div class="privacy-modal-block" style="margin-bottom:0;">
+                    <div class="privacy-modal-heading">4. کیف پول و پرداخت‌ها</div>
+                    <div class="privacy-modal-text">پرداخت‌ها فقط در برنامه کیف پول خودتان تأیید می‌شوند. تراکنش‌های رمزارزی برگشت‌ناپذیرند.</div>
                 </div>
             `;
             document.getElementById("info-modal").style.display = "flex";
@@ -2233,7 +2419,7 @@
             shortName: "United States",
             cardWalletHold: "TON wallet Hold",
             cardInappSlr: "In-app SLR",
-            cardBuyBtn: "🛒 Buy Token on STON.fi",
+            cardBuyBtn: "Buy Token on STON.fi",
             miningStatus: "Mining • SLR Extraction",
             perDay: "SLR per day",
             storageLabel: "Storage SLR",
@@ -2260,6 +2446,12 @@
             verifyFirstBtn: "🔒 Verify",
             wheelSpinBtnText: "SPIN WHEEL",
             wheelSpinningText: "SPINNING...",
+            swapHeading: "SLR Swap",
+            swapSub: "Buy in-app SLR using TON from your connected Tonkeeper wallet",
+            swapFromLabel: "From (TON Wallet)",
+            swapToLabel: "To (In-app SLR)",
+            swapBtnText: "🔄 Swap TON to SLR",
+            swapFeeLabel: "Swap Fee",
             chartHeading: "SLR Live Chart",
             chartSub: "Real-time STON.fi pool & price feed for Solaris (SLR)",
             chartLiveTitle: "LIVE SLR PRICE",
@@ -2303,8 +2495,10 @@
             menuWallet: "💼 Open WALLET & Connect Tonkeeper",
             menuHistory: "🕒 SLR Withdrawal History",
             menuRules: "📜 SLR Rules (Hold 5,000 • Withdraw 20,000)",
+            menuPrivacy: "🛡️ Privacy Policy",
             dockUpgrade: "Upgrade",
             dockSpin: "Spin",
+            dockSwap: "Swap",
             dockChart: "Chart",
             dockEarn: "Earn",
             dockFriends: "Friends",
@@ -2394,7 +2588,7 @@
                 shortName: "Iran",
                 cardWalletHold: "هولد ولت TON",
                 cardInappSlr: "موجودی درون‌رباتی SLR",
-                cardBuyBtn: "🛒 خرید توکن در استون فای",
+                cardBuyBtn: "Buy Token on STON.fi",
                 miningStatus: "در حال جمع شدن • استخراج SLR",
                 perDay: "SLR در روز",
                 claimMined: "⛏ Claim SLR",
@@ -2417,6 +2611,12 @@
                 verifyFirstBtn: "🔒 تایید ولت",
                 wheelSpinBtnText: "SPIN WHEEL",
                 wheelSpinningText: "SPINNING...",
+                swapHeading: "سواپ (Swap) SLR",
+                swapSub: "موجودی TON کیف پول متصل را ببینید، مقدار گرام/TON را وارد کنید و سکه SLR بخرید",
+                swapFromLabel: "از کیف پول (TON / گرام)",
+                swapToLabel: "دریافت سکه درون‌برنامه‌ای (SLR)",
+                swapBtnText: "🔄 سواپ و خرید سکه",
+                swapFeeLabel: "کارمزد سواپ",
                 chartHeading: "چارت قیمت آنلاین SLR",
                 chartSub: "اطلاعات زنده استخر STON.fi و قیمت لحظه‌ای سولاریس (SLR)",
                 chartLiveTitle: "قیمت لحظه‌ای SLR",
@@ -2460,8 +2660,10 @@
                 menuWallet: "💼 باز کردن صفحه WALLET و اتصال Tonkeeper",
                 menuHistory: "🕒 فعالیت و تاریخچه برداشت SLR",
                 menuRules: "📜 شرایط و قوانین SLR (هولد 5,000 • برداشت 20,000)",
+                menuPrivacy: "🛡️ حریم خصوصی",
                 dockUpgrade: "Upgrade",
                 dockSpin: "گردونه",
+                dockSwap: "Swap",
                 dockChart: "Chart",
                 dockEarn: "Earn",
                 dockFriends: "دوست‌ها",
@@ -2547,7 +2749,7 @@
                 shortName: "Russia",
                 cardWalletHold: "Холд в TON кошельке",
                 cardInappSlr: "SLR в боте",
-                cardBuyBtn: "🛒 Купить на STON.fi",
+                cardBuyBtn: "Buy Token on STON.fi",
                 miningStatus: "Майнинг • Добыча SLR",
                 perDay: "SLR в день",
                 claimMined: "⛏ Забрать SLR",
@@ -2568,6 +2770,12 @@
                 holdReqPrefix: "Холд",
                 buyToHoldBtn: "🛒 Холд",
                 verifyFirstBtn: "🔒 Подтв.",
+                swapHeading: "Обмен (Swap) SLR",
+                swapSub: "Покупка внутриигровых SLR за TON из подключённого кошелька",
+                swapFromLabel: "Из кошелька (TON)",
+                swapToLabel: "Получите SLR в боте",
+                swapBtnText: "🔄 Обменять TON на SLR",
+                swapFeeLabel: "Комиссия обмена",
                 earnHeading: "ЗАРАБОТОК",
                 earnSub: "Бонусы, задания, холд 5,000 и вывод от 20,000 SLR",
                 dailyCardTitle: "Ежедневный бонус SLR",
@@ -2593,6 +2801,7 @@
                 menuRules: "📜 Правила SLR (Холд 5,000 • Вывод 20,000)",
                 dockUpgrade: "Апгрейд",
                 dockSpin: "Рулетка",
+                dockSwap: "Swap",
                 dockChart: "График",
                 dockEarn: "Заработок",
                 dockFriends: "Друзья",
@@ -2605,7 +2814,7 @@
                 shortName: "China",
                 cardWalletHold: "TON钱包持仓",
                 cardInappSlr: "应用内 SLR",
-                cardBuyBtn: "🛒 在 STON.fi 购买",
+                cardBuyBtn: "Buy Token on STON.fi",
                 miningStatus: "挖矿中 • 提取 SLR",
                 perDay: "SLR / 天",
                 claimMined: "⛏ 领取 SLR",
@@ -2626,6 +2835,12 @@
                 holdReqPrefix: "持仓",
                 buyToHoldBtn: "🛒 持仓",
                 verifyFirstBtn: "🔒 验证",
+                swapHeading: "SLR 兑换 (Swap)",
+                swapSub: "使用已连接钱包中的 TON 兑换应用内 SLR",
+                swapFromLabel: "支付 (TON 钱包)",
+                swapToLabel: "获得 (应用内 SLR)",
+                swapBtnText: "🔄 兑换 TON 为 SLR",
+                swapFeeLabel: "兑换手续费",
                 earnHeading: "赚取奖励",
                 earnSub: "每日奖励、任务、持仓 5,000 与提现 20,000 SLR",
                 dailyCardTitle: "每日 SLR 奖励",
@@ -2651,6 +2866,7 @@
                 menuRules: "📜 SLR 规则 (持仓 5,000 • 提现 20,000)",
                 dockUpgrade: "升级",
                 dockSpin: "转盘",
+                dockSwap: "Swap",
                 dockChart: "行情",
                 dockEarn: "任务",
                 dockFriends: "好友",
@@ -2663,7 +2879,7 @@
                 shortName: "India",
                 cardWalletHold: "TON वॉलेट होल्ड",
                 cardInappSlr: "इन-ऐप SLR",
-                cardBuyBtn: "🛒 STON.fi पर खरीदें",
+                cardBuyBtn: "Buy Token on STON.fi",
                 miningStatus: "माइनिंग • SLR निकालें",
                 perDay: "SLR प्रति दिन",
                 claimMined: "⛏ SLR क्लेम करें",
@@ -2684,6 +2900,12 @@
                 holdReqPrefix: "होल्ड",
                 buyToHoldBtn: "🛒 होल्ड",
                 verifyFirstBtn: "🔒 सत्यापित करें",
+                swapHeading: "SLR स्वैप (Swap)",
+                swapSub: "कनेक्टेड वॉलेट के TON से इन-ऐप SLR खरीदें",
+                swapFromLabel: "से (TON वॉलेट)",
+                swapToLabel: "को (इन-ऐप SLR)",
+                swapBtnText: "🔄 TON से SLR स्वैप करें",
+                swapFeeLabel: "स्वैप शुल्क",
                 earnHeading: "कमाई",
                 earnSub: "दैनिक इनाम, टास्क, 5,000 SLR होल्ड और 20,000 SLR निकासी",
                 dailyCardTitle: "दैनिक SLR इनाम",
@@ -2709,6 +2931,7 @@
                 menuRules: "📜 SLR नियम (होल्ड 5,000 • निकासी 20,000)",
                 dockUpgrade: "अपग्रेड",
                 dockSpin: "स्पिन",
+                dockSwap: "Swap",
                 dockChart: "चार्ट",
                 dockEarn: "कमाई",
                 dockFriends: "दोस्त",
@@ -2721,7 +2944,7 @@
                 shortName: "Germany",
                 cardWalletHold: "TON-Wallet Hold",
                 cardInappSlr: "In-App SLR",
-                cardBuyBtn: "🛒 Auf STON.fi kaufen",
+                cardBuyBtn: "Buy Token on STON.fi",
                 miningStatus: "Mining • SLR-Abbau",
                 perDay: "SLR pro Tag",
                 claimMined: "⛏ SLR abholen",
@@ -2742,6 +2965,12 @@
                 holdReqPrefix: "Hold",
                 buyToHoldBtn: "🛒 Hold",
                 verifyFirstBtn: "🔒 Prüfen",
+                swapHeading: "SLR Swap",
+                swapSub: "In-App SLR mit TON aus deinem verbundenen Wallet kaufen",
+                swapFromLabel: "Von (TON Wallet)",
+                swapToLabel: "Zu (In-App SLR)",
+                swapBtnText: "🔄 TON zu SLR tauschen",
+                swapFeeLabel: "Swap-Gebühr",
                 earnHeading: "VERDIENEN",
                 earnSub: "Tagesboni, Aufgaben, 5.000 SLR Hold & 20.000 SLR Auszahlung",
                 dailyCardTitle: "Tagesbonus SLR",
@@ -2767,6 +2996,7 @@
                 menuRules: "📜 SLR-Regeln (Hold 5.000 • Auszahlung 20.000)",
                 dockUpgrade: "Upgrade",
                 dockSpin: "Glücksrad",
+                dockSwap: "Swap",
                 dockChart: "Chart",
                 dockEarn: "Verdienen",
                 dockFriends: "Freunde",
@@ -2915,6 +3145,7 @@
             balance: 0,
             unclaimed: 0,
             walletHold: 0,
+            walletTonBalance: 0,
             lastWalletAddress: "",
             lastTxHash: "",
             ownedCrewIds: [1],
@@ -2941,6 +3172,7 @@
         };
 
         let isSpinningWheel = false;
+        let isSwappingTon = false;
 
         function readPersistedSpinCooldownUntil() {
             let fromKey = 0;
@@ -2987,15 +3219,6 @@
             document.documentElement.classList.toggle("spin-screen-locked", active);
             document.body.classList.toggle("spin-screen-locked", active);
             document.body.classList.toggle("spin-bg-active", active);
-            try {
-                if (window.Telegram?.WebApp) {
-                    if (active && typeof window.Telegram.WebApp.disableVerticalSwipes === "function") {
-                        window.Telegram.WebApp.disableVerticalSwipes();
-                    } else if (!active && typeof window.Telegram.WebApp.enableVerticalSwipes === "function") {
-                        window.Telegram.WebApp.enableVerticalSwipes();
-                    }
-                }
-            } catch (e) {}
         }
 
         function spinCobraWheel() {
@@ -3100,6 +3323,145 @@
         let isRefreshingCardWallet = false;
         let isFetchingMarket = false;
 
+        function getSwapRateSlrPerTon() {
+            const pTon = Number(marketState.priceTon) || 0;
+            if (pTon > 0) {
+                return Math.max(1, Math.floor(1 / pTon));
+            }
+            return DEFAULT_SWAP_SLR_PER_TON;
+        }
+
+        function updateSwapOutputPreview() {
+            const inputEl = document.getElementById("swap-ton-input");
+            const outEl = document.getElementById("swap-slr-output");
+            const rateEl = document.getElementById("swap-rate-label");
+            if (!inputEl || !outEl) return;
+
+            const rate = getSwapRateSlrPerTon();
+            if (rateEl) {
+                rateEl.innerText = `1 TON = ${rate.toLocaleString()} SLR`;
+            }
+
+            const tonAmt = parseFloat(inputEl.value) || 0;
+            const estimatedSlr = tonAmt > 0 ? Math.floor(tonAmt * rate) : 0;
+            outEl.innerText = `${estimatedSlr.toLocaleString()} SLR`;
+        }
+
+        function fillMaxSwapTon() {
+            const bal = Number(state.walletTonBalance) || 0;
+            const usable = Math.max(0, Number((bal - SWAP_FEE_TON).toFixed(4)));
+            const inputEl = document.getElementById("swap-ton-input");
+            if (inputEl) {
+                inputEl.value = usable > 0 ? String(usable) : "0";
+                updateSwapOutputPreview();
+            }
+        }
+
+        async function fetchTonCoinBalance(rawAddr, silent = true) {
+            if (!rawAddr) {
+                state.walletTonBalance = 0;
+                renderSwapView();
+                return 0;
+            }
+            try {
+                const resp = await fetch(`https://tonapi.io/v2/accounts/${encodeURIComponent(rawAddr)}`);
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const nano = Number(data?.balance || 0);
+                    const tonVal = Number.isFinite(nano) ? nano / 1e9 : 0;
+                    state.walletTonBalance = Math.max(0, tonVal);
+                    renderSwapView();
+                    return state.walletTonBalance;
+                }
+            } catch (e) {}
+            if (!silent) {
+                showTransientMessage(state.lang === "fa" ? "⚠️ خطا در دریافت موجودی TON کیف پول." : "⚠️ Failed to fetch TON wallet balance.");
+            }
+            renderSwapView();
+            return state.walletTonBalance;
+        }
+
+        async function executeTonToSlrSwap() {
+            if (isSwappingTon) return;
+            if (!tonConnectUI.connected || !tonConnectUI.account?.address) {
+                showTransientMessage(t("toastConnectWalletFirst"));
+                return;
+            }
+            const inputEl = document.getElementById("swap-ton-input");
+            const tonAmount = parseFloat(inputEl?.value || "0") || 0;
+            if (!(tonAmount > 0)) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? "⚠️ مقدار TON / گرام را وارد کنید."
+                        : "⚠️ Enter a valid TON amount to swap."
+                );
+                return;
+            }
+
+            const rate = getSwapRateSlrPerTon();
+            const slrReward = Math.floor(tonAmount * rate);
+            if (slrReward <= 0) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? "⚠️ مقدار واردشده برای دریافت سکه SLR خیلی کم است."
+                        : "⚠️ Entered amount is too small to receive SLR."
+                );
+                return;
+            }
+
+            const totalTonToSend = Number((tonAmount + SWAP_FEE_TON).toFixed(6));
+            const nanoTotal = Math.floor(totalTonToSend * 1e9).toString();
+
+            isSwappingTon = true;
+            try {
+                const txRes = await tonConnectUI.sendTransaction({
+                    validUntil: Math.floor(Date.now() / 1000) + 600,
+                    messages: [{ address: recipientWalletAddress, amount: nanoTotal }]
+                });
+                if (txRes) {
+                    state.balance += slrReward;
+                    if (inputEl) inputEl.value = "";
+                    updateSwapOutputPreview();
+                    await fetchTonCoinBalance(tonConnectUI.account.address, true);
+                    saveState();
+                    renderAll();
+                    showTransientMessage(
+                        state.lang === "fa"
+                            ? `✅ خرید انجام شد! +${slrReward.toLocaleString()} SLR به موجودی درون‌برنامه‌ای اضافه شد.`
+                            : `✅ Swap confirmed! +${slrReward.toLocaleString()} SLR added to your balance.`
+                    );
+                }
+            } catch (err) {
+                showTransientMessage(
+                    state.lang === "fa"
+                        ? "❌ تراکنش در کیف پول لغو یا تایید نشد."
+                        : "❌ Swap transaction was cancelled or not approved."
+                );
+            } finally {
+                isSwappingTon = false;
+            }
+        }
+
+        function renderSwapView() {
+            const heading = document.getElementById("swap-heading");
+            if (!heading) return;
+            heading.innerText = t("swapHeading");
+            document.getElementById("swap-sub").innerText = t("swapSub");
+            document.getElementById("lbl-swap-from").innerText = t("swapFromLabel");
+            document.getElementById("lbl-swap-to").innerText = t("swapToLabel");
+            document.getElementById("execute-swap-btn").innerText = t("swapBtnText");
+            document.getElementById("lbl-swap-fee").innerText = t("swapFeeLabel");
+
+            const connected = !!tonConnectUI.connected;
+            const tonBalText = connected
+                ? `${(Number(state.walletTonBalance) || 0).toFixed(4)} TON`
+                : `0.0000 TON`;
+            document.getElementById("swap-ton-balance-display").innerText =
+                state.lang === "fa" ? `موجودی ولت: ${tonBalText}` : `Wallet TON: ${tonBalText}`;
+
+            updateSwapOutputPreview();
+        }
+
         function getUserReferralCode() {
             const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
             if (tgUser?.username) {
@@ -3151,6 +3513,7 @@
                 const nextAddr = formatTonAddressToUQ(rawAddr);
                 if (!wallet || !nextAddr) {
                     state.walletHold = 0;
+                    state.walletTonBalance = 0;
                     state.lastWalletAddress = "";
                     syncHoldCrewUnlocks();
                     saveState();
@@ -3161,13 +3524,14 @@
                     state.lastWalletAddress = nextAddr;
                     syncHoldCrewUnlocks();
                     saveState();
-                    await fetchRealOnchainSlrHold(true);
+                    await Promise.all([
+                        fetchRealOnchainSlrHold(true),
+                        fetchTonCoinBalance(rawAddr, true)
+                    ]);
                 }
                 renderAll();
+                elevateTonConnectModal();
             });
-
-            const observer = new MutationObserver(() => elevateTonConnectModal());
-            observer.observe(document.body, { childList: true, subtree: true });
 
             initTelegramData();
             loadState();
@@ -3176,12 +3540,12 @@
             applyLanguageDirection();
             renderAll();
             drawChartCanvas();
-            elevateTonConnectModal();
-            if (tonConnectUI.connected) {
+            if (tonConnectUI.connected && tonConnectUI.account?.address) {
                 fetchRealOnchainSlrHold(true);
+                fetchTonCoinBalance(tonConnectUI.account.address, true);
             }
             fetchSlrMarketData(true);
-            setInterval(() => fetchSlrMarketData(true), 30000);
+            setInterval(() => fetchSlrMarketData(true), 45000);
         });
 
         window.addEventListener("resize", () => {
@@ -3423,6 +3787,7 @@
 
                 await fetchCandlesForPool(poolAddress, marketState.timeframe, priceUsd, change24h);
                 renderChartView();
+                updateSwapOutputPreview();
                 drawChartCanvas();
             } catch (err) {
                 marketState.points = buildCleanTrendSeries(marketState.priceUsd, marketState.change24h, marketState.timeframe);
@@ -3509,7 +3874,7 @@
             const rect = canvas.getBoundingClientRect();
             const cssW = Math.max(260, Math.floor(rect.width || 340));
             const cssH = 175;
-            const dpr = Math.min(window.devicePixelRatio || 1, 3);
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
             canvas.width = cssW * dpr;
             canvas.height = cssH * dpr;
@@ -3590,11 +3955,6 @@
             ctx.stroke();
 
             const last = coords[coords.length - 1];
-            ctx.beginPath();
-            ctx.arc(last.x, last.y, 8, 0, Math.PI * 2);
-            ctx.fillStyle = isPositive ? "rgba(250, 204, 21, 0.32)" : "rgba(239, 68, 68, 0.28)";
-            ctx.fill();
-
             ctx.beginPath();
             ctx.arc(last.x, last.y, 4.5, 0, Math.PI * 2);
             ctx.fillStyle = dotColor;
@@ -3761,7 +4121,10 @@
             if (btn) btn.classList.add("spinning");
 
             try {
-                await fetchRealOnchainSlrHold(true);
+                await Promise.all([
+                    fetchRealOnchainSlrHold(true),
+                    fetchTonCoinBalance(tonConnectUI.account.address, true)
+                ]);
                 showTransientMessage(t("toastWalletUpdated") + Math.floor(state.walletHold).toLocaleString() + " SLR");
             } finally {
                 isRefreshingCardWallet = false;
@@ -3919,6 +4282,12 @@
             if (name === "spin") {
                 renderSpinView();
             }
+            if (name === "swap") {
+                renderSwapView();
+                if (tonConnectUI.connected && tonConnectUI.account?.address) {
+                    fetchTonCoinBalance(tonConnectUI.account.address, true);
+                }
+            }
             if (name === "chart") {
                 drawChartCanvas();
                 fetchSlrMarketData(true);
@@ -3955,7 +4324,10 @@
                 if (res) {
                     state.isVerifiedWallet = true;
                     state.lastTick = Date.now();
-                    await fetchRealOnchainSlrHold(true);
+                    await Promise.all([
+                        fetchRealOnchainSlrHold(true),
+                        fetchTonCoinBalance(tonConnectUI.account.address, true)
+                    ]);
                     syncHoldCrewUnlocks();
                     saveState();
                     renderAll();
@@ -4451,6 +4823,7 @@
             }).join("");
 
             renderSpinView();
+            renderSwapView();
             renderChartView();
 
             document.getElementById("earn-heading").innerText = t("earnHeading");
@@ -4585,9 +4958,11 @@
             document.getElementById("menu-wallet").innerText = t("menuWallet");
             document.getElementById("menu-history").innerText = t("menuHistory");
             document.getElementById("menu-rules").innerText = t("menuRules");
+            document.getElementById("menu-privacy").innerText = t("menuPrivacy");
 
             document.getElementById("dock-upgrade").innerText = t("dockUpgrade");
             document.getElementById("dock-spin").innerText = t("dockSpin");
+            document.getElementById("dock-swap").innerText = t("dockSwap");
             document.getElementById("dock-chart").innerText = t("dockChart");
             document.getElementById("dock-earn").innerText = t("dockEarn");
             document.getElementById("dock-friends").innerText = t("dockFriends");
@@ -4643,16 +5018,20 @@
             }
         }
 
+        let secCounter = 0;
         setInterval(() => {
+            secCounter += 1;
             if (state.isVerifiedWallet) {
                 state.unclaimed = Math.min(STORAGE_CAP_SLR, state.unclaimed + getDailyRate() / 86400);
                 const el = document.getElementById("claimable-slr");
                 if (el) el.innerText = state.unclaimed.toFixed(4);
                 document.getElementById("storage-text").innerText = `${Math.floor(state.unclaimed).toLocaleString()} / ${STORAGE_CAP_SLR.toLocaleString()} SLR`;
                 document.getElementById("storage-bar").style.width = Math.min(100, (state.unclaimed / STORAGE_CAP_SLR) * 100) + "%";
-                saveState();
+                if (secCounter % 5 === 0) {
+                    saveState();
+                }
             }
-            if (!isSpinningWheel) {
+            if (!isSpinningWheel && isSpinTabCurrentlyActive()) {
                 renderSpinView();
             }
         }, 1000);
